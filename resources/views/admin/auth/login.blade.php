@@ -10,86 +10,127 @@
 
     <title>Admin Login | Open Sky Holidays</title>
 
-    <!-- Google Fonts: Rubik -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="{{ asset('assets/admin/css/admin.css') }}">
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
 </head>
 
-<body class="login-body">
-    <div class="login-card">
-        <h1>Open Sky Holidays</h1>
+<body class="bg-light">
 
-        <p class="subtitle">
-            Login to the administration panel
-        </p>
+    <div class="container">
+        <div class="row justify-content-center align-items-center min-vh-100">
 
-        @if(session('success'))
-            <div class="success">
-                {{ session('success') }}
+            <div class="col-11 col-sm-8 col-md-6 col-lg-4">
+
+                <div class="card shadow border-0">
+                    <div class="card-body p-4">
+
+                        <div class="text-center mb-4">
+                            <h2 class="fw-bold">
+                                Admin Login
+                            </h2>
+
+                            <p class="text-muted mb-0">
+                                Open Sky Holidays
+                            </p>
+                        </div>
+
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                {{ $errors->first() }}
+                            </div>
+                        @endif
+
+                        <form
+                            method="POST"
+                            action="{{ route('admin.login.submit') }}"
+                        >
+                            @csrf
+
+                            <div class="mb-3">
+                                <label
+                                    for="email"
+                                    class="form-label"
+                                >
+                                    Email address
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value="{{ old('email') }}"
+                                    class="form-control"
+                                    placeholder="Enter your email"
+                                    required
+                                    autofocus
+                                >
+                            </div>
+
+                            <div class="mb-3">
+                                <label
+                                    for="password"
+                                    class="form-label"
+                                >
+                                    Password
+                                </label>
+
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    class="form-control"
+                                    placeholder="Enter your password"
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-check mb-3">
+                                <input
+                                    type="checkbox"
+                                    id="remember"
+                                    name="remember"
+                                    value="1"
+                                    class="form-check-input"
+                                >
+
+                                <label
+                                    for="remember"
+                                    class="form-check-label"
+                                >
+                                    Remember me
+                                </label>
+                            </div>
+
+                            <div class="d-grid">
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary"
+                                >
+                                    Login
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
             </div>
-        @endif
-
-        @if($errors->any())
-            <div class="error">
-                {{ $errors->first() }}
-            </div>
-        @endif
-
-        <form
-            method="POST"
-            action="{{ route('admin.login.submit') }}"
-        >
-            @csrf
-
-            <div class="form-group">
-                <label for="email">
-                    Email address
-                </label>
-
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value="{{ old('email') }}"
-                    required
-                    autofocus
-                >
-            </div>
-
-            <div class="form-group">
-                <label for="password">
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    required
-                >
-            </div>
-
-            <label class="remember-row">
-                <input
-                    type="checkbox"
-                    name="remember"
-                    value="1"
-                >
-
-                Remember me
-            </label>
-
-            <button
-                type="submit"
-                class="login-button"
-            >
-                Login
-            </button>
-        </form>
+        </div>
     </div>
-    <script src="{{ asset('assets/admin/js/admin.js') }}"></script>
+
+    <!-- Bootstrap JavaScript -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
 </body>
 </html>
