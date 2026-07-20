@@ -70,3 +70,69 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const sidebar = document.getElementById("adminSidebar");
+    const sidebarToggle = document.getElementById("sidebarToggle");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+    const sidebarLinks = document.querySelectorAll(
+        "#adminSidebar .nav-item"
+    );
+
+    if (!sidebar || !sidebarToggle || !sidebarOverlay) {
+        return;
+    }
+
+    function openSidebar() {
+        sidebar.classList.add("open");
+        sidebarOverlay.classList.add("show");
+        document.body.classList.add("sidebar-open");
+
+        sidebarToggle.setAttribute("aria-expanded", "true");
+        sidebarToggle.setAttribute("aria-label", "Close sidebar");
+    }
+
+    function closeSidebar() {
+        sidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("show");
+        document.body.classList.remove("sidebar-open");
+
+        sidebarToggle.setAttribute("aria-expanded", "false");
+        sidebarToggle.setAttribute("aria-label", "Open sidebar");
+    }
+
+    function toggleSidebar() {
+        if (sidebar.classList.contains("open")) {
+            closeSidebar();
+        } else {
+            openSidebar();
+        }
+    }
+
+    sidebarToggle.addEventListener("click", toggleSidebar);
+
+    sidebarOverlay.addEventListener("click", closeSidebar);
+
+    sidebarLinks.forEach(function (link) {
+        link.addEventListener("click", function () {
+            if (window.innerWidth <= 991) {
+                closeSidebar();
+            }
+        });
+    });
+
+    document.addEventListener("keydown", function (event) {
+        if (
+            event.key === "Escape" &&
+            sidebar.classList.contains("open")
+        ) {
+            closeSidebar();
+        }
+    });
+
+    window.addEventListener("resize", function () {
+        if (window.innerWidth > 991) {
+            closeSidebar();
+        }
+    });
+});
