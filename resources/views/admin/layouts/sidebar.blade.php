@@ -13,7 +13,7 @@
         <!-- Dashboard -->
         <a href="{{ route('admin.dashboard') }}"
             class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="3" y="3" width="7" height="7" rx="1"></rect>
                 <rect x="14" y="3" width="7" height="7" rx="1"></rect>
                 <rect x="14" y="14" width="7" height="7" rx="1"></rect>
@@ -76,11 +76,10 @@
 
         <a href="{{ route('admin.enquiries.index') }}"
             class="nav-item {{ request()->routeIs('admin.enquiries.*') ? 'active' : '' }}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="3" y="5" width="18" height="14" rx="2"></rect>
                 <path d="M3 7l9 6 9-6"></path>
             </svg>
-
             <span>Enquiries</span>
         </a>
         <!-- About Section -->
@@ -92,7 +91,6 @@
                 <path d="M5.5 21a6.5 6.5 0 0 1 13 0"></path>
                 <path d="M3 3h18"></path>
             </svg>
-
             <span>About Section</span>
         </a>
         <a href="{{ route('admin.our-stories.index') }}"
@@ -107,7 +105,6 @@
                 <path d="M12 21s-6-5.33-6-11a6 6 0 1 1 12 0c0 5.67-6 11-6 11z"></path>
                 <circle cx="12" cy="10" r="2"></circle>
             </svg>
-
             <span>Travel Support</span>
         </a>
         <a href="{{ route('admin.why-choose-sections.index') }}" class="sidebar-link">
@@ -133,36 +130,33 @@
 
         <!-- Tour Packages -->
         <a href="#" class="nav-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M3 6h18"></path>
                 <path d="M5 6l1 15h12l1-15"></path>
                 <path d="M9 6V4h6v2"></path>
                 <path d="M9 11h6"></path>
             </svg>
-
             <span>Tour Packages</span>
         </a>
 
         <!-- Destinations -->
         <a href="#" class="nav-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0z"></path>
                 <circle cx="12" cy="10" r="3"></circle>
             </svg>
-
             <span>Destinations</span>
         </a>
 
 
         <!-- Services -->
         <a href="#" class="nav-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="3" y="7" width="18" height="13" rx="2"></rect>
                 <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                 <path d="M3 12h18"></path>
                 <path d="M10 12v2h4v-2"></path>
             </svg>
-
             <span>Services</span>
         </a>
 
@@ -217,14 +211,10 @@
         </div>
         <!-- Settings -->
         <a href="#" class="nav-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="3"></circle>
-
-                <path
-                    d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.05.05a2 2 0 1 1-2.83 2.83l-.05-.05a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 0 1-4 0v-.07a1.7 1.7 0 0 0-1.03-1.56 1.7 1.7 0 0 0-1.88.34l-.05.05a2 2 0 1 1-2.83-2.83l.05-.05A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.53-1H3a2 2 0 0 1 0-4h.07A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.88l-.05-.05a2 2 0 1 1 2.83-2.83l.05.05A1.7 1.7 0 0 0 8.97 4.6 1.7 1.7 0 0 0 10 3.07V3a2 2 0 0 1 4 0v.07a1.7 1.7 0 0 0 1.03 1.53 1.7 1.7 0 0 0 1.88-.34l.05-.05a2 2 0 1 1 2.83 2.83l-.05.05A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.53 1H21a2 2 0 0 1 0 4h-.07A1.7 1.7 0 0 0 19.4 15z">
-                </path>
+            <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>https://github.com/hdudekulahussaini/open_sky_holidays/pull/5/conflict?name=resources%252Fviews%252Fadmin%252Flayouts%252Fsidebar.blade.php&ancestor_oid=303e1a3c34d6141afd9c8cd41db71aed411c4e25&base_oid=2b767b8b54ee1e67d8266af1c4c854c95d1ac7e8&head_oid=d1170e3a0c0acda0472c0bdff24ed10e050067d3
+                <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.05.05a2 2 0 1 1-2.83 2.83l-.05-.05a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 0 1-4 0v-.07a1.7 1.7 0 0 0-1.03-1.56 1.7 1.7 0 0 0-1.88.34l-.05.05a2 2 0 1 1-2.83-2.83l.05-.05A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.53-1H3a2 2 0 0 1 0-4h.07A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.88l-.05-.05a2 2 0 1 1 2.83-2.83l.05.05A1.7 1.7 0 0 0 8.97 4.6 1.7 1.7 0 0 0 10 3.07V3a2 2 0 0 1 4 0v.07a1.7 1.7 0 0 0 1.03 1.53 1.7 1.7 0 0 0 1.88-.34l.05-.05a2 2 0 1 1 2.83 2.83l-.05.05A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.53 1H21a2 2 0 0 1 0 4h-.07A1.7 1.7 0 0 0 19.4 15z"></path>
             </svg>
-
             <span>Settings</span>
         </a>
 
@@ -233,14 +223,12 @@
     <!-- Logout -->
     <form method="POST" action="{{ route('admin.logout') }}" class="logout-form">
         @csrf
-
         <button type="submit" class="logout-button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <path d="M16 17l5-5-5-5"></path>
                 <path d="M21 12H9"></path>
             </svg>
-
             <span>Logout</span>
         </button>
     </form>

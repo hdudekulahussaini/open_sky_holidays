@@ -2,7 +2,7 @@
 
 <div class="admin-form-grid">
 
-    {{-- Title --}}
+    {{-- Blog Title --}}
     <div class="admin-form-group full-width">
         <label for="title">
             Blog Title
@@ -41,9 +41,7 @@
                 @error('category_id') is-invalid @enderror"
             required
         >
-            <option value="">
-                Select Category
-            </option>
+            <option value="">Select Category</option>
 
             @foreach ($categories as $category)
                 <option
@@ -79,9 +77,7 @@
             class="admin-form-control
                 @error('author_id') is-invalid @enderror"
         >
-            <option value="">
-                Open Sky Team
-            </option>
+            <option value="">Open Sky Team</option>
 
             @foreach ($authors as $author)
                 <option
@@ -128,31 +124,93 @@
         @enderror
     </div>
 
-    {{-- Short Description --}}
+    {{-- Table of Contents --}}
     <div class="admin-form-group full-width">
-        <label for="short_description">
-            Short Description
+        <label>
+            Table of Contents
             <span class="required">*</span>
         </label>
 
-        <textarea
-            name="short_description"
-            id="short_description"
-            rows="4"
-            class="admin-form-control
-                @error('short_description') is-invalid @enderror"
-            placeholder="Enter short blog description"
-            required
-        >{{ old(
-            'short_description',
-            $blog->short_description ?? ''
-        ) }}</textarea>
+        <p class="admin-form-help">
+            Add the blog section titles. Numbers will be created
+            automatically.
+        </p>
 
-        @error('short_description')
+        @php
+            $tocItems = old(
+                'table_of_contents',
+                $blog->table_of_contents ?? ['']
+            );
+
+            if (is_string($tocItems)) {
+                $tocItems = json_decode(
+                    $tocItems,
+                    true
+                ) ?? [];
+            }
+
+            if (empty($tocItems)) {
+                $tocItems = [''];
+            }
+        @endphp
+
+        <div id="tableOfContentsContainer">
+
+            @foreach ($tocItems as $index => $item)
+                <div class="toc-form-row">
+
+                    <span class="toc-number">
+                        {{ str_pad(
+                            $index + 1,
+                            2,
+                            '0',
+                            STR_PAD_LEFT
+                        ) }}.
+                    </span>
+
+                    <input
+                        type="text"
+                        name="table_of_contents[]"
+                        value="{{ $item }}"
+                        class="admin-form-control
+                            @error("table_of_contents.$index")
+                                is-invalid
+                            @enderror"
+                        placeholder="Example: Kerala – God's Own Country"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="btn btn-danger remove-toc-item"
+                    >
+                        Remove
+                    </button>
+
+                    @error("table_of_contents.$index")
+                        <span class="admin-form-error toc-error">
+                            {{ $message }}
+                        </span>
+                    @enderror
+
+                </div>
+            @endforeach
+
+        </div>
+
+        @error('table_of_contents')
             <span class="admin-form-error">
                 {{ $message }}
             </span>
         @enderror
+
+        <button
+            type="button"
+            id="addTocItem"
+            class="btn btn-light"
+        >
+            + Add Section
+        </button>
     </div>
 
     {{-- Complete Content --}}
@@ -183,6 +241,7 @@
     <div class="admin-form-group">
         <label for="featured_image">
             Featured Image
+
             @if (!isset($blog))
                 <span class="required">*</span>
             @endif
@@ -263,7 +322,9 @@
             value="{{ old(
                 'published_at',
                 isset($blog) && $blog->published_at
-                    ? $blog->published_at->format('Y-m-d\TH:i')
+                    ? $blog->published_at->format(
+                        'Y-m-d\TH:i'
+                    )
                     : ''
             ) }}"
         >
@@ -292,7 +353,10 @@
             <option
                 value="1"
                 @selected(
-                    old('status', $blog->status ?? 0) == 1
+                    old(
+                        'status',
+                        $blog->status ?? 0
+                    ) == 1
                 )
             >
                 Published
@@ -301,7 +365,10 @@
             <option
                 value="0"
                 @selected(
-                    old('status', $blog->status ?? 0) == 0
+                    old(
+                        'status',
+                        $blog->status ?? 0
+                    ) == 0
                 )
             >
                 Draft
@@ -309,57 +376,6 @@
         </select>
 
         @error('status')
-            <span class="admin-form-error">
-                {{ $message }}
-            </span>
-        @enderror
-    </div>
-
-    {{-- Meta Title --}}
-    <div class="admin-form-group full-width">
-        <label for="meta_title">
-            Meta Title
-        </label>
-
-        <input
-            type="text"
-            name="meta_title"
-            id="meta_title"
-            class="admin-form-control
-                @error('meta_title') is-invalid @enderror"
-            value="{{ old(
-                'meta_title',
-                $blog->meta_title ?? ''
-            ) }}"
-            placeholder="SEO title"
-        >
-
-        @error('meta_title')
-            <span class="admin-form-error">
-                {{ $message }}
-            </span>
-        @enderror
-    </div>
-
-    {{-- Meta Description --}}
-    <div class="admin-form-group full-width">
-        <label for="meta_description">
-            Meta Description
-        </label>
-
-        <textarea
-            name="meta_description"
-            id="meta_description"
-            rows="4"
-            class="admin-form-control
-                @error('meta_description') is-invalid @enderror"
-            placeholder="SEO description"
-        >{{ old(
-            'meta_description',
-            $blog->meta_description ?? ''
-        ) }}</textarea>
-
-        @error('meta_description')
             <span class="admin-form-error">
                 {{ $message }}
             </span>
@@ -383,3 +399,114 @@
         {{ $buttonText ?? 'Save Blog' }}
     </button>
 </div>
+
+<script>
+    document.addEventListener(
+        'DOMContentLoaded',
+        function () {
+            const container = document.getElementById(
+                'tableOfContentsContainer'
+            );
+
+            const addButton = document.getElementById(
+                'addTocItem'
+            );
+
+            if (!container || !addButton) {
+                return;
+            }
+
+            function updateNumbers() {
+                const rows = container.querySelectorAll(
+                    '.toc-form-row'
+                );
+
+                rows.forEach(function (row, index) {
+                    const number = row.querySelector(
+                        '.toc-number'
+                    );
+
+                    if (number) {
+                        number.textContent =
+                            String(index + 1)
+                                .padStart(2, '0') + '.';
+                    }
+                });
+            }
+
+            function addTableOfContentsRow() {
+                const row = document.createElement('div');
+
+                row.className = 'toc-form-row';
+
+                row.innerHTML = `
+                    <span class="toc-number"></span>
+
+                    <input
+                        type="text"
+                        name="table_of_contents[]"
+                        class="admin-form-control"
+                        placeholder="Enter section title"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="btn btn-danger remove-toc-item"
+                    >
+                        Remove
+                    </button>
+                `;
+
+                container.appendChild(row);
+
+                updateNumbers();
+
+                row.querySelector('input')?.focus();
+            }
+
+            addButton.addEventListener(
+                'click',
+                addTableOfContentsRow
+            );
+
+            container.addEventListener(
+                'click',
+                function (event) {
+                    const removeButton =
+                        event.target.closest(
+                            '.remove-toc-item'
+                        );
+
+                    if (!removeButton) {
+                        return;
+                    }
+
+                    const rows = container.querySelectorAll(
+                        '.toc-form-row'
+                    );
+
+                    if (rows.length === 1) {
+                        const input =
+                            rows[0].querySelector('input');
+
+                        if (input) {
+                            input.value = '';
+                            input.focus();
+                        }
+
+                        return;
+                    }
+
+                    removeButton
+                        .closest('.toc-form-row')
+                        ?.remove();
+
+                    updateNumbers();
+                }
+            );
+
+            updateNumbers();
+        }
+    );
+</script>
