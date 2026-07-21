@@ -13,19 +13,18 @@ class Blog extends Model
         'author_id',
         'title',
         'slug',
-        'short_description',
+        'table_of_contents',
         'content',
         'featured_image',
         'read_time',
         'status',
         'published_at',
-        'meta_title',
-        'meta_description',
     ];
 
     protected function casts(): array
     {
         return [
+            'table_of_contents' => 'array',
             'status' => 'boolean',
             'published_at' => 'datetime',
         ];

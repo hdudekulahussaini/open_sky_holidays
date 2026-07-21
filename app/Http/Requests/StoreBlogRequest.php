@@ -50,11 +50,29 @@ class StoreBlogRequest extends FormRequest
                 'unique:blogs,slug',
             ],
 
-            'short_description' => [
+            /*
+            |--------------------------------------------------------------------------
+            | Table of Contents
+            |--------------------------------------------------------------------------
+            */
+
+            'table_of_contents' => [
+                'required',
+                'array',
+                'min:1',
+            ],
+
+            'table_of_contents.*' => [
                 'required',
                 'string',
-                'max:1000',
+                'max:255',
             ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Complete Blog Content
+            |--------------------------------------------------------------------------
+            */
 
             'content' => [
                 'required',
@@ -84,32 +102,53 @@ class StoreBlogRequest extends FormRequest
                 'nullable',
                 'date',
             ],
-
-            'meta_title' => [
-                'nullable',
-                'string',
-                'max:255',
-            ],
-
-            'meta_description' => [
-                'nullable',
-                'string',
-                'max:1000',
-            ],
         ];
     }
 
     public function messages(): array
     {
         return [
-            'category_id.required' => 'Please select a category.',
-            'category_id.exists' => 'Selected category does not exist.',
-            'title.required' => 'Blog title is required.',
-            'short_description.required' => 'Short description is required.',
-            'content.required' => 'Blog content is required.',
-            'featured_image.required' => 'Featured image is required.',
-            'featured_image.mimes' => 'Image must be JPG, JPEG, PNG or WEBP.',
-            'read_time.required' => 'Reading time is required.',
+            'category_id.required' =>
+                'Please select a category.',
+
+            'category_id.exists' =>
+                'Selected category does not exist.',
+
+            'title.required' =>
+                'Blog title is required.',
+
+            'table_of_contents.required' =>
+                'Please add at least one Table of Contents section.',
+
+            'table_of_contents.array' =>
+                'Table of Contents must be a valid list.',
+
+            'table_of_contents.min' =>
+                'Please add at least one Table of Contents section.',
+
+            'table_of_contents.*.required' =>
+                'Each Table of Contents section is required.',
+
+            'table_of_contents.*.max' =>
+                'Each Table of Contents section cannot exceed 255 characters.',
+
+            'content.required' =>
+                'Blog content is required.',
+
+            'featured_image.required' =>
+                'Featured image is required.',
+
+            'featured_image.image' =>
+                'The selected file must be an image.',
+
+            'featured_image.mimes' =>
+                'Image must be JPG, JPEG, PNG or WEBP.',
+
+            'featured_image.max' =>
+                'Image size must not exceed 4 MB.',
+
+            'read_time.required' =>
+                'Reading time is required.',
         ];
     }
 }

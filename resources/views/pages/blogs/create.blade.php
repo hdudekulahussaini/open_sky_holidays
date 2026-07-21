@@ -8,10 +8,17 @@
         <div class="admin-form-header">
             <div class="admin-form-header-content">
                 <h3>Create Blog</h3>
-                <p>Create a new travel blog post with category, author, and content.</p>
+
+                <p>
+                    Create a new travel blog post with category,
+                    author, table of contents, and complete content.
+                </p>
             </div>
 
-            <a href="{{ route('admin.blogs.index') }}" class="btn btn-light">
+            <a
+                href="{{ route('admin.blogs.index') }}"
+                class="btn btn-light"
+            >
                 Back
             </a>
         </div>
@@ -24,7 +31,9 @@
             >
                 @include(
                     'pages.blogs.form',
-                    ['buttonText' => 'Create Blog']
+                    [
+                        'buttonText' => 'Create Blog',
+                    ]
                 )
             </form>
         </div>
