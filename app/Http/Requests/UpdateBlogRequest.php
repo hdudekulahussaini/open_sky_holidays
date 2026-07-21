@@ -14,12 +14,36 @@ class UpdateBlogRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        $tocItems = $this->input(
+            'table_of_contents',
+            []
+        );
+
+        if (!is_array($tocItems)) {
+            $tocItems = [];
+        }
+
+        /*
+         * Remove empty Table of Contents rows.
+         */
+        $tocItems = collect($tocItems)
+            ->map(
+                fn ($item) => trim((string) $item)
+            )
+            ->filter(
+                fn ($item) => $item !== ''
+            )
+            ->values()
+            ->all();
+
         $this->merge([
             'status' => $this->boolean('status'),
 
             'author_id' => $this->filled('author_id')
                 ? $this->input('author_id')
                 : null,
+
+            'table_of_contents' => $tocItems,
         ]);
     }
 
@@ -55,17 +79,39 @@ class UpdateBlogRequest extends FormRequest
                     ->ignore($blog?->id),
             ],
 
-            'short_description' => [
+            /*
+            |--------------------------------------------------------------------------
+            | Table of Contents
+            |--------------------------------------------------------------------------
+            */
+
+            'table_of_contents' => [
+                'required',
+                'array',
+                'min:1',
+            ],
+
+            'table_of_contents.*' => [
                 'required',
                 'string',
-                'max:1000',
+                'max:255',
             ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Complete Blog Content
+            |--------------------------------------------------------------------------
+            */
 
             'content' => [
                 'required',
                 'string',
             ],
 
+            /*
+             * Image is optional while editing.
+             * Existing image is retained when no new image is uploaded.
+             */
             'featured_image' => [
                 'nullable',
                 'image',
@@ -89,18 +135,53 @@ class UpdateBlogRequest extends FormRequest
                 'nullable',
                 'date',
             ],
+        ];
+    }
 
-            'meta_title' => [
-                'nullable',
-                'string',
-                'max:255',
-            ],
+    public function messages(): array
+    {
+        return [
+            'category_id.required' =>
+                'Please select a category.',
 
-            'meta_description' => [
-                'nullable',
-                'string',
-                'max:1000',
-            ],
+            'category_id.exists' =>
+                'Selected category does not exist.',
+
+            'title.required' =>
+                'Blog title is required.',
+
+            'slug.unique' =>
+                'This blog slug is already being used.',
+
+            'table_of_contents.required' =>
+                'Please add at least one Table of Contents section.',
+
+            'table_of_contents.array' =>
+                'Table of Contents must be a valid list.',
+
+            'table_of_contents.min' =>
+                'Please add at least one Table of Contents section.',
+
+            'table_of_contents.*.required' =>
+                'Each Table of Contents section is required.',
+
+            'table_of_contents.*.max' =>
+                'Each section title cannot exceed 255 characters.',
+
+            'content.required' =>
+                'Blog content is required.',
+
+            'featured_image.image' =>
+                'The selected file must be an image.',
+
+            'featured_image.mimes' =>
+                'Image must be JPG, JPEG, PNG or WEBP.',
+
+            'featured_image.max' =>
+                'Image size must not exceed 4 MB.',
+
+            'read_time.required' =>
+                'Reading time is required.',
         ];
     }
 }

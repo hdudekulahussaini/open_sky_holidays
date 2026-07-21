@@ -22,12 +22,52 @@ class BlogDetailResource extends JsonResource
                 'slug' => $this->category?->slug,
             ],
 
-            'short_description' => $this->short_description,
+            /*
+            |--------------------------------------------------------------------------
+            | Table of Contents
+            |--------------------------------------------------------------------------
+            |
+            | Database value:
+            |
+            | [
+            |   "Kerala – God's Own Country",
+            |   "Rajasthan – The Land of Kings"
+            | ]
+            |
+            | API output:
+            |
+            | [
+            |   {
+            |       "number": "01",
+            |       "title": "Kerala – God's Own Country"
+            |   }
+            | ]
+            |
+            */
+
+            'table_of_contents' => collect(
+                $this->table_of_contents ?? []
+            )
+                ->values()
+                ->map(function ($title, $index) {
+                    return [
+                        'number' => str_pad(
+                            $index + 1,
+                            2,
+                            '0',
+                            STR_PAD_LEFT
+                        ),
+
+                        'title' => $title,
+                    ];
+                }),
 
             'content' => $this->content,
 
             'featured_image' => $this->featured_image
-                ? asset('storage/'.$this->featured_image)
+                ? asset(
+                    'storage/' . $this->featured_image
+                )
                 : null,
 
             'author' => [
@@ -38,33 +78,33 @@ class BlogDetailResource extends JsonResource
 
                 'image' => $this->author?->image
                     ? asset(
-                        'storage/'.$this->author->image
+                        'storage/' . $this->author->image
                     )
                     : null,
 
-                'description' => $this->author?->description,
+                'description' =>
+                    $this->author?->description,
 
-                'twitter_url' => $this->author?->twitter_url,
+                'twitter_url' =>
+                    $this->author?->twitter_url,
 
-                'facebook_url' => $this->author?->facebook_url,
+                'facebook_url' =>
+                    $this->author?->facebook_url,
 
-                'linkedin_url' => $this->author?->linkedin_url,
+                'linkedin_url' =>
+                    $this->author?->linkedin_url,
             ],
 
             'read_time' => $this->read_time,
 
-            'read_time_text' => $this->read_time.' min read',
+            'read_time_text' =>
+                $this->read_time . ' min read',
 
-            'published_at' => $this->published_at?->toISOString(),
+            'published_at' => $this->published_at
+                ?->toISOString(),
 
-            'published_date' => $this->published_at?->format('F j, Y'),
-
-            'seo' => [
-                'meta_title' => $this->meta_title ?: $this->title,
-
-                'meta_description' => $this->meta_description
-                    ?: $this->short_description,
-            ],
+            'published_date' => $this->published_at
+                ?->format('F j, Y'),
         ];
     }
 }
