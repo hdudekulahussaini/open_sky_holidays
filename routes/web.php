@@ -76,6 +76,14 @@ Route::prefix('admin')
                 'destroy',
             ])->name('enquiries.destroy');
 
+            Route::resource('heroes', HeroController::class)
+                ->except('show');
+            Route::resource(
+                'page-banners',
+                PageBannerController::class
+            )->except('show');
+
+
             Route::post('/logout', [
                 AuthController::class,
                 'logout',
