@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Admin\AboutSectionController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\AuthorController;
+use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EnquiryController;
 use App\Http\Controllers\Admin\HeroController;
@@ -83,9 +86,20 @@ Route::prefix('admin')
 
             Route::resource('heroes', HeroController::class)
                 ->except('show');
+
+            Route::resource('page-banners', PageBannerController::class)->except('show');
             Route::resource(
-                'page-banners',
-                PageBannerController::class
+                'categories',
+                CategoryController::class
+            )->except('show');
+            Route::resource(
+                'testimonials',
+                TestimonialController::class
+            );
+
+            Route::resource(
+                'authors',
+                AuthorController::class
             )->except('show');
             Route::resource(
                 'adventure-categories',
@@ -101,6 +115,15 @@ Route::prefix('admin')
                 OfferBannerController::class
             )->except('show');
 
+            Route::resource(
+                'blogs',
+                BlogController::class
+            )->except('show');
+            
+            Route::resource(
+                'our-stories',
+                OurStoryController::class
+            );
 
             Route::post('/logout', [
                 AuthController::class,
