@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EnquiryController;
 use App\Http\Controllers\Admin\HeroController;
 use App\Http\Controllers\Admin\PageBannerController;
+use App\Http\Controllers\Admin\TestimonialController;
+
 use App\Http\Controllers\Admin\TravelSupportSectionController;
 use App\Http\Controllers\Admin\WhyChooseSectionController;
 use Illuminate\Support\Facades\Route;
@@ -89,6 +91,10 @@ Route::prefix('admin')
                 'categories',
                 CategoryController::class
             )->except('show');
+              Route::resource(
+            'testimonials',
+            TestimonialController::class
+        );
 
             Route::resource(
                 'authors',
