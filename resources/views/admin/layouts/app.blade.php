@@ -91,6 +91,44 @@
     <script src="{{ asset('assets/admin/js/image-preview.js') }}"></script>
     @stack('scripts')
 
+    <script>
+    (function() {
+        function initDropdowns() {
+            // Dropdown toggle function
+            document.querySelectorAll('.nav-dropdown-toggle').forEach(function (button) {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const wrapper = this.closest('.nav-dropdown-wrapper');
+                    if (wrapper) {
+                        wrapper.classList.toggle('open');
+                    }
+                });
+            });
+
+            // Mobile sidebar toggle script
+            const sidebarToggle = document.getElementById("sidebarToggle");
+            const sidebarOverlay = document.getElementById("sidebarOverlay");
+
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener("click", function () {
+                    document.body.classList.toggle("sidebar-open");
+                });
+            }
+
+            if (sidebarOverlay) {
+                sidebarOverlay.addEventListener("click", function () {
+                    document.body.classList.remove("sidebar-open");
+                });
+            }
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initDropdowns);
+        } else {
+            initDropdowns();
+        }
+    })();
+    </script>
 </body>
 
 </html>
