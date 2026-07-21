@@ -31,6 +31,13 @@
                     </svg>
                     <span>Hero Management</span>
                 </a>
+                <a href="{{ route('admin.page-banners.index') }}" class="sidebar-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                    <span>Banners</span>
+                </a>
 
                 <a href="{{ route('admin.enquiries.index') }}"
                     class="nav-item {{ request()->routeIs('admin.enquiries.*') ? 'active' : '' }}">
@@ -71,6 +78,8 @@
                     </svg>
                     <span>Why Choose Us</span>
                 </a>
+
+
 
                 <!-- Tour Packages -->
                 <a href="#" class="nav-item">
