@@ -12,9 +12,14 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class BlogController extends Controller
 {
+
     public function index(
         Request $request
     ): AnonymousResourceCollection {
+        $perPage = $request->integer('per_page', 6);
+
+        $perPage = max(1, min($perPage, 24));
+
         $blogs = Blog::query()
             ->with([
                 'category:id,name,slug',
@@ -25,12 +30,18 @@ class BlogController extends Controller
             ->when(
                 $request->filled('category'),
                 function ($query) use ($request) {
+                    $categorySlug = trim(
+                        $request->input('category')
+                    );
+
                     $query->whereHas(
                         'category',
-                        function ($query) use ($request) {
-                            $query->where(
+                        function ($categoryQuery) use (
+                            $categorySlug
+                        ) {
+                            $categoryQuery->where(
                                 'slug',
-                                $request->input('category')
+                                $categorySlug
                             );
                         }
                     );
@@ -40,18 +51,20 @@ class BlogController extends Controller
             ->when(
                 $request->filled('search'),
                 function ($query) use ($request) {
-                    $search = $request->input('search');
+                    $search = trim(
+                        $request->input('search')
+                    );
 
                     $query->where(
-                        function ($query) use ($search) {
-                            $query
+                        function ($searchQuery) use ($search) {
+                            $searchQuery
                                 ->where(
                                     'title',
                                     'like',
                                     "%{$search}%"
                                 )
                                 ->orWhere(
-                                    'short_description',
+                                    'content',
                                     'like',
                                     "%{$search}%"
                                 );
@@ -61,46 +74,65 @@ class BlogController extends Controller
             )
 
             ->latest('published_at')
-            ->paginate(6);
+            ->paginate($perPage)
+            ->withQueryString();
 
         return BlogCardResource::collection($blogs);
     }
+
 
     public function show(
         Request $request,
         string $slug
     ): JsonResponse {
+
         $blog = Blog::query()
-            ->with(['category', 'author'])
+            ->with([
+                'category:id,name,slug',
+                'author:id,name,image,description,twitter_url,facebook_url,linkedin_url',
+            ])
             ->published()
             ->where('slug', $slug)
             ->firstOrFail();
 
+        /*
+         * Latest published blogs except current blog.
+         */
         $recentBlogs = Blog::query()
             ->with([
                 'category:id,name,slug',
                 'author:id,name',
             ])
             ->published()
-            ->where('id', '!=', $blog->id)
+            ->whereKeyNot($blog->id)
             ->latest('published_at')
             ->limit(4)
             ->get();
 
+  
         $relatedBlogs = Blog::query()
             ->with([
                 'category:id,name,slug',
                 'author:id,name',
             ])
             ->published()
-            ->where('id', '!=', $blog->id)
-            ->where('category_id', $blog->category_id)
+            ->whereKeyNot($blog->id)
+            ->where(
+                'category_id',
+                $blog->category_id
+            )
             ->latest('published_at')
             ->limit(3)
             ->get();
 
+        /*
+         * Older published blog.
+         */
         $previousBlog = Blog::query()
-            ->with(['category', 'author'])
+            ->with([
+                'category:id,name,slug',
+                'author:id,name',
+            ])
             ->published()
             ->where(
                 'published_at',
@@ -110,8 +142,14 @@ class BlogController extends Controller
             ->latest('published_at')
             ->first();
 
+        /*
+         * Newer published blog.
+         */
         $nextBlog = Blog::query()
-            ->with(['category', 'author'])
+            ->with([
+                'category:id,name,slug',
+                'author:id,name',
+            ])
             ->published()
             ->where(
                 'published_at',
@@ -124,19 +162,22 @@ class BlogController extends Controller
         return response()->json([
             'success' => true,
 
-            'message' => 'Blog details retrieved successfully.',
+            'message' =>
+                'Blog details retrieved successfully.',
 
             'blog' => (
                 new BlogDetailResource($blog)
             )->resolve($request),
 
-            'recent_blogs' => BlogCardResource::collection(
-                $recentBlogs
-            )->resolve($request),
+            'recent_blogs' =>
+                BlogCardResource::collection(
+                    $recentBlogs
+                )->resolve($request),
 
-            'related_blogs' => BlogCardResource::collection(
-                $relatedBlogs
-            )->resolve($request),
+            'related_blogs' =>
+                BlogCardResource::collection(
+                    $relatedBlogs
+                )->resolve($request),
 
             'previous_blog' => $previousBlog
                 ? (

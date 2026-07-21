@@ -8,20 +8,24 @@
         <div class="admin-form-header">
             <div class="admin-form-header-content">
                 <h3>Edit Blog</h3>
-                <p>Update the travel blog details, images, and content.</p>
+
+                <p>
+                    Update the travel blog details, table of contents,
+                    image, and complete content.
+                </p>
             </div>
 
-            <a href="{{ route('admin.blogs.index') }}" class="btn btn-light">
+            <a
+                href="{{ route('admin.blogs.index') }}"
+                class="btn btn-light"
+            >
                 Back
             </a>
         </div>
 
         <div class="admin-form-body">
             <form
-                action="{{ route(
-                    'admin.blogs.update',
-                    $blog
-                ) }}"
+                action="{{ route('admin.blogs.update', $blog) }}"
                 method="POST"
                 enctype="multipart/form-data"
             >
@@ -31,7 +35,7 @@
                     'pages.blogs.form',
                     [
                         'buttonText' => 'Update Blog',
-                        'blog' => $blog
+                        'blog' => $blog,
                     ]
                 )
             </form>
