@@ -64,6 +64,87 @@
 
                     <span>Travel Support</span>
                 </a>
+                <!-- Adventure Management Dropdown -->
+                <div
+                    class="nav-dropdown
+        {{ request()->routeIs(
+            'admin.adventure-categories.*',
+            'admin.adventures.*'
+        ) ? 'open' : '' }}">
+                    <button
+                        type="button"
+                        class="nav-item nav-dropdown-toggle
+            {{ request()->routeIs(
+                'admin.adventure-categories.*',
+                'admin.adventures.*'
+            ) ? 'active' : '' }}"
+                        onclick="toggleSidebarDropdown(this)">
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M3 20h18"></path>
+                            <path d="M5 20l5-12 3 7 2-4 4 9"></path>
+                            <circle cx="18" cy="5" r="2"></circle>
+                        </svg>
+
+                        <span>Adventure Management</span>
+
+                        <svg
+                            class="dropdown-arrow"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M6 9l6 6 6-6"></path>
+                        </svg>
+                    </button>
+
+                    <div class="nav-dropdown-menu">
+                        <a
+                            href="{{ route(
+                'admin.adventure-categories.index'
+            ) }}"
+                            class="nav-dropdown-item
+                {{ request()->routeIs(
+                    'admin.adventure-categories.*'
+                ) ? 'active' : '' }}">
+                            <span class="submenu-dot"></span>
+                            Adventure Categories
+                        </a>
+
+                        <a
+                            href="{{ route('admin.adventures.index') }}"
+                            class="nav-dropdown-item
+                {{ request()->routeIs(
+                    'admin.adventures.*'
+                ) ? 'active' : '' }}">
+                            <span class="submenu-dot"></span>
+                            Adventures
+                        </a>
+                    </div>
+                </div>
+                <!-- Offer Banner Management -->
+                <a href="{{ route('admin.offer-banners.index') }}"
+                    class="nav-item {{ request()->routeIs('admin.offer-banners.*') ? 'active' : '' }}">
+
+                    <svg viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2">
+
+                        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                        <path d="M7 8h6"></path>
+                        <path d="M7 12h4"></path>
+                        <path d="M15 13l4-4"></path>
+                        <circle cx="15" cy="9" r="1"></circle>
+                        <circle cx="19" cy="13" r="1"></circle>
+                    </svg>
+
+                    <span>Offer Banners</span>
+                </a>
+
                 <a href="{{ route('admin.why-choose-sections.index') }}" class="sidebar-link">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path
