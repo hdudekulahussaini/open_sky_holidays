@@ -13,6 +13,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <link rel="stylesheet"
         href="{{ asset('assets/admin/css/admin.css') }}?v={{ filemtime(public_path('assets/admin/css/admin.css')) }}">
@@ -27,7 +30,9 @@
         @include('admin.layouts.sidebar')
 
         {{-- Mobile dark overlay --}}
-        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <div
+            class="sidebar-overlay"
+            id="sidebarOverlay"></div>
 
         <main class="main-content">
 
@@ -68,15 +73,15 @@
             <div class="page-content">
 
                 @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
                 @endif
 
                 @if ($errors->any())
-                    <div class="alert alert-error">
-                        {{ $errors->first() }}
-                    </div>
+                <div class="alert alert-error">
+                    {{ $errors->first() }}
+                </div>
                 @endif
 
                 @yield('content')
