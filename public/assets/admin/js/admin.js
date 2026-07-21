@@ -136,3 +136,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+document.querySelectorAll('.dropdown-toggle').forEach(function (item) {
+    item.addEventListener('click', function () {
+        this.parentElement.classList.toggle('open');
+    });
+});
