@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class BlogCardResource extends JsonResource
 {
@@ -28,19 +29,33 @@ class BlogCardResource extends JsonResource
                     ?? 'Open Sky Team',
             ],
 
-            'short_description' => $this->short_description,
+            /*
+             * Automatically create a short description
+             * from the complete blog content.
+             */
+            'short_description' => Str::limit(
+                Str::squish(
+                    strip_tags($this->content ?? '')
+                ),
+                180
+            ),
 
             'featured_image' => $this->featured_image
-                ? asset('storage/'.$this->featured_image)
+                ? asset(
+                    'storage/' . $this->featured_image
+                )
                 : null,
 
             'read_time' => $this->read_time,
 
-            'read_time_text' => $this->read_time.' min read',
+            'read_time_text' => $this->read_time
+                . ' min read',
 
-            'published_at' => $this->published_at?->toISOString(),
+            'published_at' => $this->published_at
+                ?->toISOString(),
 
-            'published_date' => $this->published_at?->format('F j, Y'),
+            'published_date' => $this->published_at
+                ?->format('F j, Y'),
         ];
     }
 }

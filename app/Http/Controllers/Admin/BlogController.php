@@ -35,7 +35,7 @@ class BlogController extends Controller
     }
 
     /**
-     * Show blog create form.
+     * Show the create blog form.
      */
     public function create(): View
     {
@@ -62,6 +62,12 @@ class BlogController extends Controller
     ): RedirectResponse {
         $validated = $request->validated();
 
+        /*
+        |--------------------------------------------------------------------------
+        | Generate unique slug
+        |--------------------------------------------------------------------------
+        */
+
         $slugValue = $request->filled('slug')
             ? $request->input('slug')
             : $request->input('title');
@@ -69,6 +75,23 @@ class BlogController extends Controller
         $validated['slug'] = $this->generateUniqueSlug(
             $slugValue
         );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Clean Table of Contents
+        |--------------------------------------------------------------------------
+        */
+
+        $validated['table_of_contents'] =
+            $this->prepareTableOfContents(
+                $validated['table_of_contents'] ?? []
+            );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Upload featured image
+        |--------------------------------------------------------------------------
+        */
 
         if ($request->hasFile('featured_image')) {
             $validated['featured_image'] = $request
@@ -79,12 +102,24 @@ class BlogController extends Controller
                 );
         }
 
-        if ($validated['status']) {
+        /*
+        |--------------------------------------------------------------------------
+        | Published status and date
+        |--------------------------------------------------------------------------
+        */
+
+        if ((bool) $validated['status']) {
             $validated['published_at'] =
                 $validated['published_at'] ?? now();
         } else {
             $validated['published_at'] = null;
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Create blog
+        |--------------------------------------------------------------------------
+        */
 
         Blog::create($validated);
 
@@ -97,7 +132,7 @@ class BlogController extends Controller
     }
 
     /**
-     * Show blog edit form.
+     * Show the edit blog form.
      */
     public function edit(Blog $blog): View
     {
@@ -105,15 +140,22 @@ class BlogController extends Controller
             ->orderBy('name')
             ->get();
 
+        /*
+         * Show all active authors.
+         * Also show the currently selected author,
+         * even when that author is inactive.
+         */
         $authors = Author::query()
-            ->where('status', true)
-            ->when(
-                $blog->author_id,
-                fn ($query) => $query->orWhere(
-                    'id',
-                    $blog->author_id
-                )
-            )
+            ->where(function ($query) use ($blog) {
+                $query->where('status', true);
+
+                if ($blog->author_id) {
+                    $query->orWhere(
+                        'id',
+                        $blog->author_id
+                    );
+                }
+            })
             ->orderBy('name')
             ->get();
 
@@ -136,6 +178,12 @@ class BlogController extends Controller
     ): RedirectResponse {
         $validated = $request->validated();
 
+        /*
+        |--------------------------------------------------------------------------
+        | Generate unique slug
+        |--------------------------------------------------------------------------
+        */
+
         $slugValue = $request->filled('slug')
             ? $request->input('slug')
             : $request->input('title');
@@ -146,9 +194,25 @@ class BlogController extends Controller
         );
 
         /*
-         * Keep the existing featured image when
-         * no new image has been selected.
-         */
+        |--------------------------------------------------------------------------
+        | Clean Table of Contents
+        |--------------------------------------------------------------------------
+        */
+
+        $validated['table_of_contents'] =
+            $this->prepareTableOfContents(
+                $validated['table_of_contents'] ?? []
+            );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Update featured image
+        |--------------------------------------------------------------------------
+        |
+        | Keep the existing image when no new image is selected.
+        |
+        */
+
         unset($validated['featured_image']);
 
         if ($request->hasFile('featured_image')) {
@@ -166,7 +230,13 @@ class BlogController extends Controller
                 );
         }
 
-        if ($validated['status']) {
+        /*
+        |--------------------------------------------------------------------------
+        | Published status and date
+        |--------------------------------------------------------------------------
+        */
+
+        if ((bool) $validated['status']) {
             $validated['published_at'] =
                 $validated['published_at']
                 ?? $blog->published_at
@@ -174,6 +244,12 @@ class BlogController extends Controller
         } else {
             $validated['published_at'] = null;
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Update blog
+        |--------------------------------------------------------------------------
+        */
 
         $blog->update($validated);
 
@@ -207,6 +283,20 @@ class BlogController extends Controller
             );
     }
 
+    private function prepareTableOfContents(
+        array $items
+    ): array {
+        return collect($items)
+            ->map(
+                fn ($item) => trim((string) $item)
+            )
+            ->filter(
+                fn ($item) => $item !== ''
+            )
+            ->values()
+            ->all();
+    }
+
     /**
      * Generate a unique blog slug.
      */
@@ -236,7 +326,7 @@ class BlogController extends Controller
                 )
                 ->exists()
         ) {
-            $slug = $baseSlug.'-'.$number;
+            $slug = $baseSlug . '-' . $number;
             $number++;
         }
 

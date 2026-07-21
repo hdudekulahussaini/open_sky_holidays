@@ -23,15 +23,26 @@ return new class extends Migration
                 ->nullOnDelete();
 
             $table->string('title');
-            $table->string('slug')->unique();
 
-            $table->text('short_description');
+            $table->string('slug')
+                ->unique();
+
+
+            $table->json('table_of_contents')
+                ->nullable();
+
+            // Complete article content
             $table->longText('content');
 
-            $table->string('featured_image')->nullable();
+            // Main blog image
+            $table->string('featured_image')
+                ->nullable();
 
-            $table->unsignedInteger('read_time')->default(5);
+            // Reading time in minutes
+            $table->unsignedInteger('read_time')
+                ->default(5);
 
+            // Draft = 0, Published = 1
             $table->boolean('status')
                 ->default(false)
                 ->index();
@@ -39,9 +50,6 @@ return new class extends Migration
             $table->timestamp('published_at')
                 ->nullable()
                 ->index();
-
-            $table->string('meta_title')->nullable();
-            $table->text('meta_description')->nullable();
 
             $table->timestamps();
         });
