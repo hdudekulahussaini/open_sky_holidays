@@ -3,12 +3,11 @@
 use App\Http\Controllers\Api\AboutSectionController;
 use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\EnquiryController;
-use App\Http\Controllers\Api\PageBannerController;
-use App\Http\Controllers\Api\TravelSupportSectionController;
-use App\Http\Controllers\Api\WhyChooseSectionController;
+use App\Http\Controllers\Api\OurStoryController;
 use App\Http\Controllers\Api\PageBannerController;
 use App\Http\Controllers\Api\TestimonialController;
-
+use App\Http\Controllers\Api\TravelSupportSectionController;
+use App\Http\Controllers\Api\WhyChooseSectionController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/enquiries', [
@@ -52,10 +51,10 @@ Route::apiResource(
 Route::apiResource(
     'page-banners',
     PageBannerController::class
-);Route::apiResource(
+);
+Route::apiResource(
     'testimonials',
     TestimonialController::class
-);
 );
 
 Route::get('/blogs', [
@@ -67,3 +66,7 @@ Route::get('/blogs/{slug}', [
     BlogController::class,
     'show',
 ]);
+Route::apiResource(
+    'our-stories',
+    OurStoryController::class
+);

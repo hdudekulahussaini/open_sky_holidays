@@ -8,9 +8,9 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EnquiryController;
 use App\Http\Controllers\Admin\HeroController;
+use App\Http\Controllers\Admin\OurStoryController;
 use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\TestimonialController;
-
 use App\Http\Controllers\Admin\TravelSupportSectionController;
 use App\Http\Controllers\Admin\WhyChooseSectionController;
 use Illuminate\Support\Facades\Route;
@@ -91,10 +91,10 @@ Route::prefix('admin')
                 'categories',
                 CategoryController::class
             )->except('show');
-              Route::resource(
-            'testimonials',
-            TestimonialController::class
-        );
+            Route::resource(
+                'testimonials',
+                TestimonialController::class
+            );
 
             Route::resource(
                 'authors',
@@ -105,6 +105,11 @@ Route::prefix('admin')
                 'blogs',
                 BlogController::class
             )->except('show');
+            
+            Route::resource(
+                'our-stories',
+                OurStoryController::class
+            );
 
             Route::post('/logout', [
                 AuthController::class,
