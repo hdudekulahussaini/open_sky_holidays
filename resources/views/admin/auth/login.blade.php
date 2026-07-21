@@ -11,10 +11,7 @@
     <title>Admin Login | Open Sky Holidays</title>
 
     <!-- Bootstrap CSS -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
@@ -51,15 +48,13 @@
 
                         <form
                             method="POST"
-                            action="{{ route('admin.login.submit') }}"
-                        >
+                            action="{{ route('admin.login.submit') }}">
                             @csrf
 
                             <div class="mb-3">
                                 <label
                                     for="email"
-                                    class="form-label"
-                                >
+                                    class="form-label">
                                     Email address
                                 </label>
 
@@ -71,8 +66,7 @@
                                     class="form-control"
                                     placeholder="Enter your email"
                                     required
-                                    autofocus
-                                >
+                                    autofocus>
                             </div>
 
                             <div class="mb-3">
@@ -89,8 +83,7 @@
                                     name="password"
                                     class="form-control"
                                     placeholder="Enter your password"
-                                    required
-                                >
+                                    required>
                             </div>
 
                             <div class="form-check mb-3">
