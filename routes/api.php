@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AboutSectionController;
 use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\EnquiryController;
+use App\Http\Controllers\Api\OurStoryController;
 use App\Http\Controllers\Api\PageBannerController;
 use App\Http\Controllers\Api\TestimonialController;
 use App\Http\Controllers\Api\TravelSupportSectionController;
@@ -65,3 +66,7 @@ Route::get('/blogs/{slug}', [
     BlogController::class,
     'show',
 ]);
+Route::apiResource(
+    'our-stories',
+    OurStoryController::class
+);
