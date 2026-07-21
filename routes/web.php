@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\TravelSupportSectionController;
 use App\Http\Controllers\Admin\WhyChooseSectionController;
 use App\Http\Controllers\Admin\HeroController;
 use App\Http\Controllers\Admin\PageBannerController;
+use App\Http\Controllers\Admin\TestimonialController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin/login');
@@ -84,6 +86,10 @@ Route::prefix('admin')
                 'page-banners',
                 PageBannerController::class
             )->except('show');
+              Route::resource(
+            'testimonials',
+            TestimonialController::class
+        );
 
 
             Route::post('/logout', [
