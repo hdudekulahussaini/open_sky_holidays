@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\AboutSectionController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EnquiryController;
+use App\Http\Controllers\Admin\TravelSupportSectionController;
+use App\Http\Controllers\Admin\WhyChooseSectionController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin/login');
@@ -51,6 +54,18 @@ Route::prefix('admin')
                 'show',
             ])->name('enquiries.show');
 
+            Route::resource(
+                'about-sections',
+                AboutSectionController::class
+            );
+            Route::resource(
+                'travel-support',
+                TravelSupportSectionController::class
+            );
+            Route::resource(
+                'why-choose-sections',
+                WhyChooseSectionController::class
+            );
             Route::patch('/enquiries/{enquiry}/status', [
                 EnquiryController::class,
                 'updateStatus',
