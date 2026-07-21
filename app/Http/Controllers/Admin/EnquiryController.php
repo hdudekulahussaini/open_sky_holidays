@@ -34,18 +34,12 @@ class EnquiryController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view(
-            'pages.Enquiries.index',
-            compact('enquiries')
-        );
+        return view('pages.Enquiries.index',compact('enquiries'));
     }
 
     public function show(Enquiry $enquiry)
     {
-        return view(
-            'pages.Enquiries.show',
-            compact('enquiry')
-        );
+        return view('pages.Enquiries.show',compact('enquiry'));
     }
 
     public function updateStatus(
