@@ -41,15 +41,36 @@
 
                     <span>Enquiries</span>
                 </a>
-                <a href="{{ route('admin.page-banners.index') }}"
-                    class="nav-item {{ request()->routeIs('admin.page-banners.*') ? 'active' : '' }}">
+                <!-- About Section -->
+                <a href="{{ route('admin.about-sections.index') }}"
+                    class="nav-item {{ request()->routeIs('admin.about-sections.*') ? 'active' : '' }}">
+
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
-                        <path d="M3 16l5-5 4 4 3-3 6 6"></path>
-                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <circle cx="12" cy="7" r="4"></circle>
+                        <path d="M5.5 21a6.5 6.5 0 0 1 13 0"></path>
+                        <path d="M3 3h18"></path>
                     </svg>
 
-                    <span>Page Banners</span>
+                    <span>About Section</span>
+                </a>
+
+                <a href="{{ route('admin.travel-support.index') }}"
+                    class="nav-item {{ request()->routeIs('admin.travel-support.*') ? 'active' : '' }}">
+
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 21s-6-5.33-6-11a6 6 0 1 1 12 0c0 5.67-6 11-6 11z"></path>
+                        <circle cx="12" cy="10" r="2"></circle>
+                    </svg>
+
+                    <span>Travel Support</span>
+                </a>
+                <a href="{{ route('admin.why-choose-sections.index') }}" class="sidebar-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                    <span>Why Choose Us</span>
+                </a>
 
                 <!-- Tour Packages -->
                 <a href="#" class="nav-item">
