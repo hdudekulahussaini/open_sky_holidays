@@ -136,191 +136,40 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
-/*
-       |--------------------------------------------------------------------------
-       | Adventure Sidebar Dropdown Management
-       |--------------------------------------------------------------------------
-       */
-function toggleSidebarDropdown(button) {
-    const currentDropdown = button.closest('.nav-dropdown');
-
-    document
-        .querySelectorAll('.nav-dropdown')
-        .forEach(function (dropdown) {
-            if (dropdown !== currentDropdown) {
-                dropdown.classList.remove('open');
-            }
-        });
-
-    currentDropdown.classList.toggle('open');
-}
-
-
-
-/* |--------------------------------------------------------------------------
-     | Adventure Features Management
- |--------------------------------------------------------------------------
-       */
-
-document.addEventListener('DOMContentLoaded', function () {
-    const featureContainer =
-        document.getElementById('featureContainer');
-
-    const addFeatureButton =
-        document.getElementById('addFeatureButton');
-
-    /*
-    |--------------------------------------------------------------------------
-    | Create one feature row
-    |--------------------------------------------------------------------------
-    */
-
-    function createFeatureRow() {
-        const row = document.createElement('div');
-
-        row.className =
-            'feature-row row g-2 align-items-start mb-3';
-
-        row.innerHTML = `
-                <div class="col">
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <i class="fas fa-check"></i>
-                        </span>
-
-                        <input
-                            type="text"
-                            name="features[]"
-                            class="form-control"
-                            placeholder="Enter feature"
-                        >
-                    </div>
-                </div>
-
-                <div class="col-auto">
-                    <button
-                        type="button"
-                        class="btn btn-danger remove-feature"
-                        title="Delete feature"
-                        aria-label="Delete feature"
-                    >
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            `;
-
-        return row;
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Add one feature
-    |--------------------------------------------------------------------------
-    */
-
-    addFeatureButton.addEventListener('click', function () {
-        const rows =
-            featureContainer.querySelectorAll('.feature-row');
-
-        if (rows.length >= 10) {
-            alert('You can add a maximum of 10 features.');
-            return;
-        }
-
-        const newRow = createFeatureRow();
-
-        featureContainer.appendChild(newRow);
-
-        const newInput = newRow.querySelector(
-            'input[name="features[]"]'
-        );
-
-        newInput.focus();
+document.querySelectorAll('.dropdown-toggle').forEach(function (item) {
+    item.addEventListener('click', function () {
+        this.parentElement.classList.toggle('open');
     });
-
-    /*
-    |--------------------------------------------------------------------------
-    | Delete one feature
-    |--------------------------------------------------------------------------
-    */
-
-    featureContainer.addEventListener('click', function (event) {
-        const removeButton =
-            event.target.closest('.remove-feature');
-
-        if (!removeButton) {
-            return;
-        }
-
-        const rows =
-            featureContainer.querySelectorAll('.feature-row');
-
-        if (rows.length === 1) {
-            const input = rows[0].querySelector(
-                'input[name="features[]"]'
-            );
-
-            input.value = '';
-            input.focus();
-
-            return;
-        }
-
-        const currentRow =
-            removeButton.closest('.feature-row');
-
-        currentRow.remove();
-    });
-
-    /*
-    |--------------------------------------------------------------------------
-    | Image preview
-    |--------------------------------------------------------------------------
-    */
-
-    function setupImagePreview(inputId, previewId) {
-        const input = document.getElementById(inputId);
-        const preview = document.getElementById(previewId);
-
-        if (!input || !preview) {
-            return;
-        }
-
-        input.addEventListener('change', function () {
-            preview.innerHTML = '';
-
-            const file = this.files[0];
-
-            if (!file || !file.type.startsWith('image/')) {
-                return;
-            }
-
-            const reader = new FileReader();
-
-            reader.onload = function (event) {
-                const image = document.createElement('img');
-
-                image.src = event.target.result;
-                image.alt = 'Selected adventure image';
-                image.className = 'image-preview';
-
-                preview.appendChild(image);
-            };
-
-            reader.readAsDataURL(file);
-        });
-    }
-
-    setupImagePreview(
-        'image_one',
-        'imageOnePreview'
-    );
-
-    setupImagePreview(
-        'image_two',
-        'imageTwoPreview'
-    );
 });
 
+// Automatic Slug Generation
+document.addEventListener("DOMContentLoaded", function () {
+    const titleInput = document.getElementById("title") || document.getElementById("name");
+    const slugInput = document.getElementById("slug");
 
+    if (titleInput && slugInput) {
+        let userEditedSlug = slugInput.value.trim() !== "";
+
+        slugInput.addEventListener("input", function () {
+            userEditedSlug = slugInput.value.trim() !== "";
+        });
+
+        titleInput.addEventListener("input", function () {
+            if (!userEditedSlug) {
+                slugInput.value = generateSlug(titleInput.value);
+            }
+        });
+    }
+
+    function generateSlug(text) {
+        return text
+            .toString()
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, "-")           // Replace spaces with -
+            .replace(/[^\w\-]+/g, "")       // Remove all non-word chars
+            .replace(/\-\-+/g, "-")         // Replace multiple - with single -
+            .replace(/^-+/, "")             // Trim - from start
+            .replace(/-+$/, "");            // Trim - from end
+    }
+});
