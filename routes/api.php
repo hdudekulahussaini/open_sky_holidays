@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\AboutSectionController;
+use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\EnquiryController;
+use App\Http\Controllers\Api\PageBannerController;
 use App\Http\Controllers\Api\TravelSupportSectionController;
 use App\Http\Controllers\Api\WhyChooseSectionController;
 use App\Http\Controllers\Api\PageBannerController;
@@ -54,3 +56,14 @@ Route::apiResource(
     'testimonials',
     TestimonialController::class
 );
+);
+
+Route::get('/blogs', [
+    BlogController::class,
+    'index',
+]);
+
+Route::get('/blogs/{slug}', [
+    BlogController::class,
+    'show',
+]);
