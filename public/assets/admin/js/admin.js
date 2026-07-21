@@ -136,3 +136,40 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+document.querySelectorAll('.dropdown-toggle').forEach(function (item) {
+    item.addEventListener('click', function () {
+        this.parentElement.classList.toggle('open');
+    });
+});
+
+// Automatic Slug Generation
+document.addEventListener("DOMContentLoaded", function () {
+    const titleInput = document.getElementById("title") || document.getElementById("name");
+    const slugInput = document.getElementById("slug");
+
+    if (titleInput && slugInput) {
+        let userEditedSlug = slugInput.value.trim() !== "";
+
+        slugInput.addEventListener("input", function () {
+            userEditedSlug = slugInput.value.trim() !== "";
+        });
+
+        titleInput.addEventListener("input", function () {
+            if (!userEditedSlug) {
+                slugInput.value = generateSlug(titleInput.value);
+            }
+        });
+    }
+
+    function generateSlug(text) {
+        return text
+            .toString()
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, "-")           // Replace spaces with -
+            .replace(/[^\w\-]+/g, "")       // Remove all non-word chars
+            .replace(/\-\-+/g, "-")         // Replace multiple - with single -
+            .replace(/^-+/, "")             // Trim - from start
+            .replace(/-+$/, "");            // Trim - from end
+    }
+});

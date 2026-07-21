@@ -2,14 +2,17 @@
 
 use App\Http\Controllers\Admin\AboutSectionController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\AuthorController;
+use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EnquiryController;
-use App\Http\Controllers\Admin\TravelSupportSectionController;
-use App\Http\Controllers\Admin\WhyChooseSectionController;
 use App\Http\Controllers\Admin\HeroController;
 use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\TestimonialController;
 
+use App\Http\Controllers\Admin\TravelSupportSectionController;
+use App\Http\Controllers\Admin\WhyChooseSectionController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin/login');
@@ -82,15 +85,26 @@ Route::prefix('admin')
 
             Route::resource('heroes', HeroController::class)
                 ->except('show');
+
+            Route::resource('page-banners', PageBannerController::class)->except('show');
             Route::resource(
-                'page-banners',
-                PageBannerController::class
+                'categories',
+                CategoryController::class
             )->except('show');
               Route::resource(
             'testimonials',
             TestimonialController::class
         );
 
+            Route::resource(
+                'authors',
+                AuthorController::class
+            )->except('show');
+
+            Route::resource(
+                'blogs',
+                BlogController::class
+            )->except('show');
 
             Route::post('/logout', [
                 AuthController::class,
