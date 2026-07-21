@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EnquiryController;
+use App\Http\Controllers\Admin\HeroController;
+use App\Http\Controllers\Admin\PageBannerController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin/login');
@@ -60,6 +62,14 @@ Route::prefix('admin')
                 EnquiryController::class,
                 'destroy',
             ])->name('enquiries.destroy');
+
+            Route::resource('heroes', HeroController::class)
+                ->except('show');
+            Route::resource(
+                'page-banners',
+                PageBannerController::class
+            )->except('show');
+
 
             Route::post('/logout', [
                 AuthController::class,

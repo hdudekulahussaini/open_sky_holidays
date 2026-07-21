@@ -1,5 +1,5 @@
         <!-- Sidebar -->
-       <aside class="sidebar" id="adminSidebar">
+        <aside class="sidebar" id="adminSidebar">
 
             <!-- Brand -->
             <div class="brand">
@@ -21,6 +21,17 @@
                     </svg>
                     <span>Dashboard</span>
                 </a>
+                <!-- Hero Management -->
+                <a href="{{ route('admin.heroes.index') }}"
+                    class="nav-item {{ request()->routeIs('admin.heroes.*') ? 'active' : '' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                        <path d="M3 16l5-5 4 4 3-3 6 6"></path>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    </svg>
+                    <span>Hero Management</span>
+                </a>
+
                 <a href="{{ route('admin.enquiries.index') }}"
                     class="nav-item {{ request()->routeIs('admin.enquiries.*') ? 'active' : '' }}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -30,6 +41,15 @@
 
                     <span>Enquiries</span>
                 </a>
+                <a href="{{ route('admin.page-banners.index') }}"
+                    class="nav-item {{ request()->routeIs('admin.page-banners.*') ? 'active' : '' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                        <path d="M3 16l5-5 4 4 3-3 6 6"></path>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    </svg>
+
+                    <span>Page Banners</span>
 
                 <!-- Tour Packages -->
                 <a href="#" class="nav-item">
