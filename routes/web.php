@@ -4,8 +4,13 @@ use App\Http\Controllers\Admin\AboutSectionController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EnquiryController;
+use App\Http\Controllers\Admin\HeroController;
+use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\TravelSupportSectionController;
 use App\Http\Controllers\Admin\WhyChooseSectionController;
+use App\Http\Controllers\Admin\AdventureCategoryController;
+use App\Http\Controllers\Admin\AdventureController;
+use App\Http\Controllers\Admin\OfferBannerController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin/login');
@@ -81,6 +86,19 @@ Route::prefix('admin')
             Route::resource(
                 'page-banners',
                 PageBannerController::class
+            )->except('show');
+            Route::resource(
+                'adventure-categories',
+                AdventureCategoryController::class
+            )->except('show');
+
+            Route::resource(
+                'adventures',
+                AdventureController::class
+            )->except('show');
+            Route::resource(
+                'offer-banners',
+                OfferBannerController::class
             )->except('show');
 
 

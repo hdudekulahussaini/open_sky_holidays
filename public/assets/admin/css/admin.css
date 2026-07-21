@@ -3281,3 +3281,115 @@ input[type="file"].admin-form-control::file-selector-button {
         height: 38px;
     }
 }
+
+
+.nav-dropdown {
+    width: 100%;
+}
+
+.nav-dropdown-toggle {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.nav-dropdown-toggle .dropdown-arrow {
+    width: 18px;
+    height: 18px;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+.nav-dropdown.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+    display: none;
+    margin: 4px 0 8px;
+    padding-left: 18px;
+}
+
+.nav-dropdown.open .nav-dropdown-menu {
+    display: block;
+}
+
+.nav-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 4px 0;
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: inherit;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.25s ease;
+}
+
+.nav-dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-dropdown-item.active {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+}
+
+.submenu-dot {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.7;
+}
+
+
+/* ==========================================
+              Adventures
+========================================== */
+
+    .feature-row .btn {
+        width: 46px;
+        height: 46px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .feature-row .input-group-text {
+        min-width: 48px;
+        justify-content: center;
+    }
+
+    .feature-row .form-control {
+        min-height: 46px;
+    }
+
+    .image-preview {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+    }
+
+    @media (max-width: 575.98px) {
+        .feature-row {
+            flex-wrap: nowrap;
+        }
+
+        .feature-row .col {
+            min-width: 0;
+        }
+
+        .feature-row .btn {
+            width: 44px;
+            height: 44px;
+        }
+    }

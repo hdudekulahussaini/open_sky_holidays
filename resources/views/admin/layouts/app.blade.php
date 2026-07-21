@@ -12,9 +12,11 @@
 
     <link
         href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <link rel="stylesheet"
         href="{{ asset('assets/admin/css/admin.css') }}?v={{ filemtime(public_path('assets/admin/css/admin.css')) }}">
@@ -31,8 +33,7 @@
         {{-- Mobile dark overlay --}}
         <div
             class="sidebar-overlay"
-            id="sidebarOverlay"
-        ></div>
+            id="sidebarOverlay"></div>
 
         <main class="main-content">
 
@@ -47,14 +48,12 @@
                         id="sidebarToggle"
                         aria-label="Open sidebar"
                         aria-expanded="false"
-                        aria-controls="adminSidebar"
-                    >
+                        aria-controls="adminSidebar">
                         <svg
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2"
-                        >
+                            stroke-width="2">
                             <line x1="4" y1="6" x2="20" y2="6"></line>
                             <line x1="4" y1="12" x2="20" y2="12"></line>
                             <line x1="4" y1="18" x2="20" y2="18"></line>
@@ -84,15 +83,15 @@
             <div class="page-content">
 
                 @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
                 @endif
 
                 @if ($errors->any())
-                    <div class="alert alert-error">
-                        {{ $errors->first() }}
-                    </div>
+                <div class="alert alert-error">
+                    {{ $errors->first() }}
+                </div>
                 @endif
 
                 @yield('content')
