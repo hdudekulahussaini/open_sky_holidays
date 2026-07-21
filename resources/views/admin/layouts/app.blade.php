@@ -10,10 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet"
@@ -29,10 +27,7 @@
         @include('admin.layouts.sidebar')
 
         {{-- Mobile dark overlay --}}
-        <div
-            class="sidebar-overlay"
-            id="sidebarOverlay"
-        ></div>
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
         <main class="main-content">
 
@@ -41,20 +36,9 @@
                 <div class="topbar-left">
 
                     {{-- Mobile sidebar button --}}
-                    <button
-                        type="button"
-                        class="sidebar-toggle"
-                        id="sidebarToggle"
-                        aria-label="Open sidebar"
-                        aria-expanded="false"
-                        aria-controls="adminSidebar"
-                    >
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                        >
+                    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open sidebar"
+                        aria-expanded="false" aria-controls="adminSidebar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="4" y1="6" x2="20" y2="6"></line>
                             <line x1="4" y1="12" x2="20" y2="12"></line>
                             <line x1="4" y1="18" x2="20" y2="18"></line>
@@ -104,7 +88,7 @@
     </div>
 
     <script src="{{ asset('assets/admin/js/admin.js') }}"></script>
-
+    <script src="{{ asset('assets/admin/js/image-preview.js') }}"></script>
     @stack('scripts')
 
 </body>

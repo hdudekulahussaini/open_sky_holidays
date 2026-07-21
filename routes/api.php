@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\EnquiryController;
 use App\Http\Controllers\Api\TravelSupportSectionController;
 use App\Http\Controllers\Api\WhyChooseSectionController;
 use App\Http\Controllers\Api\PageBannerController;
+use App\Http\Controllers\Api\TestimonialController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -49,4 +50,7 @@ Route::apiResource(
 Route::apiResource(
     'page-banners',
     PageBannerController::class
+);Route::apiResource(
+    'testimonials',
+    TestimonialController::class
 );
