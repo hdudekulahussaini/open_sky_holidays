@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AboutSectionController;
+use App\Http\Controllers\Admin\AdventureCategoryController;
+use App\Http\Controllers\Admin\AdventureController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\BlogController;
@@ -8,14 +10,12 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EnquiryController;
 use App\Http\Controllers\Admin\HeroController;
+use App\Http\Controllers\Admin\OfferBannerController;
 use App\Http\Controllers\Admin\OurStoryController;
 use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\TravelSupportSectionController;
 use App\Http\Controllers\Admin\WhyChooseSectionController;
-use App\Http\Controllers\Admin\AdventureCategoryController;
-use App\Http\Controllers\Admin\AdventureController;
-use App\Http\Controllers\Admin\OfferBannerController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin/login');
@@ -108,7 +108,7 @@ Route::prefix('admin')
                 'blogs',
                 BlogController::class
             )->except('show');
-            
+
             Route::resource(
                 'our-stories',
                 OurStoryController::class
