@@ -18,6 +18,10 @@ use App\Http\Controllers\Admin\TravelSupportSectionController;
 use App\Http\Controllers\Admin\WhyChooseSectionController;
 use App\Http\Controllers\Admin\OurProcessController;
 use App\Http\Controllers\Admin\CounterController;
+use App\Http\Controllers\Admin\CoreValueController;
+use App\Http\Controllers\Admin\TourTypeController;
+use App\Http\Controllers\Admin\TourController;
+use App\Http\Controllers\Admin\TourDetailController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin/login');
@@ -133,7 +137,10 @@ Route::prefix('admin')
                 OurProcessController::class
             );
           Route::resource('counters', CounterController::class);
-          
+          Route::resource('core-values',CoreValueController::class);
+          Route::resource('tour-types',TourTypeController::class );
+          Route::resource('tours',TourController::class);
+          Route::resource('tour-details',TourDetailController::class);
             Route::post('/logout', [
                 AuthController::class,
                 'logout',

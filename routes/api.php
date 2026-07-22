@@ -14,6 +14,10 @@ use App\Http\Controllers\Api\TravelSupportSectionController;
 use App\Http\Controllers\Api\WhyChooseSectionController;
 use App\Http\Controllers\Api\OurProcessController;
 use App\Http\Controllers\Api\CounterController;
+use App\Http\Controllers\Api\CoreValueController;
+use App\Http\Controllers\Api\TourTypeController;
+use App\Http\Controllers\Api\TourController;
+use App\Http\Controllers\Api\TourDetailController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -173,3 +177,7 @@ Route::apiResource(
     OurProcessController::class
 );
 Route::apiResource('counters', CounterController::class);
+Route::apiResource('core-values',CoreValueController::class);    
+Route::apiResource('tour-types',TourTypeController::class);
+Route::apiResource( 'tours', TourController::class);
+Route::apiResource('tour-details',TourDetailController::class);
