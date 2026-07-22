@@ -12,6 +12,9 @@ use App\Http\Controllers\Api\PageBannerController;
 use App\Http\Controllers\Api\TestimonialController;
 use App\Http\Controllers\Api\TravelSupportSectionController;
 use App\Http\Controllers\Api\WhyChooseSectionController;
+use App\Http\Controllers\Api\OurProcessController;
+use App\Http\Controllers\Api\CounterController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -160,3 +163,13 @@ Route::apiResource(
     'testimonials',
     TestimonialController::class
 );
+Route::get(
+    'our-processes/active',
+    [OurProcessController::class, 'active']
+)->name('our-processes.active');
+
+Route::apiResource(
+    'our-processes',
+    OurProcessController::class
+);
+Route::apiResource('counters', CounterController::class);
