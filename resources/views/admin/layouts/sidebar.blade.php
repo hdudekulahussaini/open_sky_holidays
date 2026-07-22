@@ -204,10 +204,10 @@
             <span>Enquiries</span>
         </a>
 
-        <!-- About Section -->
+        <!-- Services -->
         <a
-            href="{{ route('admin.about-sections.index') }}"
-            class="nav-item {{ request()->routeIs('admin.about-sections.*') ? 'active' : '' }}"
+            href="{{ route('admin.services.index') }}"
+            class="nav-item {{ request()->routeIs('admin.services.*') ? 'active' : '' }}"
         >
             <svg
                 class="menu-icon"
@@ -218,76 +218,128 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
             >
-                <circle cx="12" cy="7" r="4"></circle>
-                <path d="M5.5 21a6.5 6.5 0 0 1 13 0"></path>
-                <path d="M3 3h18"></path>
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
             </svg>
-            <span>About Section</span>
+            <span>Services</span>
         </a>
 
-        <!-- Our Stories -->
-        <a
-            href="{{ route('admin.our-stories.index') }}"
-            class="nav-item {{ request()->routeIs('admin.our-stories.*') ? 'active' : '' }}"
-        >
-            <svg
-                class="menu-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+        <!-- About Management Dropdown -->
+        <div class="nav-dropdown-wrapper {{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*') ? 'open' : '' }}">
+            <button
+                type="button"
+                class="nav-dropdown-toggle nav-item {{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*') ? 'active' : '' }}"
+                aria-expanded="{{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*') ? 'true' : 'false' }}"
             >
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                <path d="M8 7h8"></path>
-                <path d="M8 11h6"></path>
-            </svg>
-            <span>Our Stories</span>
-        </a>
-        <!-- Our Process -->
-      <a
-          href="{{ route('admin.our-processes.index') }}"
-          class="nav-item {{ request()->routeIs('admin.our-processes.*') ? 'active' : '' }}"
->
-    <svg
-        class="menu-icon"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    >
-        <path d="M9 11l3 3L22 4"></path>
-        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-    </svg>
-
-    <span>Our Process</span>
-</a>
-<!-----counter---------->
-<a
-    href="{{ route('admin.counters.index') }}"
-    class="nav-item {{ request()->routeIs('admin.counters.*') ? 'active' : '' }}"
->
-    <svg
-        class="menu-icon"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    >
-        <path d="M4 19V9"></path>
-        <path d="M10 19V5"></path>
-        <path d="M16 19v-7"></path>
-        <path d="M22 19V3"></path>
-    </svg>
-
-    <span>Counters</span>
-</a>
+                <svg
+                    class="menu-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <circle cx="12" cy="7" r="4"></circle>
+                    <path d="M5.5 21a6.5 6.5 0 0 1 13 0"></path>
+                    <path d="M3 3h18"></path>
+                </svg>
+                <span>About Management</span>
+                <svg
+                    class="chevron-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
+            <div class="nav-dropdown-menu">
+                <!-- About Section -->
+                <a
+                    href="{{ route('admin.about-sections.index') }}"
+                    class="nav-dropdown-item {{ request()->routeIs('admin.about-sections.*') ? 'active' : '' }}"
+                >
+                    <svg
+                        class="submenu-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <circle cx="12" cy="7" r="4"></circle>
+                        <path d="M5.5 21a6.5 6.5 0 0 1 13 0"></path>
+                    </svg>
+                    <span>About Section</span>
+                </a>
+                <!-- Our Story -->
+                <a
+                    href="{{ route('admin.our-stories.index') }}"
+                    class="nav-dropdown-item {{ request()->routeIs('admin.our-stories.*') ? 'active' : '' }}"
+                >
+                    <svg
+                        class="submenu-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        <path d="M8 7h8"></path>
+                        <path d="M8 11h6"></path>
+                    </svg>
+                    <span>Our Story</span>
+                </a>
+                <!-- Our Process -->
+                <a
+                    href="{{ route('admin.our-processes.index') }}"
+                    class="nav-dropdown-item {{ request()->routeIs('admin.our-processes.*') ? 'active' : '' }}"
+                >
+                    <svg
+                        class="submenu-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M9 11l3 3L22 4"></path>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    <span>Our Process</span>
+                </a>
+                <!-- Counters -->
+                <a
+                    href="{{ route('admin.counters.index') }}"
+                    class="nav-dropdown-item {{ request()->routeIs('admin.counters.*') ? 'active' : '' }}"
+                >
+                    <svg
+                        class="submenu-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M4 19V9"></path>
+                        <path d="M10 19V5"></path>
+                        <path d="M16 19v-7"></path>
+                        <path d="M22 19V3"></path>
+                    </svg>
+                    <span>Counters</span>
+                </a>
+            </div>
+        </div>
         <!-- Travel Support -->
         <a
             href="{{ route('admin.travel-support.index') }}"
