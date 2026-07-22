@@ -246,7 +246,48 @@
             </svg>
             <span>Our Stories</span>
         </a>
+        <!-- Our Process -->
+      <a
+          href="{{ route('admin.our-processes.index') }}"
+          class="nav-item {{ request()->routeIs('admin.our-processes.*') ? 'active' : '' }}"
+>
+    <svg
+        class="menu-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <path d="M9 11l3 3L22 4"></path>
+        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+    </svg>
 
+    <span>Our Process</span>
+</a>
+<!-----counter---------->
+<a
+    href="{{ route('admin.counters.index') }}"
+    class="nav-item {{ request()->routeIs('admin.counters.*') ? 'active' : '' }}"
+>
+    <svg
+        class="menu-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <path d="M4 19V9"></path>
+        <path d="M10 19V5"></path>
+        <path d="M16 19v-7"></path>
+        <path d="M22 19V3"></path>
+    </svg>
+
+    <span>Counters</span>
+</a>
         <!-- Travel Support -->
         <a
             href="{{ route('admin.travel-support.index') }}"

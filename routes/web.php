@@ -16,6 +16,8 @@ use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\TravelSupportSectionController;
 use App\Http\Controllers\Admin\WhyChooseSectionController;
+use App\Http\Controllers\Admin\OurProcessController;
+use App\Http\Controllers\Admin\CounterController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin/login');
@@ -126,7 +128,12 @@ Route::prefix('admin')
                 'our-stories',
                 OurStoryController::class
             );
-
+            Route::resource(
+                'our-processes',
+                OurProcessController::class
+            );
+          Route::resource('counters', CounterController::class);
+          
             Route::post('/logout', [
                 AuthController::class,
                 'logout',
