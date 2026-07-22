@@ -1,14 +1,17 @@
 <?php
 
 use App\Http\Controllers\Api\AboutSectionController;
+use App\Http\Controllers\Api\AdventureCategoryController;
+use App\Http\Controllers\Api\AdventureController;
 use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\EnquiryController;
+use App\Http\Controllers\Api\HeroController;
+use App\Http\Controllers\Api\OfferBannerController;
 use App\Http\Controllers\Api\OurStoryController;
 use App\Http\Controllers\Api\PageBannerController;
 use App\Http\Controllers\Api\TestimonialController;
 use App\Http\Controllers\Api\TravelSupportSectionController;
 use App\Http\Controllers\Api\WhyChooseSectionController;
-use App\Http\Controllers\Api\OfferBannerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -77,25 +80,83 @@ Route::apiResource(
     'why-choose-sections',
     WhyChooseSectionController::class
 );
+
+/*
+|--------------------------------------------------------------------------
+| Page Banner
+|--------------------------------------------------------------------------
+*/
+
 Route::apiResource(
     'page-banners',
     PageBannerController::class
 );
+
+/*
+|--------------------------------------------------------------------------
+| Adventure Categories
+|--------------------------------------------------------------------------
+*/
+
 Route::apiResource(
-    'testimonials',
-    TestimonialController::class
+    'adventure-categories',
+    AdventureCategoryController::class
 );
 
-Route::get('/blogs', [
-    BlogController::class,
-    'index',
-]);
+/*
+|--------------------------------------------------------------------------
+| Adventures
+|--------------------------------------------------------------------------
+*/
 
-Route::get('/blogs/{slug}', [
-    BlogController::class,
-    'show',
-]);
+Route::get(
+    '/adventures/category/{slug}',
+    [AdventureController::class, 'byCategorySlug']
+)->name('api.adventures.category');
+
+Route::apiResource(
+    'adventures',
+    AdventureController::class
+);
+
+/*
+|--------------------------------------------------------------------------
+| Offer-Banners
+|--------------------------------------------------------------------------
+*/
+
+Route::apiResource(
+    'offer-banners',
+    OfferBannerController::class
+);
+
+/*
+|--------------------------------------------------------------------------
+| Blogs
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/blogs', [BlogController::class, 'index'])->name('api.blogs.index');
+Route::get('/blogs/{slug}', [BlogController::class, 'show'])->name('api.blogs.show');
+
+/*
+|--------------------------------------------------------------------------
+| Our Stories
+|--------------------------------------------------------------------------
+*/
+
 Route::apiResource(
     'our-stories',
     OurStoryController::class
+);
+
+/*
+|--------------------------------------------------------------------------
+| Testimonials
+|--------------------------------------------------------------------------
+*/
+
+Route::apiResource(
+    'testimonials',
+    TestimonialController::class
 );

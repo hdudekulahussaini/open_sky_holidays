@@ -172,4 +172,8 @@ document.addEventListener("DOMContentLoaded", function () {
             .replace(/^-+/, "")             // Trim - from start
             .replace(/-+$/, "");            // Trim - from end
     }
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 800a7cb6a12b351ec1f2c4bff661ce79728bbb36
