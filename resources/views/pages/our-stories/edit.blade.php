@@ -3,22 +3,40 @@
 @section('title', 'Edit Our Story')
 
 @section('content')
-    <div class="admin-page-header">
+<div class="ts-page-wrapper">
+    <div class="ts-page-header">
         <div>
+            <span class="ts-page-eyebrow">
+                Story Management
+            </span>
+
             <h1>Edit Our Story</h1>
-            <p>Update story content, images and features.</p>
+
+            <p>
+                Update the story content, images and features.
+            </p>
         </div>
+
+        <a
+            href="{{ route('admin.our-stories.index') }}"
+            class="ts-back-btn"
+        >
+            ← Back to List
+        </a>
     </div>
 
-    @if (session('error'))
-        <div class="alert alert-danger">
+    @if(session('error'))
+        <div class="ts-alert ts-alert-danger">
             {{ session('error') }}
         </div>
     @endif
 
-    <div class="admin-card">
+    <div class="ts-form-card">
         <form
-            action="{{ route('admin.our-stories.update', $ourStory) }}"
+            action="{{ route(
+                'admin.our-stories.update',
+                $ourStory
+            ) }}"
             method="POST"
             enctype="multipart/form-data"
         >
@@ -28,4 +46,5 @@
             @include('pages.our-stories.form')
         </form>
     </div>
+</div>
 @endsection
