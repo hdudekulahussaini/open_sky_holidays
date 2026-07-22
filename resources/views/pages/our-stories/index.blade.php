@@ -4,7 +4,6 @@
 
 @section('content')
     <div class="ts-page-wrapper">
-
         {{-- Page Header --}}
         <div class="ts-page-header">
             <div>
@@ -41,11 +40,9 @@
 
         {{-- List Card --}}
         <div class="ts-list-card">
-
             <div class="ts-list-card-header">
                 <div>
                     <h2>Our Stories</h2>
-
                     <p>
                         Total records:
                         <strong>{{ $ourStories->total() }}</strong>
@@ -62,29 +59,21 @@
                             <th>Content</th>
                             <th>Features</th>
                             <th>Status</th>
-                            <th>Created Date</th>
-
-                            <th class="ts-action-column">
-                                Actions
-                            </th>
+                            <th>Created</th>
+                            <th class="ts-action-column">Actions</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @forelse ($ourStories as $ourStory)
+                        @forelse($ourStories as $ourStory)
                             <tr>
+                                <td>#{{ $ourStory->id }}</td>
 
-                                {{-- ID --}}
-                                <td>
-                                    #{{ $ourStory->id }}
-                                </td>
-
-                                {{-- Images --}}
                                 <td>
                                     <div class="story-table-images">
                                         @forelse (array_slice($ourStory->images ?? [], 0, 3) as $image)
-                                            <img src="{{ asset('storage/' . $image) }}" alt="{{ $ourStory->heading }}"
-                                                class="story-table-image">
+                                            <img src="{{ asset('storage/' . $image) }}"
+                                                alt="{{ $ourStory->heading }}" class="story-table-image">
                                         @empty
                                             <div class="ts-table-image-empty">
                                                 ✦
@@ -93,13 +82,12 @@
                                     </div>
                                 </td>
 
-                                {{-- Content --}}
                                 <td>
                                     <div class="ts-content-cell">
                                         @if ($ourStory->small_heading)
-                                            <small class="story-small-heading">
+                                            <span class="ts-small-heading">
                                                 {{ $ourStory->small_heading }}
-                                            </small>
+                                            </span>
                                         @endif
 
                                         <h3>
@@ -112,39 +100,23 @@
                                     </div>
                                 </td>
 
-                                {{-- Features --}}
                                 <td>
-                                    @php
-                                        $features = $ourStory->features ?? [];
-                                    @endphp
+                                    <div class="ts-feature-list">
+                                        @foreach (array_slice($ourStory->features ?? [], 0, 3) as $feature)
+                                            <span class="ts-feature-badge">
+                                                {{ is_array($feature) ? ($feature['heading'] ?? '') : $feature }}
+                                            </span>
+                                        @endforeach
 
-                                    @if (count($features))
-                                        <ul class="story-feature-list">
-                                            @foreach (array_slice($features, 0, 3) as $feature)
-                                                <li>
-                                                    <strong>
-                                                        {{ $feature['heading'] }}
-                                                    </strong>
-
-                                                    @if (!empty($feature['sub_heading']))
-                                                        <small>
-                                                            {{ $feature['sub_heading'] }}
-                                                        </small>
-                                                    @endif
-                                                </li>
-                                            @endforeach
-
-                                            @if (count($features) > 3)
-                                                <li class="story-feature-more">
-                                                    +{{ count($features) - 3 }} more
-                                                </li>
-                                            @endif
-                                        </ul>
-                                    @else
-                                        —
-                                    @endif
+                                        @if (count($ourStory->features ?? []) > 3)
+                                            <span class="ts-more-features">
+                                                +{{ count($ourStory->features) - 3 }}
+                                                more
+                                            </span>
+                                        @endif
+                                    </div>
                                 </td>
-                                {{-- Status --}}
+
                                 <td>
                                     @if ($ourStory->status)
                                         <span class="ts-status-badge ts-active">
@@ -159,22 +131,14 @@
                                     @endif
                                 </td>
 
-                                {{-- Created Date --}}
                                 <td>
                                     <span class="ts-date">
                                         {{ $ourStory->created_at->format('d M Y') }}
                                     </span>
-
-                                    <small class="story-created-time">
-                                        {{ $ourStory->created_at->format('h:i A') }}
-                                    </small>
                                 </td>
 
-                                {{-- Actions --}}
                                 <td>
                                     <div class="ts-actions">
-
-
                                         <a href="{{ route('admin.our-stories.edit', $ourStory) }}"
                                             class="ts-action-btn ts-edit-btn">
                                             Edit
