@@ -4,17 +4,17 @@ use App\Http\Controllers\Api\AboutSectionController;
 use App\Http\Controllers\Api\AdventureCategoryController;
 use App\Http\Controllers\Api\AdventureController;
 use App\Http\Controllers\Api\BlogController;
+use App\Http\Controllers\Api\CounterController;
 use App\Http\Controllers\Api\EnquiryController;
 use App\Http\Controllers\Api\HeroController;
 use App\Http\Controllers\Api\OfferBannerController;
+use App\Http\Controllers\Api\OurProcessController;
 use App\Http\Controllers\Api\OurStoryController;
 use App\Http\Controllers\Api\PageBannerController;
+use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\TestimonialController;
 use App\Http\Controllers\Api\TravelSupportSectionController;
 use App\Http\Controllers\Api\WhyChooseSectionController;
-use App\Http\Controllers\Api\OurProcessController;
-use App\Http\Controllers\Api\CounterController;
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -173,3 +173,4 @@ Route::apiResource(
     OurProcessController::class
 );
 Route::apiResource('counters', CounterController::class);
+Route::apiResource('services', ServiceController::class);
