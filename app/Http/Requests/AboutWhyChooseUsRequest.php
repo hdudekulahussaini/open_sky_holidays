@@ -34,7 +34,6 @@ class AboutWhyChooseUsRequest extends FormRequest
 
                 'image',
                 'mimes:jpg,jpeg,png,webp',
-                'max:5120',
             ],
 
             'features_title' => [
