@@ -6,27 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class TourDetail extends Model
+class TourImage extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'tour_id',
-        'heading',
-        'description',
-        'status',
+        'image',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'status' => 'boolean',
-        ];
-    }
-
-    /**
-     * Tour detail belongs to one tour.
-     */
     public function tour(): BelongsTo
     {
         return $this->belongsTo(Tour::class);

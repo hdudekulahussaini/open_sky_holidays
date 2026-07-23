@@ -19,7 +19,7 @@ class TourController extends Controller
     public function index(): AnonymousResourceCollection
     {
         $tours = Tour::query()
-            ->with(['tourType:id,name,slug', 'detail', 'features'])
+            ->with(['tourType:id,name,slug', 'detail', 'features', 'gallery'])
             ->latest('id')
             ->paginate(10);
 
@@ -52,21 +52,22 @@ class TourController extends Controller
             $tour = Tour::create($validated);
 
             // Detail
-            $galleryPaths = [];
-            if ($request->hasFile('gallery')) {
-                foreach ($request->file('gallery') as $image) {
-                    $path = $image->store('tour-details/gallery', 'public');
-                    $galleryPaths[] = $path;
-                    $uploadedFiles[] = $path;
-                }
-            }
-
             $tour->detail()->create([
                 'heading' => $validated['detail']['heading'],
                 'description' => $validated['detail']['description'],
-                'gallery' => $galleryPaths,
                 'status' => $validated['detail']['status'],
             ]);
+
+            // Save gallery images
+            if ($request->hasFile('gallery')) {
+                foreach ($request->file('gallery') as $image) {
+                    $path = $image->store('tour-details/gallery', 'public');
+                    $tour->gallery()->create([
+                        'image' => $path,
+                    ]);
+                    $uploadedFiles[] = $path;
+                }
+            }
 
             // Save inclusions
             if (! empty($validated['package_inclusions'])) {
@@ -116,7 +117,7 @@ class TourController extends Controller
 
             DB::commit();
 
-            $tour->load(['tourType:id,name,slug', 'detail', 'features']);
+            $tour->load(['tourType:id,name,slug', 'detail', 'features', 'gallery']);
 
             return response()->json([
                 'success' => true,
@@ -141,7 +142,7 @@ class TourController extends Controller
 
     public function show(Tour $tour): JsonResponse
     {
-        $tour->load(['tourType:id,name,slug', 'detail', 'features']);
+        $tour->load(['tourType:id,name,slug', 'detail', 'features', 'gallery']);
 
         return response()->json([
             'success' => true,
@@ -183,39 +184,40 @@ class TourController extends Controller
 
             $tour->update($validated);
 
-            // Handle TourDetail & Gallery
-            $tourDetail = $tour->detail;
-            $oldGallery = $tourDetail && is_array($tourDetail->gallery) ? $tourDetail->gallery : [];
-            $retainedGallery = $request->input('existing_gallery', []);
-            $retainedGallery = is_array($retainedGallery) ? $retainedGallery : [];
-            $existingGallery = array_values(array_intersect($oldGallery, $retainedGallery));
-
-            $newGalleryPaths = [];
-            if ($request->hasFile('gallery')) {
-                foreach ($request->file('gallery') as $image) {
-                    $path = $image->store('tour-details/gallery', 'public');
-                    $newGalleryPaths[] = $path;
-                    $newUploadedFiles[] = $path;
-                }
-            }
-
-            $finalGallery = array_merge($existingGallery, $newGalleryPaths);
-
-            if (count($finalGallery) > 10) {
-                throw new \Exception('The gallery may contain a maximum of 10 images.');
-            }
-
-            $removedGalleryImages = array_diff($oldGallery, $existingGallery);
-
+            // Handle TourDetail
             $tour->detail()->updateOrCreate(
                 ['tour_id' => $tour->id],
                 [
                     'heading' => $validated['detail']['heading'],
                     'description' => $validated['detail']['description'],
-                    'gallery' => $finalGallery,
                     'status' => $validated['detail']['status'],
                 ]
             );
+
+            // Handle Gallery Syncing
+            $oldGallery = $tour->gallery;
+            $retainedGalleryPaths = $request->input('existing_gallery', []);
+            $retainedGalleryPaths = is_array($retainedGalleryPaths) ? $retainedGalleryPaths : [];
+
+            $galleryToDelete = $oldGallery->whereNotIn('image', $retainedGalleryPaths);
+            foreach ($galleryToDelete as $tourImage) {
+                $deletedFiles[] = $tourImage->image;
+                $tourImage->delete();
+            }
+
+            if ($request->hasFile('gallery')) {
+                foreach ($request->file('gallery') as $image) {
+                    $path = $image->store('tour-details/gallery', 'public');
+                    $tour->gallery()->create([
+                        'image' => $path,
+                    ]);
+                    $newUploadedFiles[] = $path;
+                }
+            }
+
+            if ($tour->gallery()->count() > 10) {
+                throw new \Exception('The gallery may contain a maximum of 10 images.');
+            }
 
             // Inclusions
             $submittedInclusions = $validated['package_inclusions'] ?? [];
@@ -322,11 +324,6 @@ class TourController extends Controller
 
             DB::commit();
 
-            // Clean files
-            foreach ($removedGalleryImages as $img) {
-                Storage::disk('public')->delete($img);
-            }
-
             if ($newThumbnail && $oldThumbnail) {
                 Storage::disk('public')->delete($oldThumbnail);
             }
@@ -335,7 +332,7 @@ class TourController extends Controller
                 Storage::disk('public')->delete($file);
             }
 
-            $tour->load(['tourType:id,name,slug', 'detail', 'features']);
+            $tour->load(['tourType:id,name,slug', 'detail', 'features', 'gallery']);
 
             return response()->json([
                 'success' => true,
@@ -366,9 +363,10 @@ class TourController extends Controller
             $filesToDelete[] = $tour->thumbnail;
         }
 
-        $tour->load(['detail', 'placesCovered']);
-        if ($tour->detail && is_array($tour->detail->gallery)) {
-            $filesToDelete = array_merge($filesToDelete, $tour->detail->gallery);
+        $tour->load(['detail', 'placesCovered', 'gallery']);
+
+        foreach ($tour->gallery as $img) {
+            $filesToDelete[] = $img->image;
         }
 
         foreach ($tour->placesCovered as $place) {

@@ -8,7 +8,7 @@
     $detailStatus = old('detail.status', $tour->detail->status ?? 'active');
 
     // Gallery images
-    $gallery = old('existing_gallery', $tour->detail->gallery ?? []);
+    $gallery = old('existing_gallery', isset($tour) ? $tour->gallery->pluck('image')->toArray() : []);
     $gallery = is_array($gallery) ? $gallery : [];
 
     // Package Inclusions
