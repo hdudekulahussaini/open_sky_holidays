@@ -17,11 +17,10 @@ use App\Http\Controllers\Admin\OurStoryController;
 use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\TourController;
+use App\Http\Controllers\Admin\TourTypeController;
 use App\Http\Controllers\Admin\TravelSupportSectionController;
 use App\Http\Controllers\Admin\WhyChooseSectionController;
-use App\Http\Controllers\Admin\TourTypeController;
-use App\Http\Controllers\Admin\TourController;
-use App\Http\Controllers\Admin\TourDetailController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin/login');
@@ -140,9 +139,6 @@ Route::prefix('admin')
             Route::resource('services', ServiceController::class);
             Route::resource('tour-types', TourTypeController::class);
             Route::resource('tours', TourController::class);
-            Route::resource('tour-details', TourDetailController::class);
-
-
             Route::post('/logout', [
                 AuthController::class,
                 'logout',
