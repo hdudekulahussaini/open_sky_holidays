@@ -54,25 +54,13 @@ class TourInquiryController extends Controller
     }
 
     /**
-     * Show the form for editing the specified tour inquiry.
-     */
-    public function edit(TourInquiry $tourInquiry): View
-    {
-        $tourInquiry->load('tour');
-
-        return view('pages.tour-inquiries.edit', compact('tourInquiry'));
-    }
-
-    /**
      * Update the specified tour inquiry in storage.
      */
     public function update(UpdateTourInquiryRequest $request, TourInquiry $tourInquiry): RedirectResponse
     {
         $tourInquiry->update($request->validated());
 
-        return redirect()
-            ->route('admin.tour-inquiries.index')
-            ->with('success', 'Tour inquiry updated successfully.');
+        return back()->with('success', 'Tour inquiry status updated successfully.');
     }
 
     /**

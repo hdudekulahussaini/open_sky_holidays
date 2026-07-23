@@ -93,13 +93,28 @@
 
         {{-- Update Status Card --}}
         <div class="details-card message-card" style="margin-top: 24px;">
-            <h3>Update Inquiry Status / Details</h3>
-            <p style="margin-bottom: 16px; font-size: 14px; color: #666;">
-                Need to change the status or update the traveler details? Use the edit form to update details.
-            </p>
-            <a href="{{ route('admin.tour-inquiries.edit', $tourInquiry) }}" class="btn btn-primary">
-                Edit Inquiry Details / Status
-            </a>
+            <h3>Update Inquiry Status</h3>
+            <form
+                method="POST"
+                action="{{ route('admin.tour-inquiries.update', $tourInquiry) }}"
+                style="margin-top: 16px;"
+            >
+                @csrf
+                @method('PUT')
+
+                <div class="form-group" style="margin-bottom: 16px; max-width: 300px;">
+                    <label for="status" style="display: block; margin-bottom: 8px; font-weight: 500;">Inquiry Status</label>
+                    <select name="status" id="status" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                        <option value="new" @selected($tourInquiry->status === 'new')>New</option>
+                        <option value="contacted" @selected($tourInquiry->status === 'contacted')>Contacted</option>
+                        <option value="closed" @selected($tourInquiry->status === 'closed')>Closed</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Update Status
+                </button>
+            </form>
         </div>
 
         {{-- Action Buttons --}}
