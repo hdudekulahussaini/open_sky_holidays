@@ -904,37 +904,103 @@
             });
 
             // Dynamic repeaters logic for Features
-            function initializeRepeater(listId, addBtnId, templateId, inputPrefix) {
-                const list = document.getElementById(listId);
-                const addBtn = document.getElementById(addBtnId);
-                const template = document.getElementById(templateId);
+            function initializeRepeater(config) {
+                const list = document.getElementById(config.listId);
+                const addButton = document.getElementById(config.buttonId);
+                const template = document.getElementById(config.templateId);
 
-                if (!list || !addBtn || !template) return;
+                if (!list || !addButton || !template) {
+                    return;
+                }
+
+                function updateNumbers() {
+                    const items = list.querySelectorAll('[data-repeat-item]');
+                    items.forEach(function(item, index) {
+                        const number = item.querySelector('[data-item-number]');
+                        if (number) {
+                            const prefix = config.label;
+                            number.textContent = `${prefix} ${index + 1}`;
+                        }
+                    });
+                }
+
+                function bindItem(item) {
+                    const removeButton = item.querySelector('[data-remove-item]');
+                    removeButton?.addEventListener('click', function() {
+                        const items = list.querySelectorAll('[data-repeat-item]');
+                        if (items.length === 1) {
+                            // Clear inputs of the last item instead of removing it entirely
+                            item.querySelectorAll('input, textarea').forEach(function(field) {
+                                if (field.type === 'file') {
+                                    field.value = '';
+                                } else if (field.type === 'number') {
+                                    field.value = '0';
+                                } else {
+                                    field.value = '';
+                                }
+                            });
+
+                            const preview = item.querySelector('[data-image-preview]');
+                            if (preview) {
+                                preview.innerHTML = '<span>No image selected</span>';
+                            }
+
+                            const fileName = item.querySelector('[data-file-name]');
+                            if (fileName) {
+                                fileName.textContent = 'No file selected';
+                            }
+                            return;
+                        }
+
+                        item.remove();
+                        updateNumbers();
+                        reindexItems();
+                    });
+
+                    const imageInput = item.querySelector('[data-image-input]');
+                    imageInput?.addEventListener('change', function() {
+                        const file = this.files[0];
+                        const preview = item.querySelector('[data-image-preview]');
+                        const fileName = item.querySelector('[data-file-name]');
+
+                        if (!file) {
+                            if (preview) preview.innerHTML = '<span>No image selected</span>';
+                            if (fileName) fileName.textContent = 'No file selected';
+                            return;
+                        }
+
+                        if (!file.type.startsWith('image/')) {
+                            this.value = '';
+                            if (fileName) fileName.textContent = 'Invalid image';
+                            return;
+                        }
+
+                        if (fileName) {
+                            fileName.textContent = file.name;
+                        }
+
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            if (preview) {
+                                preview.innerHTML = `<img src="${event.target.result}" alt="Selected image" style="width: 100%; height: 100%; object-fit: cover;">`;
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
 
                 function reindexItems() {
                     const items = list.querySelectorAll('[data-repeat-item]');
                     items.forEach((item, index) => {
-                        // Update Header Text (e.g. Inclusion 1, Place 1, Highlight 1)
-                        const header = item.querySelector('[data-item-number]');
-                        if (header) {
-                            const typeName = header.textContent.split(' ')[0];
-                            header.textContent = `${typeName} ${index + 1}`;
-                        }
+                        item.querySelectorAll('[name]').forEach(input => {
+                            let namePattern = input.getAttribute('name');
+                            namePattern = namePattern.replace(/\[\d+\]/g, `[${index}]`);
+                            input.setAttribute('name', namePattern);
 
-                        // Update input/textarea names
-                        item.querySelectorAll('[name], [data-name]').forEach(input => {
-                            const nameAttr = input.hasAttribute('name') ? 'name' : 'data-name';
-                            let namePattern = input.getAttribute(nameAttr);
-                            
-                            // Replace indices
-                            namePattern = namePattern.replace(/\[\d+\]/, `[${index}]`);
-                            input.setAttribute(nameAttr, namePattern);
-                            
-                            // Re-bind file upload IDs/labels for place images
                             if (input.type === 'file') {
-                                const newId = `${inputPrefix}_${index}_image`;
+                                const newId = `${config.inputPrefix}_${index}_image`;
                                 input.id = newId;
-                                const label = item.querySelector('label[for]');
+                                const label = item.querySelector(`label[for^="${config.inputPrefix}"]`) || item.querySelector('label[data-file-label]');
                                 if (label) {
                                     label.setAttribute('for', newId);
                                 }
@@ -943,57 +1009,63 @@
                     });
                 }
 
-                addBtn.addEventListener('click', function() {
+                list.querySelectorAll('[data-repeat-item]').forEach(bindItem);
+
+                addButton.addEventListener('click', function() {
                     const index = list.querySelectorAll('[data-repeat-item]').length;
-                    const html = template.innerHTML.replace(/__INDEX__/g, index);
-                    
-                    // Create wrapper element
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = html.trim();
-                    const newItem = tempDiv.firstChild;
+                    const fragment = template.content.cloneNode(true);
 
-                    list.appendChild(newItem);
+                    fragment.querySelectorAll('[data-name]').forEach(function(field) {
+                        field.name = field.dataset.name.replace('__INDEX__', index);
+                        field.removeAttribute('data-name');
+                    });
+
+                    fragment.querySelectorAll('[data-image-input]').forEach(function(input) {
+                        const newId = `${config.inputPrefix}_${index}_image`;
+                        input.id = newId;
+                        const label = fragment.querySelector('label[data-file-label]') || fragment.querySelector('label[for]');
+                        if (label) {
+                            label.setAttribute('for', newId);
+                        }
+                    });
+
+                    const item = fragment.querySelector('[data-repeat-item]');
+                    list.appendChild(fragment);
+
+                    bindItem(item);
+                    updateNumbers();
                     reindexItems();
+
+                    item.querySelector('input[type="text"]')?.focus();
                 });
 
-                list.addEventListener('click', function(e) {
-                    const removeBtn = e.target.closest('[data-remove-item]');
-                    if (!removeBtn) return;
-
-                    const item = removeBtn.closest('[data-repeat-item]');
-                    item.remove();
-                    reindexItems();
-                });
-
-                // Change handler for place image preview/filename
-                list.addEventListener('change', function(e) {
-                    const fileInput = e.target.closest('[data-image-input]');
-                    if (!fileInput) return;
-
-                    const row = fileInput.closest('[data-repeat-item]');
-                    const preview = row.querySelector('[data-image-preview]');
-                    const label = row.querySelector('[data-file-name]');
-                    const file = fileInput.files[0];
-
-                    if (!file) {
-                        preview.innerHTML = '<span>No image selected</span>';
-                        label.textContent = 'No file selected';
-                        return;
-                    }
-
-                    label.textContent = file.name;
-                    const reader = new FileReader();
-                    reader.onload = function(readerEvent) {
-                        preview.innerHTML = `<img src="${readerEvent.target.result}" alt="Place preview" style="width: 100%; height: 100%; object-fit: cover;">`;
-                    };
-                    reader.readAsDataURL(file);
-                });
+                updateNumbers();
             }
 
             // Initialize all three repeaters
-            initializeRepeater('packageInclusionList', 'addPackageInclusion', 'packageInclusionTemplate', 'package_inclusions');
-            initializeRepeater('placeCoveredList', 'addPlaceCovered', 'placeCoveredTemplate', 'places_covered');
-            initializeRepeater('tourHighlightList', 'addTourHighlight', 'tourHighlightTemplate', 'tour_highlights');
+            initializeRepeater({
+                listId: 'packageInclusionList',
+                buttonId: 'addPackageInclusion',
+                templateId: 'packageInclusionTemplate',
+                label: 'Inclusion',
+                inputPrefix: 'package_inclusions'
+            });
+
+            initializeRepeater({
+                listId: 'placeCoveredList',
+                buttonId: 'addPlaceCovered',
+                templateId: 'placeCoveredTemplate',
+                label: 'Place',
+                inputPrefix: 'places_covered'
+            });
+
+            initializeRepeater({
+                listId: 'tourHighlightList',
+                buttonId: 'addTourHighlight',
+                templateId: 'tourHighlightTemplate',
+                label: 'Highlight',
+                inputPrefix: 'tour_highlights'
+            });
 
             // Initialize gallery count display
             updateGalleryStatus();

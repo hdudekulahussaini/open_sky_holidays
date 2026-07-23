@@ -43,6 +43,25 @@ class TourResource extends JsonResource
 
             'status' => (bool) $this->status,
 
+            'detail' => $this->whenLoaded(
+                'detail',
+                function (): array {
+                    return [
+                        'heading' => $this->detail->heading,
+                        'description' => $this->detail->description,
+                        'gallery' => $this->detail->gallery,
+                        'gallery_urls' => array_map(function ($path) {
+                            return Storage::disk('public')->url($path);
+                        }, is_array($this->detail->gallery) ? $this->detail->gallery : []),
+                        'status' => $this->detail->status,
+                    ];
+                }
+            ),
+
+            'features' => TourFeatureResource::collection(
+                $this->whenLoaded('features')
+            ),
+
             'created_at' => $this->created_at?->toISOString(),
 
             'updated_at' => $this->updated_at?->toISOString(),
