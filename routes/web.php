@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AboutOurCoreValueController;
 use App\Http\Controllers\Admin\AboutSectionController;
 use App\Http\Controllers\Admin\AboutWhyChooseUsController;
 use App\Http\Controllers\Admin\AdventureCategoryController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CoreValueController;
 use App\Http\Controllers\Admin\CounterController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EnquiryController;
@@ -19,10 +21,10 @@ use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\TourController;
+use App\Http\Controllers\Admin\TourTypeController;
 use App\Http\Controllers\Admin\TravelSupportSectionController;
 use App\Http\Controllers\Admin\WhatWeOfferController;
 use App\Http\Controllers\Admin\WhyChooseSectionController;
-use App\Http\Controllers\Api\AboutOurCoreValueController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin/login');
@@ -71,18 +73,6 @@ Route::prefix('admin')
                 'show',
             ])->name('enquiries.show');
 
-            Route::resource(
-                'about-sections',
-                AboutSectionController::class
-            );
-            Route::resource(
-                'travel-support',
-                TravelSupportSectionController::class
-            );
-            Route::resource(
-                'why-choose-sections',
-                WhyChooseSectionController::class
-            );
             Route::patch('/enquiries/{enquiry}/status', [
                 EnquiryController::class,
                 'updateStatus',
@@ -93,57 +83,30 @@ Route::prefix('admin')
                 'destroy',
             ])->name('enquiries.destroy');
 
-            Route::resource('heroes', HeroController::class)
-                ->except('show');
+            Route::resource('about-sections', AboutSectionController::class);
+            Route::resource('travel-support', TravelSupportSectionController::class);
+            Route::resource('why-choose-sections', WhyChooseSectionController::class);
 
+            Route::resource('heroes', HeroController::class)->except('show');
             Route::resource('page-banners', PageBannerController::class)->except('show');
-            Route::resource(
-                'categories',
-                CategoryController::class
-            )->except('show');
-            Route::resource(
-                'testimonials',
-                TestimonialController::class
-            );
-
-            Route::resource(
-                'authors',
-                AuthorController::class
-            )->except('show');
-            Route::resource(
-                'adventure-categories',
-                AdventureCategoryController::class
-            )->except('show');
-
-            Route::resource(
-                'adventures',
-                AdventureController::class
-            )->except('show');
-            Route::resource(
-                'offer-banners',
-                OfferBannerController::class
-            )->except('show');
-
-            Route::resource(
-                'blogs',
-                BlogController::class
-            )->except('show');
-
-            Route::resource(
-                'our-stories',
-                OurStoryController::class
-            );
-            Route::resource(
-                'our-processes',
-                OurProcessController::class
-            );
+            Route::resource('categories', CategoryController::class)->except('show');
+            Route::resource('testimonials', TestimonialController::class);
+            Route::resource('authors', AuthorController::class)->except('show');
+            Route::resource('adventure-categories', AdventureCategoryController::class)->except('show');
+            Route::resource('adventures', AdventureController::class)->except('show');
+            Route::resource('offer-banners', OfferBannerController::class)->except('show');
+            Route::resource('blogs', BlogController::class)->except('show');
+            Route::resource('our-stories', OurStoryController::class);
+            Route::resource('our-processes', OurProcessController::class);
             Route::resource('counters', CounterController::class);
             Route::resource('services', ServiceController::class);
             Route::resource('what-we-offers', WhatWeOfferController::class);
             Route::resource('about-our-core-values', AboutOurCoreValueController::class);
             Route::resource('about-why-choose-us', AboutWhyChooseUsController::class);
-
+            Route::resource('core-values', CoreValueController::class);
+            Route::resource('tour-types', TourTypeController::class);
             Route::resource('tours', TourController::class);
+
             Route::post('/logout', [
                 AuthController::class,
                 'logout',
