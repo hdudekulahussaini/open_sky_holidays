@@ -448,31 +448,6 @@
 
     <span>Tours</span>
 </a>
-<!-- Tour Details -->
-<a
-    href="{{ route('admin.tour-details.index') }}"
-    class="nav-item {{ request()->routeIs('admin.tour-details.*') ? 'active' : '' }}"
->
-    <svg
-        class="menu-icon"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    >
-        <path d="M9 11H3"></path>
-        <path d="M9 16H3"></path>
-        <path d="M13 6H3"></path>
-        <path d="M21 6h-6"></path>
-        <path d="M21 11H13"></path>
-        <path d="M21 16h-6"></path>
-        <path d="M11 11l2 2 4-4"></path>
-    </svg>
-
-    <span>Tour Details</span>
-</a>
         <!-- Blog Management Dropdown -->
         <div class="nav-dropdown-wrapper {{ request()->routeIs('admin.categories.*', 'admin.authors.*', 'admin.blogs.*') ? 'open' : '' }}">
             <button

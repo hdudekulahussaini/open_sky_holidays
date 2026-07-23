@@ -59,6 +59,7 @@
                             <th>Tour Type</th>
                             <th>Country</th>
                             <th>Duration</th>
+                            <th>Counts</th>
                             <th>Status</th>
                             <th>Created</th>
                             <th class="ts-action-column">
@@ -116,6 +117,15 @@
                                     <strong>
                                         {{ $tour->duration }}
                                     </strong>
+                                </td>
+
+                                <td>
+                                    <div style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #475569;">
+                                        <span><i class="fa-regular fa-image" style="width: 16px;"></i> Gallery: <strong>{{ count($tour->detail->gallery ?? []) }}</strong></span>
+                                        <span><i class="fa-solid fa-box" style="width: 16px;"></i> Packages: <strong>{{ $tour->package_inclusions_count }}</strong></span>
+                                        <span><i class="fa-solid fa-map-location-dot" style="width: 16px;"></i> Places: <strong>{{ $tour->places_covered_count }}</strong></span>
+                                        <span><i class="fa-solid fa-star" style="width: 16px;"></i> Highlights: <strong>{{ $tour->tour_highlights_count }}</strong></span>
+                                    </div>
                                 </td>
 
                                 <td>

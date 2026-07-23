@@ -47,7 +47,6 @@ class StoreTourDetailRequest extends FormRequest
             'gallery.*' => [
                 'image',
                 'mimes:jpg,jpeg,png,webp',
-                'max:5120',
             ],
 
             'status' => [
@@ -69,7 +68,6 @@ class StoreTourDetailRequest extends FormRequest
             'description.required' => 'The description field is required.',
             'gallery.max' => 'You can upload a maximum of 10 images.',
             'gallery.*.image' => 'Every gallery file must be an image.',
-            'gallery.*.max' => 'Each image must not exceed 5 MB.',
             'status.required' => 'Please select a status.',
         ];
     }

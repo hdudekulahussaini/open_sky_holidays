@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\TourFeature;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateTourDetailRequest extends FormRequest
+class StoreTourFeatureRequest extends FormRequest
 {
     /**
      * Determine whether the user can make this request.
@@ -20,53 +21,55 @@ class UpdateTourDetailRequest extends FormRequest
      */
     public function rules(): array
     {
-        $tourDetail = $this->route('tour_detail');
-
         return [
             'tour_id' => [
                 'required',
                 'integer',
                 'exists:tours,id',
-
-                Rule::unique('tour_details', 'tour_id')
-                    ->ignore($tourDetail?->id),
             ],
 
-            'heading' => [
+            'type' => [
+                'required',
+                Rule::in([
+                    TourFeature::TYPE_PACKAGE_INCLUSION,
+                    TourFeature::TYPE_PLACE_COVERED,
+                    TourFeature::TYPE_TOUR_HIGHLIGHT,
+                ]),
+            ],
+
+            'title' => [
                 'required',
                 'string',
                 'max:255',
             ],
 
             'description' => [
-                'required',
+                'nullable',
                 'string',
             ],
 
-            'gallery' => [
+            'image' => [
+                Rule::requiredIf(
+                    fn (): bool => $this->input('type') ===
+                        TourFeature::TYPE_PLACE_COVERED
+                ),
                 'nullable',
-                'array',
-                'max:10',
-            ],
-
-            'gallery.*' => [
                 'image',
                 'mimes:jpg,jpeg,png,webp',
             ],
 
-            'existing_gallery' => [
+            'sort_order' => [
                 'nullable',
-                'array',
-            ],
-
-            'existing_gallery.*' => [
-                'nullable',
-                'string',
+                'integer',
+                'min:0',
             ],
 
             'status' => [
                 'required',
-                'in:active,inactive',
+                Rule::in([
+                    'active',
+                    'inactive',
+                ]),
             ],
         ];
     }
@@ -78,12 +81,14 @@ class UpdateTourDetailRequest extends FormRequest
     {
         return [
             'tour_id.required' => 'Please select a tour.',
-            'tour_id.unique' => 'Details already exist for this tour.',
-            'heading.required' => 'The heading field is required.',
-            'description.required' => 'The description field is required.',
-            'gallery.max' => 'You can upload a maximum of 10 images.',
-            'gallery.*.image' => 'Every gallery file must be an image.',
-            'status.required' => 'Please select a status.',
+
+            'tour_id.exists' => 'The selected tour does not exist.',
+
+            'type.required' => 'Please select a feature type.',
+
+            'title.required' => 'The title field is required.',
+
+            'image.required' => 'An image is required for a place covered.',
         ];
     }
 }
