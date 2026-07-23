@@ -157,24 +157,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
         addBtn.addEventListener("click", function () {
             const row = document.createElement("div");
-            row.className = "repeater-card inline-repeater";
+            row.className = "row g-2 align-items-start mb-3 inline-repeater service-item-row doc-row why-row";
             row.innerHTML = `
-                <div class="inline-repeater-input">
-                    <input type="text" name="${inputName}" class="form-input" placeholder="${placeholder}">
+                <div class="col">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-check"></i></span>
+                        <input type="text" name="${inputName}" class="form-control" placeholder="${placeholder}">
+                    </div>
                 </div>
-                <button type="button" class="remove-btn" title="Remove Item">&times;</button>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-danger remove-btn removeServiceItemBtn removeDocBtn removeWhyBtn" title="Delete feature">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
             `;
             container.appendChild(row);
         });
 
         container.addEventListener("click", function (e) {
-            const removeBtn = e.target.closest(".remove-btn");
+            const removeBtn = e.target.closest(".remove-btn, .removeServiceItemBtn, .removeDocBtn, .removeWhyBtn");
             if (removeBtn) {
-                const rows = container.querySelectorAll(".inline-repeater");
+                const rows = container.querySelectorAll(".inline-repeater, .service-item-row, .doc-row, .why-row");
                 if (rows.length > 1) {
-                    removeBtn.closest(".inline-repeater").remove();
+                    removeBtn.closest(".inline-repeater, .service-item-row, .doc-row, .why-row").remove();
                 } else {
-                    const input = removeBtn.closest(".inline-repeater").querySelector("input");
+                    const input = removeBtn.closest(".inline-repeater, .service-item-row, .doc-row, .why-row").querySelector("input");
                     if (input) input.value = "";
                 }
             }
