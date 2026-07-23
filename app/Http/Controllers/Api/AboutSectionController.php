@@ -253,7 +253,6 @@ class AboutSectionController extends Controller
                 'location_name' => $location['location_name'],
                 'latitude' => $location['latitude'],
                 'longitude' => $location['longitude'],
-                'destination_url' => $location['destination_url'] ?? null,
             ]);
         }
     }

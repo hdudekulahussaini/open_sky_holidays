@@ -84,12 +84,6 @@ class AboutSectionRequest extends FormRequest
                 'between:-180,180',
             ],
 
-            'locations.*.destination_url' => [
-                'nullable',
-                'string',
-                'max:500',
-            ],
-
             /*
             |--------------------------------------------------------------------------
             | Customer avatar images
@@ -174,8 +168,6 @@ class AboutSectionRequest extends FormRequest
             'locations.*.longitude.numeric' => 'Longitude must be a valid number.',
 
             'locations.*.longitude.between' => 'Longitude must be between -180 and 180.',
-
-            'locations.*.destination_url.max' => 'The destination URL or slug must not exceed 500 characters.',
 
             'avatar_images.array' => 'Avatar images must be submitted as a valid image list.',
 

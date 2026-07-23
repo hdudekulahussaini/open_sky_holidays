@@ -15,7 +15,6 @@ class AboutGlobeLocation extends Model
         'location_name',
         'latitude',
         'longitude',
-        'destination_url',
     ];
 
     protected function casts(): array
