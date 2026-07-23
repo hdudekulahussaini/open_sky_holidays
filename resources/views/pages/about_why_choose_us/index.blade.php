@@ -1,288 +1,96 @@
 @extends('admin.layouts.app')
 
 @section('title', 'About Why Choose Us')
+@section('page-title', 'About Why Choose Us')
 
 @section('content')
-<div class="container-fluid">
-
-    <div
-        class="d-flex flex-wrap
-               justify-content-between
-               align-items-center gap-3 mb-4"
-    >
-        <div>
-            <h2 class="fw-bold mb-1">
-                About Why Choose Us
-            </h2>
-
-            <p class="text-muted mb-0">
-                Manage title, description, image,
-                features and status.
-            </p>
-        </div>
-
-        <a
-            href="{{ route(
-                'admin.about-why-choose-us.create'
-            ) }}"
-            class="btn btn-primary"
-        >
-            <i class="fa-solid fa-plus me-2"></i>
-            Add Section
-        </a>
-    </div>
-
-
-    <div class="card border-0 shadow-sm">
-        <div
-            class="card-header bg-white
-                   border-bottom py-3 px-4"
-        >
-            <div
-                class="d-flex justify-content-between
-                       align-items-center"
-            >
-                <h5 class="fw-semibold mb-0">
-                    Section List
-                </h5>
-
-                <span class="badge bg-light text-dark">
-                    Total: {{ $sections->total() }}
-                </span>
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <div>
+                <h3>About Why Choose Us</h3>
+                <p>Manage title, description, image, features, and status.</p>
             </div>
+
+            <a href="{{ route('admin.about-why-choose-us.create') }}" class="btn btn-primary">
+                + Add Section
+            </a>
         </div>
 
-        <div class="card-body p-0">
+        @if ($sections->count() > 0)
             <div class="table-responsive">
-                <table
-                    class="table table-hover
-                           align-middle mb-0"
-                >
-                    <thead class="table-light">
+                <table class="admin-table">
+                    <thead>
                         <tr>
-                            <th class="px-4">ID</th>
+                            <th>ID</th>
                             <th>Image</th>
                             <th>Title</th>
                             <th>Description</th>
-                            <th>Feature Titles</th>
-                            <th>Feature Descriptions</th>
                             <th>Status</th>
-                            <th class="text-end px-4">
-                                Actions
-                            </th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
-
                     <tbody>
-                        @forelse ($sections as $section)
+                        @foreach ($sections as $section)
                             <tr>
-                                <td class="px-4">
-                                    #{{ $section->id }}
-                                </td>
-
+                                <td>#{{ $section->id }}</td>
                                 <td>
                                     @if ($section->image)
-                                        <img
-                                            src="{{ asset(
-                                                'storage/' .
-                                                $section->image
-                                            ) }}"
-                                            alt="{{ $section->title }}"
-                                            width="115"
-                                            height="78"
-                                            class="section-table-image"
-                                        >
+                                        <img src="{{ asset('storage/' . $section->image) }}" alt="{{ $section->title }}" class="blog-table-image">
                                     @else
-                                        <span class="text-muted">
-                                            No image
-                                        </span>
+                                        <small>No image</small>
                                     @endif
                                 </td>
-
-                                <td style="min-width: 220px;">
-                                    <strong>
-                                        {{ $section->title }}
-                                    </strong>
-                                </td>
-
-                                <td style="min-width: 270px;">
-                                    @if ($section->description)
-                                        {{ \Illuminate\Support\Str::limit(
-                                            $section->description,
-                                            100
-                                        ) }}
-                                    @else
-                                        <span class="text-muted">
-                                            No description
-                                        </span>
-                                    @endif
-                                </td>
-
-                                <td style="min-width: 240px;">
-                                    @forelse (
-                                        $section->features_title
-                                        ?? [] as $featureTitle
-                                    )
-                                        <span
-                                            class="badge
-                                                   bg-light text-dark
-                                                   border me-1 mb-1"
-                                        >
-                                            {{ $featureTitle }}
-                                        </span>
-                                    @empty
-                                        <span class="text-muted">
-                                            No feature titles
-                                        </span>
-                                    @endforelse
-                                </td>
-
-                                <td style="min-width: 300px;">
-                                    @php
-                                        $descriptions =
-                                            $section
-                                                ->features_description
-                                            ?? [];
-                                    @endphp
-
-                                    @if (count($descriptions))
-                                        {{ \Illuminate\Support\Str::limit(
-                                            implode(
-                                                ' | ',
-                                                array_filter(
-                                                    $descriptions
-                                                )
-                                            ),
-                                            150
-                                        ) }}
-                                    @else
-                                        <span class="text-muted">
-                                            No feature descriptions
-                                        </span>
-                                    @endif
-                                </td>
-
+                                <td><strong>{{ $section->title }}</strong></td>
+                                <td>{{ \Illuminate\Support\Str::limit($section->description, 100) }}</td>
                                 <td>
-                                    @if (
-                                        $section->status
-                                        === 'active'
-                                    )
-                                        <span class="badge bg-success">
-                                            Active
-                                        </span>
-                                    @else
-                                        <span class="badge bg-danger">
-                                            Inactive
-                                        </span>
-                                    @endif
+                                    <span class="status-badge {{ $section->status ? 'status-active' : 'status-inactive' }}">
+                                        {{ $section->status ? 'Active' : 'Inactive' }}
+                                    </span>
                                 </td>
-
-                                <td class="text-end px-4">
-                                    <div
-                                        class="d-flex
-                                               justify-content-end
-                                               gap-2"
-                                    >
-                                        <a
-                                            href="{{ route(
-                                                'admin.about-why-choose-us.edit',
-                                                $section
-                                            ) }}"
-                                            class="btn btn-sm
-                                                   btn-outline-primary"
-                                        >
-                                            <i
-                                                class="fa-solid
-                                                       fa-pen me-1"
-                                            ></i>
-
+                                <td>
+                                    <div class="table-actions">
+                                        <a href="{{ route('admin.about-why-choose-us.edit', $section) }}" class="action-button action-edit">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M12 20h9"></path>
+                                                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"></path>
+                                            </svg>
                                             Edit
                                         </a>
-
-                                        <form
-                                            action="{{ route(
-                                                'admin.about-why-choose-us.destroy',
-                                                $section
-                                            ) }}"
-                                            method="POST"
-                                            class="d-inline"
-                                            onsubmit="
-                                                return confirm(
-                                                    'Delete this section?'
-                                                );
-                                            "
-                                        >
+                                        <form action="{{ route('admin.about-why-choose-us.destroy', $section) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this record?')">
                                             @csrf
                                             @method('DELETE')
-
-                                            <button
-                                                type="submit"
-                                                class="btn btn-sm
-                                                       btn-outline-danger"
-                                            >
-                                                <i
-                                                    class="fa-solid
-                                                           fa-trash me-1"
-                                                ></i>
-
+                                            <button type="submit" class="action-button action-delete">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                    <path d="M19 6l-1 14H6L5 6"></path>
+                                                    <path d="M10 11v6"></path>
+                                                    <path d="M14 11v6"></path>
+                                                    <path d="M9 6V4h6v2"></path>
+                                                </svg>
                                                 Delete
                                             </button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td
-                                    colspan="8"
-                                    class="text-center py-5"
-                                >
-                                    <div class="text-muted">
-                                        <i
-                                            class="fa-solid
-                                                   fa-circle-check
-                                                   fa-3x mb-3"
-                                        ></i>
-
-                                        <h5>
-                                            No Sections Found
-                                        </h5>
-
-                                        <p>
-                                            Add your first About Why
-                                            Choose Us section.
-                                        </p>
-
-                                        <a
-                                            href="{{ route(
-                                                'admin.about-why-choose-us.create'
-                                            ) }}"
-                                            class="btn btn-primary"
-                                        >
-                                            Add Section
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-        </div>
 
-        @if ($sections->hasPages())
-            <div class="card-footer bg-white">
-                {{ $sections->links() }}
+            @if ($sections->hasPages())
+                <div class="pagination-wrapper">
+                    {{ $sections->links() }}
+                </div>
+            @endif
+        @else
+            <div class="empty-table">
+                <strong>No sections found.</strong>
+                <p>Create your first About Why Choose Us section.</p>
+                <a href="{{ route('admin.about-why-choose-us.create') }}" class="btn btn-primary">
+                    Create Section
+                </a>
             </div>
         @endif
     </div>
-</div>
-
-<style>
-    .section-table-image {
-        object-fit: cover;
-        border: 1px solid #e2e8f0;
-        border-radius: 10px;
-    }
-</style>
 @endsection

@@ -190,8 +190,8 @@
                                 @endphp
 
                                 @foreach ($features as $index => $feature)
-                                    <div class="feature-row d-flex align-items-start gap-2 mb-3">
-                                        <div class="flex-grow-1">
+                                    <div class="feature-row row g-2 align-items-start mb-3">
+                                        <div class="col">
                                             <div class="input-group">
                                                 <span class="input-group-text">
                                                     <i class="fas fa-check"></i>
@@ -201,12 +201,7 @@
                                                     type="text"
                                                     name="features[]"
                                                     value="{{ $feature }}"
-                                                    class="form-control
-                                                        @error(
-                                                            'features.' . $index
-                                                        )
-                                                            is-invalid
-                                                        @enderror"
+                                                    class="form-control @error('features.' . $index) is-invalid @enderror"
                                                     placeholder="Enter feature"
                                                 >
                                             </div>
@@ -218,16 +213,20 @@
                                             @enderror
                                         </div>
 
-                                        <button
-                                            type="button"
-                                            class="btn btn-outline-danger remove-feature"
-                                            title="Delete feature"
-                                        >
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                        <div class="col-auto">
+                                            <button
+                                                type="button"
+                                                class="btn btn-danger remove-feature"
+                                                title="Delete feature"
+                                                aria-label="Delete feature"
+                                            >
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>
+
                         </div>
 
                         <div>

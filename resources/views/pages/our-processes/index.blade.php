@@ -1,196 +1,93 @@
 @extends('admin.layouts.app')
 
 @section('title', 'Our Processes')
+@section('page-title', 'Our Processes')
 
 @section('content')
-    <div class="ts-page-wrapper">
-
-        {{-- Page Header --}}
-        <div class="ts-page-header">
+    <div class="admin-card">
+        <div class="admin-card-header">
             <div>
-                <span class="ts-page-eyebrow">
-                    Website Content
-                </span>
-
-                <h1>Our Processes</h1>
-
-                <p>
-                    Manage process sections displayed on the website.
-                </p>
+                <h3>Our Processes</h3>
+                <p>Manage process sections displayed on the website.</p>
             </div>
 
-            <a href="{{ route('admin.our-processes.create') }}" class="ts-primary-btn">
-                <span>+</span>
-                Add Our Process
+            <a href="{{ route('admin.our-processes.create') }}" class="btn btn-primary">
+                + Add Our Process
             </a>
         </div>
-        {{-- List Card --}}
-        <div class="ts-list-card">
 
-            <div class="ts-list-card-header">
-                <div>
-                    <h2>Our Processes</h2>
-
-                    <p>
-                        Total records:
-                        <strong>{{ $ourProcesses->total() }}</strong>
-                    </p>
-                </div>
-            </div>
-
-            <div class="ts-table-wrapper">
-                <table class="ts-table">
+        @if ($ourProcesses->count() > 0)
+            <div class="table-responsive">
+                <table class="admin-table">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Content</th>
-                            <th>Promises</th>
+                            <th>Heading</th>
+                            <th>Description</th>
                             <th>Status</th>
-                            <th>Created Date</th>
-
-                            <th class="ts-action-column">
-                                Actions
-                            </th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
-
                     <tbody>
-                        @forelse ($ourProcesses as $ourProcess)
+                        @foreach ($ourProcesses as $ourProcess)
                             <tr>
-
-                                {{-- ID --}}
+                                <td>#{{ $ourProcess->id }}</td>
                                 <td>
-                                    #{{ $ourProcess->id }}
-                                </td>
-
-                                {{-- Content --}}
-                                <td>
-                                    <div class="ts-content-cell">
-                                        @if ($ourProcess->small_heading)
-                                            <small class="story-small-heading">
-                                                {{ $ourProcess->small_heading }}
-                                            </small>
-                                        @endif
-
-                                        <h3>
-                                            {{ $ourProcess->heading }}
-                                        </h3>
-
-                                        <p>
-                                            {{ \Illuminate\Support\Str::limit(strip_tags($ourProcess->description), 100) }}
-                                        </p>
-                                    </div>
-                                </td>
-
-                                {{-- Promises --}}
-                                <td>
-                                    @php
-                                        $promises = $ourProcess->promises ?? [];
-                                    @endphp
-
-                                    @if (count($promises))
-                                        <ul class="story-feature-list">
-                                            @foreach (array_slice($promises, 0, 3) as $promise)
-                                                <li>
-                                                    <strong>
-                                                        {{ $promise['text'] ?? '' }}
-                                                    </strong>
-                                                </li>
-                                            @endforeach
-
-                                            @if (count($promises) > 3)
-                                                <li class="story-feature-more">
-                                                    +{{ count($promises) - 3 }} more
-                                                </li>
-                                            @endif
-                                        </ul>
-                                    @else
-                                        —
+                                    <strong>{{ $ourProcess->heading }}</strong>
+                                    @if ($ourProcess->small_heading)
+                                        <small>{{ $ourProcess->small_heading }}</small>
                                     @endif
                                 </td>
-
-                                {{-- Status --}}
+                                <td>{{ \Illuminate\Support\Str::limit(strip_tags($ourProcess->description), 100) }}</td>
                                 <td>
-                                    @if ($ourProcess->status === 'active')
-                                        <span class="ts-status-badge ts-active">
-                                            <span></span>
-                                            Active
-                                        </span>
-                                    @else
-                                        <span class="ts-status-badge ts-inactive">
-                                            <span></span>
-                                            Inactive
-                                        </span>
-                                    @endif
-                                </td>
-
-                                {{-- Created Date --}}
-                                <td>
-                                    <span class="ts-date">
-                                        {{ $ourProcess->created_at->format('d M Y') }}
+                                    <span class="status-badge {{ $ourProcess->status ? 'status-active' : 'status-inactive' }}">
+                                        {{ $ourProcess->status ? 'Active' : 'Inactive' }}
                                     </span>
-
-                                    <small class="story-created-time">
-                                        {{ $ourProcess->created_at->format('h:i A') }}
-                                    </small>
                                 </td>
-
-                                {{-- Actions --}}
                                 <td>
-                                    <div class="ts-actions">
-
-                                        <a href="{{ route('admin.our-processes.edit', $ourProcess) }}"
-                                            class="ts-action-btn ts-edit-btn">
+                                    <div class="table-actions">
+                                        <a href="{{ route('admin.our-processes.edit', $ourProcess) }}" class="action-button action-edit">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M12 20h9"></path>
+                                                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"></path>
+                                            </svg>
                                             Edit
                                         </a>
-
-                                        <form
-                                            action="{{ route('admin.our-processes.destroy', $ourProcess) }}"
-                                            method="POST"
-                                            onsubmit="return confirm(
-                                                'Are you sure you want to delete this process?'
-                                            )">
+                                        <form action="{{ route('admin.our-processes.destroy', $ourProcess) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this process?')">
                                             @csrf
                                             @method('DELETE')
-
-                                            <button type="submit" class="ts-action-btn ts-delete-btn">
+                                            <button type="submit" class="action-button action-delete">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                    <path d="M19 6l-1 14H6L5 6"></path>
+                                                    <path d="M10 11v6"></path>
+                                                    <path d="M14 11v6"></path>
+                                                    <path d="M9 6V4h6v2"></path>
+                                                </svg>
                                                 Delete
                                             </button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7">
-                                    <div class="ts-empty-state">
-                                        <div class="ts-empty-icon">
-                                            ✦
-                                        </div>
-
-                                        <h3>No process records</h3>
-
-                                        <p>
-                                            Create your first website process section.
-                                        </p>
-
-                                        <a href="{{ route('admin.our-processes.create') }}"
-                                            class="ts-primary-btn">
-                                            Create Our Process
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
 
             @if ($ourProcesses->hasPages())
-                <div class="ts-pagination">
+                <div class="pagination-wrapper">
                     {{ $ourProcesses->links() }}
                 </div>
             @endif
-        </div>
+        @else
+            <div class="empty-table">
+                <strong>No processes found.</strong>
+                <p>Add your first Our Process item.</p>
+                <a href="{{ route('admin.our-processes.create') }}" class="btn btn-primary">
+                    Create Process
+                </a>
+            </div>
+        @endif
     </div>
 @endsection

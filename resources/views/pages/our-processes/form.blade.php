@@ -62,49 +62,46 @@
             </span>
         @enderror
     </div>
+
     {{-- Promises --}}
     <div class="admin-form-group admin-form-group-full">
-        <div class="promise-header">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
             <div>
-                <label>Promises</label>
-
-                <p class="admin-form-help">
-                    Add multiple promise items.
-                </p>
+                <label class="form-label fw-bold mb-1">Promises</label>
+                <p class="small text-muted mb-0">Add or delete each promise item separately.</p>
             </div>
 
-            <button type="button" id="addPromiseButton" class="admin-secondary-button">
+            <button type="button" id="addPromiseButton" class="btn btn-sm btn-primary">
                 + Add Promise
             </button>
         </div>
 
         <div id="promiseContainer">
             @foreach ($promiseItems as $index => $promise)
-                <div class="promise-item">
-                    <input type="text" name="promises[{{ $index }}][text]"
-                        class="admin-form-control
-                            @error("promises.$index.text")
-                                is-invalid
-                            @enderror"
-                        value="{{ $promise['text'] ?? '' }}" placeholder="Enter promise text">
+                <div class="promise-item row g-2 align-items-start mb-3">
+                    <div class="col">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-check"></i></span>
+                            <input type="text" name="promises[{{ $index }}][text]"
+                                class="form-control @error("promises.$index.text") is-invalid @enderror"
+                                value="{{ $promise['text'] ?? '' }}" placeholder="Enter promise text">
+                        </div>
+                        @error("promises.$index.text")
+                            <span class="admin-form-error mt-1">{{ $message }}</span>
+                        @enderror
+                    </div>
 
-                    <button type="button" class="remove-promise-button" aria-label="Remove promise">
-                        ×
-                    </button>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-danger remove-promise-button" title="Delete promise">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
                 </div>
-
-                @error("promises.$index.text")
-                    <span class="admin-form-error">
-                        {{ $message }}
-                    </span>
-                @enderror
             @endforeach
         </div>
 
         @error('promises')
-            <span class="admin-form-error">
-                {{ $message }}
-            </span>
+            <span class="admin-form-error">{{ $message }}</span>
         @enderror
     </div>
 
@@ -148,22 +145,17 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const container =
-            document.getElementById('promiseContainer');
-
-        const addButton =
-            document.getElementById('addPromiseButton');
+        const container = document.getElementById('promiseContainer');
+        const addButton = document.getElementById('addPromiseButton');
 
         if (!container || !addButton) {
             return;
         }
 
-        let promiseIndex =
-            container.querySelectorAll('.promise-item').length;
+        let promiseIndex = container.querySelectorAll('.promise-item').length;
 
         addButton.addEventListener('click', function() {
-            const totalItems =
-                container.querySelectorAll('.promise-item').length;
+            const totalItems = container.querySelectorAll('.promise-item').length;
 
             if (totalItems >= 20) {
                 alert('You can add a maximum of 20 promises.');
@@ -171,55 +163,37 @@
             }
 
             const item = document.createElement('div');
-
-            item.className = 'promise-item';
-
+            item.className = 'promise-item row g-2 align-items-start mb-3';
             item.innerHTML = `
-                <input
-                    type="text"
-                    name="promises[${promiseIndex}][text]"
-                    class="admin-form-control"
-                    placeholder="Enter promise text"
-                >
-
-                <button
-                    type="button"
-                    class="remove-promise-button"
-                    aria-label="Remove promise"
-                >
-                    ×
-                </button>
+                <div class="col">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-check"></i></span>
+                        <input type="text" name="promises[${promiseIndex}][text]" class="form-control" placeholder="Enter promise text">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-danger remove-promise-button" title="Delete promise">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
             `;
 
             container.appendChild(item);
-
             promiseIndex++;
         });
 
         container.addEventListener('click', function(event) {
-            const removeButton = event.target.closest(
-                '.remove-promise-button'
-            );
+            const removeButton = event.target.closest('.remove-promise-button');
+            if (!removeButton) return;
 
-            if (!removeButton) {
-                return;
-            }
-
-            const promiseItems =
-                container.querySelectorAll('.promise-item');
-
+            const promiseItems = container.querySelectorAll('.promise-item');
             if (promiseItems.length === 1) {
-                const input =
-                    promiseItems[0].querySelector('input');
-
+                const input = promiseItems[0].querySelector('input');
                 input.value = '';
-
                 return;
             }
 
-            removeButton
-                .closest('.promise-item')
-                .remove();
+            removeButton.closest('.promise-item').remove();
         });
     });
 </script>

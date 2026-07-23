@@ -1,185 +1,101 @@
 @extends('admin.layouts.app')
 
 @section('title', 'Our Stories')
+@section('page-title', 'Our Stories')
 
 @section('content')
-    <div class="ts-page-wrapper">
-        {{-- Page Header --}}
-        <div class="ts-page-header">
+    <div class="admin-card">
+        <div class="admin-card-header">
             <div>
-                <span class="ts-page-eyebrow">
-                    Website Content
-                </span>
-
-                <h1>Our Stories</h1>
-
-                <p>
-                    Manage story sections displayed on the website.
-                </p>
+                <h3>Our Stories</h3>
+                <p>Manage company stories and timeline milestones.</p>
             </div>
 
-            <a href="{{ route('admin.our-stories.create') }}" class="ts-primary-btn">
-                <span>+</span>
-                Add Our Story
+            <a href="{{ route('admin.our-stories.create') }}" class="btn btn-primary">
+                + Add Our Story
             </a>
         </div>
 
-
-        {{-- Error Message --}}
-        @if (session('error'))
-            <div class="alert alert-error">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        {{-- List Card --}}
-        <div class="ts-list-card">
-            <div class="ts-list-card-header">
-                <div>
-                    <h2>Our Stories</h2>
-                    <p>
-                        Total records:
-                        <strong>{{ $ourStories->total() }}</strong>
-                    </p>
-                </div>
-            </div>
-
-            <div class="ts-table-wrapper">
-                <table class="ts-table">
+        @if ($ourStories->count() > 0)
+            <div class="table-responsive">
+                <table class="admin-table">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Images</th>
-                            <th>Content</th>
-                            <th>Features</th>
+                            <th>Image</th>
+                            <th>Heading</th>
+                            <th>Description</th>
                             <th>Status</th>
-                            <th>Created</th>
-                            <th class="ts-action-column">Actions</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
-
                     <tbody>
-                        @forelse($ourStories as $ourStory)
+                        @foreach ($ourStories as $story)
                             <tr>
-                                <td>#{{ $ourStory->id }}</td>
-
+                                <td>#{{ $story->id }}</td>
                                 <td>
-                                    <div class="story-table-images">
-                                        @forelse (array_slice($ourStory->images ?? [], 0, 3) as $image)
-                                            <img src="{{ asset('storage/' . $image) }}"
-                                                alt="{{ $ourStory->heading }}" class="story-table-image">
-                                        @empty
-                                            <div class="ts-table-image-empty">
-                                                ✦
-                                            </div>
-                                        @endforelse
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="ts-content-cell">
-                                        @if ($ourStory->small_heading)
-                                            <span class="ts-small-heading">
-                                                {{ $ourStory->small_heading }}
-                                            </span>
-                                        @endif
-
-                                        <h3>
-                                            {{ $ourStory->heading }}
-                                        </h3>
-
-                                        <p>
-                                            {{ \Illuminate\Support\Str::limit(strip_tags($ourStory->description), 100) }}
-                                        </p>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="ts-feature-list">
-                                        @foreach (array_slice($ourStory->features ?? [], 0, 3) as $feature)
-                                            <span class="ts-feature-badge">
-                                                {{ is_array($feature) ? ($feature['heading'] ?? '') : $feature }}
-                                            </span>
-                                        @endforeach
-
-                                        @if (count($ourStory->features ?? []) > 3)
-                                            <span class="ts-more-features">
-                                                +{{ count($ourStory->features) - 3 }}
-                                                more
-                                            </span>
-                                        @endif
-                                    </div>
-                                </td>
-
-                                <td>
-                                    @if ($ourStory->status)
-                                        <span class="ts-status-badge ts-active">
-                                            <span></span>
-                                            Active
-                                        </span>
+                                    @if ($story->image)
+                                        <img src="{{ asset('storage/' . $story->image) }}" alt="{{ $story->heading }}" class="blog-table-image">
                                     @else
-                                        <span class="ts-status-badge ts-inactive">
-                                            <span></span>
-                                            Inactive
-                                        </span>
+                                        <small>No image</small>
                                     @endif
                                 </td>
-
                                 <td>
-                                    <span class="ts-date">
-                                        {{ $ourStory->created_at->format('d M Y') }}
+                                    <strong>{{ $story->heading }}</strong>
+                                    @if ($story->small_heading)
+                                        <small>{{ $story->small_heading }}</small>
+                                    @endif
+                                </td>
+                                <td>{{ \Illuminate\Support\Str::limit(strip_tags($story->description), 100) }}</td>
+                                <td>
+                                    <span class="status-badge {{ $story->status ? 'status-active' : 'status-inactive' }}">
+                                        {{ $story->status ? 'Active' : 'Inactive' }}
                                     </span>
                                 </td>
-
                                 <td>
-                                    <div class="ts-actions">
-                                        <a href="{{ route('admin.our-stories.edit', $ourStory) }}"
-                                            class="ts-action-btn ts-edit-btn">
+                                    <div class="table-actions">
+                                        <a href="{{ route('admin.our-stories.edit', $story) }}" class="action-button action-edit">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M12 20h9"></path>
+                                                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"></path>
+                                            </svg>
                                             Edit
                                         </a>
-
-                                        <form action="{{ route('admin.our-stories.destroy', $ourStory) }}" method="POST"
-                                            onsubmit="return confirm('Are you sure you want to delete this story?')">
+                                        <form action="{{ route('admin.our-stories.destroy', $story) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this story?')">
                                             @csrf
                                             @method('DELETE')
-
-                                            <button type="submit" class="ts-action-btn ts-delete-btn">
+                                            <button type="submit" class="action-button action-delete">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                    <path d="M19 6l-1 14H6L5 6"></path>
+                                                    <path d="M10 11v6"></path>
+                                                    <path d="M14 11v6"></path>
+                                                    <path d="M9 6V4h6v2"></path>
+                                                </svg>
                                                 Delete
                                             </button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7">
-                                    <div class="ts-empty-state">
-                                        <div class="ts-empty-icon">
-                                            ✦
-                                        </div>
-
-                                        <h3>No story records</h3>
-
-                                        <p>
-                                            Create your first website story section.
-                                        </p>
-
-                                        <a href="{{ route('admin.our-stories.create') }}" class="ts-primary-btn">
-                                            Create Our Story
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
 
             @if ($ourStories->hasPages())
-                <div class="ts-pagination">
+                <div class="pagination-wrapper">
                     {{ $ourStories->links() }}
                 </div>
             @endif
-        </div>
+        @else
+            <div class="empty-table">
+                <strong>No stories found.</strong>
+                <p>Add your first Our Story record.</p>
+                <a href="{{ route('admin.our-stories.create') }}" class="btn btn-primary">
+                    Create Story
+                </a>
+            </div>
+        @endif
     </div>
 @endsection
