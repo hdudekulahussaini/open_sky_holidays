@@ -110,6 +110,24 @@
                     </svg>
                     <span>Page Banners</span>
                 </a>
+
+                <!-- Offer Banners -->
+                <a
+                    href="{{ route('admin.offer-banners.index') }}"
+                    class="nav-dropdown-item {{ request()->routeIs('admin.offer-banners.*') ? 'active' : '' }}">
+                    <svg
+                        class="submenu-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                        <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                    </svg>
+                    <span>Offer Banners</span>
+                </a>
             </div>
         </div>
 
@@ -184,8 +202,8 @@
 
         <!-- Services -->
         <a
-            href="{{ route('admin.about-sections.index') }}"
-            class="nav-item {{ request()->routeIs('admin.about-sections.*') ? 'active' : '' }}">
+            href="{{ route('admin.services.index') }}"
+            class="nav-item {{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
             <svg
                 class="menu-icon"
                 viewBox="0 0 24 24"
@@ -193,7 +211,7 @@
                 stroke="currentColor"
                 stroke-width="2"
                 stroke-linecap="round"
-                stroke-linejoin="round"
+                stroke-linejoin="round">
                 <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                 <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
             </svg>
@@ -201,11 +219,11 @@
         </a>
 
         <!-- About Management Dropdown -->
-        <div class="nav-dropdown-wrapper {{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*') ? 'open' : '' }}">
+        <div class="nav-dropdown-wrapper {{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*', 'admin.what-we-offers.*', 'admin.about-why-choose-us.*', 'admin.about-our-core-values.*') ? 'open' : '' }}">
             <button
                 type="button"
-                class="nav-dropdown-toggle nav-item {{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*') ? 'active' : '' }}"
-                aria-expanded="{{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*') ? 'true' : 'false' }}"
+                class="nav-dropdown-toggle nav-item {{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*', 'admin.what-we-offers.*', 'admin.about-why-choose-us.*', 'admin.about-our-core-values.*') ? 'active' : '' }}"
+                aria-expanded="{{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*', 'admin.what-we-offers.*', 'admin.about-why-choose-us.*', 'admin.about-our-core-values.*') ? 'true' : 'false' }}"
             >
                 <svg
                     class="menu-icon"
@@ -314,6 +332,64 @@
                     </svg>
                     <span>Counters</span>
                 </a>
+                <!-- What We Offer -->
+                <a
+                    href="{{ route('admin.what-we-offers.index') }}"
+                    class="nav-dropdown-item {{ request()->routeIs('admin.what-we-offers.*') ? 'active' : '' }}"
+                >
+                    <svg
+                        class="submenu-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                        <path d="M7 8h10"></path>
+                        <path d="M7 12h7"></path>
+                        <path d="M7 16h4"></path>
+                    </svg>
+                    <span>What We Offer</span>
+                </a>
+                <!-- About Why Choose Us -->
+                <a
+                    href="{{ route('admin.about-why-choose-us.index') }}"
+                    class="nav-dropdown-item {{ request()->routeIs('admin.about-why-choose-us.*') ? 'active' : '' }}"
+                >
+                    <svg
+                        class="submenu-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M8 12l3 3 5-6"></path>
+                    </svg>
+                    <span>About Why Choose Us</span>
+                </a>
+                <!-- About Our Core Values -->
+                <a
+                    href="{{ route('admin.about-our-core-values.index') }}"
+                    class="nav-dropdown-item {{ request()->routeIs('admin.about-our-core-values.*') ? 'active' : '' }}"
+                >
+                    <svg
+                        class="submenu-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M12 2l2.8 5.7L21 8.6l-4.5 4.4 1.1 6.2L12 16.3 6.4 19.2 7.5 13 3 8.6l6.2-.9L12 2z"></path>
+                    </svg>
+                    <span>About Our Core Values</span>
+                </a>
             </div>
         </div>
         <!-- Travel Support -->
@@ -368,63 +444,6 @@
                 <path d="M8 13h5"></path>
             </svg>
             <span>Testimonials</span>
-        </a>
-        <!-- What We Offer -->
-        <a
-            href="{{ route('admin.what-we-offers.index') }}"
-            class="nav-item {{ request()->routeIs('admin.what-we-offers.*') ? 'active' : '' }}">
-            <svg
-                class="menu-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="16" rx="2"></rect>
-                <path d="M7 8h10"></path>
-                <path d="M7 12h7"></path>
-                <path d="M7 16h4"></path>
-            </svg>
-
-            <span>What We Offer</span>
-        </a>
-        <a
-            href="{{ route('admin.about-why-choose-us.index') }}"
-            class="nav-item {{ request()->routeIs('admin.about-why-choose-us.*') ? 'active' : '' }}">
-            <svg
-                class="menu-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M8 12l3 3 5-6"></path>
-            </svg>
-
-            <span>About Why Choose Us</span>
-        </a>
-
-        <a
-            href="{{ route('admin.about-our-core-values.index') }}"
-            class="nav-item {{ request()->routeIs('admin.about-our-core-values.*') ? 'active' : '' }}">
-            <svg
-                class="menu-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round">
-                <path
-                    d="M12 2l2.8 5.7L21 8.6l-4.5 4.4
-               1.1 6.2L12 16.3 6.4 19.2
-               7.5 13 3 8.6l6.2-.9L12 2z"></path>
-            </svg>
-
-            <span>About Our Core Values</span>
         </a>
 
         <!-- Blog Management Dropdown -->
