@@ -23,6 +23,8 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\TourController;
 use App\Http\Controllers\Admin\TourInquiryController;
+use App\Http\Controllers\Admin\TourDetailController;
+use App\Http\Controllers\Admin\TourFeatureController;
 use App\Http\Controllers\Admin\TourTypeController;
 use App\Http\Controllers\Admin\TravelSupportSectionController;
 use App\Http\Controllers\Admin\WhatWeOfferController;
@@ -60,6 +62,13 @@ Route::prefix('admin')
         */
 
         Route::middleware(['auth', 'admin'])->group(function () {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Dashboard
+            |--------------------------------------------------------------------------
+            */
+
             Route::get('/dashboard', [
                 DashboardController::class,
                 'index',
@@ -107,10 +116,15 @@ Route::prefix('admin')
                 'destroy',
             ])->name('enquiries.destroy');
 
+            /*
+            |--------------------------------------------------------------------------
+            | Resources
+            |--------------------------------------------------------------------------
+            */
+
             Route::resource('about-sections', AboutSectionController::class);
             Route::resource('travel-support', TravelSupportSectionController::class);
             Route::resource('why-choose-sections', WhyChooseSectionController::class);
-
             Route::resource('heroes', HeroController::class)->except('show');
             Route::resource('page-banners', PageBannerController::class)->except('show');
             Route::resource('categories', CategoryController::class)->except('show');
@@ -124,13 +138,27 @@ Route::prefix('admin')
             Route::resource('our-processes', OurProcessController::class);
             Route::resource('counters', CounterController::class);
             Route::resource('services', ServiceController::class);
-            Route::resource('what-we-offers', WhatWeOfferController::class);
-            Route::resource('about-our-core-values', AboutOurCoreValueController::class);
-            Route::resource('about-why-choose-us', AboutWhyChooseUsController::class);
+            Route::resource('what-we-offers', WhatWeOfferController::class)
+                ->parameters(['what-we-offers' => 'whatWeOffer'])
+                ->except('show');
+            Route::resource('about-our-core-values', AboutOurCoreValueController::class)
+                ->parameters(['about-our-core-values' => 'aboutOurCoreValue'])
+                ->except('show');
+            Route::resource('about-why-choose-us', AboutWhyChooseUsController::class)
+                ->parameters(['about-why-choose-us' => 'aboutWhyChooseUs'])
+                ->except('show');
             Route::resource('core-values', CoreValueController::class);
             Route::resource('tour-types', TourTypeController::class);
             Route::resource('tours', TourController::class);
             Route::resource('tour-inquiries', TourInquiryController::class)->except(['create', 'store', 'edit']);
+            Route::resource('tour-details', TourDetailController::class);
+            Route::resource('tour-features', TourFeatureController::class);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Logout
+            |--------------------------------------------------------------------------
+            */
 
             Route::post('/logout', [
                 AuthController::class,
