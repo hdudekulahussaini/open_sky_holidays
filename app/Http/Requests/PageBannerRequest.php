@@ -86,9 +86,8 @@ class PageBannerRequest extends FormRequest
             ],
 
             'image' => [
-                $imageRequired ? 'required' : 'nullable',
-                'image',
-                'mimes:jpg,jpeg,png,webp',
+                'nullable',
+                'file',
             ],
 
             'status' => [
@@ -101,62 +100,43 @@ class PageBannerRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'page.required' =>
-                'Please enter the page name.',
+            'page.required' => 'Please enter the page name.',
 
-            'page.string' =>
-                'The page name must be valid text.',
+            'page.string' => 'The page name must be valid text.',
 
-            'page.max' =>
-                'The page name must not exceed 100 characters.',
+            'page.max' => 'The page name must not exceed 100 characters.',
 
-            'page.unique' =>
-                'A banner already exists for this page.',
+            'page.unique' => 'A banner already exists for this page.',
 
-            'label.string' =>
-                'The small label must be valid text.',
+            'label.string' => 'The small label must be valid text.',
 
-            'label.max' =>
-                'The small label must not exceed 100 characters.',
+            'label.max' => 'The small label must not exceed 100 characters.',
 
-            'title.required' =>
-                'Please enter the banner title.',
+            'title.required' => 'Please enter the banner title.',
 
-            'title.string' =>
-                'The banner title must be valid text.',
+            'title.string' => 'The banner title must be valid text.',
 
-            'title.max' =>
-                'The banner title must not exceed 255 characters.',
+            'title.max' => 'The banner title must not exceed 255 characters.',
 
-            'description.string' =>
-                'The description must be valid text.',
+            'description.string' => 'The description must be valid text.',
 
-            'description.max' =>
-                'The description must not exceed 2000 characters.',
+            'description.max' => 'The description must not exceed 2000 characters.',
 
-            'breadcrumb_title.string' =>
-                'The breadcrumb title must be valid text.',
+            'breadcrumb_title.string' => 'The breadcrumb title must be valid text.',
 
-            'breadcrumb_title.max' =>
-                'The breadcrumb title must not exceed 255 characters.',
+            'breadcrumb_title.max' => 'The breadcrumb title must not exceed 255 characters.',
 
-            'image.required' =>
-                'Please select a banner image.',
+            'image.required' => 'Please select a banner image.',
 
-            'image.image' =>
-                'The selected file must be an image.',
+            'image.image' => 'The selected file must be an image.',
 
-            'image.mimes' =>
-                'The image must be JPG, JPEG, PNG or WEBP.',
+            'image.mimes' => 'The image must be JPG, JPEG, PNG or WEBP.',
 
-            'image.max' =>
-                'The image size must not exceed 5 MB.',
+            'image.max' => 'The image size must not exceed 5 MB.',
 
-            'status.required' =>
-                'Please select the banner status.',
+            'status.required' => 'Please select the banner status.',
 
-            'status.boolean' =>
-                'The status must be 1 or 0.',
+            'status.boolean' => 'The status must be 1 or 0.',
         ];
     }
 }

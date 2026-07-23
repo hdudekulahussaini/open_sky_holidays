@@ -27,7 +27,6 @@ class AboutSectionResource extends JsonResource
                         'location_name' => $location->location_name,
                         'latitude' => (float) $location->latitude,
                         'longitude' => (float) $location->longitude,
-                        'destination_url' => $location->destination_url,
                     ]
                 )
             ),

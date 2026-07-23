@@ -15,7 +15,6 @@
                         'location_name' => $location->location_name,
                         'latitude' => $location->latitude,
                         'longitude' => $location->longitude,
-                        'destination_url' => $location->destination_url,
                     ];
                 })
                 ->toArray()
@@ -28,7 +27,6 @@
                     'location_name' => '',
                     'latitude' => '',
                     'longitude' => '',
-                    'destination_url' => '',
                 ],
             ];
         }
@@ -313,8 +311,7 @@
                             <h4>Globe Locations</h4>
 
                             <p>
-                                Update location names, coordinates and
-                                destination links for the interactive globe.
+                                Update location names and coordinates for the interactive globe.
                             </p>
                         </div>
 
@@ -462,34 +459,7 @@
 
                                     </div>
 
-                                    {{-- Destination URL --}}
-                                    <div class="admin-form-group">
 
-                                        <label>
-                                            Destination URL or Slug
-                                        </label>
-
-                                        <input
-                                            type="text"
-                                            name="locations[{{ $index }}][destination_url]"
-                                            class="admin-form-control
-                                                @error("locations.$index.destination_url")
-                                                    is-invalid
-                                                @enderror"
-                                            value="{{ old(
-                                                "locations.$index.destination_url",
-                                                $location['destination_url'] ?? ''
-                                            ) }}"
-                                            placeholder="/destinations/uae"
-                                        >
-
-                                        @error("locations.$index.destination_url")
-                                            <span class="admin-form-error">
-                                                {{ $message }}
-                                            </span>
-                                        @enderror
-
-                                    </div>
 
                                 </div>
 
@@ -906,20 +876,7 @@
 
                             </div>
 
-                            <div class="admin-form-group">
 
-                                <label>
-                                    Destination URL or Slug
-                                </label>
-
-                                <input
-                                    type="text"
-                                    name="locations[${locationIndex}][destination_url]"
-                                    class="admin-form-control"
-                                    placeholder="/destinations/uae"
-                                >
-
-                            </div>
 
                         </div>
 

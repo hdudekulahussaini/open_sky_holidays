@@ -34,8 +34,7 @@ class OfferBannerRequest extends FormRequest
 
             'image' => [
                 'nullable',
-                'image',
-                'mimes:jpg,jpeg,png,webp',
+                'file',
             ],
 
             'status' => [
