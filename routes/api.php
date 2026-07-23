@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\Api\AboutOurCoreValueController;
 use App\Http\Controllers\Api\AboutSectionController;
+use App\Http\Controllers\Api\AboutWhyChooseUsController;
 use App\Http\Controllers\Api\AdventureCategoryController;
 use App\Http\Controllers\Api\AdventureController;
 use App\Http\Controllers\Api\BlogController;
+use App\Http\Controllers\Api\CoreValueController;
 use App\Http\Controllers\Api\CounterController;
 use App\Http\Controllers\Api\EnquiryController;
 use App\Http\Controllers\Api\HeroController;
@@ -13,14 +16,13 @@ use App\Http\Controllers\Api\OurStoryController;
 use App\Http\Controllers\Api\PageBannerController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\TestimonialController;
+use App\Http\Controllers\Api\TourController;
+use App\Http\Controllers\Api\TourDetailController;
+use App\Http\Controllers\Api\TourFeatureController;
+use App\Http\Controllers\Api\TourTypeController;
 use App\Http\Controllers\Api\TravelSupportSectionController;
 use App\Http\Controllers\Api\WhatWeOfferController;
 use App\Http\Controllers\Api\WhyChooseSectionController;
-use App\Http\Controllers\Api\TourTypeController;
-use App\Http\Controllers\Api\TourController;
-use App\Http\Controllers\Api\TourDetailController;
-use App\Http\Controllers\Api\AboutWhyChooseUsController;
-use App\Http\Controllers\Api\AboutOurCoreValueController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -181,18 +183,20 @@ Route::apiResource(
 )->parameters([
     'what-we-offers' => 'whatWeOffer',
 ]);
+
 /*
 |--------------------------------------------------------------------------
-| About-Why-Choose-Us
+| About Why Choose Us
 |--------------------------------------------------------------------------
 */
+
 Route::apiResource(
     'about-why-choose-us',
     AboutWhyChooseUsController::class
 )->parameters([
-    'about-why-choose-us' =>
-    'aboutWhyChooseUs',
+    'about-why-choose-us' => 'aboutWhyChooseUs',
 ]);
+
 /*
 |--------------------------------------------------------------------------
 | About Our Core Values
@@ -203,8 +207,7 @@ Route::apiResource(
     'about-our-core-values',
     AboutOurCoreValueController::class
 )->parameters([
-    'about-our-core-values' =>
-    'aboutOurCoreValue',
+    'about-our-core-values' => 'aboutOurCoreValue',
 ]);
 
 /*
@@ -217,19 +220,33 @@ Route::apiResource(
     'testimonials',
     TestimonialController::class
 );
-Route::get(
-    'our-processes/active',
-    [OurProcessController::class, 'active']
-)->name('our-processes.active');
+
+/*
+|--------------------------------------------------------------------------
+| Our Processes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('our-processes/active', [
+    OurProcessController::class,
+    'active',
+])->name('our-processes.active');
 
 Route::apiResource(
     'our-processes',
     OurProcessController::class
 );
+
+/*
+|--------------------------------------------------------------------------
+| Other API Resources
+|--------------------------------------------------------------------------
+*/
+
+Route::apiResource('core-values', CoreValueController::class);
 Route::apiResource('counters', CounterController::class);
 Route::apiResource('services', ServiceController::class);
 Route::apiResource('tour-types', TourTypeController::class);
-
 Route::apiResource('tours', TourController::class);
-
 Route::apiResource('tour-details', TourDetailController::class);
+Route::apiResource('tour-features', TourFeatureController::class);

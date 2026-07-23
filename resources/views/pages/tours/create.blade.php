@@ -19,11 +19,9 @@
         </div>
     @endif
 
-    <div class="admin-card">
-        <form action="{{ route('admin.tours.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+    <form action="{{ route('admin.tours.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
 
-            @include('pages.tours.form')
-        </form>
-    </div>
+        @include('pages.tours.form')
+    </form>
 @endsection

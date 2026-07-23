@@ -102,17 +102,14 @@ class TourDetailController extends Controller
     /**
      * Show the edit form.
      */
-    public function edit(
-        TourDetail $tourDetail
-    ): View {
-        $tourDetail->load('tour.tourType');
-
+    public function edit(TourDetail $tourDetail): View
+    {
         $tours = Tour::query()
             ->with('tourType')
             ->where(function ($query) use ($tourDetail) {
                 $query
                     ->whereDoesntHave('detail')
-                    ->orWhereKey($tourDetail->tour_id);
+                    ->orWhere('id', $tourDetail->tour_id);
             })
             ->orderBy('title')
             ->get();

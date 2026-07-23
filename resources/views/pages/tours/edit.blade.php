@@ -19,12 +19,10 @@
         </div>
     @endif
 
-    <div class="admin-card">
-        <form action="{{ route('admin.tours.update', $tour) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
+    <form action="{{ route('admin.tours.update', $tour) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
 
-            @include('pages.tours.form')
-        </form>
-    </div>
+        @include('pages.tours.form')
+    </form>
 @endsection
