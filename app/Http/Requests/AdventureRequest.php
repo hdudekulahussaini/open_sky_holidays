@@ -67,14 +67,12 @@ class AdventureRequest extends FormRequest
                 'nullable',
                 'image',
                 'mimes:jpg,jpeg,png,webp',
-                'max:5120',
             ],
 
             'image_two' => [
                 'nullable',
                 'image',
                 'mimes:jpg,jpeg,png,webp',
-                'max:5120',
             ],
 
             'status' => [

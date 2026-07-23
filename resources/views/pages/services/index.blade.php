@@ -18,11 +18,6 @@
         </a>
     </div>
 
-    @if (session('success'))
-        <div class="alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
 
     <div class="table-card">
         <div class="table-responsive">

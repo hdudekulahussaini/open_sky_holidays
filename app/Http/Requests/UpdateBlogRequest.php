@@ -116,7 +116,6 @@ class UpdateBlogRequest extends FormRequest
                 'nullable',
                 'image',
                 'mimes:jpg,jpeg,png,webp',
-                'max:4096',
             ],
 
             'read_time' => [
@@ -177,8 +176,6 @@ class UpdateBlogRequest extends FormRequest
             'featured_image.mimes' =>
                 'Image must be JPG, JPEG, PNG or WEBP.',
 
-            'featured_image.max' =>
-                'Image size must not exceed 4 MB.',
 
             'read_time.required' =>
                 'Reading time is required.',

@@ -36,12 +36,6 @@
     </div>
 
 
-    {{-- Success Message --}}
-    @if(session('success'))
-        <div class="ts-alert ts-alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
 
 
     {{-- List Card --}}

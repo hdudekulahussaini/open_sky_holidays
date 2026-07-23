@@ -25,11 +25,12 @@
                     <div class="card-body p-4">
 
                         <div class="text-center mb-4">
-                            <h2 class="fw-bold">
+                            <img src="{{ asset('assets/admin/images/logo.png') }}" alt="Open Sky Holidays Logo" class="img-fluid mb-2" style="max-height: 60px;">
+                            <h2 class="fw-bold fs-4">
                                 Admin Login
                             </h2>
 
-                            <p class="text-muted mb-0">
+                            <p class="text-muted mb-0 small">
                                 Open Sky Holidays
                             </p>
                         </div>

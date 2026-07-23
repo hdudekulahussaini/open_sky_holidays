@@ -12,14 +12,6 @@ return new class extends Migration
             $table->id();
             $table->string('heading');
             $table->longText('description')->nullable();
-
-            /*
-             * Example:
-             * [
-             *     "our-stories/image-1.jpg",
-             *     "our-stories/image-2.jpg"
-             * ]
-             */
             $table->json('images')->nullable();
 
             /*

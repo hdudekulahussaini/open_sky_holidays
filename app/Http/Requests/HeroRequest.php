@@ -36,7 +36,6 @@ class HeroRequest extends FormRequest
                 'nullable',
                 'image',
                 'mimes:jpg,jpeg,png,webp',
-                'max:5120',
             ],
 
             'status' => [
