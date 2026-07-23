@@ -1,0 +1,50 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('tours', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('tour_type_id')
+                ->constrained('tour_types')
+                ->cascadeOnUpdate()
+                ->restrictOnDelete();
+
+            $table->string('title');
+
+            $table->string('slug')
+                ->unique();
+
+            $table->string('country');
+
+            $table->string('duration');
+
+            $table->string('thumbnail');
+
+            $table->boolean('status')
+                ->default(true);
+
+            $table->timestamps();
+
+            $table->index('tour_type_id');
+            $table->index('status');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('tours');
+    }
+};

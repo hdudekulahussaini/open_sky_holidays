@@ -8,7 +8,7 @@
                     'heading' => '',
                     'sub_heading' => '',
                 ],
-            ]
+            ],
     );
 
     $existingImages = $ourStory->images ?? [];
@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const previewContainer = document.getElementById('storyImagePreview');
     const removedImagesContainer = document.getElementById('removedImagesContainer');
 
-    let selectedFiles = [];
+            let selectedFiles = [];
 
     function getExistingImageCount() {
         return previewContainer.querySelectorAll('.existing-image').length;
@@ -228,8 +228,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function renderSelectedImages() {
         previewContainer.querySelectorAll('.new-image').forEach(item => item.remove());
 
-        selectedFiles.forEach(function (file, index) {
-            const reader = new FileReader();
+                selectedFiles.forEach(function(file, index) {
+                    const reader = new FileReader();
 
             reader.onload = function (event) {
                 const item = document.createElement('div');
@@ -241,11 +241,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 previewContainer.appendChild(item);
             };
 
-            reader.readAsDataURL(file);
-        });
+                    reader.readAsDataURL(file);
+                });
 
-        updateFileInput();
-    }
+                updateFileInput();
+            }
 
     function updateFileInput() {
         const dataTransfer = new DataTransfer();
@@ -257,11 +257,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const incomingFiles = Array.from(imageInput.files);
         const availableSlots = maxImages - getExistingImageCount() - selectedFiles.length;
 
-        if (availableSlots <= 0) {
-            alert('You can upload a maximum of 3 images.');
-            imageInput.value = '';
-            return;
-        }
+                if (availableSlots <= 0) {
+                    alert('You can upload a maximum of 3 images.');
+                    imageInput.value = '';
+                    return;
+                }
 
         if (incomingFiles.length > availableSlots) {
             alert(`You can select only ${availableSlots} more image(s).`);
@@ -276,8 +276,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        renderSelectedImages();
-    });
+                renderSelectedImages();
+            });
 
     previewContainer.addEventListener('click', function (event) {
         const newImageRemoveButton = event.target.closest('.remove-new-image');
@@ -326,7 +326,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const featureItem = document.createElement('div');
         featureItem.className = 'feature-item';
 
-        featureItem.innerHTML = `
+                featureItem.innerHTML = `
             <div class="feature-item-header">
                 <strong class="feature-number">Feature ${featureIndex + 1}</strong>
                 <button type="button" class="remove-feature-button" aria-label="Remove feature">&times;</button>
@@ -345,8 +345,8 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
         `;
 
-        featuresContainer.appendChild(featureItem);
-    });
+                featuresContainer.appendChild(featureItem);
+            });
 
     featuresContainer.addEventListener('click', function (event) {
         const removeButton = event.target.closest('.remove-feature-button');
@@ -362,7 +362,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateFeatureIndexes();
     });
 
-    updateFeatureIndexes();
-});
-</script>
+            updateFeatureIndexes();
+        });
+    </script>
 @endpush

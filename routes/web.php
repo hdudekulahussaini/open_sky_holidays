@@ -20,6 +20,9 @@ use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\TravelSupportSectionController;
 use App\Http\Controllers\Admin\WhatWeOfferController;
 use App\Http\Controllers\Admin\WhyChooseSectionController;
+use App\Http\Controllers\Admin\TourTypeController;
+use App\Http\Controllers\Admin\TourController;
+use App\Http\Controllers\Admin\TourDetailController;
 use App\Http\Controllers\Admin\AboutWhyChooseUsController;
 use App\Http\Controllers\Admin\AboutOurCoreValueController;
 use Illuminate\Support\Facades\Route;
@@ -214,6 +217,10 @@ Route::prefix('admin')
             );
             Route::resource('counters', CounterController::class);
             Route::resource('services', ServiceController::class);
+            Route::resource('tour-types', TourTypeController::class);
+            Route::resource('tours', TourController::class);
+            Route::resource('tour-details', TourDetailController::class);
+
 
             /*
             |--------------------------------------------------------------------------
