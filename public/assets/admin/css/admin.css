@@ -4410,6 +4410,13 @@ input[type="file"].admin-form-control {
     border-color: #ef4444;
 }
 
+.story-feature-more{
+    list-style:none;
+    margin-left:-18px;
+    color:#2563eb;
+    font-weight:600;
+    font-size:13px;
+}
 .service-form-page .form-actions {
     display: flex;
     align-items: center;
@@ -4931,3 +4938,4 @@ input[type="file"].admin-form-control {
         align-items: stretch;
     }
 }
+

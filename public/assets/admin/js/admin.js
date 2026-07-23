@@ -174,6 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+
 // Services Repeaters Management
 document.addEventListener('DOMContentLoaded', function () {
     function setupSimpleRepeater(containerId, addBtnId, inputName, placeholder) {
@@ -292,4 +293,5 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
 

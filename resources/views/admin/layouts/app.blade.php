@@ -30,9 +30,7 @@
         @include('admin.layouts.sidebar')
 
         {{-- Mobile dark overlay --}}
-        <div
-            class="sidebar-overlay"
-            id="sidebarOverlay"></div>
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
         <main class="main-content">
 
