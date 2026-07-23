@@ -20,11 +20,6 @@ class UpdateTourInquiryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:30',
-            'email' => 'required|email|max:255',
-            'travel_date' => 'required|date',
-            'travelers' => 'required|integer|min:1',
             'status' => 'required|string|in:new,contacted,closed',
         ];
     }

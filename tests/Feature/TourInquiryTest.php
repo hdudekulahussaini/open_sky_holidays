@@ -98,26 +98,19 @@ test('admin can access and manage tour inquiries via dashboard', function () {
         ->assertSee('Jane Smith')
         ->assertSee('+971507654321');
 
-    // edit
-    $response = $this->actingAs($admin)->get("/admin/tour-inquiries/{$inquiry->id}/edit");
-    $response->assertStatus(200)
-        ->assertSee('Jane Smith');
-
     // update
     $payload = [
-        'name' => 'Jane Smith Updated',
-        'phone' => '+971507654322',
-        'email' => 'jane-updated@example.com',
-        'travel_date' => now()->addDays(12)->format('Y-m-d'),
-        'travelers' => 4,
         'status' => 'contacted',
     ];
-    $response = $this->actingAs($admin)->put("/admin/tour-inquiries/{$inquiry->id}", $payload);
-    $response->assertRedirect('/admin/tour-inquiries');
+    $response = $this->actingAs($admin)
+        ->from("/admin/tour-inquiries/{$inquiry->id}")
+        ->put("/admin/tour-inquiries/{$inquiry->id}", $payload);
+
+    $response->assertRedirect("/admin/tour-inquiries/{$inquiry->id}");
 
     $this->assertDatabaseHas('tour_inquiries', [
         'id' => $inquiry->id,
-        'name' => 'Jane Smith Updated',
+        'name' => 'Jane Smith', // remains unchanged
         'status' => 'contacted',
     ]);
 

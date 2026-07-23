@@ -130,7 +130,7 @@ Route::prefix('admin')
             Route::resource('core-values', CoreValueController::class);
             Route::resource('tour-types', TourTypeController::class);
             Route::resource('tours', TourController::class);
-            Route::resource('tour-inquiries', TourInquiryController::class);
+            Route::resource('tour-inquiries', TourInquiryController::class)->except(['create', 'store', 'edit']);
 
             Route::post('/logout', [
                 AuthController::class,
