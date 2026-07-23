@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Storage;
 
 class Tour extends Model
 {
@@ -25,6 +26,33 @@ class Tour extends Model
     protected $casts = [
         'status' => 'boolean',
     ];
+
+    protected static function booted(): void
+    {
+        static::deleting(function (Tour $tour) {
+            $filesToDelete = [];
+
+            if ($tour->thumbnail) {
+                $filesToDelete[] = $tour->thumbnail;
+            }
+
+            $tour->load(['gallery', 'placesCovered']);
+
+            foreach ($tour->gallery as $img) {
+                $filesToDelete[] = $img->image;
+            }
+
+            foreach ($tour->placesCovered as $place) {
+                if ($place->image) {
+                    $filesToDelete[] = $place->image;
+                }
+            }
+
+            foreach ($filesToDelete as $file) {
+                Storage::disk('public')->delete($file);
+            }
+        });
+    }
 
     /**
      * A tour belongs to one tour type.

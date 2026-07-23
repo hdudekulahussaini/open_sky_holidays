@@ -221,3 +221,36 @@ test('can delete tour via API', function () {
     $this->assertDatabaseMissing('tour_images', ['tour_id' => $tour->id]);
     $this->assertDatabaseMissing('tour_features', ['tour_id' => $tour->id]);
 });
+
+test('deleting a tour type automatically deletes all related tours and triggers their file deletions', function () {
+    Storage::fake('public');
+
+    $tourType = TourType::create(['name' => 'Adventure', 'slug' => 'adventure']);
+    $tour = Tour::create([
+        'tour_type_id' => $tourType->id,
+        'title' => 'Delete Me With Type',
+        'slug' => 'delete-me-with-type',
+        'country' => 'UAE',
+        'duration' => '5 Hours',
+        'thumbnail' => 'tours/test.jpg',
+        'status' => true,
+    ]);
+
+    $tour->detail()->create(['heading' => 'H', 'description' => 'D']);
+    $tour->gallery()->create(['image' => 'tour-details/gallery/del.jpg']);
+    $tour->features()->create([
+        'type' => TourFeature::TYPE_PACKAGE_INCLUSION,
+        'title' => 'Inclusion',
+        'status' => 'active',
+    ]);
+
+    // Delete the TourType
+    $tourType->delete();
+
+    // Assert everything is gone from DB
+    $this->assertDatabaseMissing('tour_types', ['id' => $tourType->id]);
+    $this->assertDatabaseMissing('tours', ['id' => $tour->id]);
+    $this->assertDatabaseMissing('tour_details', ['tour_id' => $tour->id]);
+    $this->assertDatabaseMissing('tour_images', ['tour_id' => $tour->id]);
+    $this->assertDatabaseMissing('tour_features', ['tour_id' => $tour->id]);
+});
