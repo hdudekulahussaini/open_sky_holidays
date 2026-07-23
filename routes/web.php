@@ -18,10 +18,13 @@ use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\TravelSupportSectionController;
+use App\Http\Controllers\Admin\WhatWeOfferController;
 use App\Http\Controllers\Admin\WhyChooseSectionController;
 use App\Http\Controllers\Admin\TourTypeController;
 use App\Http\Controllers\Admin\TourController;
 use App\Http\Controllers\Admin\TourDetailController;
+use App\Http\Controllers\Admin\AboutWhyChooseUsController;
+use App\Http\Controllers\Admin\AboutOurCoreValueController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin/login');
@@ -54,11 +57,27 @@ Route::prefix('admin')
         |--------------------------------------------------------------------------
         */
 
-        Route::middleware(['auth', 'admin'])->group(function () {
+        Route::middleware([
+            'auth',
+            'admin',
+        ])->group(function () {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Dashboard
+            |--------------------------------------------------------------------------
+            */
+
             Route::get('/dashboard', [
                 DashboardController::class,
                 'index',
             ])->name('dashboard');
+
+            /*
+            |--------------------------------------------------------------------------
+            | Enquiries
+            |--------------------------------------------------------------------------
+            */
 
             Route::get('/enquiries', [
                 EnquiryController::class,
@@ -70,63 +89,123 @@ Route::prefix('admin')
                 'show',
             ])->name('enquiries.show');
 
-            Route::resource(
-                'about-sections',
-                AboutSectionController::class
-            );
-            Route::resource(
-                'travel-support',
-                TravelSupportSectionController::class
-            );
-            Route::resource(
-                'why-choose-sections',
-                WhyChooseSectionController::class
-            );
-            Route::patch('/enquiries/{enquiry}/status', [
-                EnquiryController::class,
-                'updateStatus',
-            ])->name('enquiries.status');
+            Route::patch(
+                '/enquiries/{enquiry}/status',
+                [
+                    EnquiryController::class,
+                    'updateStatus',
+                ]
+            )->name('enquiries.status');
 
             Route::delete('/enquiries/{enquiry}', [
                 EnquiryController::class,
                 'destroy',
             ])->name('enquiries.destroy');
 
-            Route::resource('heroes', HeroController::class)
-                ->except('show');
+            /*
+            |--------------------------------------------------------------------------
+            | About Sections
+            |--------------------------------------------------------------------------
+            */
 
-            Route::resource('page-banners', PageBannerController::class)->except('show');
+            Route::resource(
+                'about-sections',
+                AboutSectionController::class
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | Travel Support
+            |--------------------------------------------------------------------------
+            */
+
+            Route::resource(
+                'travel-support',
+                TravelSupportSectionController::class
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | Why Choose Us
+            |--------------------------------------------------------------------------
+            */
+
+            Route::resource(
+                'why-choose-sections',
+                WhyChooseSectionController::class
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | Hero Slides
+            |--------------------------------------------------------------------------
+            */
+
+            Route::resource(
+                'heroes',
+                HeroController::class
+            )->except('show');
+
+            /*
+            |--------------------------------------------------------------------------
+            | Page Banners
+            |--------------------------------------------------------------------------
+            */
+
+            Route::resource(
+                'page-banners',
+                PageBannerController::class
+            )->except('show');
+
+            /*
+            |--------------------------------------------------------------------------
+            | Blog Categories
+            |--------------------------------------------------------------------------
+            */
+
             Route::resource(
                 'categories',
                 CategoryController::class
             )->except('show');
+
+            /*
+            |--------------------------------------------------------------------------
+            | Testimonials
+            |--------------------------------------------------------------------------
+            */
+
             Route::resource(
                 'testimonials',
                 TestimonialController::class
             );
 
+            /*
+            |--------------------------------------------------------------------------
+            | Blog Authors
+            |--------------------------------------------------------------------------
+            */
+
             Route::resource(
                 'authors',
                 AuthorController::class
             )->except('show');
-            Route::resource(
-                'adventure-categories',
-                AdventureCategoryController::class
-            )->except('show');
 
-            Route::resource(
-                'adventures',
-                AdventureController::class
-            )->except('show');
-            Route::resource(
-                'offer-banners',
-                OfferBannerController::class
-            )->except('show');
+            /*
+            |--------------------------------------------------------------------------
+            | Blogs
+            |--------------------------------------------------------------------------
+            */
 
             Route::resource(
                 'blogs',
                 BlogController::class
             )->except('show');
+
+            /*
+            |--------------------------------------------------------------------------
+            | Our Stories
+            |--------------------------------------------------------------------------
+            */
 
             Route::resource(
                 'our-stories',
@@ -142,6 +221,89 @@ Route::prefix('admin')
             Route::resource('tours', TourController::class);
             Route::resource('tour-details', TourDetailController::class);
 
+
+            /*
+            |--------------------------------------------------------------------------
+            | Offer Banners
+            |--------------------------------------------------------------------------
+            */
+
+            Route::resource(
+                'offer-banners',
+                OfferBannerController::class
+            )->except('show');
+
+            /*
+            |--------------------------------------------------------------------------
+            | Adventure Categories
+            |--------------------------------------------------------------------------
+            */
+
+            Route::resource(
+                'adventure-categories',
+                AdventureCategoryController::class
+            )->except('show');
+
+            /*
+            |--------------------------------------------------------------------------
+            | Adventures
+            |--------------------------------------------------------------------------
+            */
+
+            Route::resource(
+                'adventures',
+                AdventureController::class
+            )->except('show');
+
+            /*
+            |--------------------------------------------------------------------------
+            | What We Offer
+            |--------------------------------------------------------------------------
+            */
+
+            Route::resource(
+                'what-we-offers',
+                WhatWeOfferController::class
+            )
+                ->parameters([
+                    'what-we-offers' => 'whatWeOffer',
+                ])
+                ->except('show');
+            /*
+            |--------------------------------------------------------------------------
+            | About-Why-Choose-Us
+            |--------------------------------------------------------------------------
+            */
+
+            Route::resource(
+                'about-why-choose-us',
+                AboutWhyChooseUsController::class
+            )
+                ->parameters([
+                    'about-why-choose-us' =>
+                    'aboutWhyChooseUs',
+                ])
+                ->except('show');
+             /*
+            |--------------------------------------------------------------------------
+            | About-Our-Core-Values
+            |--------------------------------------------------------------------------
+            */
+            Route::resource(
+                'about-our-core-values',
+                AboutOurCoreValueController::class
+            )
+                ->parameters([
+                    'about-our-core-values' =>
+                    'aboutOurCoreValue',
+                ])
+                ->except('show');
+
+            /*
+            |--------------------------------------------------------------------------
+            | Logout
+            |--------------------------------------------------------------------------
+            */
 
             Route::post('/logout', [
                 AuthController::class,
