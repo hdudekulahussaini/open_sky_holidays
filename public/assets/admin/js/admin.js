@@ -172,8 +172,126 @@ document.addEventListener("DOMContentLoaded", function () {
             .replace(/^-+/, "")             // Trim - from start
             .replace(/-+$/, "");            // Trim - from end
     }
-<<<<<<< HEAD
 });
-=======
+
+
+// Services Repeaters Management
+document.addEventListener('DOMContentLoaded', function () {
+    function setupSimpleRepeater(containerId, addBtnId, inputName, placeholder) {
+        const container = document.getElementById(containerId);
+        const addBtn = document.getElementById(addBtnId);
+
+        if (!container || !addBtn) return;
+
+        addBtn.addEventListener('click', function () {
+            const row = document.createElement('div');
+            row.className = 'repeater-card inline-repeater';
+            row.innerHTML = `
+                <div class="inline-repeater-input">
+                    <input type="text" name="${inputName}" class="form-input" placeholder="${placeholder}">
+                </div>
+                <button type="button" class="remove-btn" title="Remove Item">&times;</button>
+            `;
+            container.appendChild(row);
+        });
+
+        container.addEventListener('click', function (e) {
+            const removeBtn = e.target.closest('.remove-btn');
+            if (removeBtn) {
+                const rows = container.querySelectorAll('.inline-repeater');
+                if (rows.length > 1) {
+                    removeBtn.closest('.inline-repeater').remove();
+                } else {
+                    const input = removeBtn.closest('.inline-repeater').querySelector('input');
+                    if (input) input.value = '';
+                }
+            }
+        });
+    }
+
+    setupSimpleRepeater('serviceItemsContainer', 'addServiceItemBtn', 'service_items[]', 'Enter service item name');
+    setupSimpleRepeater('documentsContainer', 'addDocumentBtn', 'documents[]', 'Enter document name');
+    setupSimpleRepeater('whyChooseContainer', 'addWhyChooseBtn', 'why_choose_items[]', 'Enter why choose point');
+
+    // Features Repeater
+    const featuresContainer = document.getElementById('featuresContainer');
+    const addFeatureBtn = document.getElementById('addFeatureBtn');
+
+    if (featuresContainer && addFeatureBtn) {
+        addFeatureBtn.addEventListener('click', function () {
+            const index = featuresContainer.querySelectorAll('.feature-row').length;
+            const card = document.createElement('div');
+            card.className = 'repeater-card feature-row';
+            card.innerHTML = `
+                <button type="button" class="remove-btn removeFeatureBtn" title="Remove Feature">&times;</button>
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label class="form-label">Feature Title <span class="required">*</span></label>
+                        <input type="text" name="features[${index}][title]" class="form-input" placeholder="Enter feature title" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label class="form-label">Feature Description</label>
+                        <input type="text" name="features[${index}][description]" class="form-input" placeholder="Enter feature description">
+                    </div>
+                </div>
+            `;
+            featuresContainer.appendChild(card);
+        });
+
+        featuresContainer.addEventListener('click', function (e) {
+            const removeBtn = e.target.closest('.removeFeatureBtn');
+            if (removeBtn) {
+                const rows = featuresContainer.querySelectorAll('.feature-row');
+                if (rows.length > 1) {
+                    removeBtn.closest('.feature-row').remove();
+                } else {
+                    removeBtn.closest('.feature-row').querySelectorAll('input').forEach(i => i.value = '');
+                }
+            }
+        });
+    }
+
+    // Process Steps Repeater
+    const stepsContainer = document.getElementById('processStepsContainer');
+    const addProcessStepBtn = document.getElementById('addProcessStepBtn');
+
+    if (stepsContainer && addProcessStepBtn) {
+        addProcessStepBtn.addEventListener('click', function () {
+            const index = stepsContainer.querySelectorAll('.step-row').length;
+            const card = document.createElement('div');
+            card.className = 'repeater-card step-row';
+            card.innerHTML = `
+                <button type="button" class="remove-btn removeStepBtn" title="Remove Step">&times;</button>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Step Icon / Number</label>
+                        <input type="text" name="process_steps[${index}][icon]" class="form-input" placeholder="e.g. 01">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Step Title <span class="required">*</span></label>
+                        <input type="text" name="process_steps[${index}][title]" class="form-input" placeholder="Enter step title" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label class="form-label">Step Description</label>
+                        <input type="text" name="process_steps[${index}][description]" class="form-input" placeholder="Enter step description">
+                    </div>
+                </div>
+            `;
+            stepsContainer.appendChild(card);
+        });
+
+        stepsContainer.addEventListener('click', function (e) {
+            const removeBtn = e.target.closest('.removeStepBtn');
+            if (removeBtn) {
+                const rows = stepsContainer.querySelectorAll('.step-row');
+                if (rows.length > 1) {
+                    removeBtn.closest('.step-row').remove();
+                } else {
+                    removeBtn.closest('.step-row').querySelectorAll('input').forEach(i => i.value = '');
+                }
+            }
+        });
+    }
 });
->>>>>>> 800a7cb6a12b351ec1f2c4bff661ce79728bbb36
+
+
