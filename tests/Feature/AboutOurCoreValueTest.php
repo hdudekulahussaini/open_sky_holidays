@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 test('edit page can be rendered for about our core values', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['is_admin' => true]);
 
     $coreValue = AboutOurCoreValue::create([
         'title' => 'Integrity',
@@ -22,7 +22,7 @@ test('edit page can be rendered for about our core values', function () {
 });
 
 test('core value can be updated', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['is_admin' => true]);
 
     $coreValue = AboutOurCoreValue::create([
         'title' => 'Integrity',

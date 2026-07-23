@@ -129,4 +129,9 @@ class Tour extends Model
             ->orderBy('sort_order')
             ->orderBy('id');
     }
+
+    public function tourInquiries(): HasMany
+    {
+        return $this->hasMany(TourInquiry::class);
+    }
 }
