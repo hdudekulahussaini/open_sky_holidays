@@ -121,14 +121,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const slugInput = document.getElementById("slug");
 
     if (titleInput && slugInput) {
-        let userEditedSlug = slugInput.value.trim() !== "";
+        let userManuallyEditedSlug = false;
 
         slugInput.addEventListener("input", function () {
-            userEditedSlug = slugInput.value.trim() !== "";
+            userManuallyEditedSlug = slugInput.value.trim() !== "";
         });
 
         titleInput.addEventListener("input", function () {
-            if (!userEditedSlug) {
+            if (!userManuallyEditedSlug || slugInput.value.trim() === "") {
                 slugInput.value = generateSlug(titleInput.value);
             }
         });
@@ -261,6 +261,28 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else {
                     removeBtn.closest(".step-row").querySelectorAll("input").forEach((i) => (i.value = ""));
                 }
+            }
+        });
+    }
+
+    // ------------------------------------------------------------------
+    // Topbar Profile Dropdown Toggle
+    // ------------------------------------------------------------------
+    const profileDropdown = document.getElementById("topbarProfileDropdown");
+    const profileToggle = document.getElementById("topbarProfileToggle");
+
+    if (profileDropdown && profileToggle) {
+        profileToggle.addEventListener("click", function (e) {
+            e.stopPropagation();
+            profileDropdown.classList.toggle("open");
+            const isOpen = profileDropdown.classList.contains("open");
+            profileToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        });
+
+        document.addEventListener("click", function (e) {
+            if (!profileDropdown.contains(e.target)) {
+                profileDropdown.classList.remove("open");
+                profileToggle.setAttribute("aria-expanded", "false");
             }
         });
     }

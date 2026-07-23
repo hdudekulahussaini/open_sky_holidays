@@ -17,11 +17,6 @@
             </a>
         </div>
 
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
 
         @if ($authors->count() > 0)
             <div class="table-responsive">

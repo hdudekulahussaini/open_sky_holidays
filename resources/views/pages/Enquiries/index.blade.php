@@ -146,13 +146,14 @@
                                 </span>
                             </td>
 
-                            <td>
+                            <td class="action-buttons">
                                 <a
                                     href="{{ route(
                                         'admin.enquiries.show',
                                         $enquiry
                                     ) }}"
                                     class="action-button"
+                                    title="View Enquiry"
                                 >
                                     <svg
                                         viewBox="0 0 24 24"
@@ -173,6 +174,37 @@
 
                                     View
                                 </a>
+
+                                <form
+                                    action="{{ route(
+                                        'admin.enquiries.destroy',
+                                        $enquiry
+                                    ) }}"
+                                    method="POST"
+                                    class="inline-form"
+                                    onsubmit="return confirm('Are you sure you want to delete this enquiry? This action cannot be undone.');"
+                                >
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button
+                                        type="submit"
+                                        class="action-button danger"
+                                        title="Delete Enquiry"
+                                    >
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                        >
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        </svg>
+
+                                        Delete
+                                    </button>
+                                </form>
                             </td>
                         </tr>
 

@@ -32,28 +32,6 @@
         </a>
     </div>
 
-    @if (session('success'))
-        <div
-            class="alert alert-success
-                   alert-dismissible fade show
-                   border-0 shadow-sm"
-            role="alert"
-        >
-            <i
-                class="fa-solid
-                       fa-circle-check me-2"
-            ></i>
-
-            {{ session('success') }}
-
-            <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-            ></button>
-        </div>
-    @endif
 
     <div class="card border-0 shadow-sm">
 
@@ -129,27 +107,9 @@
                                 </td>
 
                                 <td style="min-width: 200px;">
-                                    <div
-                                        class="d-flex
-                                               align-items-center
-                                               gap-3"
-                                    >
-                                        <div
-                                            class="core-value-letter"
-                                        >
-                                            {{ strtoupper(
-                                                substr(
-                                                    $coreValue->title,
-                                                    0,
-                                                    1
-                                                )
-                                            ) }}
-                                        </div>
-
-                                        <strong>
-                                            {{ $coreValue->title }}
-                                        </strong>
-                                    </div>
+                                    <strong>
+                                        {{ $coreValue->title }}
+                                    </strong>
                                 </td>
 
                                 <td style="min-width: 420px;">
@@ -274,19 +234,6 @@
 </div>
 
 <style>
-    .core-value-letter {
-        width: 42px;
-        height: 42px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        color: #0d6efd;
-        font-weight: 700;
-        background: #eaf3ff;
-        border: 1px solid #cfe2ff;
-        border-radius: 12px;
-    }
 
     .empty-state-icon {
         width: 72px;
