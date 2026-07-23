@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AboutOurCoreValueController;
 use App\Http\Controllers\Admin\AboutSectionController;
+use App\Http\Controllers\Admin\AboutWhyChooseUsController;
 use App\Http\Controllers\Admin\AdventureCategoryController;
 use App\Http\Controllers\Admin\AdventureController;
 use App\Http\Controllers\Admin\AuthController;
@@ -15,16 +17,15 @@ use App\Http\Controllers\Admin\OfferBannerController;
 use App\Http\Controllers\Admin\OurProcessController;
 use App\Http\Controllers\Admin\OurStoryController;
 use App\Http\Controllers\Admin\PageBannerController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\TourController;
+use App\Http\Controllers\Admin\TourDetailController;
+use App\Http\Controllers\Admin\TourTypeController;
 use App\Http\Controllers\Admin\TravelSupportSectionController;
 use App\Http\Controllers\Admin\WhatWeOfferController;
 use App\Http\Controllers\Admin\WhyChooseSectionController;
-use App\Http\Controllers\Admin\TourTypeController;
-use App\Http\Controllers\Admin\TourController;
-use App\Http\Controllers\Admin\TourDetailController;
-use App\Http\Controllers\Admin\AboutWhyChooseUsController;
-use App\Http\Controllers\Admin\AboutOurCoreValueController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin/login');
@@ -72,6 +73,22 @@ Route::prefix('admin')
                 DashboardController::class,
                 'index',
             ])->name('dashboard');
+
+            /*
+            |--------------------------------------------------------------------------
+            | Admin Profile
+            |--------------------------------------------------------------------------
+            */
+
+            Route::get('/profile', [
+                ProfileController::class,
+                'edit',
+            ])->name('profile.edit');
+
+            Route::put('/profile', [
+                ProfileController::class,
+                'update',
+            ])->name('profile.update');
 
             /*
             |--------------------------------------------------------------------------
@@ -221,7 +238,6 @@ Route::prefix('admin')
             Route::resource('tours', TourController::class);
             Route::resource('tour-details', TourDetailController::class);
 
-
             /*
             |--------------------------------------------------------------------------
             | Offer Banners
@@ -280,11 +296,10 @@ Route::prefix('admin')
                 AboutWhyChooseUsController::class
             )
                 ->parameters([
-                    'about-why-choose-us' =>
-                    'aboutWhyChooseUs',
+                    'about-why-choose-us' => 'aboutWhyChooseUs',
                 ])
                 ->except('show');
-             /*
+            /*
             |--------------------------------------------------------------------------
             | About-Our-Core-Values
             |--------------------------------------------------------------------------
@@ -294,8 +309,7 @@ Route::prefix('admin')
                 AboutOurCoreValueController::class
             )
                 ->parameters([
-                    'about-our-core-values' =>
-                    'aboutOurCoreValue',
+                    'about-our-core-values' => 'aboutOurCoreValue',
                 ])
                 ->except('show');
 
