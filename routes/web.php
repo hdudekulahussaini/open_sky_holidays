@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\TourController;
+use App\Http\Controllers\Admin\TourInquiryController;
 use App\Http\Controllers\Admin\TourDetailController;
 use App\Http\Controllers\Admin\TourFeatureController;
 use App\Http\Controllers\Admin\TourTypeController;
@@ -149,6 +150,7 @@ Route::prefix('admin')
             Route::resource('core-values', CoreValueController::class);
             Route::resource('tour-types', TourTypeController::class);
             Route::resource('tours', TourController::class);
+            Route::resource('tour-inquiries', TourInquiryController::class)->except(['create', 'store', 'edit']);
             Route::resource('tour-details', TourDetailController::class);
             Route::resource('tour-features', TourFeatureController::class);
 
