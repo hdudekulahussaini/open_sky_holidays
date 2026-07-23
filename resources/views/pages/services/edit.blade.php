@@ -108,14 +108,14 @@
 
         <!-- 4. Service Items -->
         <div class="form-section">
-            <div class="repeater-header">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
                 <div>
-                    <h3 class="section-title mb-0">Service Items</h3>
-                    <p class="section-subtitle">Add service items to list in about section</p>
+                    <h3 class="form-label fw-bold mb-1">Service Items</h3>
+                    <p class="small text-muted mb-0">Add or delete each service item separately.</p>
                 </div>
-                <button type="button" class="add-btn" id="addServiceItemBtn">+ Add Service Item</button>
+                <button type="button" class="btn btn-sm btn-primary" id="addServiceItemBtn">+ Add Service Item</button>
             </div>
-            <div id="serviceItemsContainer" class="repeater-list">
+            <div id="serviceItemsContainer">
                 @php 
                     $items = old('service_items', $service->service_items ?? []);
                     if (empty($items)) {
@@ -123,11 +123,18 @@
                     }
                 @endphp
                 @foreach ($items as $val)
-                    <div class="repeater-card inline-repeater service-item-row">
-                        <div class="inline-repeater-input">
-                            <input type="text" name="service_items[]" value="{{ is_array($val) ? ($val['title'] ?? '') : $val }}" class="form-input" placeholder="Enter service item name" required>
+                    <div class="service-item-row row g-2 align-items-start mb-3">
+                        <div class="col">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-check"></i></span>
+                                <input type="text" name="service_items[]" value="{{ is_array($val) ? ($val['title'] ?? '') : $val }}" class="form-control" placeholder="Enter service item name" required>
+                            </div>
                         </div>
-                        <button type="button" class="remove-btn removeServiceItemBtn" title="Remove Item">&times;</button>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-danger removeServiceItemBtn" title="Remove Item">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
                     </div>
                 @endforeach
             </div>
@@ -173,24 +180,31 @@
 
         <!-- 6. Required Documents -->
         <div class="form-section">
-            <div class="repeater-header">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
                 <div>
-                    <h3 class="section-title mb-0">Required Documents</h3>
-                    <p class="section-subtitle">Add required document items</p>
+                    <h3 class="form-label fw-bold mb-1">Required Documents</h3>
+                    <p class="small text-muted mb-0">Add or delete required document items separately.</p>
                 </div>
-                <button type="button" class="add-btn" id="addDocumentBtn">+ Add Document</button>
+                <button type="button" class="btn btn-sm btn-primary" id="addDocumentBtn">+ Add Document</button>
             </div>
-            <div id="documentsContainer" class="repeater-list">
+            <div id="documentsContainer">
                 @php 
                     $docs = old('documents', $service->documents ?? []);
                     if (empty($docs)) { $docs = ['']; }
                 @endphp
                 @foreach ($docs as $val)
-                    <div class="repeater-card inline-repeater doc-row">
-                        <div class="inline-repeater-input">
-                            <input type="text" name="documents[]" value="{{ $val }}" class="form-input" placeholder="Enter document name">
+                    <div class="doc-row row g-2 align-items-start mb-3">
+                        <div class="col">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-check"></i></span>
+                                <input type="text" name="documents[]" value="{{ $val }}" class="form-control" placeholder="Enter document name">
+                            </div>
                         </div>
-                        <button type="button" class="remove-btn removeDocBtn" title="Remove Document">&times;</button>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-danger removeDocBtn" title="Remove Document">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
                     </div>
                 @endforeach
             </div>
@@ -198,24 +212,31 @@
 
         <!-- 7. Why Choose Items -->
         <div class="form-section">
-            <div class="repeater-header">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
                 <div>
-                    <h3 class="section-title mb-0">Why Choose Us Items</h3>
-                    <p class="section-subtitle">Add why choose us points</p>
+                    <h3 class="form-label fw-bold mb-1">Why Choose Us Items</h3>
+                    <p class="small text-muted mb-0">Add or delete why choose us points separately.</p>
                 </div>
-                <button type="button" class="add-btn" id="addWhyChooseBtn">+ Add Item</button>
+                <button type="button" class="btn btn-sm btn-primary" id="addWhyChooseBtn">+ Add Item</button>
             </div>
-            <div id="whyChooseContainer" class="repeater-list">
+            <div id="whyChooseContainer">
                 @php 
-                    $why = old('why_choose_items', $service->why_choose_items ?? []);
-                    if (empty($why)) { $why = ['']; }
+                    $whyItems = old('why_choose_items', $service->why_choose_items ?? []);
+                    if (empty($whyItems)) { $whyItems = ['']; }
                 @endphp
-                @foreach ($why as $val)
-                    <div class="repeater-card inline-repeater why-row">
-                        <div class="inline-repeater-input">
-                            <input type="text" name="why_choose_items[]" value="{{ $val }}" class="form-input" placeholder="Enter why choose point">
+                @foreach ($whyItems as $val)
+                    <div class="why-row row g-2 align-items-start mb-3">
+                        <div class="col">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-check"></i></span>
+                                <input type="text" name="why_choose_items[]" value="{{ $val }}" class="form-control" placeholder="Enter why choose point">
+                            </div>
                         </div>
-                        <button type="button" class="remove-btn removeWhyBtn" title="Remove Item">&times;</button>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-danger removeWhyBtn" title="Remove Item">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
                     </div>
                 @endforeach
             </div>

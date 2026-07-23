@@ -1,195 +1,90 @@
 @extends('admin.layouts.app')
 
 @section('title', 'Why Choose Us')
+@section('page-title', 'Why Choose Us')
 
 @section('content')
-    <div class="ts-page-wrapper">
-
-        {{-- Page Header --}}
-        <div class="ts-page-header">
+    <div class="admin-card">
+        <div class="admin-card-header">
             <div>
-                <span class="ts-page-eyebrow">
-                    Website Content
-                </span>
-
-                <h1>Why Choose Us</h1>
-
-                <p>
-                    Manage the Why Choose Us sections displayed on the website.
-                </p>
+                <h3>Why Choose Us</h3>
+                <p>Manage the Why Choose Us sections displayed on the website.</p>
             </div>
 
-            <a
-                href="{{ route('admin.why-choose-sections.create') }}"
-                class="ts-primary-btn"
-            >
-                <span>+</span>
-                Add Why Choose Section
+            <a href="{{ route('admin.why-choose-sections.create') }}" class="btn btn-primary">
+                + Add Section
             </a>
         </div>
 
-
-        {{-- List Card --}}
-        <div class="ts-list-card">
-
-            <div class="ts-list-card-header">
-                <div>
-                    <h2>Why Choose Sections</h2>
-
-                    <p>
-                        Total records: {{ $whyChooseSections->total() }}
-                    </p>
-                </div>
+        @if ($whyChooseSections->count() > 0)
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Sort Order</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($whyChooseSections as $section)
+                            <tr>
+                                <td>#{{ $section->id }}</td>
+                                <td><strong>{{ $section->title }}</strong></td>
+                                <td>{{ \Illuminate\Support\Str::limit($section->description, 100) }}</td>
+                                <td>{{ $section->sort_order }}</td>
+                                <td>
+                                    <span class="status-badge {{ $section->status ? 'status-active' : 'status-inactive' }}">
+                                        {{ $section->status ? 'Active' : 'Inactive' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="table-actions">
+                                        <a href="{{ route('admin.why-choose-sections.edit', $section) }}" class="action-button action-edit">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M12 20h9"></path>
+                                                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"></path>
+                                            </svg>
+                                            Edit
+                                        </a>
+                                        <form action="{{ route('admin.why-choose-sections.destroy', $section) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this section?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="action-button action-delete">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                    <path d="M19 6l-1 14H6L5 6"></path>
+                                                    <path d="M10 11v6"></path>
+                                                    <path d="M14 11v6"></path>
+                                                    <path d="M9 6V4h6v2"></path>
+                                                </svg>
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
 
-            @if ($whyChooseSections->count() > 0)
-
-                <div class="ts-table-wrapper">
-                    <table class="ts-table">
-
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Content</th>
-                                <th>Sort Order</th>
-                                <th>Status</th>
-                                <th>Created</th>
-                                <th class="ts-action-column">
-                                    Actions
-                                </th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach ($whyChooseSections as $section)
-                                <tr>
-
-                                    {{-- ID --}}
-                                    <td>
-                                        #{{ $section->id }}
-                                    </td>
-
-                                    {{-- Content --}}
-                                    <td>
-                                        <div class="ts-content-cell">
-                                            <h3>
-                                                {{ $section->title }}
-                                            </h3>
-
-                                            <p>
-                                                {{ \Illuminate\Support\Str::limit(
-                                                    $section->description,
-                                                    100
-                                                ) }}
-                                            </p>
-                                        </div>
-                                    </td>
-
-                                    {{-- Sort Order --}}
-                                    <td>
-                                        {{ $section->sort_order }}
-                                    </td>
-
-                                    {{-- Status --}}
-                                    <td>
-                                        @if ($section->status)
-                                            <span class="ts-status-badge ts-active">
-                                                <span></span>
-                                                Active
-                                            </span>
-                                        @else
-                                            <span class="ts-status-badge ts-inactive">
-                                                <span></span>
-                                                Inactive
-                                            </span>
-                                        @endif
-                                    </td>
-
-                                    {{-- Created Date --}}
-                                    <td>
-                                        <span class="ts-date">
-                                            {{ $section->created_at?->format('d M Y') }}
-                                        </span>
-                                    </td>
-
-                                    {{-- Actions --}}
-                                    <td class="ts-action-column">
-                                        <div class="ts-actions">
-
-                                            <a
-                                                href="{{ route(
-                                                    'admin.why-choose-sections.edit',
-                                                    $section
-                                                ) }}"
-                                                class="ts-action-btn ts-edit-btn"
-                                            >
-                                                Edit
-                                            </a>
-
-                                            <form
-                                                action="{{ route(
-                                                    'admin.why-choose-sections.destroy',
-                                                    $section
-                                                ) }}"
-                                                method="POST"
-                                                onsubmit="return confirm(
-                                                    'Are you sure you want to delete this section?'
-                                                )"
-                                            >
-                                                @csrf
-                                                @method('DELETE')
-
-                                                <button
-                                                    type="submit"
-                                                    class="ts-action-btn ts-delete-btn"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </form>
-
-                                        </div>
-                                    </td>
-
-                                </tr>
-                            @endforeach
-                        </tbody>
-
-                    </table>
+            @if ($whyChooseSections->hasPages())
+                <div class="pagination-wrapper">
+                    {{ $whyChooseSections->links() }}
                 </div>
-
-                {{-- Pagination --}}
-                @if ($whyChooseSections->hasPages())
-                    <div class="ts-pagination">
-                        {{ $whyChooseSections->links() }}
-                    </div>
-                @endif
-
-            @else
-
-                {{-- Empty State --}}
-                <div class="ts-empty-state">
-
-                    <div class="ts-empty-icon">
-                        ✦
-                    </div>
-
-                    <h3>No Why Choose Us records</h3>
-
-                    <p>
-                        Create your first Why Choose Us section.
-                    </p>
-
-                    <a
-                        href="{{ route('admin.why-choose-sections.create') }}"
-                        class="ts-primary-btn"
-                    >
-                        Create Why Choose Section
-                    </a>
-
-                </div>
-
             @endif
-
-        </div>
+        @else
+            <div class="empty-table">
+                <strong>No sections found.</strong>
+                <p>Add your first Why Choose Us section.</p>
+                <a href="{{ route('admin.why-choose-sections.create') }}" class="btn btn-primary">
+                    Create Section
+                </a>
+            </div>
+        @endif
     </div>
 @endsection

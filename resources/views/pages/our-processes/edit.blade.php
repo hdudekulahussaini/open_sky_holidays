@@ -1,26 +1,30 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Edit Our Process')
+@section('title', 'Edit Process')
+@section('page-title', 'Our Processes')
 
 @section('content')
-    <div class="admin-page-header">
-        <div>
-            <h1>Edit Our Process</h1>
-
-            <p>
-                Update process details, count information
-                and promises.
-            </p>
+    <div class="admin-form-card">
+        <div class="admin-form-header">
+            <div class="admin-form-header-content">
+                <h3>Edit Process</h3>
+                <p>Update process section details below.</p>
+            </div>
+            <a href="{{ route('admin.our-processes.index') }}" class="btn btn-light">Back</a>
         </div>
-    </div>
 
-    <div class="admin-card">
-        <form action="{{ route('admin.our-processes.update', $ourProcess) }}"
-            method="POST">
-            @csrf
-            @method('PUT')
+        <div class="admin-form-body">
+            <form action="{{ route('admin.our-processes.update', $ourProcess) }}" method="POST" class="admin-form">
+                @csrf
+                @method('PUT')
 
-            @include('pages.our-processes.form')
-        </form>
+                @include('pages.our-processes.form')
+
+                <div class="admin-form-actions">
+                    <a href="{{ route('admin.our-processes.index') }}" class="btn btn-light">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Update Process</button>
+                </div>
+            </form>
+        </div>
     </div>
 @endsection

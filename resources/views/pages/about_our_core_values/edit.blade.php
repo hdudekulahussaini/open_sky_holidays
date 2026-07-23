@@ -1,70 +1,46 @@
 @extends('admin.layouts.app')
 
 @section('title', 'Edit Core Value')
+@section('page-title', 'About Our Core Values')
 
 @section('content')
-<div class="container-fluid">
-
-    <div
-        class="d-flex flex-wrap
-               justify-content-between
-               align-items-center gap-3 mb-4"
-    >
-        <div>
-            <h2 class="fw-bold mb-1">
-                Edit Core Value
-            </h2>
-
-            <p class="text-muted mb-0">
-                Update core value title and description.
-            </p>
-        </div>
-
-        <a
-            href="{{ route(
-                'admin.about-our-core-values.index'
-            ) }}"
-            class="btn btn-outline-secondary"
-        >
-            <i
-                class="fa-solid
-                       fa-arrow-left me-2"
-            ></i>
-
-            Back
-        </a>
-    </div>
-
-    @if ($errors->any())
-        <div
-            class="alert alert-danger
-                   border-0 shadow-sm"
-        >
-            <div class="fw-semibold mb-2">
-                Please correct the following errors:
+    <div class="admin-form-card">
+        <div class="admin-form-header">
+            <div class="admin-form-header-content">
+                <h3>Edit Core Value</h3>
+                <p>Update the core value details below.</p>
             </div>
-
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            <a href="{{ route('admin.about-our-core-values.index') }}" class="btn btn-light">Back</a>
         </div>
-    @endif
 
-    <form
-        action="{{ route(
-            'admin.about-our-core-values.update',
-            $aboutOurCoreValue
-        ) }}"
-        method="POST"
-    >
-        @csrf
-        @method('PUT')
+        <div class="admin-form-body">
+            <form action="{{ route('admin.about-our-core-values.update', $aboutOurCoreValue) }}" method="POST" class="admin-form">
+                @csrf
+                @method('PUT')
 
-        @include(
-            'pages.about_our_core_values.form'
-        )
-    </form>
-</div>
+                <div class="admin-form-grid">
+                    <div class="admin-form-group full-width">
+                        <label for="title">Title <span class="required">*</span></label>
+                        <input type="text" id="title" name="title" value="{{ old('title', $aboutOurCoreValue->title) }}" class="admin-form-control @error('title') is-invalid @enderror" required>
+                        @error('title')
+                            <span class="admin-form-error">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="admin-form-group full-width">
+                        <label for="description">Description <span class="required">*</span></label>
+                        <textarea id="description" name="description" rows="5" class="admin-form-control @error('description') is-invalid @enderror" required>{{ old('description', $aboutOurCoreValue->description) }}</textarea>
+                        @error('description')
+                            <span class="admin-form-error">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="admin-form-actions">
+                    <a href="{{ route('admin.about-our-core-values.index') }}" class="btn btn-light">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Update Core Value</button>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
