@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AboutSectionController;
+use App\Http\Controllers\Admin\AboutWhyChooseUsController;
 use App\Http\Controllers\Admin\AdventureCategoryController;
 use App\Http\Controllers\Admin\AdventureController;
 use App\Http\Controllers\Admin\AuthController;
@@ -17,8 +18,11 @@ use App\Http\Controllers\Admin\OurStoryController;
 use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\TourController;
 use App\Http\Controllers\Admin\TravelSupportSectionController;
+use App\Http\Controllers\Admin\WhatWeOfferController;
 use App\Http\Controllers\Admin\WhyChooseSectionController;
+use App\Http\Controllers\Api\AboutOurCoreValueController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin/login');
@@ -135,7 +139,11 @@ Route::prefix('admin')
             );
             Route::resource('counters', CounterController::class);
             Route::resource('services', ServiceController::class);
+            Route::resource('what-we-offers', WhatWeOfferController::class);
+            Route::resource('about-our-core-values', AboutOurCoreValueController::class);
+            Route::resource('about-why-choose-us', AboutWhyChooseUsController::class);
 
+            Route::resource('tours', TourController::class);
             Route::post('/logout', [
                 AuthController::class,
                 'logout',
