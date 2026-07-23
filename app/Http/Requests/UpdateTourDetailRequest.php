@@ -52,7 +52,6 @@ class UpdateTourDetailRequest extends FormRequest
             'gallery.*' => [
                 'image',
                 'mimes:jpg,jpeg,png,webp',
-                'max:5120',
             ],
 
             'existing_gallery' => [
