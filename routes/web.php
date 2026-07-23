@@ -7,12 +7,15 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CounterController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EnquiryController;
 use App\Http\Controllers\Admin\HeroController;
 use App\Http\Controllers\Admin\OfferBannerController;
+use App\Http\Controllers\Admin\OurProcessController;
 use App\Http\Controllers\Admin\OurStoryController;
 use App\Http\Controllers\Admin\PageBannerController;
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\TravelSupportSectionController;
 use App\Http\Controllers\Admin\WhatWeOfferController;
@@ -205,6 +208,12 @@ Route::prefix('admin')
                 'our-stories',
                 OurStoryController::class
             );
+            Route::resource(
+                'our-processes',
+                OurProcessController::class
+            );
+            Route::resource('counters', CounterController::class);
+            Route::resource('services', ServiceController::class);
 
             /*
             |--------------------------------------------------------------------------
