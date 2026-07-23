@@ -17,7 +17,7 @@ return new class extends Migration
 
             $table->string('location_name');
             $table->decimal('latitude', 10, 7);
-            $table->decimal('longitude', 10, 7);
+            $table->decimal('longitude', 10, 7)->nullable();
             $table->string('destination_url')->nullable();
             $table->timestamps();
         });
