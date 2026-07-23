@@ -14,7 +14,10 @@ use App\Http\Controllers\Api\PageBannerController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\TestimonialController;
 use App\Http\Controllers\Api\TravelSupportSectionController;
+use App\Http\Controllers\Api\WhatWeOfferController;
 use App\Http\Controllers\Api\WhyChooseSectionController;
+use App\Http\Controllers\Api\AboutWhyChooseUsController;
+use App\Http\Controllers\Api\AboutOurCoreValueController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,7 +37,10 @@ Route::post('/enquiries', [
 |--------------------------------------------------------------------------
 */
 
-Route::apiResource('heroes', HeroController::class);
+Route::apiResource(
+    'heroes',
+    HeroController::class
+);
 
 /*
 |--------------------------------------------------------------------------
@@ -42,10 +48,10 @@ Route::apiResource('heroes', HeroController::class);
 |--------------------------------------------------------------------------
 */
 
-Route::get(
-    '/about-section/active',
-    [AboutSectionController::class, 'active']
-)->name('api.about-section.active');
+Route::get('/about-section/active', [
+    AboutSectionController::class,
+    'active',
+])->name('api.about-section.active');
 
 Route::apiResource(
     'about-sections',
@@ -58,10 +64,10 @@ Route::apiResource(
 |--------------------------------------------------------------------------
 */
 
-Route::get(
-    '/travel-support/active',
-    [TravelSupportSectionController::class, 'active']
-);
+Route::get('/travel-support/active', [
+    TravelSupportSectionController::class,
+    'active',
+])->name('api.travel-support.active');
 
 Route::apiResource(
     'travel-support',
@@ -74,10 +80,10 @@ Route::apiResource(
 |--------------------------------------------------------------------------
 */
 
-Route::get(
-    '/why-choose-sections/active',
-    [WhyChooseSectionController::class, 'active']
-);
+Route::get('/why-choose-sections/active', [
+    WhyChooseSectionController::class,
+    'active',
+])->name('api.why-choose-sections.active');
 
 Route::apiResource(
     'why-choose-sections',
@@ -86,7 +92,7 @@ Route::apiResource(
 
 /*
 |--------------------------------------------------------------------------
-| Page Banner
+| Page Banners
 |--------------------------------------------------------------------------
 */
 
@@ -112,10 +118,10 @@ Route::apiResource(
 |--------------------------------------------------------------------------
 */
 
-Route::get(
-    '/adventures/category/{slug}',
-    [AdventureController::class, 'byCategorySlug']
-)->name('api.adventures.category');
+Route::get('/adventures/category/{slug}', [
+    AdventureController::class,
+    'byCategorySlug',
+])->name('api.adventures.category');
 
 Route::apiResource(
     'adventures',
@@ -124,7 +130,7 @@ Route::apiResource(
 
 /*
 |--------------------------------------------------------------------------
-| Offer-Banners
+| Offer Banners
 |--------------------------------------------------------------------------
 */
 
@@ -139,8 +145,15 @@ Route::apiResource(
 |--------------------------------------------------------------------------
 */
 
-Route::get('/blogs', [BlogController::class, 'index'])->name('api.blogs.index');
-Route::get('/blogs/{slug}', [BlogController::class, 'show'])->name('api.blogs.show');
+Route::get('/blogs', [
+    BlogController::class,
+    'index',
+])->name('api.blogs.index');
+
+Route::get('/blogs/{slug}', [
+    BlogController::class,
+    'show',
+])->name('api.blogs.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -152,6 +165,44 @@ Route::apiResource(
     'our-stories',
     OurStoryController::class
 );
+
+/*
+|--------------------------------------------------------------------------
+| What We Offer
+|--------------------------------------------------------------------------
+*/
+
+Route::apiResource(
+    'what-we-offers',
+    WhatWeOfferController::class
+)->parameters([
+    'what-we-offers' => 'whatWeOffer',
+]);
+/*
+|--------------------------------------------------------------------------
+| About-Why-Choose-Us
+|--------------------------------------------------------------------------
+*/
+Route::apiResource(
+    'about-why-choose-us',
+    AboutWhyChooseUsController::class
+)->parameters([
+    'about-why-choose-us' =>
+    'aboutWhyChooseUs',
+]);
+/*
+|--------------------------------------------------------------------------
+| About Our Core Values
+|--------------------------------------------------------------------------
+*/
+
+Route::apiResource(
+    'about-our-core-values',
+    AboutOurCoreValueController::class
+)->parameters([
+    'about-our-core-values' =>
+    'aboutOurCoreValue',
+]);
 
 /*
 |--------------------------------------------------------------------------
