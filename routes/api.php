@@ -15,6 +15,9 @@ use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\TestimonialController;
 use App\Http\Controllers\Api\TravelSupportSectionController;
 use App\Http\Controllers\Api\WhyChooseSectionController;
+use App\Http\Controllers\Api\TourTypeController;
+use App\Http\Controllers\Api\TourController;
+use App\Http\Controllers\Api\TourDetailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -174,3 +177,8 @@ Route::apiResource(
 );
 Route::apiResource('counters', CounterController::class);
 Route::apiResource('services', ServiceController::class);
+Route::apiResource('tour-types', TourTypeController::class);
+
+Route::apiResource('tours', TourController::class);
+
+Route::apiResource('tour-details', TourDetailController::class);
