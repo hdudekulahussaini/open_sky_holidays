@@ -1023,6 +1023,30 @@ td {
     height: 17px;
 }
 
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.action-buttons form {
+    display: inline-block;
+    margin: 0;
+}
+
+.action-button.danger {
+    color: #dc2626;
+    background: #fef2f2;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.action-button.danger:hover {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
 .table-filters {
     display: flex;
     align-items: center;
@@ -1256,6 +1280,24 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
+.brand-link {
+    text-decoration: none;
+    display: block;
+}
+
+.brand-logo {
+    max-width: 100%;
+    height: auto;
+    max-height: 52px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.25));
+    transition: transform 0.2s ease;
+}
+
+.brand-link:hover .brand-logo {
+    transform: scale(1.03);
+}
+
 .brand h2 {
     margin: 0;
     color: #ffffff;
@@ -1332,6 +1374,18 @@ body {
         color 0.2s ease,
         background-color 0.2s ease,
         transform 0.2s ease;
+}
+
+.sidebar-nav .nav-badge {
+    margin-left: auto;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    line-height: 1.4;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
 }
 
 .sidebar-nav .nav-item svg {
@@ -4937,5 +4991,225 @@ input[type="file"].admin-form-control {
         flex-direction: column;
         align-items: stretch;
     }
+}
+
+/* ==========================================================================
+   Admin Profile Page Styles
+   ========================================================================== */
+.profile-header-banner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 1px solid #bae6fd;
+    border-radius: 12px;
+}
+
+.admin-avatar.xl {
+    width: 64px;
+    height: 64px;
+    font-size: 24px;
+    font-weight: 700;
+    background: #0284c7;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+}
+
+.profile-header-info h4 {
+    margin: 0 0 4px;
+    color: #0f172a;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.profile-header-info p {
+    margin: 0 0 8px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.form-section-title {
+    margin: 20px 0 16px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0f172a;
+    border-left: 4px solid #0284c7;
+    padding-left: 10px;
+}
+
+.admin-profile {
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.admin-profile:hover {
+    opacity: 0.85;
+}
+
+/* ==========================================================================
+   Topbar Profile Dropdown Styles
+   ========================================================================== */
+.topbar-profile-dropdown {
+    position: relative;
+}
+
+.admin-profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(15, 23, 42, 0.03);
+}
+
+.admin-profile-btn:hover,
+.topbar-profile-dropdown.open .admin-profile-btn {
+    border-color: #0284c7;
+    background: #f0f9ff;
+}
+
+.admin-profile-btn .dropdown-chevron {
+    width: 16px;
+    height: 16px;
+    color: #64748b;
+    transition: transform 0.2s ease;
+}
+
+.topbar-profile-dropdown.open .dropdown-chevron {
+    transform: rotate(180deg);
+    color: #0284c7;
+}
+
+.profile-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 260px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+    padding: 12px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.2s ease;
+    z-index: 100;
+}
+
+.topbar-profile-dropdown.open .profile-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.profile-menu-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 18px 12px;
+}
+
+.admin-avatar.lg {
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
+    font-weight: 700;
+    background: #0284c7;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-menu-header .user-details {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.profile-menu-header .user-details strong {
+    color: #0f172a;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-menu-header .user-details small {
+    color: #64748b;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-menu-divider {
+    height: 1px;
+    background: #f1f5f9;
+    margin: 6px 0;
+}
+
+.profile-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.profile-menu-item svg {
+    width: 18px;
+    height: 18px;
+    color: #64748b;
+    transition: color 0.15s ease;
+}
+
+.profile-menu-item:hover,
+.profile-menu-item.active {
+    background: #f0f9ff;
+    color: #0284c7;
+}
+
+.profile-menu-item:hover svg,
+.profile-menu-item.active svg {
+    color: #0284c7;
+}
+
+.profile-menu-item.danger {
+    color: #ef4444;
+}
+
+.profile-menu-item.danger svg {
+    color: #ef4444;
+}
+
+.profile-menu-item.danger:hover {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.profile-menu-item.danger:hover svg {
+    color: #dc2626;
 }
 

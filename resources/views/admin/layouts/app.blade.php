@@ -54,16 +54,52 @@
 
                 </div>
 
-                <div class="admin-profile">
+                <div class="topbar-profile-dropdown" id="topbarProfileDropdown">
+                    <button type="button" class="admin-profile-btn" id="topbarProfileToggle" aria-haspopup="true" aria-expanded="false">
+                        <div class="admin-avatar">
+                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                        </div>
+                        <span class="admin-name">{{ auth()->user()->name }}</span>
+                        <svg class="dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
 
-                    <div class="admin-avatar">
-                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    <div class="profile-dropdown-menu" id="topbarProfileMenu">
+                        <div class="profile-menu-header">
+                            <div class="admin-avatar lg">
+                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                            </div>
+                            <div class="user-details">
+                                <strong>{{ auth()->user()->name }}</strong>
+                                <small>{{ auth()->user()->email }}</small>
+                            </div>
+                        </div>
+
+                        <div class="profile-menu-divider"></div>
+
+                        <a href="{{ route('admin.profile.edit') }}" class="profile-menu-item {{ request()->routeIs('admin.profile.*') ? 'active' : '' }}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <span>Profile Settings</span>
+                        </a>
+
+                        <div class="profile-menu-divider"></div>
+
+                        <form method="POST" action="{{ route('admin.logout') }}">
+                            @csrf
+                            <button type="submit" class="profile-menu-item danger">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                    <path d="M16 17l5-5-5-5"></path>
+                                    <path d="M21 12H9"></path>
+                                </svg>
+                                <span>Log Out</span>
+                            </button>
+                        </form>
                     </div>
-
-                    <div class="admin-name">
-                        {{ auth()->user()->name }}
-                    </div>
-
                 </div>
 
             </header>
