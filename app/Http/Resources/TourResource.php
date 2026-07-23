@@ -49,12 +49,21 @@ class TourResource extends JsonResource
                     return [
                         'heading' => $this->detail->heading,
                         'description' => $this->detail->description,
-                        'gallery' => $this->detail->gallery,
-                        'gallery_urls' => array_map(function ($path) {
-                            return Storage::disk('public')->url($path);
-                        }, is_array($this->detail->gallery) ? $this->detail->gallery : []),
                         'status' => $this->detail->status,
                     ];
+                }
+            ),
+
+            'gallery' => $this->whenLoaded(
+                'gallery',
+                function () {
+                    return $this->gallery->map(function ($img) {
+                        return [
+                            'id' => $img->id,
+                            'image' => $img->image,
+                            'image_url' => Storage::disk('public')->url($img->image),
+                        ];
+                    });
                 }
             ),
 

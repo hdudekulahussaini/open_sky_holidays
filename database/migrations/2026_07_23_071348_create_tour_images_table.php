@@ -11,25 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tour_details', function (Blueprint $table) {
+        Schema::create('tour_images', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('tour_id')
-                ->unique()
                 ->constrained('tours')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
-            $table->string('heading');
-
-            $table->longText('description');
-
-            $table->enum('status', [
-                'active',
-                'inactive',
-            ])->default('active');
+            $table->string('image');
 
             $table->timestamps();
+
+            $table->index('tour_id');
         });
     }
 
@@ -38,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tour_details');
+        Schema::dropIfExists('tour_images');
     }
 };

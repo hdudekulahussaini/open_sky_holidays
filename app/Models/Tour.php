@@ -43,6 +43,14 @@ class Tour extends Model
     }
 
     /**
+     * A tour has many gallery images.
+     */
+    public function gallery(): HasMany
+    {
+        return $this->hasMany(TourImage::class, 'tour_id', 'id');
+    }
+
+    /**
      * A tour has many features.
      */
     public function features(): HasMany

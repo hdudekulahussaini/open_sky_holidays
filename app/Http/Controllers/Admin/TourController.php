@@ -21,7 +21,7 @@ class TourController extends Controller
     {
         $tours = Tour::query()
             ->with(['tourType:id,name,slug', 'detail'])
-            ->withCount(['packageInclusions', 'placesCovered', 'tourHighlights'])
+            ->withCount(['packageInclusions', 'placesCovered', 'tourHighlights', 'gallery'])
             ->latest('id')
             ->paginate(10);
 
@@ -68,22 +68,23 @@ class TourController extends Controller
 
             $tour = Tour::create($validated);
 
-            // Create detail heading/description & gallery
-            $galleryPaths = [];
-            if ($request->hasFile('gallery')) {
-                foreach ($request->file('gallery') as $image) {
-                    $path = $image->store('tour-details/gallery', 'public');
-                    $galleryPaths[] = $path;
-                    $uploadedFiles[] = $path;
-                }
-            }
-
+            // Create detail heading/description
             $tour->detail()->create([
                 'heading' => $validated['detail']['heading'],
                 'description' => $validated['detail']['description'],
-                'gallery' => $galleryPaths,
                 'status' => $validated['detail']['status'],
             ]);
+
+            // Save gallery images
+            if ($request->hasFile('gallery')) {
+                foreach ($request->file('gallery') as $image) {
+                    $path = $image->store('tour-details/gallery', 'public');
+                    $tour->gallery()->create([
+                        'image' => $path,
+                    ]);
+                    $uploadedFiles[] = $path;
+                }
+            }
 
             // Save package inclusions
             if (! empty($validated['package_inclusions'])) {
@@ -159,7 +160,7 @@ class TourController extends Controller
 
     public function edit(Tour $tour): View
     {
-        $tour->load(['detail', 'features']);
+        $tour->load(['detail', 'features', 'gallery']);
 
         $tourTypes = TourType::query()
             ->orderBy('name')
@@ -210,40 +211,40 @@ class TourController extends Controller
 
             $tour->update($validated);
 
-            // Handle TourDetail & Gallery
-            $tourDetail = $tour->detail;
-            $oldGallery = $tourDetail && is_array($tourDetail->gallery) ? $tourDetail->gallery : [];
-            $retainedGallery = $request->input('existing_gallery', []);
-            $retainedGallery = is_array($retainedGallery) ? $retainedGallery : [];
-            $existingGallery = array_values(array_intersect($oldGallery, $retainedGallery));
-
-            $newGalleryPaths = [];
-            if ($request->hasFile('gallery')) {
-                foreach ($request->file('gallery') as $image) {
-                    $path = $image->store('tour-details/gallery', 'public');
-                    $newGalleryPaths[] = $path;
-                    $newUploadedFiles[] = $path;
-                }
-            }
-
-            $finalGallery = array_merge($existingGallery, $newGalleryPaths);
-
-            if (count($finalGallery) > 10) {
-                // Rollback and clean up new files
-                throw new \Exception('The gallery may contain a maximum of 10 images.');
-            }
-
-            $removedGalleryImages = array_diff($oldGallery, $existingGallery);
-
+            // Handle TourDetail
             $tour->detail()->updateOrCreate(
                 ['tour_id' => $tour->id],
                 [
                     'heading' => $validated['detail']['heading'],
                     'description' => $validated['detail']['description'],
-                    'gallery' => $finalGallery,
                     'status' => $validated['detail']['status'],
                 ]
             );
+
+            // Handle Gallery Syncing
+            $oldGallery = $tour->gallery;
+            $retainedGalleryPaths = $request->input('existing_gallery', []);
+            $retainedGalleryPaths = is_array($retainedGalleryPaths) ? $retainedGalleryPaths : [];
+
+            $galleryToDelete = $oldGallery->whereNotIn('image', $retainedGalleryPaths);
+            foreach ($galleryToDelete as $tourImage) {
+                $deletedFiles[] = $tourImage->image;
+                $tourImage->delete();
+            }
+
+            if ($request->hasFile('gallery')) {
+                foreach ($request->file('gallery') as $image) {
+                    $path = $image->store('tour-details/gallery', 'public');
+                    $tour->gallery()->create([
+                        'image' => $path,
+                    ]);
+                    $newUploadedFiles[] = $path;
+                }
+            }
+
+            if ($tour->gallery()->count() > 10) {
+                throw new \Exception('The gallery may contain a maximum of 10 images.');
+            }
 
             // Handle Features Syncing: Inclusions
             $submittedInclusions = $validated['package_inclusions'] ?? [];
@@ -350,11 +351,6 @@ class TourController extends Controller
 
             DB::commit();
 
-            // Clear removed gallery and place images
-            foreach ($removedGalleryImages as $img) {
-                Storage::disk('public')->delete($img);
-            }
-
             if ($newThumbnail && $oldThumbnail) {
                 Storage::disk('public')->delete($oldThumbnail);
             }
@@ -396,9 +392,10 @@ class TourController extends Controller
             $filesToDelete[] = $tour->thumbnail;
         }
 
-        $tour->load(['detail', 'placesCovered']);
-        if ($tour->detail && is_array($tour->detail->gallery)) {
-            $filesToDelete = array_merge($filesToDelete, $tour->detail->gallery);
+        $tour->load(['detail', 'placesCovered', 'gallery']);
+
+        foreach ($tour->gallery as $img) {
+            $filesToDelete[] = $img->image;
         }
 
         foreach ($tour->placesCovered as $place) {
