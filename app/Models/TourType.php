@@ -15,6 +15,15 @@ class TourType extends Model
         'slug',
     ];
 
+    protected static function booted(): void
+    {
+        static::deleting(function (TourType $tourType) {
+            $tourType->tours->each(function (Tour $tour) {
+                $tour->delete();
+            });
+        });
+    }
+
     public function tours(): HasMany
     {
         return $this->hasMany(Tour::class);

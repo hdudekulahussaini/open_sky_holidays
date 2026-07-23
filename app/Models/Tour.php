@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Storage;
 
 class Tour extends Model
 {
@@ -25,6 +27,33 @@ class Tour extends Model
         'status' => 'boolean',
     ];
 
+    protected static function booted(): void
+    {
+        static::deleting(function (Tour $tour) {
+            $filesToDelete = [];
+
+            if ($tour->thumbnail) {
+                $filesToDelete[] = $tour->thumbnail;
+            }
+
+            $tour->load(['gallery', 'placesCovered']);
+
+            foreach ($tour->gallery as $img) {
+                $filesToDelete[] = $img->image;
+            }
+
+            foreach ($tour->placesCovered as $place) {
+                if ($place->image) {
+                    $filesToDelete[] = $place->image;
+                }
+            }
+
+            foreach ($filesToDelete as $file) {
+                Storage::disk('public')->delete($file);
+            }
+        });
+    }
+
     /**
      * A tour belongs to one tour type.
      */
@@ -39,5 +68,65 @@ class Tour extends Model
     public function detail(): HasOne
     {
         return $this->hasOne(TourDetail::class, 'tour_id', 'id');
+    }
+
+    /**
+     * A tour has many gallery images.
+     */
+    public function gallery(): HasMany
+    {
+        return $this->hasMany(TourImage::class, 'tour_id', 'id');
+    }
+
+    /**
+     * A tour has many features.
+     */
+    public function features(): HasMany
+    {
+        return $this->hasMany(TourFeature::class)
+            ->orderBy('sort_order')
+            ->orderBy('id');
+    }
+
+    /**
+     * Package inclusions belonging to the tour.
+     */
+    public function packageInclusions(): HasMany
+    {
+        return $this->hasMany(TourFeature::class)
+            ->where(
+                'type',
+                TourFeature::TYPE_PACKAGE_INCLUSION
+            )
+            ->orderBy('sort_order')
+            ->orderBy('id');
+    }
+
+    /**
+     * Places covered by the tour.
+     */
+    public function placesCovered(): HasMany
+    {
+        return $this->hasMany(TourFeature::class)
+            ->where(
+                'type',
+                TourFeature::TYPE_PLACE_COVERED
+            )
+            ->orderBy('sort_order')
+            ->orderBy('id');
+    }
+
+    /**
+     * Highlights belonging to the tour.
+     */
+    public function tourHighlights(): HasMany
+    {
+        return $this->hasMany(TourFeature::class)
+            ->where(
+                'type',
+                TourFeature::TYPE_TOUR_HIGHLIGHT
+            )
+            ->orderBy('sort_order')
+            ->orderBy('id');
     }
 }

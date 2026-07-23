@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CoreValueController;
 use App\Http\Controllers\Admin\CounterController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EnquiryController;
@@ -58,17 +59,7 @@ Route::prefix('admin')
         |--------------------------------------------------------------------------
         */
 
-        Route::middleware([
-            'auth',
-            'admin',
-        ])->group(function () {
-
-            /*
-            |--------------------------------------------------------------------------
-            | Dashboard
-            |--------------------------------------------------------------------------
-            */
-
+        Route::middleware(['auth', 'admin'])->group(function () {
             Route::get('/dashboard', [
                 DashboardController::class,
                 'index',
@@ -106,134 +97,37 @@ Route::prefix('admin')
                 'show',
             ])->name('enquiries.show');
 
-            Route::patch(
-                '/enquiries/{enquiry}/status',
-                [
-                    EnquiryController::class,
-                    'updateStatus',
-                ]
-            )->name('enquiries.status');
+            Route::patch('/enquiries/{enquiry}/status', [
+                EnquiryController::class,
+                'updateStatus',
+            ])->name('enquiries.status');
 
             Route::delete('/enquiries/{enquiry}', [
                 EnquiryController::class,
                 'destroy',
             ])->name('enquiries.destroy');
 
-            /*
-            |--------------------------------------------------------------------------
-            | About Sections
-            |--------------------------------------------------------------------------
-            */
+            Route::resource('about-sections', AboutSectionController::class);
+            Route::resource('travel-support', TravelSupportSectionController::class);
+            Route::resource('why-choose-sections', WhyChooseSectionController::class);
 
-            Route::resource(
-                'about-sections',
-                AboutSectionController::class
-            );
-
-            /*
-            |--------------------------------------------------------------------------
-            | Travel Support
-            |--------------------------------------------------------------------------
-            */
-
-            Route::resource(
-                'travel-support',
-                TravelSupportSectionController::class
-            );
-
-            /*
-            |--------------------------------------------------------------------------
-            | Why Choose Us
-            |--------------------------------------------------------------------------
-            */
-
-            Route::resource(
-                'why-choose-sections',
-                WhyChooseSectionController::class
-            );
-
-            /*
-            |--------------------------------------------------------------------------
-            | Hero Slides
-            |--------------------------------------------------------------------------
-            */
-
-            Route::resource(
-                'heroes',
-                HeroController::class
-            )->except('show');
-
-            /*
-            |--------------------------------------------------------------------------
-            | Page Banners
-            |--------------------------------------------------------------------------
-            */
-
-            Route::resource(
-                'page-banners',
-                PageBannerController::class
-            )->except('show');
-
-            /*
-            |--------------------------------------------------------------------------
-            | Blog Categories
-            |--------------------------------------------------------------------------
-            */
-
-            Route::resource(
-                'categories',
-                CategoryController::class
-            )->except('show');
-
-            /*
-            |--------------------------------------------------------------------------
-            | Testimonials
-            |--------------------------------------------------------------------------
-            */
-
-            Route::resource(
-                'testimonials',
-                TestimonialController::class
-            );
-
-            /*
-            |--------------------------------------------------------------------------
-            | Blog Authors
-            |--------------------------------------------------------------------------
-            */
-
-            Route::resource(
-                'authors',
-                AuthorController::class
-            )->except('show');
-
-            /*
-            |--------------------------------------------------------------------------
-            | Blogs
-            |--------------------------------------------------------------------------
-            */
-
-            Route::resource(
-                'blogs',
-                BlogController::class
-            )->except('show');
-
-            /*
-            |--------------------------------------------------------------------------
-            | Our Stories
-            |--------------------------------------------------------------------------
-            */
-
-            Route::resource(
-                'our-stories',
-                OurStoryController::class
-            );
-            Route::resource(
-                'our-processes',
-                OurProcessController::class
-            );
+            Route::resource('heroes', HeroController::class)->except('show');
+            Route::resource('page-banners', PageBannerController::class)->except('show');
+            Route::resource('categories', CategoryController::class)->except('show');
+            Route::resource('testimonials', TestimonialController::class);
+            Route::resource('authors', AuthorController::class)->except('show');
+            Route::resource('adventure-categories', AdventureCategoryController::class)->except('show');
+            Route::resource('adventures', AdventureController::class)->except('show');
+            Route::resource('offer-banners', OfferBannerController::class)->except('show');
+            Route::resource('blogs', BlogController::class)->except('show');
+            Route::resource('our-stories', OurStoryController::class);
+            Route::resource('our-processes', OurProcessController::class);
             Route::resource('counters', CounterController::class);
             Route::resource('services', ServiceController::class);
+            Route::resource('what-we-offers', WhatWeOfferController::class);
+            Route::resource('about-our-core-values', AboutOurCoreValueController::class);
+            Route::resource('about-why-choose-us', AboutWhyChooseUsController::class);
+            Route::resource('core-values', CoreValueController::class);
             Route::resource('tour-types', TourTypeController::class);
             Route::resource('tours', TourController::class);
             Route::resource('tour-details', TourDetailController::class);

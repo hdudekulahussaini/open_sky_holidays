@@ -253,22 +253,17 @@
                     </div>
 
                 </div>
-
-                <p id="galleryLimitMessage" class="td-gallery-limit-message">
-                    The gallery can contain a maximum of 10 images.
-                </p>
-
                 @error('gallery')
                     <span class="td-error-message">
                         {{ $message }}
                     </span>
                 @enderror
 
-                @error('gallery.*')
+                {{-- @error('gallery.*')
                     <span class="td-error-message">
                         {{ $message }}
                     </span>
-                @enderror
+                @enderror --}}
 
             </div>
 
@@ -1007,10 +1002,7 @@
                 'emptyGalleryMessage'
             );
 
-            const limitMessage = document.getElementById(
-                'galleryLimitMessage'
-            );
-
+          
             const description = document.getElementById(
                 'description'
             );

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('tour_type_id')
                 ->constrained('tour_types')
                 ->cascadeOnUpdate()
-                ->restrictOnDelete();
+                ->cascadeOnDelete();
 
             $table->string('title');
 
