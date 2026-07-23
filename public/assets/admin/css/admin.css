@@ -95,7 +95,7 @@ body {
 }
 
 .nav-dropdown-wrapper.open .nav-dropdown-menu {
-    max-height: 200px !important;
+    max-height: 1000px !important;
 }
 
 .sidebar-nav .nav-dropdown-item {
@@ -3756,7 +3756,7 @@ input[type="file"].admin-form-control {
 }
 
 .nav-dropdown-wrapper.open .nav-dropdown-menu {
-    max-height: 200px;
+    max-height: 1000px;
 }
 
 .sidebar-nav .nav-dropdown-item {
