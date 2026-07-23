@@ -1,69 +1,45 @@
 @extends('admin.layouts.app')
 
 @section('title', 'Create Core Value')
+@section('page-title', 'About Our Core Values')
 
 @section('content')
-<div class="container-fluid">
-
-    <div
-        class="d-flex flex-wrap
-               justify-content-between
-               align-items-center gap-3 mb-4"
-    >
-        <div>
-            <h2 class="fw-bold mb-1">
-                Create Core Value
-            </h2>
-
-            <p class="text-muted mb-0">
-                Add a new value to the
-                About Our Core Values section.
-            </p>
-        </div>
-
-        <a
-            href="{{ route(
-                'admin.about-our-core-values.index'
-            ) }}"
-            class="btn btn-outline-secondary"
-        >
-            <i
-                class="fa-solid
-                       fa-arrow-left me-2"
-            ></i>
-
-            Back
-        </a>
-    </div>
-
-    @if ($errors->any())
-        <div
-            class="alert alert-danger
-                   border-0 shadow-sm"
-        >
-            <div class="fw-semibold mb-2">
-                Please correct the following errors:
+    <div class="admin-form-card">
+        <div class="admin-form-header">
+            <div class="admin-form-header-content">
+                <h3>Create Core Value</h3>
+                <p>Fill in the details to add a new core value.</p>
             </div>
-
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            <a href="{{ route('admin.about-our-core-values.index') }}" class="btn btn-light">Back</a>
         </div>
-    @endif
 
-    <form
-        action="{{ route(
-            'admin.about-our-core-values.store'
-        ) }}"
-        method="POST"
-    >
-        @csrf
+        <div class="admin-form-body">
+            <form action="{{ route('admin.about-our-core-values.store') }}" method="POST" class="admin-form">
+                @csrf
 
-        @include(
-            'pages.about_our_core_values.form'
-        )
-    </form>
-</div>
+                <div class="admin-form-grid">
+                    <div class="admin-form-group full-width">
+                        <label for="title">Title <span class="required">*</span></label>
+                        <input type="text" id="title" name="title" value="{{ old('title') }}" class="admin-form-control @error('title') is-invalid @enderror" placeholder="e.g. Integrity" required>
+                        @error('title')
+                            <span class="admin-form-error">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="admin-form-group full-width">
+                        <label for="description">Description <span class="required">*</span></label>
+                        <textarea id="description" name="description" rows="5" class="admin-form-control @error('description') is-invalid @enderror" placeholder="Enter core value description..." required>{{ old('description') }}</textarea>
+                        @error('description')
+                            <span class="admin-form-error">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="admin-form-actions">
+                    <a href="{{ route('admin.about-our-core-values.index') }}" class="btn btn-light">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Save Core Value</button>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection

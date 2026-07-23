@@ -1,47 +1,29 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Create Travel Support')
+@section('title', 'Create Support Section')
+@section('page-title', 'Travel Support')
 
 @section('content')
-<div class="ts-page-wrapper">
-    <div class="ts-page-header">
-        <div>
-            <span class="ts-page-eyebrow">
-                Travel Support Management
-            </span>
-
-            <h1>Create Travel Support</h1>
-
-            <p>
-                Create a new travel assistance section with dynamic features.
-            </p>
+    <div class="admin-form-card">
+        <div class="admin-form-header">
+            <div class="admin-form-header-content">
+                <h3>Create Support Section</h3>
+                <p>Add a new travel support record.</p>
+            </div>
+            <a href="{{ route('admin.travel-support.index') }}" class="btn btn-light">Back</a>
         </div>
 
-        <a
-            href="{{ route('admin.travel-support.index') }}"
-            class="ts-back-btn"
-        >
-            ← Back to List
-        </a>
-    </div>
+        <div class="admin-form-body">
+            <form action="{{ route('admin.travel-support.store') }}" method="POST" enctype="multipart/form-data" class="admin-form">
+                @csrf
 
-    @if(session('error'))
-        <div class="ts-alert ts-alert-danger">
-            {{ session('error') }}
+                @include('pages.travel-support.form')
+
+                <div class="admin-form-actions">
+                    <a href="{{ route('admin.travel-support.index') }}" class="btn btn-light">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Save Support Section</button>
+                </div>
+            </form>
         </div>
-    @endif
-
-    <div class="ts-form-card">
-        <form
-            action="{{ route('admin.travel-support.store') }}"
-            method="POST"
-            enctype="multipart/form-data"
-        >
-            @csrf
-
-            @include('pages.travel-support.form')
-        </form>
     </div>
-</div>
 @endsection
-

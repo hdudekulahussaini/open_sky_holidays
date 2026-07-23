@@ -1,46 +1,29 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Create Our Story')
+@section('title', 'Create Story')
+@section('page-title', 'Our Stories')
 
 @section('content')
-<div class="ts-page-wrapper">
-    <div class="ts-page-header">
-        <div>
-            <span class="ts-page-eyebrow">
-                Story Management
-            </span>
-
-            <h1>Create Our Story</h1>
-
-            <p>
-                Create a new website story section with dynamic images and features.
-            </p>
+    <div class="admin-form-card">
+        <div class="admin-form-header">
+            <div class="admin-form-header-content">
+                <h3>Create Story</h3>
+                <p>Add a new story record to your website.</p>
+            </div>
+            <a href="{{ route('admin.our-stories.index') }}" class="btn btn-light">Back</a>
         </div>
 
-        <a
-            href="{{ route('admin.our-stories.index') }}"
-            class="ts-back-btn"
-        >
-            ← Back to List
-        </a>
-    </div>
+        <div class="admin-form-body">
+            <form action="{{ route('admin.our-stories.store') }}" method="POST" enctype="multipart/form-data" class="admin-form">
+                @csrf
 
-    @if(session('error'))
-        <div class="ts-alert ts-alert-danger">
-            {{ session('error') }}
+                @include('pages.our-stories.form')
+
+                <div class="admin-form-actions">
+                    <a href="{{ route('admin.our-stories.index') }}" class="btn btn-light">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Save Story</button>
+                </div>
+            </form>
         </div>
-    @endif
-
-    <div class="ts-form-card">
-        <form
-            action="{{ route('admin.our-stories.store') }}"
-            method="POST"
-            enctype="multipart/form-data"
-        >
-            @csrf
-
-            @include('pages.our-stories.form')
-        </form>
     </div>
-</div>
 @endsection

@@ -1,225 +1,98 @@
 @extends('admin.layouts.app')
 
 @section('title', 'What We Offer')
+@section('page-title', 'What We Offer')
 
 @section('content')
-<div class="container-fluid">
-
-    <div
-        class="d-flex flex-wrap justify-content-between
-               align-items-center gap-3 mb-4">
-        <div>
-            <h2 class="fw-bold mb-1">
-                What We Offer
-            </h2>
-
-            <p class="text-muted mb-0">
-                Manage travel solutions, descriptions,
-                images and status.
-            </p>
-        </div>
-
-        <a
-            href="{{ route('admin.what-we-offers.create') }}"
-            class="btn btn-primary">
-            <i class="fa-solid fa-plus me-2"></i>
-            Add What We Offer
-        </a>
-    </div>
-
-    <div class="card border-0 shadow-sm">
-        <div
-            class="card-header bg-white
-                   border-bottom py-3 px-4">
-            <div
-                class="d-flex justify-content-between
-                       align-items-center">
-                <h5 class="fw-semibold mb-0">
-                    What We Offer List
-                </h5>
-
-                <span class="badge bg-light text-dark">
-                    Total: {{ $whatWeOffers->total() }}
-                </span>
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <div>
+                <h3>What We Offer</h3>
+                <p>Manage travel solutions, descriptions, images, and status.</p>
             </div>
+
+            <a href="{{ route('admin.what-we-offers.create') }}" class="btn btn-primary">
+                + Add Offer
+            </a>
         </div>
 
-        <div class="card-body p-0">
+        @if ($whatWeOffers->count() > 0)
             <div class="table-responsive">
-                <table
-                    class="table table-hover
-                           align-middle mb-0">
-                    <thead class="table-light">
+                <table class="admin-table">
+                    <thead>
                         <tr>
-                            <th class="px-4">ID</th>
+                            <th>ID</th>
                             <th>Image</th>
                             <th>Title</th>
                             <th>Subtitle</th>
                             <th>Description</th>
                             <th>Status</th>
-                            <th class="text-end px-4">
-                                Actions
-                            </th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
-
                     <tbody>
-                        @forelse ($whatWeOffers as $offer)
-                        <tr>
-                            <td class="px-4">
-                                #{{ $offer->id }}
-                            </td>
-
-                            <td>
-                                @if ($offer->image)
-                                <img
-                                    src="{{ asset(
-                                                'storage/' .
-                                                $offer->image
-                                            ) }}"
-                                    alt="{{ $offer->title }}"
-                                    width="115"
-                                    height="78"
-                                    class="offer-table-image">
-                                @else
-                                <span class="text-muted">
-                                    No image
-                                </span>
-                                @endif
-                            </td>
-
-                            <td style="min-width: 190px;">
-                                <strong>
-                                    {{ $offer->title }}
-                                </strong>
-                            </td>
-
-                            <td style="min-width: 170px;">
-                                {{ $offer->subtitle ?? '-' }}
-                            </td>
-
-                            <td style="min-width: 280px;">
-                                @if ($offer->description)
-                                {{ \Illuminate\Support\Str::limit(
-                                            $offer->description,
-                                            110
-                                        ) }}
-                                @else
-                                <span class="text-muted">
-                                    No description
-                                </span>
-                                @endif
-                            </td>
-
-                            <td>
-                                @if ($offer->status === 'active')
-                                <span class="badge bg-success">
-                                    Active
-                                </span>
-                                @else
-                                <span class="badge bg-danger">
-                                    Inactive
-                                </span>
-                                @endif
-                            </td>
-
-                            <td class="text-end px-4">
-                                <div
-                                    class="d-flex justify-content-end
-                                               align-items-center gap-2">
-                                    <a
-                                        href="{{ route(
-                                                'admin.what-we-offers.edit',
-                                                $offer
-                                            ) }}"
-                                        class="btn btn-sm
-                                                   btn-outline-primary">
-                                        <i
-                                            class="fa-solid
-                                                       fa-pen me-1"></i>
-
-                                        Edit
-                                    </a>
-
-                                    <form
-                                        action="{{ route(
-                                                'admin.what-we-offers.destroy',
-                                                $offer
-                                            ) }}"
-                                        method="POST"
-                                        class="d-inline"
-                                        onsubmit="
-                                                return confirm(
-                                                    'Delete this What We Offer item?'
-                                                );
-                                            ">
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button
-                                            type="submit"
-                                            class="btn btn-sm
-                                                       btn-outline-danger">
-                                            <i
-                                                class="fa-solid
-                                                           fa-trash me-1"></i>
-
-                                            Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td
-                                colspan="7"
-                                class="text-center py-5">
-                                <div class="text-muted">
-                                    <i
-                                        class="fa-solid
-                                                   fa-plane-departure
-                                                   fa-3x mb-3"></i>
-
-                                    <h5>
-                                        No What We Offer Items
-                                    </h5>
-
-                                    <p>
-                                        Add your first travel solution.
-                                    </p>
-
-                                    <a
-                                        href="{{ route(
-                                                'admin.what-we-offers.create'
-                                            ) }}"
-                                        class="btn btn-primary">
-                                        Add What We Offer
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforelse
+                        @foreach ($whatWeOffers as $offer)
+                            <tr>
+                                <td>#{{ $offer->id }}</td>
+                                <td>
+                                    @if ($offer->image)
+                                        <img src="{{ asset('storage/' . $offer->image) }}" alt="{{ $offer->title }}" class="blog-table-image">
+                                    @else
+                                        <small>No image</small>
+                                    @endif
+                                </td>
+                                <td><strong>{{ $offer->title }}</strong></td>
+                                <td>{{ $offer->subtitle ?? '-' }}</td>
+                                <td>{{ \Illuminate\Support\Str::limit($offer->description, 90) }}</td>
+                                <td>
+                                    <span class="status-badge {{ $offer->status ? 'status-active' : 'status-inactive' }}">
+                                        {{ $offer->status ? 'Active' : 'Inactive' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="table-actions">
+                                        <a href="{{ route('admin.what-we-offers.edit', $offer) }}" class="action-button action-edit">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M12 20h9"></path>
+                                                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"></path>
+                                            </svg>
+                                            Edit
+                                        </a>
+                                        <form action="{{ route('admin.what-we-offers.destroy', $offer) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this offer?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="action-button action-delete">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                    <path d="M19 6l-1 14H6L5 6"></path>
+                                                    <path d="M10 11v6"></path>
+                                                    <path d="M14 11v6"></path>
+                                                    <path d="M9 6V4h6v2"></path>
+                                                </svg>
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-        </div>
 
-        @if ($whatWeOffers->hasPages())
-        <div
-            class="card-footer bg-white
-                       border-top py-3">
-            {{ $whatWeOffers->links() }}
-        </div>
+            @if ($whatWeOffers->hasPages())
+                <div class="pagination-wrapper">
+                    {{ $whatWeOffers->links() }}
+                </div>
+            @endif
+        @else
+            <div class="empty-table">
+                <strong>No items found.</strong>
+                <p>Add your first What We Offer item.</p>
+                <a href="{{ route('admin.what-we-offers.create') }}" class="btn btn-primary">
+                    Create Item
+                </a>
+            </div>
         @endif
     </div>
-</div>
-
-<style>
-    .offer-table-image {
-        object-fit: cover;
-        border: 1px solid #e2e8f0;
-        border-radius: 10px;
-    }
-</style>
 @endsection

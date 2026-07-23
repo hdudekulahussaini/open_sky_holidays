@@ -1,250 +1,82 @@
 @extends('admin.layouts.app')
 
 @section('title', 'About Our Core Values')
+@section('page-title', 'About Our Core Values')
 
 @section('content')
-<div class="container-fluid">
-
-    <div
-        class="d-flex flex-wrap
-               justify-content-between
-               align-items-center gap-3 mb-4"
-    >
-        <div>
-            <h2 class="fw-bold mb-1">
-                About Our Core Values
-            </h2>
-
-            <p class="text-muted mb-0">
-                Manage the core value titles
-                and descriptions.
-            </p>
-        </div>
-
-        <a
-            href="{{ route(
-                'admin.about-our-core-values.create'
-            ) }}"
-            class="btn btn-primary"
-        >
-            <i class="fa-solid fa-plus me-2"></i>
-            Add Core Value
-        </a>
-    </div>
-
-
-    <div class="card border-0 shadow-sm">
-
-        <div
-            class="card-header bg-white
-                   border-bottom py-3 px-4"
-        >
-            <div
-                class="d-flex justify-content-between
-                       align-items-center"
-            >
-                <div>
-                    <h5 class="fw-semibold mb-1">
-                        Core Values List
-                    </h5>
-
-                    <p class="small text-muted mb-0">
-                        All About Our Core Values records.
-                    </p>
-                </div>
-
-                <span
-                    class="badge bg-light text-dark
-                           border px-3 py-2"
-                >
-                    Total:
-                    {{ $coreValues->total() }}
-                </span>
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <div>
+                <h3>About Our Core Values</h3>
+                <p>Manage the core value titles and descriptions.</p>
             </div>
+
+            <a href="{{ route('admin.about-our-core-values.create') }}" class="btn btn-primary">
+                + Add Core Value
+            </a>
         </div>
 
-        <div class="card-body p-0">
+        @if ($coreValues->count() > 0)
             <div class="table-responsive">
-                <table
-                    class="table table-hover
-                           align-middle mb-0"
-                >
-                    <thead class="table-light">
+                <table class="admin-table">
+                    <thead>
                         <tr>
-                            <th class="px-4">
-                                ID
-                            </th>
-
-                            <th>
-                                Title
-                            </th>
-
-                            <th>
-                                Description
-                            </th>
-
-                            <th
-                                class="text-end px-4"
-                            >
-                                Actions
-                            </th>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
-
                     <tbody>
-                        @forelse (
-                            $coreValues as $coreValue
-                        )
+                        @foreach ($coreValues as $coreValue)
                             <tr>
-                                <td class="px-4">
-                                    <span
-                                        class="badge
-                                               bg-light text-dark
-                                               border"
-                                    >
-                                        #{{ $coreValue->id }}
-                                    </span>
-                                </td>
-
-                                <td style="min-width: 200px;">
-                                    <strong>
-                                        {{ $coreValue->title }}
-                                    </strong>
-                                </td>
-
-                                <td style="min-width: 420px;">
-                                    {{ \Illuminate\Support\Str::limit(
-                                        $coreValue->description,
-                                        150
-                                    ) }}
-                                </td>
-
-                                <td class="text-end px-4">
-                                    <div
-                                        class="d-flex
-                                               justify-content-end
-                                               align-items-center
-                                               gap-2"
-                                    >
-                                        <a
-                                            href="{{ route(
-                                                'admin.about-our-core-values.edit',
-                                                $coreValue
-                                            ) }}"
-                                            class="btn btn-sm
-                                                   btn-outline-primary"
-                                        >
-                                            <i
-                                                class="fa-solid
-                                                       fa-pen me-1"
-                                            ></i>
-
+                                <td>#{{ $coreValue->id }}</td>
+                                <td><strong>{{ $coreValue->title }}</strong></td>
+                                <td>{{ \Illuminate\Support\Str::limit($coreValue->description, 120) }}</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <a href="{{ route('admin.about-our-core-values.edit', $coreValue) }}" class="action-button action-edit">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M12 20h9"></path>
+                                                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"></path>
+                                            </svg>
                                             Edit
                                         </a>
-
-                                        <form
-                                            action="{{ route(
-                                                'admin.about-our-core-values.destroy',
-                                                $coreValue
-                                            ) }}"
-                                            method="POST"
-                                            class="d-inline"
-                                            onsubmit="
-                                                return confirm(
-                                                    'Delete this core value?'
-                                                );
-                                            "
-                                        >
+                                        <form action="{{ route('admin.about-our-core-values.destroy', $coreValue) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this core value?')">
                                             @csrf
                                             @method('DELETE')
-
-                                            <button
-                                                type="submit"
-                                                class="btn btn-sm
-                                                       btn-outline-danger"
-                                            >
-                                                <i
-                                                    class="fa-solid
-                                                           fa-trash me-1"
-                                                ></i>
-
+                                            <button type="submit" class="action-button action-delete">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                    <path d="M19 6l-1 14H6L5 6"></path>
+                                                    <path d="M10 11v6"></path>
+                                                    <path d="M14 11v6"></path>
+                                                    <path d="M9 6V4h6v2"></path>
+                                                </svg>
                                                 Delete
                                             </button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td
-                                    colspan="4"
-                                    class="text-center py-5"
-                                >
-                                    <div class="empty-state">
-                                        <div
-                                            class="empty-state-icon"
-                                        >
-                                            <i
-                                                class="fa-solid
-                                                       fa-gem"
-                                            ></i>
-                                        </div>
-
-                                        <h5 class="fw-bold mt-3">
-                                            No Core Values Found
-                                        </h5>
-
-                                        <p class="text-muted">
-                                            Add your first About Our
-                                            Core Value.
-                                        </p>
-
-                                        <a
-                                            href="{{ route(
-                                                'admin.about-our-core-values.create'
-                                            ) }}"
-                                            class="btn btn-primary"
-                                        >
-                                            <i
-                                                class="fa-solid
-                                                       fa-plus me-2"
-                                            ></i>
-
-                                            Add Core Value
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-        </div>
 
-        @if ($coreValues->hasPages())
-            <div
-                class="card-footer bg-white
-                       border-top py-3"
-            >
-                {{ $coreValues->links() }}
+            @if ($coreValues->hasPages())
+                <div class="pagination-wrapper">
+                    {{ $coreValues->links() }}
+                </div>
+            @endif
+        @else
+            <div class="empty-table">
+                <strong>No core values found.</strong>
+                <p>Add your first About Our Core Value.</p>
+                <a href="{{ route('admin.about-our-core-values.create') }}" class="btn btn-primary">
+                    Create Core Value
+                </a>
             </div>
         @endif
-
     </div>
-</div>
-
-<style>
-
-    .empty-state-icon {
-        width: 72px;
-        height: 72px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        color: #0d6efd;
-        font-size: 28px;
-        background: #eaf3ff;
-        border-radius: 50%;
-    }
-</style>
 @endsection

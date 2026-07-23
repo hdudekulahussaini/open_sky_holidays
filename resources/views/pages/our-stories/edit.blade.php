@@ -1,50 +1,30 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Edit Our Story')
+@section('title', 'Edit Story')
+@section('page-title', 'Our Stories')
 
 @section('content')
-<div class="ts-page-wrapper">
-    <div class="ts-page-header">
-        <div>
-            <span class="ts-page-eyebrow">
-                Story Management
-            </span>
-
-            <h1>Edit Our Story</h1>
-
-            <p>
-                Update the story content, images and features.
-            </p>
+    <div class="admin-form-card">
+        <div class="admin-form-header">
+            <div class="admin-form-header-content">
+                <h3>Edit Story</h3>
+                <p>Update story details below.</p>
+            </div>
+            <a href="{{ route('admin.our-stories.index') }}" class="btn btn-light">Back</a>
         </div>
 
-        <a
-            href="{{ route('admin.our-stories.index') }}"
-            class="ts-back-btn"
-        >
-            ← Back to List
-        </a>
-    </div>
+        <div class="admin-form-body">
+            <form action="{{ route('admin.our-stories.update', $ourStory) }}" method="POST" enctype="multipart/form-data" class="admin-form">
+                @csrf
+                @method('PUT')
 
-    @if(session('error'))
-        <div class="ts-alert ts-alert-danger">
-            {{ session('error') }}
+                @include('pages.our-stories.form')
+
+                <div class="admin-form-actions">
+                    <a href="{{ route('admin.our-stories.index') }}" class="btn btn-light">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Update Story</button>
+                </div>
+            </form>
         </div>
-    @endif
-
-    <div class="ts-form-card">
-        <form
-            action="{{ route(
-                'admin.our-stories.update',
-                $ourStory
-            ) }}"
-            method="POST"
-            enctype="multipart/form-data"
-        >
-            @csrf
-            @method('PUT')
-
-            @include('pages.our-stories.form')
-        </form>
     </div>
-</div>
 @endsection
