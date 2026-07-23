@@ -25,12 +25,6 @@
         </a>
     </div>
 
-    {{-- Success Message --}}
-    @if (session('success'))
-        <div class="admin-alert admin-alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
 
     {{-- List Card --}}
     <div class="ts-list-card">
