@@ -21,10 +21,10 @@
                 <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Image</th>
                             <th>Heading</th>
-                            <th>Phone / Email</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Features</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -32,23 +32,32 @@
                     <tbody>
                         @foreach ($travelSupports as $support)
                             <tr>
-                                <td>#{{ $support->id }}</td>
+                                <td>
+                                    <strong>{{ $support->heading }}</strong>
+                                    @if ($support->small_heading)
+                                        <small class="d-block text-muted" style="margin-top: 2px; font-size: 0.8rem;">{{ $support->small_heading }}</small>
+                                    @endif
+                                </td>
+                                <td>
+                                    {{ \Illuminate\Support\Str::limit(strip_tags($support->description), 80) }}
+                                </td>
                                 <td>
                                     @if ($support->image)
                                         <img src="{{ asset('storage/' . $support->image) }}" alt="{{ $support->heading }}" class="blog-table-image">
                                     @else
-                                        <small>No image</small>
+                                        <small class="text-muted">No image</small>
                                     @endif
                                 </td>
                                 <td>
-                                    <strong>{{ $support->heading }}</strong>
-                                    @if ($support->small_heading)
-                                        <small>{{ $support->small_heading }}</small>
+                                    @if (is_array($support->features))
+                                        <div class="d-flex flex-wrap gap-1" style="max-width: 250px;">
+                                            @foreach ($support->features as $feature)
+                                                <span style="background-color: #f3f4f6; color: #4b5563; font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; border: 1px solid #e5e7eb; display: inline-block; white-space: nowrap; margin-bottom: 2px;">{{ $feature }}</span>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        -
                                     @endif
-                                </td>
-                                <td>
-                                    <strong>{{ $support->phone_number ?? '-' }}</strong>
-                                    <small>{{ $support->email ?? '-' }}</small>
                                 </td>
                                 <td>
                                     <span class="status-badge {{ $support->status ? 'status-active' : 'status-inactive' }}">

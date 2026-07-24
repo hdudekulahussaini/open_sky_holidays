@@ -44,7 +44,6 @@ class OurStoryController extends Controller
             }
 
             OurStory::create([
-                'small_heading' => $request->input('small_heading'),
                 'heading' => $request->input('heading'),
                 'description' => $request->input('description'),
                 'images' => $uploadedImages,
@@ -71,6 +70,7 @@ class OurStoryController extends Controller
                 ->with('error', 'Unable to create Our Story.');
         }
     }
+
     public function edit(OurStory $ourStory): View
     {
         return view(

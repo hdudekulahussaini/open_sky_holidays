@@ -78,7 +78,9 @@ Route::get('/travel-support/active', [
 Route::apiResource(
     'travel-support',
     TravelSupportSectionController::class
-);
+)->parameters([
+    'travel-support' => 'travelSupport',
+]);
 
 /*
 |--------------------------------------------------------------------------

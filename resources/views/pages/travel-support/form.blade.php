@@ -190,15 +190,7 @@
     </div>
 </div>
 
-<div class="ts-form-actions">
-    <a href="{{ route('admin.travel-support.index') }}" class="ts-secondary-btn">
-        Cancel
-    </a>
 
-    <button type="submit" class="ts-primary-btn">
-        {{ isset($travelSupport) ? 'Update Travel Support' : 'Create Travel Support' }}
-    </button>
-</div>
 
 @push('scripts')
     <script>

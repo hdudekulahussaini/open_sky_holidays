@@ -14,12 +14,12 @@ class TravelSupportSectionController extends Controller
 {
     public function index(): View
     {
-        $travelSupportSections = TravelSupportSection::latest()
+        $travelSupports = TravelSupportSection::latest()
             ->paginate(10);
 
         return view(
             'pages.travel-support.index',
-            compact('travelSupportSections')
+            compact('travelSupports')
         );
     }
 
@@ -57,7 +57,6 @@ class TravelSupportSectionController extends Controller
             );
     }
 
-  
     public function edit(
         TravelSupportSection $travelSupport
     ): View {
