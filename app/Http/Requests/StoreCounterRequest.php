@@ -14,13 +14,19 @@ class StoreCounterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'value' => [
+            'counters' => [
+                'required',
+                'array',
+                'min:1',
+            ],
+
+            'counters.*.value' => [
                 'required',
                 'string',
                 'max:100',
             ],
 
-            'name' => [
+            'counters.*.name' => [
                 'required',
                 'string',
                 'max:255',
@@ -36,11 +42,11 @@ class StoreCounterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'value.required' => 'The counter value is required.',
-            'value.max' => 'The counter value may not be greater than 100 characters.',
-
-            'name.required' => 'The counter name is required.',
-            'name.max' => 'The counter name may not be greater than 255 characters.',
+            'counters.required' => 'At least one counter entry is required.',
+            'counters.*.value.required' => 'The counter value is required.',
+            'counters.*.value.max' => 'The counter value may not be greater than 100 characters.',
+            'counters.*.name.required' => 'The counter name is required.',
+            'counters.*.name.max' => 'The counter name may not be greater than 255 characters.',
         ];
     }
 }

@@ -245,12 +245,21 @@
                         </label>
                     </div>
 
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                    >
-                        Update Page Banner
-                    </button>
+                    <div class="d-flex gap-2">
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            Update Page Banner
+                        </button>
+
+                        <a
+                            href="{{ route('admin.page-banners.index') }}"
+                            class="btn btn-light"
+                        >
+                            Cancel
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>

@@ -51,7 +51,6 @@ class OurStoryController extends Controller
             }
 
             $ourStory = OurStory::create([
-                'small_heading' => $request->input('small_heading'),
                 'heading' => $request->input('heading'),
                 'description' => $request->input('description'),
                 'images' => $uploadedImages,
