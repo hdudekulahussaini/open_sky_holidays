@@ -32,6 +32,18 @@ class HeroRequest extends FormRequest
                 'max:2000',
             ],
 
+            'button_text' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+
+            'button_link' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+
             'image' => [
                 'nullable',
                 'file',

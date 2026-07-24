@@ -76,6 +76,67 @@
 
                     <div class="mb-3">
                         <label
+                            for="button_text"
+                            class="form-label"
+                        >
+                            Button Text
+                        </label>
+
+                        <input
+                            type="text"
+                            id="button_text"
+                            name="button_text"
+                            class="form-control
+                                @error('button_text') is-invalid @enderror"
+                            placeholder="e.g. Explore More"
+                            value="{{ old('button_text', 'Explore More') }}"
+                        >
+
+                        @error('button_text')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label
+                            for="button_link"
+                            class="form-label"
+                        >
+                            Button Link / URL
+                        </label>
+
+                        <input
+                            type="text"
+                            id="button_link"
+                            name="button_link"
+                            class="form-control
+                                @error('button_link') is-invalid @enderror"
+                            placeholder="e.g. /tours or https://example.com"
+                            value="{{ old('button_link', '/tours') }}"
+                        >
+
+                        <small class="form-text text-muted mt-1 d-block">
+                            Common site page links: 
+                            <code>/tours</code>, 
+                            <code>/about</code>, 
+                            <code>/services</code>, 
+                            <code>/blogs</code>, 
+                            <code>/contact</code>, 
+                            <code>/adventures</code>, 
+                            or full external URL (e.g. <code>https://example.com</code>).
+                        </small>
+
+                        @error('button_link')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label
                             for="image"
                             class="form-label"
                         >

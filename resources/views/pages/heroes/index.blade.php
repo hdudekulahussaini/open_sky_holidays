@@ -29,6 +29,7 @@
                                     <th>Image</th>
                                     <th>Title</th>
                                     <th>Description</th>
+                                    <th>Button Text & Link</th>
                                     <th>Status</th>
                                     <th>Slider Order</th>
                                     <th>Actions</th>
@@ -59,6 +60,12 @@
 
                             <td style="max-width:300px;">
                                 {{ Str::limit($hero->description, 80) }}
+                            </td>
+
+                            <td>
+                                <strong>{{ $hero->button_text ?: 'Explore More' }}</strong>
+                                <br>
+                                <small class="text-muted">{{ $hero->button_link ?: '/tours' }}</small>
                             </td>
 
                             <td>
@@ -95,7 +102,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="7" class="text-center">
+                            <td colspan="8" class="text-center">
                                 No hero slides found.
                             </td>
                         </tr>

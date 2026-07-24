@@ -13,6 +13,8 @@ class HeroResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
+            'button_text' => $this->button_text ?? 'Explore More',
+            'button_link' => $this->button_link ?? '/tours',
 
             'image' => $this->image,
 
