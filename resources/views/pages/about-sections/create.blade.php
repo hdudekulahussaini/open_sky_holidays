@@ -9,8 +9,6 @@
         $locations = old('locations', [
             [
                 'location_name' => '',
-                'latitude' => '',
-                'longitude' => '',
             ],
         ]);
     @endphp
@@ -213,7 +211,7 @@
                             <h4>Globe Locations</h4>
 
                             <p>
-                                Add location names and coordinates for the interactive globe.
+                                Add location names for the interactive globe.
                             </p>
                         </div>
 
@@ -270,55 +268,9 @@
 
                                     </div>
 
-                                    {{-- Latitude --}}
-                                    <div class="admin-form-group">
 
-                                        <label>
-                                            Latitude
-                                            <span class="required">*</span>
-                                        </label>
 
-                                        <input type="number" step="0.0000001" min="-90" max="90"
-                                            name="locations[{{ $index }}][latitude]"
-                                            class="admin-form-control
-                                                @error("locations.$index.latitude")
-                                                    is-invalid
-                                                @enderror"
-                                            value="{{ old("locations.$index.latitude", $location['latitude'] ?? '') }}"
-                                            placeholder="Example: 23.4241" required>
 
-                                        @error("locations.$index.latitude")
-                                            <span class="admin-form-error">
-                                                {{ $message }}
-                                            </span>
-                                        @enderror
-
-                                    </div>
-
-                                    {{-- Longitude --}}
-                                    <div class="admin-form-group">
-
-                                        <label>
-                                            Longitude
-                                            <span class="required">*</span>
-                                        </label>
-
-                                        <input type="number" step="0.0000001" min="-180" max="180"
-                                            name="locations[{{ $index }}][longitude]"
-                                            class="admin-form-control
-                                                @error("locations.$index.longitude")
-                                                    is-invalid
-                                                @enderror"
-                                            value="{{ old("locations.$index.longitude", $location['longitude'] ?? '') }}"
-                                            placeholder="Example: 53.8478" required>
-
-                                        @error("locations.$index.longitude")
-                                            <span class="admin-form-error">
-                                                {{ $message }}
-                                            </span>
-                                        @enderror
-
-                                    </div>
 
 
 
@@ -533,45 +485,9 @@
 
                             </div>
 
-                            <div class="admin-form-group">
 
-                                <label>
-                                    Latitude
-                                    <span class="required">*</span>
-                                </label>
 
-                                <input
-                                    type="number"
-                                    step="0.0000001"
-                                    min="-90"
-                                    max="90"
-                                    name="locations[${locationIndex}][latitude]"
-                                    class="admin-form-control"
-                                    placeholder="Example: 23.4241"
-                                    required
-                                >
 
-                            </div>
-
-                            <div class="admin-form-group">
-
-                                <label>
-                                    Longitude
-                                    <span class="required">*</span>
-                                </label>
-
-                                <input
-                                    type="number"
-                                    step="0.0000001"
-                                    min="-180"
-                                    max="180"
-                                    name="locations[${locationIndex}][longitude]"
-                                    class="admin-form-control"
-                                    placeholder="Example: 53.8478"
-                                    required
-                                >
-
-                            </div>
 
 
 
