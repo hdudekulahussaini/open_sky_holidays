@@ -72,18 +72,6 @@ class AboutSectionRequest extends FormRequest
                 'max:255',
             ],
 
-            'locations.*.latitude' => [
-                'required',
-                'numeric',
-                'between:-90,90',
-            ],
-
-            'locations.*.longitude' => [
-                'required',
-                'numeric',
-                'between:-180,180',
-            ],
-
             /*
             |--------------------------------------------------------------------------
             | Customer avatar images
@@ -156,18 +144,6 @@ class AboutSectionRequest extends FormRequest
             'locations.min' => 'At least one globe location is required.',
 
             'locations.*.location_name.required' => 'Every globe location must have a location name.',
-
-            'locations.*.latitude.required' => 'Every globe location must have a latitude.',
-
-            'locations.*.latitude.numeric' => 'Latitude must be a valid number.',
-
-            'locations.*.latitude.between' => 'Latitude must be between -90 and 90.',
-
-            'locations.*.longitude.required' => 'Every globe location must have a longitude.',
-
-            'locations.*.longitude.numeric' => 'Longitude must be a valid number.',
-
-            'locations.*.longitude.between' => 'Longitude must be between -180 and 180.',
 
             'avatar_images.array' => 'Avatar images must be submitted as a valid image list.',
 
