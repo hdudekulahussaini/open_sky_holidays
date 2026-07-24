@@ -42,9 +42,6 @@
                                 </td>
                                 <td>
                                     <strong>{{ $story->heading }}</strong>
-                                    @if ($story->small_heading)
-                                        <small>{{ $story->small_heading }}</small>
-                                    @endif
                                 </td>
                                 <td>{{ \Illuminate\Support\Str::limit(strip_tags($story->description), 100) }}</td>
                                 <td>

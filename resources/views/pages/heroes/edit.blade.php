@@ -157,12 +157,21 @@
                         </label>
                     </div>
 
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                    >
-                        Update Hero
-                    </button>
+                    <div class="d-flex gap-2">
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            Update Hero
+                        </button>
+
+                        <a
+                            href="{{ route('admin.heroes.index') }}"
+                            class="btn btn-light"
+                        >
+                            Cancel
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>

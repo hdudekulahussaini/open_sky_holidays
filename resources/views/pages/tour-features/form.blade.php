@@ -605,18 +605,7 @@
 
 </div>
 
-{{-- Actions --}}
-<div class="tf-form-actions">
 
-    <a href="{{ route('admin.tour-features.index') }}" class="tf-btn tf-btn-secondary">
-        Cancel
-    </a>
-
-    <button type="submit" class="tf-btn tf-btn-primary">
-        Save All Tour Features
-    </button>
-
-</div>
 
 {{-- Dynamic templates --}}
 <template id="packageInclusionTemplate">

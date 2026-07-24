@@ -122,33 +122,7 @@
                     @enderror
                 </div>
 
-                <div
-                    class="d-flex flex-wrap
-                           justify-content-end gap-2"
-                >
-                    <a
-                        href="{{ route(
-                            'admin.about-our-core-values.index'
-                        ) }}"
-                        class="btn btn-light px-4"
-                    >
-                        Cancel
-                    </a>
 
-                    <button
-                        type="submit"
-                        class="btn btn-primary px-4"
-                    >
-                        <i
-                            class="fa-solid
-                                   fa-floppy-disk me-2"
-                        ></i>
-
-                        {{ $isEdit
-                            ? 'Update Core Value'
-                            : 'Save Core Value' }}
-                    </button>
-                </div>
 
             </div>
         </div>

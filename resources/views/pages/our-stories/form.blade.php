@@ -17,23 +17,7 @@
 <div class="ts-form-grid">
     <div class="ts-form-main">
 
-        {{-- Small Heading --}}
-        <div class="ts-form-group">
-            <label for="small_heading" class="ts-label">
-                Small Heading
-            </label>
 
-            <input type="text" name="small_heading" id="small_heading"
-                class="ts-input @error('small_heading') ts-input-error @enderror"
-                value="{{ old('small_heading', $ourStory->small_heading ?? '') }}"
-                placeholder="Example: OUR STORY">
-
-            @error('small_heading')
-                <span class="ts-error-message">
-                    {{ $message }}
-                </span>
-            @enderror
-        </div>
 
         {{-- Main Heading --}}
         <div class="ts-form-group">
@@ -201,15 +185,7 @@
     </div>
 </div>
 
-<div class="ts-form-actions">
-    <a href="{{ route('admin.our-stories.index') }}" class="ts-secondary-btn">
-        Cancel
-    </a>
 
-    <button type="submit" class="ts-primary-btn">
-        {{ isset($ourStory) ? 'Update Our Story' : 'Create Our Story' }}
-    </button>
-</div>
 
 @push('scripts')
 <script>

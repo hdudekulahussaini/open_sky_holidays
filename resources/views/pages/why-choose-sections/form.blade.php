@@ -86,13 +86,4 @@
 
 </div>
 
-{{-- Form Actions --}}
-<div class="admin-form-actions">
-    <a href="{{ route('admin.why-choose-sections.index') }}" class="btn btn-light">
-        Cancel
-    </a>
 
-    <button type="submit" class="btn btn-primary">
-        {{ $buttonText ?? 'Save Why Choose Section' }}
-    </button>
-</div>
