@@ -251,8 +251,6 @@ class AboutSectionController extends Controller
         foreach ($locations as $location) {
             $aboutSection->globeLocations()->create([
                 'location_name' => $location['location_name'],
-                'latitude' => $location['latitude'],
-                'longitude' => $location['longitude'],
             ]);
         }
     }
