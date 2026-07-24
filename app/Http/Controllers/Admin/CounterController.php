@@ -27,18 +27,21 @@ class CounterController extends Controller
 
     public function store(StoreCounterRequest $request): RedirectResponse
     {
-        $data = $request->validated();
+        $status = $request->boolean('status');
+        $counters = $request->input('counters', []);
 
-        $data['status'] = $request->boolean('status');
-
-        Counter::create($data);
+        foreach ($counters as $counterData) {
+            Counter::create([
+                'value' => $counterData['value'],
+                'name' => $counterData['name'],
+                'status' => $status,
+            ]);
+        }
 
         return redirect()
             ->route('admin.counters.index')
-            ->with('success', 'Counter created successfully.');
+            ->with('success', 'Counters created successfully.');
     }
-
-
 
     public function edit(Counter $counter): View
     {
@@ -49,15 +52,43 @@ class CounterController extends Controller
         UpdateCounterRequest $request,
         Counter $counter
     ): RedirectResponse {
-        $data = $request->validated();
+        $status = $request->boolean('status');
+        $countersData = $request->input('counters', []);
 
-        $data['status'] = $request->boolean('status');
+        $submittedIds = [];
+        $currentCounterUpdated = false;
 
-        $counter->update($data);
+        foreach ($countersData as $data) {
+            if (isset($data['id'])) {
+                $existing = Counter::find($data['id']);
+                if ($existing) {
+                    $existing->update([
+                        'value' => $data['value'],
+                        'name' => $data['name'],
+                        'status' => $status,
+                    ]);
+                    $submittedIds[] = $existing->id;
+                    if ($existing->id === $counter->id) {
+                        $currentCounterUpdated = true;
+                    }
+                }
+            } else {
+                $newCounter = Counter::create([
+                    'value' => $data['value'],
+                    'name' => $data['name'],
+                    'status' => $status,
+                ]);
+                $submittedIds[] = $newCounter->id;
+            }
+        }
+
+        if (! $currentCounterUpdated) {
+            $counter->delete();
+        }
 
         return redirect()
             ->route('admin.counters.index')
-            ->with('success', 'Counter updated successfully.');
+            ->with('success', 'Counters updated successfully.');
     }
 
     public function destroy(Counter $counter): RedirectResponse

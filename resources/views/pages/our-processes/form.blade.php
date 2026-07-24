@@ -133,15 +133,7 @@
 
 </div>
 
-<div class="admin-form-actions">
-    <a href="{{ route('admin.our-processes.index') }}" class="admin-secondary-button">
-        Cancel
-    </a>
 
-    <button type="submit" class="admin-primary-button">
-        {{ isset($ourProcess) ? 'Update Process' : 'Create Process' }}
-    </button>
-</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

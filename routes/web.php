@@ -22,9 +22,9 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\TourController;
-use App\Http\Controllers\Admin\TourInquiryController;
 use App\Http\Controllers\Admin\TourDetailController;
 use App\Http\Controllers\Admin\TourFeatureController;
+use App\Http\Controllers\Admin\TourInquiryController;
 use App\Http\Controllers\Admin\TourTypeController;
 use App\Http\Controllers\Admin\TravelSupportSectionController;
 use App\Http\Controllers\Admin\WhatWeOfferController;
@@ -123,7 +123,7 @@ Route::prefix('admin')
             */
 
             Route::resource('about-sections', AboutSectionController::class);
-            Route::resource('travel-support', TravelSupportSectionController::class);
+            Route::resource('travel-support', TravelSupportSectionController::class)->parameters(['travel-support' => 'travelSupport']);
             Route::resource('why-choose-sections', WhyChooseSectionController::class);
             Route::resource('heroes', HeroController::class)->except('show');
             Route::resource('page-banners', PageBannerController::class)->except('show');
