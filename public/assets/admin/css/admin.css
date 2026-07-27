@@ -186,19 +186,25 @@ a {
     flex-grow: 1;
 }
 
-.sidebar-nav a {
+.sidebar-nav a,
+.sidebar-nav .nav-item,
+.sidebar-nav .nav-dropdown-toggle,
+.sidebar-nav .nav-dropdown-item {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 8px;
-    padding: 12px 16px;
+    margin-bottom: 6px;
+    padding: 10px 16px;
     border-radius: 10px;
     color: #bae6fd;
-    font-size: 15px;
+    font-size: 14.5px;
     font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    width: 100%;
 }
 
-.sidebar-nav a svg {
+.sidebar-nav svg {
     width: 20px;
     height: 20px;
     stroke: currentColor;
@@ -207,22 +213,66 @@ a {
     transition: all 0.2s ease;
 }
 
-.sidebar-nav a:hover {
-    color: white;
-    background: rgba(255, 255, 255, 0.08);
+.sidebar-nav .menu-icon {
+    font-size: 17px;
+    width: 22px;
+    text-align: center;
+    color: #93c5fd;
+    transition: all 0.2s ease;
 }
 
-.sidebar-nav a.active {
-    color: white;
-    background: rgba(255, 255, 255, 0.15);
-    border-left: 4px solid #fbb03b;
-    border-radius: 0 10px 10px 0;
-    margin-left: -20px;
-    padding-left: 16px;
+.sidebar-nav .submenu-icon {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+    color: #93c5fd;
+    opacity: 0.85;
+    transition: all 0.2s ease;
 }
 
-.sidebar-nav a.active svg {
-    color: #fbb03b;
+.sidebar-nav .chevron-icon {
+    margin-left: auto;
+    font-size: 12px;
+    transition: transform 0.25s ease;
+}
+
+.nav-dropdown-wrapper.open .chevron-icon {
+    transform: rotate(180deg);
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav .nav-item:hover,
+.sidebar-nav .nav-dropdown-toggle:hover,
+.sidebar-nav .nav-dropdown-item:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-nav a:hover .menu-icon,
+.sidebar-nav a:hover .submenu-icon,
+.sidebar-nav .nav-item:hover .menu-icon,
+.sidebar-nav .nav-dropdown-toggle:hover .menu-icon,
+.sidebar-nav .nav-dropdown-item:hover .submenu-icon {
+    color: #ffffff;
+}
+
+.sidebar-nav a.active,
+.sidebar-nav .nav-item.active,
+.sidebar-nav .nav-dropdown-toggle.active,
+.sidebar-nav .nav-dropdown-item.active {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.18) !important;
+    border-left: 4px solid #fbb03b !important;
+    font-weight: 600;
+}
+
+.sidebar-nav a.active svg,
+.sidebar-nav a.active .menu-icon,
+.sidebar-nav a.active .submenu-icon,
+.sidebar-nav .nav-item.active .menu-icon,
+.sidebar-nav .nav-dropdown-toggle.active .menu-icon,
+.sidebar-nav .nav-dropdown-item.active .submenu-icon {
+    color: #fbb03b !important;
 }
 
 .logout-form {
@@ -339,6 +389,243 @@ a {
     color: #b91c1c;
     background: #fee2e2;
     border-left: 5px solid #ef4444;
+}
+
+/* ==========================================================================
+   PHPFLASHER GOOGLE THEME TOAST (Top-Right Floating Card)
+   ========================================================================== */
+.flasher-google-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    pointer-events: none;
+}
+
+.flasher-google {
+    pointer-events: auto;
+    width: 360px;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 20px 24px 16px 24px;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.15), 0 4px 12px 0 rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+    font-family: 'Rubik', system-ui, -apple-system, sans-serif;
+    animation: flasherSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.flasher-google-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.flasher-google-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #202124;
+}
+
+.flasher-google-body {
+    font-size: 14px;
+    color: #5f6368;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.flasher-google-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.flasher-google-dismiss {
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.15s ease;
+}
+
+.flasher-google-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    animation: flasherProgress 5s linear forwards;
+}
+
+@keyframes flasherProgress {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
+}
+
+/* Success Theme */
+.flasher-google-success .flasher-google-icon {
+    color: #10b981;
+    font-size: 22px;
+}
+
+.flasher-google-success .flasher-google-dismiss {
+    color: #10b981;
+}
+
+.flasher-google-success .flasher-google-dismiss:hover {
+    background: #ecfdf5;
+}
+
+.flasher-google-success .flasher-google-progress {
+    background: #10b981;
+}
+
+/* Error Theme */
+.flasher-google-error .flasher-google-icon {
+    color: #ef4444;
+    font-size: 22px;
+}
+
+.flasher-google-error .flasher-google-dismiss {
+    color: #ef4444;
+}
+
+.flasher-google-error .flasher-google-dismiss:hover {
+    background: #fef2f2;
+}
+
+.flasher-google-error .flasher-google-progress {
+    background: #ef4444;
+}
+
+/* Warning Theme (Matches Screenshot) */
+.flasher-google-warning .flasher-google-icon {
+    color: #f59e0b;
+    font-size: 22px;
+}
+
+.flasher-google-warning .flasher-google-dismiss {
+    color: #f59e0b;
+}
+
+.flasher-google-warning .flasher-google-dismiss:hover {
+    background: #fffbeb;
+}
+
+.flasher-google-warning .flasher-google-progress {
+    background: #f59e0b;
+}
+
+/* Info Theme */
+.flasher-google-info .flasher-google-icon {
+    color: #3b82f6;
+    font-size: 22px;
+}
+
+.flasher-google-info .flasher-google-dismiss {
+    color: #3b82f6;
+}
+
+.flasher-google-info .flasher-google-dismiss:hover {
+    background: #eff6ff;
+}
+
+.flasher-google-info .flasher-google-progress {
+    background: #3b82f6;
+}
+
+@keyframes flasherSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.flasher-google.hide {
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+/* Google Material Info Theme (Blue) */
+.google-toast-info {
+    background: #0d47a1;
+    border-left: 6px solid #2196f3;
+}
+
+.google-toast-info .google-toast-icon {
+    color: #64b5f6;
+    font-size: 20px;
+}
+
+.google-toast-info .google-toast-dismiss {
+    color: #bbdefb;
+}
+
+.google-toast-info .google-toast-dismiss:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+}
+
+.google-toast-content {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.google-toast-message {
+    line-height: 1.4;
+}
+
+.google-toast-dismiss {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    flex-shrink: 0;
+}
+
+@keyframes googleToastSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.google-toast.hide {
+    opacity: 0;
+    transform: translateY(-10px);
 }
 
 .card {

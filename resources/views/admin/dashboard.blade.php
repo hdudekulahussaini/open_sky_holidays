@@ -14,11 +14,7 @@
             </div>
 
             <div class="stat-icon">
-                <svg viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                    <path d="M3 7l9 6 9-6"></path>
-                </svg>
+                <i class="fa-solid fa-envelope fs-4 text-primary"></i>
             </div>
         </div>
 
@@ -29,11 +25,7 @@
             </div>
 
             <div class="stat-icon">
-                <svg viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="9"></circle>
-                    <path d="M12 8v4l3 2"></path>
-                </svg>
+                <i class="fa-solid fa-clock fs-4 text-warning"></i>
             </div>
         </div>
 
@@ -44,22 +36,7 @@
             </div>
 
             <div class="stat-icon">
-                <svg viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2
-                        19.79 19.79 0 0 1-8.63-3.07
-                        19.5 19.5 0 0 1-6-6
-                        19.79 19.79 0 0 1-3.07-8.67
-                        A2 2 0 0 1 3.9 2h3
-                        a2 2 0 0 1 2 1.72
-                        12.84 12.84 0 0 0 .7 2.81
-                        2 2 0 0 1-.45 2.11L7.88 9.91
-                        a16 16 0 0 0 6 6l1.27-1.27
-                        a2 2 0 0 1 2.11-.45
-                        12.84 12.84 0 0 0 2.81.7
-                        A2 2 0 0 1 22 16.92z">
-                    </path>
-                </svg>
+                <i class="fa-solid fa-phone fs-4 text-info"></i>
             </div>
         </div>
 
@@ -70,11 +47,7 @@
             </div>
 
             <div class="stat-icon">
-                <svg viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="9"></circle>
-                    <path d="M8 12l3 3 5-6"></path>
-                </svg>
+                <i class="fa-solid fa-circle-check fs-4 text-success"></i>
             </div>
         </div>
 
@@ -161,17 +134,7 @@
                                     class="action-button"
                                     title="View enquiry"
                                 >
-                                    <svg viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2">
-                                        <path d="M1 12s4-7 11-7 11 7 11 7
-                                            -4 7-11 7S1 12 1 12z">
-                                        </path>
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                    </svg>
-
-                                    View
+                                    <i class="fa-solid fa-eye me-1"></i> View
                                 </a>
                             </td>
                         </tr>

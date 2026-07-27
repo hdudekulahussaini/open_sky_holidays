@@ -15,11 +15,13 @@
             </p>
         </div>
 
+        @if ($hasAvailablePages)
         <a
             href="{{ route('admin.page-banners.create') }}"
             class="btn btn-primary">
             Add Page Banner
         </a>
+        @endif
     </div>
 
     <div class="card">
