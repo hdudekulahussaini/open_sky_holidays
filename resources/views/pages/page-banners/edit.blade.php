@@ -42,20 +42,29 @@
                             for="page"
                             class="form-label"
                         >
-                            Page Name
+                            Page Name <span class="text-danger">*</span>
                         </label>
 
-                        <input
-                            type="text"
+                        <select
                             id="page"
                             name="page"
-                            class="form-control
+                            class="form-select
                                 @error('page') is-invalid @enderror"
-                            value="{{ old(
-                                'page',
-                                $pageBanner->page
-                            ) }}"
                         >
+                            <option value="">Select an option</option>
+                            @foreach ($availablePages as $slug => $label)
+                                <option
+                                    value="{{ $slug }}"
+                                    @selected(old('page', $pageBanner->page) == $slug)
+                                >
+                                    {{ $label }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        <small class="text-muted">
+                            Other pages with existing banners are hidden from this list.
+                        </small>
 
                         @error('page')
                             <div class="invalid-feedback">

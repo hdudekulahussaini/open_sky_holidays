@@ -7,6 +7,7 @@ use App\Http\Requests\PageBannerRequest;
 use App\Models\PageBanner;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class PageBannerController extends Controller
@@ -25,12 +26,23 @@ class PageBannerController extends Controller
 
     public function create(): View
     {
-        return view('pages.page-banners.create');
+        $usedPages = PageBanner::pluck('page')
+            ->map(fn ($page) => Str::slug($page))
+            ->toArray();
+
+        $allPages = PageBanner::getPageOptions();
+
+        $availablePages = array_filter(
+            $allPages,
+            fn ($key) => ! in_array(Str::slug($key), $usedPages),
+            ARRAY_FILTER_USE_KEY
+        );
+
+        return view('pages.page-banners.create', compact('availablePages'));
     }
 
-    public function store(
-        PageBannerRequest $request
-    ): RedirectResponse {
+    public function store(PageBannerRequest $request): RedirectResponse
+    {
         $validated = $request->validated();
 
         if ($request->hasFile('image')) {
@@ -49,19 +61,34 @@ class PageBannerController extends Controller
             );
     }
 
-    public function edit(
-        PageBanner $pageBanner
-    ): View {
+    public function edit(PageBanner $pageBanner): View
+    {
+        $usedPages = PageBanner::where('id', '!=', $pageBanner->id)
+            ->pluck('page')
+            ->map(fn ($page) => Str::slug($page))
+            ->toArray();
+
+        $allPages = PageBanner::getPageOptions();
+
+        $currentSlug = Str::slug($pageBanner->page);
+        if (! isset($allPages[$currentSlug]) && ! isset($allPages[$pageBanner->page])) {
+            $allPages[$pageBanner->page] = ucfirst($pageBanner->page);
+        }
+
+        $availablePages = array_filter(
+            $allPages,
+            fn ($key) => ! in_array(Str::slug($key), $usedPages),
+            ARRAY_FILTER_USE_KEY
+        );
+
         return view(
             'pages.page-banners.edit',
-            compact('pageBanner')
+            compact('pageBanner', 'availablePages')
         );
     }
 
-    public function update(
-        PageBannerRequest $request,
-        PageBanner $pageBanner
-    ): RedirectResponse {
+    public function update(PageBannerRequest $request, PageBanner $pageBanner): RedirectResponse
+    {
         $validated = $request->validated();
 
         if ($request->hasFile('image')) {
@@ -84,9 +111,8 @@ class PageBannerController extends Controller
             );
     }
 
-    public function destroy(
-        PageBanner $pageBanner
-    ): RedirectResponse {
+    public function destroy(PageBanner $pageBanner): RedirectResponse
+    {
         $this->deleteImage($pageBanner->image);
 
         $pageBanner->delete();
@@ -101,10 +127,7 @@ class PageBannerController extends Controller
 
     private function deleteImage(?string $image): void
     {
-        if (
-            $image &&
-            Storage::disk('public')->exists($image)
-        ) {
+        if ($image && Storage::disk('public')->exists($image)) {
             Storage::disk('public')->delete($image);
         }
     }
