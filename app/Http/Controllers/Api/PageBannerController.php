@@ -8,6 +8,7 @@ use App\Http\Resources\PageBannerResource;
 use App\Models\PageBanner;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PageBannerController extends Controller
 {
@@ -19,23 +20,15 @@ class PageBannerController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Page banners retrieved successfully.',
-            'data' =>
-                PageBannerResource::collection($pageBanners),
+            'message' => 'Page banners retrieved successfully.',
+            'data' => PageBannerResource::collection($pageBanners),
         ], 200);
     }
 
-    public function store(
-        PageBannerRequest $request
-    ): JsonResponse {
+    public function store(PageBannerRequest $request): JsonResponse
+    {
         $validated = $request->validated();
 
-        /*
-         * API image is optional.
-         * Raw JSON can be sent without an image.
-         * Form-data can be sent with an image.
-         */
         if ($request->hasFile('image')) {
             $validated['image'] = $request
                 ->file('image')
@@ -46,29 +39,22 @@ class PageBannerController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Page banner created successfully.',
-            'data' =>
-                new PageBannerResource($pageBanner),
+            'message' => 'Page banner created successfully.',
+            'data' => new PageBannerResource($pageBanner),
         ], 201);
     }
 
-    public function show(
-        PageBanner $pageBanner
-    ): JsonResponse {
+    public function show(PageBanner $pageBanner): JsonResponse
+    {
         return response()->json([
             'success' => true,
-            'message' =>
-                'Page banner retrieved successfully.',
-            'data' =>
-                new PageBannerResource($pageBanner),
+            'message' => 'Page banner retrieved successfully.',
+            'data' => new PageBannerResource($pageBanner),
         ], 200);
     }
 
-    public function update(
-        PageBannerRequest $request,
-        PageBanner $pageBanner
-    ): JsonResponse {
+    public function update(PageBannerRequest $request, PageBanner $pageBanner): JsonResponse
+    {
         $validated = $request->validated();
 
         if ($request->hasFile('image')) {
@@ -85,62 +71,54 @@ class PageBannerController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Page banner updated successfully.',
-            'data' =>
-                new PageBannerResource(
-                    $pageBanner->fresh()
-                ),
+            'message' => 'Page banner updated successfully.',
+            'data' => new PageBannerResource($pageBanner->fresh()),
         ], 200);
     }
 
-    public function destroy(
-        PageBanner $pageBanner
-    ): JsonResponse {
+    public function destroy(PageBanner $pageBanner): JsonResponse
+    {
         $this->deleteImage($pageBanner->image);
 
         $pageBanner->delete();
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Page banner deleted successfully.',
+            'message' => 'Page banner deleted successfully.',
             'data' => null,
         ], 200);
     }
 
-    public function byPage(
-        string $page
-    ): JsonResponse {
+    public function byPage(string $page): JsonResponse
+    {
+        $slug = Str::slug($page);
+
         $pageBanner = PageBanner::query()
-            ->where('page', $page)
+            ->where(function ($query) use ($page, $slug) {
+                $query->where('page', $page)
+                    ->orWhere('page', $slug);
+            })
             ->where('status', true)
             ->first();
 
-        if (!$pageBanner) {
+        if (! $pageBanner) {
             return response()->json([
                 'success' => false,
-                'message' =>
-                    'Active page banner not found.',
+                'message' => 'Active page banner not found.',
                 'data' => null,
             ], 404);
         }
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Page banner retrieved successfully.',
-            'data' =>
-                new PageBannerResource($pageBanner),
+            'message' => 'Page banner retrieved successfully.',
+            'data' => new PageBannerResource($pageBanner),
         ], 200);
     }
 
     private function deleteImage(?string $image): void
     {
-        if (
-            $image &&
-            Storage::disk('public')->exists($image)
-        ) {
+        if ($image && Storage::disk('public')->exists($image)) {
             Storage::disk('public')->delete($image);
         }
     }

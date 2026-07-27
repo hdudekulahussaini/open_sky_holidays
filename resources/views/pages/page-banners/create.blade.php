@@ -35,27 +35,41 @@
                 >
                     @csrf
 
+                    @if(empty($availablePages))
+                        <div class="alert alert-warning mb-4">
+                            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                            All page banners for site pages have already been created. You can manage existing banners from the <a href="{{ route('admin.page-banners.index') }}" class="alert-link">Page Banners List</a>.
+                        </div>
+                    @endif
+
                     <div class="mb-3">
                         <label
                             for="page"
                             class="form-label"
                         >
-                            Page Name
+                            Page Name <span class="text-danger">*</span>
                         </label>
 
-                        <input
-                            type="text"
+                        <select
                             id="page"
                             name="page"
-                            class="form-control
+                            class="form-select
                                 @error('page') is-invalid @enderror"
-                            value="{{ old('page') }}"
-                            placeholder="about, services, tours"
+                            @if(empty($availablePages)) disabled @endif
                         >
+                            <option value="">Select an option</option>
+                            @foreach ($availablePages as $slug => $label)
+                                <option
+                                    value="{{ $slug }}"
+                                    @selected(old('page') == $slug)
+                                >
+                                    {{ $label }}
+                                </option>
+                            @endforeach
+                        </select>
 
                         <small class="text-muted">
-                            Examples: about, services, blogs,
-                            contact, tours, packages.
+                            Pages with existing banners are automatically hidden from this list.
                         </small>
 
                         @error('page')

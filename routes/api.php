@@ -104,6 +104,11 @@ Route::apiResource(
 |--------------------------------------------------------------------------
 */
 
+Route::get('/page-banners/page/{page}', [
+    PageBannerController::class,
+    'byPage',
+])->name('api.page-banners.by-page');
+
 Route::apiResource(
     'page-banners',
     PageBannerController::class
