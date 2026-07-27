@@ -1111,8 +1111,109 @@ td {
     text-align: center !important;
 }
 
-.pagination-wrapper {
-    padding: 20px 24px;
+/* ==========================================================================
+   Admin Pagination Design System
+   ========================================================================== */
+.pagination-wrapper,
+.ts-pagination,
+.admin-card-footer {
+    padding: 16px 24px;
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.pagination-wrapper nav,
+.ts-pagination nav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.pagination-wrapper nav>div:first-child,
+.ts-pagination nav>div:first-child {
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748b;
+}
+
+.pagination-wrapper .pagination,
+.ts-pagination .pagination,
+.admin-card .pagination,
+.admin-table-card .pagination,
+ul.pagination {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+.pagination .page-item,
+ul.pagination li {
+    margin: 0 !important;
+}
+
+.pagination .page-item .page-link,
+ul.pagination li a,
+ul.pagination li span {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 36px !important;
+    height: 36px !important;
+    padding: 0 12px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: #475569 !important;
+    background-color: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease-in-out !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+}
+
+.pagination .page-item .page-link:hover,
+ul.pagination li a:hover {
+    color: #1769c2 !important;
+    background-color: #f0f7ff !important;
+    border-color: #93c5fd !important;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(23, 105, 194, 0.12) !important;
+}
+
+.pagination .page-item.active .page-link,
+ul.pagination li.active span,
+ul.pagination li.active a {
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #1769c2, #0284c7) !important;
+    border-color: #1769c2 !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 10px rgba(23, 105, 194, 0.28) !important;
+}
+
+.pagination .page-item.disabled .page-link,
+ul.pagination li.disabled span {
+    color: #94a3b8 !important;
+    background-color: #f1f5f9 !important;
+    border-color: #e2e8f0 !important;
+    cursor: not-allowed !important;
+    opacity: 0.65 !important;
+    box-shadow: none !important;
+}
+
+.pagination svg,
+nav svg {
+    width: 16px !important;
+    height: 16px !important;
+    vertical-align: middle;
 }
 
 .details-header {
@@ -5262,4 +5363,84 @@ input[type="file"].admin-form-control {
     font-size: 12px;
     font-weight: 500;
     white-space: nowrap;
+}
+
+/* ==========================================================================
+   Comprehensive Mobile Responsiveness Enhancements
+   ========================================================================== */
+@media (max-width: 768px) {
+    .admin-form-actions {
+        flex-direction: column-reverse;
+        width: 100%;
+        gap: 12px;
+    }
+
+    .admin-form-actions .btn,
+    .admin-form-actions button,
+    .admin-form-actions a {
+        width: 100% !important;
+        text-align: center !important;
+        justify-content: center !important;
+    }
+
+    .table-responsive,
+    .admin-table-container,
+    .table-wrapper {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media (max-width: 640px) {
+
+    .pagination-wrapper,
+    .ts-pagination,
+    .admin-card-footer {
+        padding: 14px 16px;
+        flex-direction: column;
+        justify-content: center;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .pagination-wrapper nav,
+    .ts-pagination nav {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .pagination-wrapper nav>div:first-child,
+    .ts-pagination nav>div:first-child {
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .pagination .page-item .page-link,
+    ul.pagination li a,
+    ul.pagination li span {
+        min-width: 32px !important;
+        height: 32px !important;
+        padding: 0 10px !important;
+        font-size: 12px !important;
+    }
+}
+
+/* ==========================================================================
+   Table Actions Flex Layout & Gap
+   ========================================================================== */
+.table-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.table-actions form,
+.table-actions .delete-form {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
 }

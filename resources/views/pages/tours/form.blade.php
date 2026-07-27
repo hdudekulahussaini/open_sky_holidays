@@ -433,11 +433,11 @@
 </div>
 
 <div class="admin-form-actions mt-4">
-    <a href="{{ route('admin.tours.index') }}" class="admin-cancel-button">
+    <a href="{{ route('admin.tours.index') }}" class="btn btn-light">
         Cancel
     </a>
 
-    <button type="submit" class="admin-submit-button">
+    <button type="submit" class="btn btn-primary">
         {{ isset($tour) ? 'Update Tour' : 'Create Tour' }}
     </button>
 </div>
