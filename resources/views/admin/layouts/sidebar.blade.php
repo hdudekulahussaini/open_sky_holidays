@@ -467,55 +467,74 @@
             </svg>
             <span>Testimonials</span>
         </a>
-        <!-- Tour Types -->
-<a
-    href="{{ route('admin.tour-types.index') }}"
-    class="nav-item {{ request()->routeIs('admin.tour-types.*') ? 'active' : '' }}"
->
-    <svg
-        class="menu-icon"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    >
-        <!-- Suitcase -->
-        <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-        <rect x="3" y="7" width="18" height="13" rx="2"></rect>
-        <path d="M3 12h18"></path>
-        <path d="M12 12v3"></path>
-    </svg>
-
-    <span>Tour Types</span>
-</a>
-<a
-    href="{{ route('admin.tours.index') }}"
-    class="nav-item {{ request()->routeIs('admin.tours.*') ? 'active' : '' }}"
->
-    <svg
-        class="menu-icon"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    >
-        <path
-            d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0z"
-        ></path>
-
-        <circle
-            cx="12"
-            cy="10"
-            r="3"
-        ></circle>
-    </svg>
-
-    <span>Tours</span>
-</a>
+        <!-- Tour Management Dropdown -->
+        <div class="nav-dropdown-wrapper {{ request()->routeIs('admin.tours.*', 'admin.tour-types.*') ? 'open' : '' }}">
+            <button
+                type="button"
+                class="nav-dropdown-toggle nav-item {{ request()->routeIs('admin.tours.*', 'admin.tour-types.*') ? 'active' : '' }}"
+                aria-expanded="{{ request()->routeIs('admin.tours.*', 'admin.tour-types.*') ? 'true' : 'false' }}">
+                <svg
+                    class="menu-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span>Tour Management</span>
+                <svg
+                    class="chevron-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
+            <div class="nav-dropdown-menu">
+                <!-- Tour Types -->
+                <a
+                    href="{{ route('admin.tour-types.index') }}"
+                    class="nav-dropdown-item {{ request()->routeIs('admin.tour-types.*') ? 'active' : '' }}">
+                    <svg
+                        class="submenu-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        <rect x="3" y="7" width="18" height="13" rx="2"></rect>
+                        <path d="M3 12h18"></path>
+                        <path d="M12 12v3"></path>
+                    </svg>
+                    <span>Tour Types</span>
+                </a>
+                <!-- Tours -->
+                <a
+                    href="{{ route('admin.tours.index') }}"
+                    class="nav-dropdown-item {{ request()->routeIs('admin.tours.*') ? 'active' : '' }}">
+                    <svg
+                        class="submenu-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <span>Tours</span>
+                </a>
+            </div>
+        </div>
         <!-- Blog Management Dropdown -->
         <div class="nav-dropdown-wrapper {{ request()->routeIs('admin.categories.*', 'admin.authors.*', 'admin.blogs.*') ? 'open' : '' }}">
             <button

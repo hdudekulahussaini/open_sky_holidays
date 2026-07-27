@@ -42,11 +42,11 @@
 </div>
 
 <div class="admin-form-actions">
-    <a href="{{ route('admin.tour-types.index') }}" class="admin-cancel-button">
+    <a href="{{ route('admin.tour-types.index') }}" class="btn btn-light">
         Cancel
     </a>
 
-    <button type="submit" class="admin-submit-button">
+    <button type="submit" class="btn btn-primary">
         {{ isset($tourType) ? 'Update Tour Type' : 'Create Tour Type' }}
     </button>
 </div>
