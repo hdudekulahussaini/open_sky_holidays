@@ -16,19 +16,7 @@
         <a
             href="{{ route('admin.dashboard') }}"
             class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-            <svg
-                class="menu-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round">
-                <rect x="3" y="3" width="7" height="7" rx="1"></rect>
-                <rect x="14" y="3" width="7" height="7" rx="1"></rect>
-                <rect x="14" y="14" width="7" height="7" rx="1"></rect>
-                <rect x="3" y="14" width="7" height="7" rx="1"></rect>
-            </svg>
+            <i class="fa-solid fa-gauge menu-icon"></i>
             <span>Dashboard</span>
         </a>
 
@@ -38,97 +26,44 @@
                 type="button"
                 class="nav-dropdown-toggle nav-item {{ request()->routeIs('admin.heroes.*', 'admin.offer-banners.*', 'admin.page-banners.*') ? 'active' : '' }}"
                 aria-expanded="{{ request()->routeIs('admin.heroes.*', 'admin.offer-banners.*', 'admin.page-banners.*') ? 'true' : 'false' }}">
-                <svg
-                    class="menu-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-                    <line x1="9" y1="3" x2="9" y2="21"></line>
-                </svg>
+                <i class="fa-solid fa-images menu-icon"></i>
                 <span>Hero &amp; Banners</span>
-                <svg
-                    class="chevron-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
             </button>
             <div class="nav-dropdown-menu">
-                <!-- Hero Slides -->
-                <a
-                    href="{{ route('admin.heroes.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.heroes.*') ? 'active' : '' }}">
-                    <svg
-                        class="submenu-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <rect
-                            x="3"
-                            y="4"
-                            width="18"
-                            height="16"
-                            rx="2"></rect>
-
-                        <path
-                            d="M3 16l5-5 4 4 3-3 6 6"></path>
-
-                        <circle
-                            cx="8.5"
-                            cy="8.5"
-                            r="1.5"></circle>
-                    </svg>
-
+                <a href="{{ route('admin.heroes.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.heroes.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-sliders submenu-icon"></i>
                     <span>Hero Slides</span>
                 </a>
-
-                <!-- Page Banners -->
-                <a
-                    href="{{ route('admin.page-banners.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.page-banners.*') ? 'active' : '' }}">
-                    <svg
-                        class="submenu-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
-                        <path d="M7 8h10"></path>
-                        <path d="M7 12h7"></path>
-                        <path d="M7 16h4"></path>
-                    </svg>
+                <a href="{{ route('admin.page-banners.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.page-banners.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-image submenu-icon"></i>
                     <span>Page Banners</span>
                 </a>
-
-                <!-- Offer Banners -->
-                <a
-                    href="{{ route('admin.offer-banners.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.offer-banners.*') ? 'active' : '' }}">
-                    <svg
-                        class="submenu-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
-                        <line x1="7" y1="7" x2="7.01" y2="7"></line>
-                    </svg>
+                <a href="{{ route('admin.offer-banners.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.offer-banners.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-tags submenu-icon"></i>
                     <span>Offer Banners</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Tour Management Dropdown -->
+        <div class="nav-dropdown-wrapper {{ request()->routeIs('admin.tours.*', 'admin.tour-types.*', 'admin.tour-details.*', 'admin.tour-features.*') ? 'open' : '' }}">
+            <button
+                type="button"
+                class="nav-dropdown-toggle nav-item {{ request()->routeIs('admin.tours.*', 'admin.tour-types.*', 'admin.tour-details.*', 'admin.tour-features.*') ? 'active' : '' }}"
+                aria-expanded="{{ request()->routeIs('admin.tours.*', 'admin.tour-types.*', 'admin.tour-details.*', 'admin.tour-features.*') ? 'true' : 'false' }}">
+                <i class="fa-solid fa-plane-departure menu-icon"></i>
+                <span>Tour Management</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+            </button>
+            <div class="nav-dropdown-menu">
+                <a href="{{ route('admin.tour-types.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.tour-types.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-layer-group submenu-icon"></i>
+                    <span>Tour Types</span>
+                </a>
+                <a href="{{ route('admin.tours.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.tours.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-map-location-dot submenu-icon"></i>
+                    <span>Tours</span>
                 </a>
             </div>
         </div>
@@ -139,104 +74,63 @@
                 type="button"
                 class="nav-dropdown-toggle nav-item {{ request()->routeIs('admin.adventure-categories.*', 'admin.adventures.*') ? 'active' : '' }}"
                 aria-expanded="{{ request()->routeIs('admin.adventure-categories.*', 'admin.adventures.*') ? 'true' : 'false' }}">
-                <svg
-                    class="menu-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path d="M3 20h18"></path>
-                    <path d="M5 20l5-12 3 7 2-4 4 9"></path>
-                    <circle cx="18" cy="5" r="2"></circle>
-                </svg>
+                <i class="fa-solid fa-person-hiking menu-icon"></i>
                 <span>Adventure Management</span>
-                <svg
-                    class="chevron-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
             </button>
             <div class="nav-dropdown-menu">
-                <a
-                    href="{{ route('admin.adventure-categories.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.adventure-categories.*') ? 'active' : '' }}">
-                    <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                    </svg>
+                <a href="{{ route('admin.adventure-categories.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.adventure-categories.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-list submenu-icon"></i>
                     <span>Adventure Categories</span>
                 </a>
-                <a
-                    href="{{ route('admin.adventures.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.adventures.*') ? 'active' : '' }}">
-                    <svg class="submenu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                    </svg>
+                <a href="{{ route('admin.adventures.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.adventures.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-compass submenu-icon"></i>
                     <span>Adventures</span>
                 </a>
             </div>
         </div>
 
+        <!-- Blog Management Dropdown -->
+        <div class="nav-dropdown-wrapper {{ request()->routeIs('admin.categories.*', 'admin.authors.*', 'admin.blogs.*') ? 'open' : '' }}">
+            <button
+                type="button"
+                class="nav-dropdown-toggle nav-item {{ request()->routeIs('admin.categories.*', 'admin.authors.*', 'admin.blogs.*') ? 'active' : '' }}"
+                aria-expanded="{{ request()->routeIs('admin.categories.*', 'admin.authors.*', 'admin.blogs.*') ? 'true' : 'false' }}">
+                <i class="fa-solid fa-newspaper menu-icon"></i>
+                <span>Blog Management</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+            </button>
+            <div class="nav-dropdown-menu">
+                <a href="{{ route('admin.categories.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-folder submenu-icon"></i>
+                    <span>Categories</span>
+                </a>
+                <a href="{{ route('admin.authors.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.authors.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-users submenu-icon"></i>
+                    <span>Authors</span>
+                </a>
+                <a href="{{ route('admin.blogs.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.blogs.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-blog submenu-icon"></i>
+                    <span>Blogs</span>
+                </a>
+            </div>
+        </div>
+
         <!-- Enquiries -->
-        <a
-            href="{{ route('admin.enquiries.index') }}"
-            class="nav-item {{ request()->routeIs('admin.enquiries.*') ? 'active' : '' }}">
-            <svg
-                class="menu-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round">
-                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                <path d="M3 7l9 6 9-6"></path>
-            </svg>
+        <a href="{{ route('admin.enquiries.index') }}" class="nav-item {{ request()->routeIs('admin.enquiries.*') ? 'active' : '' }}">
+            <i class="fa-solid fa-envelope menu-icon"></i>
             <span>Enquiries</span>
         </a>
 
         <!-- Tour Inquiries -->
-        <a
-            href="{{ route('admin.tour-inquiries.index') }}"
-            class="nav-item {{ request()->routeIs('admin.tour-inquiries.*') ? 'active' : '' }}">
-            <svg
-                class="menu-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-            </svg>
+        <a href="{{ route('admin.tour-inquiries.index') }}" class="nav-item {{ request()->routeIs('admin.tour-inquiries.*') ? 'active' : '' }}">
+            <i class="fa-solid fa-clipboard-list menu-icon"></i>
             <span>Tour Inquiries</span>
         </a>
 
         <!-- Services -->
-        <a
-            href="{{ route('admin.services.index') }}"
-            class="nav-item {{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
-            <svg
-                class="menu-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round">
-                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-            </svg>
+        <a href="{{ route('admin.services.index') }}" class="nav-item {{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
+            <i class="fa-solid fa-briefcase menu-icon"></i>
             <span>Services</span>
         </a>
 
@@ -245,427 +139,74 @@
             <button
                 type="button"
                 class="nav-dropdown-toggle nav-item {{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*', 'admin.what-we-offers.*', 'admin.about-why-choose-us.*', 'admin.about-our-core-values.*') ? 'active' : '' }}"
-                aria-expanded="{{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*', 'admin.what-we-offers.*', 'admin.about-why-choose-us.*', 'admin.about-our-core-values.*') ? 'true' : 'false' }}"
-            >
-                <svg
-                    class="menu-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <circle cx="12" cy="7" r="4"></circle>
-                    <path d="M5.5 21a6.5 6.5 0 0 1 13 0"></path>
-                    <path d="M3 3h18"></path>
-                </svg>
+                aria-expanded="{{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*', 'admin.what-we-offers.*', 'admin.about-why-choose-us.*', 'admin.about-our-core-values.*') ? 'true' : 'false' }}">
+                <i class="fa-solid fa-circle-info menu-icon"></i>
                 <span>About Management</span>
-                <svg
-                    class="chevron-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
             </button>
             <div class="nav-dropdown-menu">
-                <!-- About Section -->
-                <a
-                    href="{{ route('admin.about-sections.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.about-sections.*') ? 'active' : '' }}"
-                >
-                    <svg
-                        class="submenu-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <circle cx="12" cy="7" r="4"></circle>
-                        <path d="M5.5 21a6.5 6.5 0 0 1 13 0"></path>
-                    </svg>
+                <a href="{{ route('admin.about-sections.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.about-sections.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-building submenu-icon"></i>
                     <span>About Section</span>
                 </a>
-                <!-- Our Story -->
-                <a
-                    href="{{ route('admin.our-stories.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.our-stories.*') ? 'active' : '' }}"
-                >
-                    <svg
-                        class="submenu-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                        <path d="M8 7h8"></path>
-                        <path d="M8 11h6"></path>
-                    </svg>
+                <a href="{{ route('admin.our-stories.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.our-stories.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-book-open submenu-icon"></i>
                     <span>Our Story</span>
                 </a>
-                <!-- Our Process -->
-                <a
-                    href="{{ route('admin.our-processes.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.our-processes.*') ? 'active' : '' }}"
-                >
-                    <svg
-                        class="submenu-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path d="M9 11l3 3L22 4"></path>
-                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-                    </svg>
+                <a href="{{ route('admin.our-processes.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.our-processes.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-gears submenu-icon"></i>
                     <span>Our Process</span>
                 </a>
-                <!-- Counters -->
-                <a
-                    href="{{ route('admin.counters.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.counters.*') ? 'active' : '' }}"
-                >
-                    <svg
-                        class="submenu-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path d="M4 19V9"></path>
-                        <path d="M10 19V5"></path>
-                        <path d="M16 19v-7"></path>
-                        <path d="M22 19V3"></path>
-                    </svg>
+                <a href="{{ route('admin.counters.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.counters.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-calculator submenu-icon"></i>
                     <span>Counters</span>
                 </a>
-                <!-- What We Offer -->
-                <a
-                    href="{{ route('admin.what-we-offers.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.what-we-offers.*') ? 'active' : '' }}"
-                >
-                    <svg
-                        class="submenu-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
-                        <path d="M7 8h10"></path>
-                        <path d="M7 12h7"></path>
-                        <path d="M7 16h4"></path>
-                    </svg>
+                <a href="{{ route('admin.what-we-offers.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.what-we-offers.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-handshake submenu-icon"></i>
                     <span>What We Offer</span>
                 </a>
-                <!-- About Why Choose Us -->
-                <a
-                    href="{{ route('admin.about-why-choose-us.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.about-why-choose-us.*') ? 'active' : '' }}"
-                >
-                    <svg
-                        class="submenu-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M8 12l3 3 5-6"></path>
-                    </svg>
-                    <span>About Why Choose Us</span>
+                <a href="{{ route('admin.about-why-choose-us.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.about-why-choose-us.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-award submenu-icon"></i>
+                    <span>Why Choose Us</span>
                 </a>
-                <!-- About Our Core Values -->
-                <a
-                    href="{{ route('admin.about-our-core-values.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.about-our-core-values.*') ? 'active' : '' }}"
-                >
-                    <svg
-                        class="submenu-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path d="M12 2l2.8 5.7L21 8.6l-4.5 4.4 1.1 6.2L12 16.3 6.4 19.2 7.5 13 3 8.6l6.2-.9L12 2z"></path>
-                    </svg>
-                    <span>About Our Core Values</span>
+                <a href="{{ route('admin.about-our-core-values.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.about-our-core-values.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-heart submenu-icon"></i>
+                    <span>Core Values</span>
                 </a>
             </div>
         </div>
+
         <!-- Travel Support -->
-        <a
-            href="{{ route('admin.travel-support.index') }}"
-            class="nav-item {{ request()->routeIs('admin.travel-support.*') ? 'active' : '' }}">
-            <svg
-                class="menu-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round">
-                <path d="M12 21s-6-5.33-6-11a6 6 0 1 1 12 0 c0 5.67-6 11-6 11z"></path>
-                <circle cx="12" cy="10" r="2"></circle>
-            </svg>
+        <a href="{{ route('admin.travel-support.index') }}" class="nav-item {{ request()->routeIs('admin.travel-support.*') ? 'active' : '' }}">
+            <i class="fa-solid fa-headset menu-icon"></i>
             <span>Travel Support</span>
         </a>
 
         <!-- Why Choose Us -->
-        <a
-            href="{{ route('admin.why-choose-sections.index') }}"
-            class="nav-item {{ request()->routeIs('admin.why-choose-sections.*') ? 'active' : '' }}">
-            <svg
-                class="menu-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round">
-                <path d="M12 2l3.09 6.26L22 9.27 l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27 l6.91-1.01L12 2z"></path>
-            </svg>
+        <a href="{{ route('admin.why-choose-sections.index') }}" class="nav-item {{ request()->routeIs('admin.why-choose-sections.*') ? 'active' : '' }}">
+            <i class="fa-solid fa-shield-halved menu-icon"></i>
             <span>Why Choose Us</span>
         </a>
 
         <!-- Testimonials -->
-        <a
-            href="{{ route('admin.testimonials.index') }}"
-            class="nav-item {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}">
-            <svg
-                class="menu-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round">
-                <path d="M21 15a4 4 0 0 1-4 4H8 l-5 3V7a4 4 0 0 1 4-4h10 a4 4 0 0 1 4 4z"></path>
-                <path d="M8 9h8"></path>
-                <path d="M8 13h5"></path>
-            </svg>
+        <a href="{{ route('admin.testimonials.index') }}" class="nav-item {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}">
+            <i class="fa-solid fa-star menu-icon"></i>
             <span>Testimonials</span>
         </a>
-        <!-- Tour Management Dropdown -->
-        <div class="nav-dropdown-wrapper {{ request()->routeIs('admin.tours.*', 'admin.tour-types.*') ? 'open' : '' }}">
-            <button
-                type="button"
-                class="nav-dropdown-toggle nav-item {{ request()->routeIs('admin.tours.*', 'admin.tour-types.*') ? 'active' : '' }}"
-                aria-expanded="{{ request()->routeIs('admin.tours.*', 'admin.tour-types.*') ? 'true' : 'false' }}">
-                <svg
-                    class="menu-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                <span>Tour Management</span>
-                <svg
-                    class="chevron-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-            </button>
-            <div class="nav-dropdown-menu">
-                <!-- Tour Types -->
-                <a
-                    href="{{ route('admin.tour-types.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.tour-types.*') ? 'active' : '' }}">
-                    <svg
-                        class="submenu-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                        <rect x="3" y="7" width="18" height="13" rx="2"></rect>
-                        <path d="M3 12h18"></path>
-                        <path d="M12 12v3"></path>
-                    </svg>
-                    <span>Tour Types</span>
-                </a>
-                <!-- Tours -->
-                <a
-                    href="{{ route('admin.tours.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.tours.*') ? 'active' : '' }}">
-                    <svg
-                        class="submenu-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0z"></path>
-                        <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
-                    <span>Tours</span>
-                </a>
-            </div>
-        </div>
-        <!-- Blog Management Dropdown -->
-        <div class="nav-dropdown-wrapper {{ request()->routeIs('admin.categories.*', 'admin.authors.*', 'admin.blogs.*') ? 'open' : '' }}">
-            <button
-                type="button"
-                class="nav-dropdown-toggle nav-item {{ request()->routeIs('admin.categories.*', 'admin.authors.*', 'admin.blogs.*') ? 'active' : '' }}"
-                aria-expanded="{{ request()->routeIs('admin.categories.*', 'admin.authors.*', 'admin.blogs.*') ? 'true' : 'false' }}">
-                <svg
-                    class="menu-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4 a2 2 0 0 1-2-2V6 a2 2 0 0 1 2-2z"></path>
-                    <path d="M16 8h2"></path>
-                    <path d="M16 12h2"></path>
-                    <path d="M16 16h2"></path>
-                    <path d="M6 8h6v8H6z"></path>
-                </svg>
-                <span>Blog Management</span>
-                <svg
-                    class="chevron-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-            </button>
-            <div class="nav-dropdown-menu">
-                <!-- Categories -->
-                <a
-                    href="{{ route('admin.categories.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
-                    <svg
-                        class="submenu-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M22 19a2 2 0 0 1-2 2H4 a2 2 0 0 1-2-2V5 a2 2 0 0 1 2-2h5l2 3h9 a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                    <span>Categories</span>
-                </a>
-                <!-- Authors -->
-                <a
-                    href="{{ route('admin.authors.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.authors.*') ? 'active' : '' }}">
-                    <svg
-                        class="submenu-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8 a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                    <span>Authors</span>
-                </a>
-                <!-- Blogs -->
-                <a
-                    href="{{ route('admin.blogs.index') }}"
-                    class="nav-dropdown-item {{ request()->routeIs('admin.blogs.*') ? 'active' : '' }}">
-                    <svg
-                        class="submenu-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16 a2 2 0 0 0 2 2h12 a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                    </svg>
-                    <span>Blogs</span>
-                </a>
-            </div>
-        </div>
 
         <!-- Profile Settings -->
-        <a
-            href="{{ route('admin.profile.edit') }}"
-            class="nav-item {{ request()->routeIs('admin.profile.*') ? 'active' : '' }}">
-            <svg
-                class="menu-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-            </svg>
+        <a href="{{ route('admin.profile.edit') }}" class="nav-item {{ request()->routeIs('admin.profile.*') ? 'active' : '' }}">
+            <i class="fa-solid fa-user-gear menu-icon"></i>
             <span>Profile Settings</span>
         </a>
 
     </nav>
 
     <!-- Logout -->
-    <form
-        method="POST"
-        action="{{ route('admin.logout') }}"
-        class="logout-form">
+    <form method="POST" action="{{ route('admin.logout') }}" class="logout-form">
         @csrf
-        <button
-            type="submit"
-            class="logout-button">
-            <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round">
-                <path
-                    d="M9 21H5a2 2 0 0 1-2-2V5
-                    a2 2 0 0 1 2-2h4"></path>
-
-                <path d="M16 17l5-5-5-5"></path>
-                <path d="M21 12H9"></path>
-            </svg>
+        <button type="submit" class="logout-button">
+            <i class="fa-solid fa-right-from-bracket menu-icon"></i>
             <span>Logout</span>
         </button>
     </form>

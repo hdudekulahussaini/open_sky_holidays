@@ -13,9 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <link rel="stylesheet"
         href="{{ asset('assets/admin/css/admin.css') }}?v={{ filemtime(public_path('assets/admin/css/admin.css')) }}">
@@ -31,6 +28,89 @@
 
         {{-- Mobile dark overlay --}}
         <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        {{-- PHPFlasher Google Theme Toast (Top Right Floating) --}}
+        <div class="flasher-google-container">
+            @if (session('success'))
+                <div class="flasher-google flasher-google-success">
+                    <div class="flasher-google-header">
+                        <i class="fa-solid fa-circle-check flasher-google-icon"></i>
+                        <span class="flasher-google-title">Success</span>
+                    </div>
+                    <div class="flasher-google-body">
+                        {{ session('success') }}
+                    </div>
+                    <div class="flasher-google-footer">
+                        <button type="button" class="flasher-google-dismiss" onclick="dismissFlasherGoogle(this)">DISMISS</button>
+                    </div>
+                    <div class="flasher-google-progress"></div>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="flasher-google flasher-google-error">
+                    <div class="flasher-google-header">
+                        <i class="fa-solid fa-circle-exclamation flasher-google-icon"></i>
+                        <span class="flasher-google-title">Error</span>
+                    </div>
+                    <div class="flasher-google-body">
+                        {{ session('error') }}
+                    </div>
+                    <div class="flasher-google-footer">
+                        <button type="button" class="flasher-google-dismiss" onclick="dismissFlasherGoogle(this)">DISMISS</button>
+                    </div>
+                    <div class="flasher-google-progress"></div>
+                </div>
+            @endif
+
+            @if (session('warning'))
+                <div class="flasher-google flasher-google-warning">
+                    <div class="flasher-google-header">
+                        <i class="fa-solid fa-triangle-exclamation flasher-google-icon"></i>
+                        <span class="flasher-google-title">Warning</span>
+                    </div>
+                    <div class="flasher-google-body">
+                        {{ session('warning') }}
+                    </div>
+                    <div class="flasher-google-footer">
+                        <button type="button" class="flasher-google-dismiss" onclick="dismissFlasherGoogle(this)">DISMISS</button>
+                    </div>
+                    <div class="flasher-google-progress"></div>
+                </div>
+            @endif
+
+            @if (session('info'))
+                <div class="flasher-google flasher-google-info">
+                    <div class="flasher-google-header">
+                        <i class="fa-solid fa-circle-info flasher-google-icon"></i>
+                        <span class="flasher-google-title">Notification</span>
+                    </div>
+                    <div class="flasher-google-body">
+                        {{ session('info') }}
+                    </div>
+                    <div class="flasher-google-footer">
+                        <button type="button" class="flasher-google-dismiss" onclick="dismissFlasherGoogle(this)">DISMISS</button>
+                    </div>
+                    <div class="flasher-google-progress"></div>
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="flasher-google flasher-google-error">
+                    <div class="flasher-google-header">
+                        <i class="fa-solid fa-circle-exclamation flasher-google-icon"></i>
+                        <span class="flasher-google-title">Validation Error</span>
+                    </div>
+                    <div class="flasher-google-body">
+                        {{ $errors->first() }}
+                    </div>
+                    <div class="flasher-google-footer">
+                        <button type="button" class="flasher-google-dismiss" onclick="dismissFlasherGoogle(this)">DISMISS</button>
+                    </div>
+                    <div class="flasher-google-progress"></div>
+                </div>
+            @endif
+        </div>
 
         <main class="main-content">
 
@@ -106,18 +186,6 @@
 
             <div class="page-content">
 
-                @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-                @endif
-
-                @if ($errors->any())
-                <div class="alert alert-error">
-                    {{ $errors->first() }}
-                </div>
-                @endif
-
                 @yield('content')
 
             </div>
@@ -128,6 +196,27 @@
 
     <script src="{{ asset('assets/admin/js/admin.js') }}"></script>
     <script src="{{ asset('assets/admin/js/image-preview.js') }}"></script>
+    <script>
+        function dismissFlasherGoogle(btn) {
+            const toast = btn.closest('.flasher-google');
+            if (toast) {
+                toast.classList.add('hide');
+                setTimeout(function() { toast.remove(); }, 250);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const toasts = document.querySelectorAll('.flasher-google');
+            toasts.forEach(function(toast) {
+                setTimeout(function() {
+                    if (toast && document.body.contains(toast)) {
+                        toast.classList.add('hide');
+                        setTimeout(function() { toast.remove(); }, 250);
+                    }
+                }, 5000);
+            });
+        });
+    </script>
     @stack('scripts')
 </body>
 

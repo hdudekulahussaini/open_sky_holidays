@@ -18,9 +18,23 @@ class PageBannerController extends Controller
             ->latest('id')
             ->paginate(10);
 
+        $usedPages = PageBanner::pluck('page')
+            ->map(fn ($page) => Str::slug($page))
+            ->toArray();
+
+        $allPages = PageBanner::getPageOptions();
+
+        $availablePages = array_filter(
+            $allPages,
+            fn ($key) => ! in_array(Str::slug($key), $usedPages),
+            ARRAY_FILTER_USE_KEY
+        );
+
+        $hasAvailablePages = count($availablePages) > 0;
+
         return view(
             'pages.page-banners.index',
-            compact('pageBanners')
+            compact('pageBanners', 'hasAvailablePages')
         );
     }
 
