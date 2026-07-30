@@ -11,13 +11,32 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use OpenApi\Attributes as OA;
 use Throwable;
 
 class TourFeatureController extends Controller
 {
-    /**
-     * Display all tour features.
-     */
+    #[OA\Get(
+        path: '/api/tour-features',
+        summary: 'List all tour features',
+        description: 'Retrieves a paginated list of tour features ordered by tour ID, type, and sort order.',
+        tags: ['Tour Features'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Paginated list of tour features',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'data',
+                            type: 'array',
+                            items: new OA\Items(ref: '#/components/schemas/TourFeature')
+                        ),
+                    ]
+                )
+            ),
+        ]
+    )]
     public function index(): AnonymousResourceCollection
     {
         $tourFeatures = TourFeature::query()
@@ -31,9 +50,44 @@ class TourFeatureController extends Controller
         return TourFeatureResource::collection($tourFeatures);
     }
 
-    /**
-     * Store a new tour feature.
-     */
+    #[OA\Post(
+        path: '/api/tour-features',
+        summary: 'Store a new tour feature',
+        description: 'Creates a new feature item (highlight, inclusion, or covered place) for a tour package.',
+        tags: ['Tour Features'],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\MediaType(
+                mediaType: 'multipart/form-data',
+                schema: new OA\Schema(
+                    required: ['tour_id', 'title', 'type'],
+                    properties: [
+                        new OA\Property(property: 'tour_id', type: 'integer', example: 1),
+                        new OA\Property(property: 'title', type: 'string', example: 'Burj Khalifa Top Floor Access'),
+                        new OA\Property(property: 'type', type: 'string', example: 'highlight'),
+                        new OA\Property(property: 'icon', type: 'string', example: 'fas fa-building', nullable: true),
+                        new OA\Property(property: 'image', type: 'string', format: 'binary', nullable: true),
+                        new OA\Property(property: 'sort_order', type: 'integer', example: 1),
+                    ]
+                )
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: 'Tour feature created successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Tour feature created successfully.'),
+                        new OA\Property(property: 'data', ref: '#/components/schemas/TourFeature'),
+                    ]
+                )
+            ),
+            new OA\Response(response: 422, description: 'Validation Error'),
+            new OA\Response(response: 500, description: 'Unable to create tour feature'),
+        ]
+    )]
     public function store(
         StoreTourFeatureRequest $request
     ): JsonResponse {
@@ -88,9 +142,47 @@ class TourFeatureController extends Controller
         }
     }
 
-    /**
-     * Update a tour feature.
-     */
+    #[OA\Put(
+        path: '/api/tour-features/{tourFeature}',
+        summary: 'Update tour feature',
+        description: 'Updates an existing tour feature record by ID.',
+        tags: ['Tour Features'],
+        parameters: [
+            new OA\Parameter(name: 'tourFeature', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
+        ],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\MediaType(
+                mediaType: 'multipart/form-data',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'tour_id', type: 'integer', example: 1),
+                        new OA\Property(property: 'title', type: 'string', example: 'Updated Feature Title'),
+                        new OA\Property(property: 'type', type: 'string', example: 'highlight'),
+                        new OA\Property(property: 'icon', type: 'string', example: 'fas fa-star', nullable: true),
+                        new OA\Property(property: 'image', type: 'string', format: 'binary', nullable: true),
+                        new OA\Property(property: 'remove_image', type: 'boolean', example: false),
+                        new OA\Property(property: 'sort_order', type: 'integer', example: 1),
+                    ]
+                )
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Tour feature updated successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Tour feature updated successfully.'),
+                        new OA\Property(property: 'data', ref: '#/components/schemas/TourFeature'),
+                    ]
+                )
+            ),
+            new OA\Response(response: 404, description: 'Tour feature not found'),
+            new OA\Response(response: 500, description: 'Unable to update tour feature'),
+        ]
+    )]
     public function update(
         UpdateTourFeatureRequest $request,
         TourFeature $tourFeature
@@ -176,9 +268,29 @@ class TourFeatureController extends Controller
         }
     }
 
-    /**
-     * Delete a tour feature.
-     */
+    #[OA\Delete(
+        path: '/api/tour-features/{tourFeature}',
+        summary: 'Delete tour feature',
+        description: 'Deletes a tour feature record by ID.',
+        tags: ['Tour Features'],
+        parameters: [
+            new OA\Parameter(name: 'tourFeature', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Tour feature deleted successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Tour feature deleted successfully.'),
+                    ]
+                )
+            ),
+            new OA\Response(response: 404, description: 'Tour feature not found'),
+            new OA\Response(response: 500, description: 'Unable to delete tour feature'),
+        ]
+    )]
     public function destroy(
         TourFeature $tourFeature
     ): JsonResponse {

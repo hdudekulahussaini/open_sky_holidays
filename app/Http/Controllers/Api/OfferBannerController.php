@@ -3,20 +3,41 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\OfferBannerRequest;
+use App\Http\Requests\StoreOfferBannerRequest;
+use App\Http\Requests\UpdateOfferBannerRequest;
 use App\Http\Resources\OfferBannerResource;
 use App\Models\OfferBanner;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Storage;
-use Throwable;
+use OpenApi\Attributes as OA;
 
 class OfferBannerController extends Controller
 {
+    #[OA\Get(
+        path: '/api/offer-banners',
+        summary: 'List active offer banners',
+        description: 'Retrieves all active promotional offer banners.',
+        tags: ['Offer Banners'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Offer banners retrieved successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Offer banners retrieved successfully.'),
+                        new OA\Property(property: 'data', type: 'array', items: new OA\Items(ref: '#/components/schemas/OfferBanner')),
+                    ]
+                )
+            ),
+        ]
+    )]
     public function index(): JsonResponse
     {
         $offerBanners = OfferBanner::query()
             ->where('status', true)
-            ->latest()
+            ->latest('id')
             ->get();
 
         return response()->json([
@@ -27,39 +48,23 @@ class OfferBannerController extends Controller
     }
 
     public function store(
-        OfferBannerRequest $request
+        StoreOfferBannerRequest $request
     ): JsonResponse {
-        $data = $request->validated();
-        $uploadedImage = null;
+        $validated = $request->validated();
 
-        try {
-            if ($request->hasFile('image')) {
-                $uploadedImage = $request
-                    ->file('image')
-                    ->store('offer-banners', 'public');
-
-                $data['image'] = $uploadedImage;
-            }
-
-            $offerBanner = OfferBanner::create($data);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Offer banner created successfully.',
-                'data' => new OfferBannerResource($offerBanner),
-            ], 201);
-        } catch (Throwable $exception) {
-            if ($uploadedImage) {
-                Storage::disk('public')->delete($uploadedImage);
-            }
-
-            report($exception);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Unable to create the offer banner.',
-            ], 500);
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request
+                ->file('image')
+                ->store('offer-banners', 'public');
         }
+
+        $offerBanner = OfferBanner::create($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Offer banner created successfully.',
+            'data' => new OfferBannerResource($offerBanner),
+        ], 201);
     }
 
     public function show(
@@ -73,75 +78,43 @@ class OfferBannerController extends Controller
     }
 
     public function update(
-        OfferBannerRequest $request,
+        UpdateOfferBannerRequest $request,
         OfferBanner $offerBanner
     ): JsonResponse {
-        $data = $request->validated();
+        $validated = $request->validated();
 
-        $oldImage = $offerBanner->image;
-        $newImage = null;
-
-        try {
-            if ($request->hasFile('image')) {
-                $newImage = $request
-                    ->file('image')
-                    ->store('offer-banners', 'public');
-
-                $data['image'] = $newImage;
-            } else {
-                unset($data['image']);
+        if ($request->hasFile('image')) {
+            if ($offerBanner->image && Storage::disk('public')->exists($offerBanner->image)) {
+                Storage::disk('public')->delete($offerBanner->image);
             }
 
-            $offerBanner->update($data);
-
-            if ($newImage && $oldImage) {
-                Storage::disk('public')->delete($oldImage);
-            }
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Offer banner updated successfully.',
-                'data' => new OfferBannerResource(
-                    $offerBanner->fresh()
-                ),
-            ]);
-        } catch (Throwable $exception) {
-            if ($newImage) {
-                Storage::disk('public')->delete($newImage);
-            }
-
-            report($exception);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Unable to update the offer banner.',
-            ], 500);
+            $validated['image'] = $request
+                ->file('image')
+                ->store('offer-banners', 'public');
         }
+
+        $offerBanner->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Offer banner updated successfully.',
+            'data' => new OfferBannerResource($offerBanner->fresh()),
+        ]);
     }
 
     public function destroy(
         OfferBanner $offerBanner
     ): JsonResponse {
-        try {
-            $image = $offerBanner->image;
-
-            $offerBanner->delete();
-
-            if ($image) {
-                Storage::disk('public')->delete($image);
-            }
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Offer banner deleted successfully.',
-            ]);
-        } catch (Throwable $exception) {
-            report($exception);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Unable to delete the offer banner.',
-            ], 500);
+        if ($offerBanner->image && Storage::disk('public')->exists($offerBanner->image)) {
+            Storage::disk('public')->delete($offerBanner->image);
         }
+
+        $offerBanner->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Offer banner deleted successfully.',
+            'data' => null,
+        ]);
     }
 }

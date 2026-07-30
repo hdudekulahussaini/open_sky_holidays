@@ -10,10 +10,39 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use OpenApi\Attributes as OA;
 use Throwable;
 
 class EnquiryController extends Controller
 {
+    #[OA\Post(
+        path: '/api/enquiries',
+        summary: 'Submit a customer travel enquiry',
+        description: 'Submits a new general travel enquiry and sends email notifications to admin and customer.',
+        tags: ['Enquiries'],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(ref: '#/components/schemas/EnquiryInput')
+        ),
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: 'Enquiry submitted successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'status', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Your enquiry has been submitted successfully.'),
+                        new OA\Property(property: 'data', ref: '#/components/schemas/Enquiry'),
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 422,
+                description: 'Validation Error',
+                content: new OA\JsonContent(ref: '#/components/schemas/ValidationErrorResponse')
+            ),
+        ]
+    )]
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([

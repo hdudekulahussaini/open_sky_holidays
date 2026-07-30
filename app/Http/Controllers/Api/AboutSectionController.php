@@ -9,13 +9,28 @@ use App\Models\AboutSection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use OpenApi\Attributes as OA;
 use Throwable;
 
 class AboutSectionController extends Controller
 {
-    /**
-     * Display all about sections.
-     */
+    #[OA\Get(
+        path: '/api/about-sections',
+        summary: 'List all about sections',
+        description: 'Retrieves all about section records with globe locations and customer avatars.',
+        tags: ['About Section'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'About sections retrieved successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'data', type: 'array', items: new OA\Items(ref: '#/components/schemas/AboutSection')),
+                    ]
+                )
+            ),
+        ]
+    )]
     public function index()
     {
         $aboutSections = AboutSection::with([
@@ -216,6 +231,24 @@ class AboutSectionController extends Controller
     /**
      * Return the latest active about section for frontend.
      */
+    #[OA\Get(
+        path: '/api/about-section/active',
+        summary: 'Get active about section for website',
+        description: 'Retrieves the latest active About section content with globe locations and customer avatar images for the website.',
+        tags: ['About Section'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Active about section fetched successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'data', ref: '#/components/schemas/AboutSection'),
+                    ]
+                )
+            ),
+            new OA\Response(response: 404, description: 'Active about section not found'),
+        ]
+    )]
     public function active(): JsonResponse
     {
         $aboutSection = AboutSection::with([

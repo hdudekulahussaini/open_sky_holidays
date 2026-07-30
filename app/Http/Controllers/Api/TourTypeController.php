@@ -10,12 +10,27 @@ use App\Models\TourType;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Str;
+use OpenApi\Attributes as OA;
 
 class TourTypeController extends Controller
 {
-    /**
-     * Return all tour types.
-     */
+    #[OA\Get(
+        path: '/api/tour-types',
+        summary: 'List all tour categories/types',
+        description: 'Retrieves a paginated list of tour categories and types.',
+        tags: ['Tour Types'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Tour types retrieved successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'data', type: 'array', items: new OA\Items(ref: '#/components/schemas/TourType')),
+                    ]
+                )
+            ),
+        ]
+    )]
     public function index(): AnonymousResourceCollection
     {
         $tourTypes = TourType::query()

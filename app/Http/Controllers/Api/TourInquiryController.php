@@ -11,13 +11,39 @@ use App\Models\TourInquiry;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use OpenApi\Attributes as OA;
 use Throwable;
 
 class TourInquiryController extends Controller
 {
-    /**
-     * Store a new tour inquiry submission.
-     */
+    #[OA\Post(
+        path: '/api/tour-inquiries',
+        summary: 'Submit a specific tour booking inquiry',
+        description: 'Submits a booking inquiry for a specific tour package and sends confirmation emails.',
+        tags: ['Tour Inquiries'],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(ref: '#/components/schemas/TourInquiryInput')
+        ),
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: 'Booking inquiry submitted successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Tour booking inquiry submitted successfully.'),
+                        new OA\Property(property: 'data', ref: '#/components/schemas/TourInquiryInput'),
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 422,
+                description: 'Validation Error',
+                content: new OA\JsonContent(ref: '#/components/schemas/ValidationErrorResponse')
+            ),
+        ]
+    )]
     public function store(StoreTourInquiryRequest $request): JsonResponse
     {
         try {

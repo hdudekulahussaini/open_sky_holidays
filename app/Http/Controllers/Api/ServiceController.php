@@ -9,12 +9,29 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use OpenApi\Attributes as OA;
 
 class ServiceController extends Controller
 {
-    /**
-     * Display all active services.
-     */
+    #[OA\Get(
+        path: '/api/services',
+        summary: 'List active travel services',
+        description: 'Retrieves a list of all active travel services (visa, flight tickets, passport, etc.).',
+        tags: ['Services'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Services fetched successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'status', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Services fetched successfully.'),
+                        new OA\Property(property: 'data', type: 'array', items: new OA\Items(ref: '#/components/schemas/Service')),
+                    ]
+                )
+            ),
+        ]
+    )]
     public function index(): JsonResponse
     {
         $services = Service::query()
@@ -71,6 +88,29 @@ class ServiceController extends Controller
     /**
      * Display one service by slug.
      */
+    #[OA\Get(
+        path: '/api/services/{id}',
+        summary: 'Get service details by ID',
+        description: 'Retrieves complete details for a specific travel service.',
+        tags: ['Services'],
+        parameters: [
+            new OA\Parameter(name: 'id', in: 'path', required: true, description: 'ID of the service', schema: new OA\Schema(type: 'integer')),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Service details fetched successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'status', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Service fetched successfully.'),
+                        new OA\Property(property: 'data', ref: '#/components/schemas/Service'),
+                    ]
+                )
+            ),
+            new OA\Response(response: 404, description: 'Service not found'),
+        ]
+    )]
     public function show(Service $service): JsonResponse
     {
         return response()->json([

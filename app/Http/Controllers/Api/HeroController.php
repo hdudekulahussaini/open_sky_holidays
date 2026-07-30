@@ -7,9 +7,29 @@ use App\Http\Requests\HeroRequest;
 use App\Http\Resources\HeroResource;
 use App\Models\Hero;
 use Illuminate\Http\JsonResponse;
+use OpenApi\Attributes as OA;
 
 class HeroController extends Controller
 {
+    #[OA\Get(
+        path: '/api/heroes',
+        summary: 'List homepage hero slides',
+        description: 'Retrieves all homepage hero slides in display order.',
+        tags: ['Hero Section'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Hero slides retrieved successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Hero slides retrieved successfully.'),
+                        new OA\Property(property: 'data', type: 'array', items: new OA\Items(ref: '#/components/schemas/Hero')),
+                    ]
+                )
+            ),
+        ]
+    )]
     public function index(): JsonResponse
     {
         $heroes = Hero::query()
