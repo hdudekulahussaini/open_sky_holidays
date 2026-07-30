@@ -8,9 +8,29 @@ use App\Http\Resources\AdventureResource;
 use App\Models\Adventure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
+use OpenApi\Attributes as OA;
 
 class AdventureController extends Controller
 {
+    #[OA\Get(
+        path: '/api/adventures',
+        summary: 'List active adventure activities',
+        description: 'Retrieves all active adventure activities.',
+        tags: ['Adventures'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Adventures retrieved successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Adventures retrieved successfully.'),
+                        new OA\Property(property: 'data', type: 'array', items: new OA\Items(ref: '#/components/schemas/Adventure')),
+                    ]
+                )
+            ),
+        ]
+    )]
     public function index(): JsonResponse
     {
         $adventures = Adventure::query()
@@ -140,6 +160,29 @@ class AdventureController extends Controller
         ], 200);
     }
 
+    #[OA\Get(
+        path: '/api/adventures/category/{slug}',
+        summary: 'Get adventure by category slug',
+        description: 'Retrieves an active adventure details by category slug.',
+        tags: ['Adventures'],
+        parameters: [
+            new OA\Parameter(name: 'slug', in: 'path', required: true, description: 'Adventure category slug', schema: new OA\Schema(type: 'string')),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Adventure retrieved successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Adventure retrieved successfully.'),
+                        new OA\Property(property: 'data', ref: '#/components/schemas/Adventure'),
+                    ]
+                )
+            ),
+            new OA\Response(response: 404, description: 'Active adventure not found'),
+        ]
+    )]
     public function byCategorySlug(
         string $slug
     ): JsonResponse {

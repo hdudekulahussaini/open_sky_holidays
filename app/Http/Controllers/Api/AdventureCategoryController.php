@@ -7,9 +7,22 @@ use App\Http\Requests\AdventureCategoryRequest;
 use App\Http\Resources\AdventureCategoryResource;
 use App\Models\AdventureCategory;
 use Illuminate\Http\JsonResponse;
+use OpenApi\Attributes as OA;
 
 class AdventureCategoryController extends Controller
 {
+    #[OA\Get(
+        path: '/api/adventure-categories',
+        summary: 'List active adventure categories',
+        description: 'Retrieves all active adventure categories.',
+        tags: ['Adventures'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Adventure categories retrieved successfully',
+            ),
+        ]
+    )]
     public function index(): JsonResponse
     {
         $categories = AdventureCategory::query()

@@ -9,10 +9,30 @@ use App\Http\Resources\TravelSupportSectionResource;
 use App\Models\TravelSupportSection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
+use OpenApi\Attributes as OA;
 use Throwable;
 
 class TravelSupportSectionController extends Controller
 {
+    #[OA\Get(
+        path: '/api/travel-support',
+        summary: 'List all travel support sections',
+        description: 'Retrieves all travel support sections.',
+        tags: ['Travel Support'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Travel support sections retrieved successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Travel support sections retrieved successfully.'),
+                        new OA\Property(property: 'data', type: 'array', items: new OA\Items(ref: '#/components/schemas/TravelSupportSection')),
+                    ]
+                )
+            ),
+        ]
+    )]
     public function index(): JsonResponse
     {
         $travelSupportSections = TravelSupportSection::latest()
@@ -153,6 +173,25 @@ class TravelSupportSectionController extends Controller
         }
     }
 
+    #[OA\Get(
+        path: '/api/travel-support/active',
+        summary: 'Get active travel support sections',
+        description: 'Retrieves all active travel support sections for website display.',
+        tags: ['Travel Support'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Active travel support sections retrieved successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Active travel support sections retrieved successfully.'),
+                        new OA\Property(property: 'data', type: 'array', items: new OA\Items(ref: '#/components/schemas/TravelSupportSection')),
+                    ]
+                )
+            ),
+        ]
+    )]
     public function active(): JsonResponse
     {
         $travelSupportSections = TravelSupportSection::query()

@@ -9,10 +9,32 @@ use App\Models\Blog;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use OpenApi\Attributes as OA;
 
 class BlogController extends Controller
 {
-
+    #[OA\Get(
+        path: '/api/blogs',
+        summary: 'List published travel blogs',
+        description: 'Retrieves a paginated list of published travel blogs with category and search filtering.',
+        tags: ['Blogs'],
+        parameters: [
+            new OA\Parameter(name: 'category', in: 'query', required: false, description: 'Filter by category slug', schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'search', in: 'query', required: false, description: 'Search title or content', schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'per_page', in: 'query', required: false, description: 'Items per page (default 6)', schema: new OA\Schema(type: 'integer', default: 6)),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Paginated list of blogs',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'data', type: 'array', items: new OA\Items(ref: '#/components/schemas/Blog')),
+                    ]
+                )
+            ),
+        ]
+    )]
     public function index(
         Request $request
     ): AnonymousResourceCollection {
@@ -81,6 +103,29 @@ class BlogController extends Controller
     }
 
 
+    #[OA\Get(
+        path: '/api/blogs/{slug}',
+        summary: 'Get single blog details by slug',
+        description: 'Retrieves complete blog post details including author info, recent blogs, and related posts.',
+        tags: ['Blogs'],
+        parameters: [
+            new OA\Parameter(name: 'slug', in: 'path', required: true, description: 'Slug of the blog post', schema: new OA\Schema(type: 'string')),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Blog details retrieved successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Blog details retrieved successfully.'),
+                        new OA\Property(property: 'blog', ref: '#/components/schemas/Blog'),
+                    ]
+                )
+            ),
+            new OA\Response(response: 404, description: 'Blog post not found'),
+        ]
+    )]
     public function show(
         Request $request,
         string $slug

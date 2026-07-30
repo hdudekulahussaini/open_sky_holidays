@@ -9,9 +9,27 @@ use App\Http\Resources\WhyChooseSectionResource;
 use App\Models\WhyChooseSection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use OpenApi\Attributes as OA;
 
 class WhyChooseSectionController extends Controller
 {
+    #[OA\Get(
+        path: '/api/why-choose-sections',
+        summary: 'List all Why Choose Us home sections',
+        description: 'Retrieves all Why Choose Us section items.',
+        tags: ['Why Choose Us'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Why choose sections retrieved successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'data', type: 'array', items: new OA\Items(ref: '#/components/schemas/WhyChooseSection')),
+                    ]
+                )
+            ),
+        ]
+    )]
     public function index(): AnonymousResourceCollection
     {
         $sections = WhyChooseSection::query()
@@ -71,6 +89,23 @@ class WhyChooseSectionController extends Controller
         ]);
     }
 
+    #[OA\Get(
+        path: '/api/why-choose-sections/active',
+        summary: 'Get active Why Choose Us sections for website',
+        description: 'Retrieves active Why Choose Us cards in display order.',
+        tags: ['Why Choose Us'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Active Why choose sections retrieved successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'data', type: 'array', items: new OA\Items(ref: '#/components/schemas/WhyChooseSection')),
+                    ]
+                )
+            ),
+        ]
+    )]
     public function active(): AnonymousResourceCollection
     {
         $sections = WhyChooseSection::query()

@@ -12,10 +12,36 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use OpenApi\Attributes as OA;
 use Throwable;
 
 class OurStoryController extends Controller
 {
+    #[OA\Get(
+        path: '/api/our-stories',
+        summary: 'List company stories',
+        description: 'Retrieves a paginated list of company story records with optional status filter.',
+        tags: ['Our Story'],
+        parameters: [
+            new OA\Parameter(name: 'status', in: 'query', description: 'Filter by status (true/false)', required: false, schema: new OA\Schema(type: 'boolean')),
+            new OA\Parameter(name: 'per_page', in: 'query', description: 'Items per page (default 10)', required: false, schema: new OA\Schema(type: 'integer', default: 10)),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Paginated list of our stories',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: 'data',
+                            type: 'array',
+                            items: new OA\Items(ref: '#/components/schemas/OurStory')
+                        ),
+                    ]
+                )
+            ),
+        ]
+    )]
     public function index(
         Request $request
     ): AnonymousResourceCollection {
@@ -35,6 +61,51 @@ class OurStoryController extends Controller
         return OurStoryResource::collection($ourStories);
     }
 
+    #[OA\Post(
+        path: '/api/our-stories',
+        summary: 'Store a new company story',
+        description: 'Creates a new company story with image uploads (max 3 images).',
+        tags: ['Our Story'],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\MediaType(
+                mediaType: 'multipart/form-data',
+                schema: new OA\Schema(
+                    required: ['heading', 'description'],
+                    properties: [
+                        new OA\Property(property: 'heading', type: 'string', example: 'Our Journey Since 2015'),
+                        new OA\Property(property: 'description', type: 'string', example: 'Started with a vision to make international travel accessible.'),
+                        new OA\Property(
+                            property: 'images[]',
+                            type: 'array',
+                            items: new OA\Items(type: 'string', format: 'binary')
+                        ),
+                        new OA\Property(
+                            property: 'features[]',
+                            type: 'array',
+                            items: new OA\Items(type: 'string', example: 'Certified Travel Agents')
+                        ),
+                        new OA\Property(property: 'status', type: 'boolean', example: true),
+                    ]
+                )
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: 'Our Story created successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Our Story created successfully.'),
+                        new OA\Property(property: 'data', ref: '#/components/schemas/OurStory'),
+                    ]
+                )
+            ),
+            new OA\Response(response: 422, description: 'Validation Error'),
+            new OA\Response(response: 500, description: 'Unable to create Our Story'),
+        ]
+    )]
     public function store(
         StoreOurStoryRequest $request
     ): JsonResponse {
@@ -81,6 +152,58 @@ class OurStoryController extends Controller
         }
     }
 
+    #[OA\Put(
+        path: '/api/our-stories/{ourStory}',
+        summary: 'Update company story',
+        description: 'Updates an existing company story record by ID.',
+        tags: ['Our Story'],
+        parameters: [
+            new OA\Parameter(name: 'ourStory', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
+        ],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\MediaType(
+                mediaType: 'multipart/form-data',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'heading', type: 'string', example: 'Updated Story Heading'),
+                        new OA\Property(property: 'description', type: 'string', example: 'Updated description content.'),
+                        new OA\Property(
+                            property: 'images[]',
+                            type: 'array',
+                            items: new OA\Items(type: 'string', format: 'binary')
+                        ),
+                        new OA\Property(
+                            property: 'removed_images[]',
+                            type: 'array',
+                            items: new OA\Items(type: 'string', example: 'our-stories/old_image.jpg')
+                        ),
+                        new OA\Property(
+                            property: 'features[]',
+                            type: 'array',
+                            items: new OA\Items(type: 'string', example: 'Feature Name')
+                        ),
+                        new OA\Property(property: 'status', type: 'boolean', example: true),
+                    ]
+                )
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Our Story updated successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Our Story updated successfully.'),
+                        new OA\Property(property: 'data', ref: '#/components/schemas/OurStory'),
+                    ]
+                )
+            ),
+            new OA\Response(response: 404, description: 'Story not found'),
+            new OA\Response(response: 500, description: 'Unable to update Our Story'),
+        ]
+    )]
     public function update(
         UpdateOurStoryRequest $request,
         OurStory $ourStory
@@ -156,6 +279,29 @@ class OurStoryController extends Controller
         }
     }
 
+    #[OA\Delete(
+        path: '/api/our-stories/{ourStory}',
+        summary: 'Delete company story',
+        description: 'Deletes a company story record by ID.',
+        tags: ['Our Story'],
+        parameters: [
+            new OA\Parameter(name: 'ourStory', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Our Story deleted successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Our Story deleted successfully.'),
+                    ]
+                )
+            ),
+            new OA\Response(response: 404, description: 'Story not found'),
+            new OA\Response(response: 500, description: 'Unable to delete Our Story'),
+        ]
+    )]
     public function destroy(
         OurStory $ourStory
     ): JsonResponse {
