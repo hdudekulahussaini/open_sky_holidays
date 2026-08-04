@@ -32,7 +32,7 @@
                                     <th>Button Text & Link</th>
                                     <th>Status</th>
                                     <th>Slider Order</th>
-                                    <th>Actions</th>
+                                    <th class="ts-action-column">Actions</th>
                                 </tr>
                             </thead>
                         </tr>
@@ -79,25 +79,26 @@
                             <td>{{ $hero->sort_order }}</td>
 
                             <td>
-                                <a href="{{ route('admin.heroes.edit', $hero) }}"
-                                    class="btn btn-warning btn-sm">
-                                    Edit
-                                </a>
+                                <div class="ts-actions">
+                                    <a href="{{ route('admin.heroes.edit', $hero) }}"
+                                        class="ts-action-btn ts-edit-btn">
+                                        Edit
+                                    </a>
 
-                                <form
-                                    action="{{ route('admin.heroes.destroy', $hero) }}"
-                                    method="POST"
-                                    class="d-inline"
-                                    onsubmit="return confirm('Delete this hero?')">
-                                    @csrf
-                                    @method('DELETE')
+                                    <form
+                                        action="{{ route('admin.heroes.destroy', $hero) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Delete this hero?')">
+                                        @csrf
+                                        @method('DELETE')
 
-                                    <button
-                                        type="submit"
-                                        class="btn btn-danger btn-sm">
-                                        Delete
-                                    </button>
-                                </form>
+                                        <button
+                                            type="submit"
+                                            class="ts-action-btn ts-delete-btn">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @empty

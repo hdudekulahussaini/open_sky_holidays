@@ -40,7 +40,7 @@
                             <th>Description</th>
                             <th>Breadcrumb Title</th>
                             <th>Status</th>
-                            <th width="170">Actions</th>
+                            <th class="ts-action-column">Actions</th>
                         </tr>
                     </thead>
 
@@ -85,26 +85,27 @@
                             </td>
 
                             <td>
-                                <a
-                                    href="{{ route('admin.page-banners.edit', $banner) }}"
-                                    class="btn btn-sm btn-warning">
-                                    Edit
-                                </a>
+                                <div class="ts-actions">
+                                    <a
+                                        href="{{ route('admin.page-banners.edit', $banner) }}"
+                                        class="ts-action-btn ts-edit-btn">
+                                        Edit
+                                    </a>
 
-                                <form
-                                    action="{{ route('admin.page-banners.destroy', $banner) }}"
-                                    method="POST"
-                                    class="d-inline"
-                                    onsubmit="return confirm('Delete this banner?')">
-                                    @csrf
-                                    @method('DELETE')
+                                    <form
+                                        action="{{ route('admin.page-banners.destroy', $banner) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Delete this banner?')">
+                                        @csrf
+                                        @method('DELETE')
 
-                                    <button
-                                        type="submit"
-                                        class="btn btn-sm btn-danger">
-                                        Delete
-                                    </button>
-                                </form>
+                                        <button
+                                            type="submit"
+                                            class="ts-action-btn ts-delete-btn">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @empty

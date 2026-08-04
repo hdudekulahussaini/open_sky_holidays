@@ -89,7 +89,7 @@
                         <th>Travelers</th>
                         <th>Tour Type</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <th class="ts-action-column">Actions</th>
                     </tr>
                 </thead>
 
@@ -103,10 +103,7 @@
                             </td>
 
                             <td>
-                                <strong>
-                                    {{ $enquiry->name }}
-                                </strong>
-
+                                <strong>{{ $enquiry->name }}</strong>
                                 <small>
                                     <a href="mailto:{{ $enquiry->email }}">
                                         {{ $enquiry->email }}
@@ -121,90 +118,52 @@
                             </td>
 
                             <td>
-                                {{ $enquiry->travel_date
-                                    ? $enquiry->travel_date->format('d M Y')
-                                    : 'Not provided' }}
+                                {{ $enquiry->travel_date ? $enquiry->travel_date->format('d M Y') : 'N/A' }}
                             </td>
 
                             <td>
-                                {{ $enquiry->destination ?: 'Not provided' }}
+                                {{ $enquiry->destination ?: 'N/A' }}
                             </td>
 
                             <td>
-                                {{ $enquiry->travelers ?: 'Not provided' }}
+                                {{ $enquiry->no_of_travelers ?: 'N/A' }}
                             </td>
 
                             <td>
-                                {{ $enquiry->tour_type ?: 'Not provided' }}
+                                {{ $enquiry->tourType ? $enquiry->tourType->name : 'N/A' }}
                             </td>
 
                             <td>
-                                <span
-                                    class="status-badge status-{{ $enquiry->status }}"
-                                >
+                                <span class="status-badge status-{{ $enquiry->status }}">
                                     {{ ucfirst($enquiry->status) }}
                                 </span>
                             </td>
 
-                            <td class="action-buttons">
-                                <a
-                                    href="{{ route(
-                                        'admin.enquiries.show',
-                                        $enquiry
-                                    ) }}"
-                                    class="action-button"
-                                    title="View Enquiry"
-                                >
-                                    <svg
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
+                            <td>
+                                <div class="ts-actions">
+                                    <a
+                                        href="{{ route('admin.enquiries.show', $enquiry) }}"
+                                        class="ts-action-btn"
                                     >
-                                        <path
-                                            d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"
-                                        ></path>
+                                        View
+                                    </a>
 
-                                        <circle
-                                            cx="12"
-                                            cy="12"
-                                            r="3"
-                                        ></circle>
-                                    </svg>
-
-                                    View
-                                </a>
-
-                                <form
-                                    action="{{ route(
-                                        'admin.enquiries.destroy',
-                                        $enquiry
-                                    ) }}"
-                                    method="POST"
-                                    class="inline-form"
-                                    onsubmit="return confirm('Are you sure you want to delete this enquiry? This action cannot be undone.');"
-                                >
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <button
-                                        type="submit"
-                                        class="action-button danger"
-                                        title="Delete Enquiry"
+                                    <form
+                                        action="{{ route('admin.enquiries.destroy', $enquiry) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Are you sure you want to delete this enquiry? This action cannot be undone.');"
                                     >
-                                        <svg
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button
+                                            type="submit"
+                                            class="ts-action-btn ts-delete-btn"
                                         >
-                                            <polyline points="3 6 5 6 21 6"></polyline>
-                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                        </svg>
-
-                                        Delete
-                                    </button>
-                                </form>
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
 
