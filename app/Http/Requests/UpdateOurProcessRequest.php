@@ -55,20 +55,15 @@ class UpdateOurProcessRequest extends FormRequest
         return [
             'heading.required' => 'The heading field is required.',
 
-            'promises.array' =>
-                'The promises field must be an array.',
+            'promises.array' => 'The promises field must be an array.',
 
-            'promises.max' =>
-                'You can add a maximum of 20 promises.',
+            'promises.max' => 'You can add a maximum of 20 promises.',
 
-            'promises.*.text.required' =>
-                'The promise text field is required.',
+            'promises.*.text.required' => 'The promise text field is required.',
 
-            'status.required' =>
-                'Please select the status.',
+            'status.required' => 'Please select the status.',
 
-            'status.in' =>
-                'The selected status is invalid.',
+            'status.in' => 'The selected status is invalid.',
         ];
     }
 }

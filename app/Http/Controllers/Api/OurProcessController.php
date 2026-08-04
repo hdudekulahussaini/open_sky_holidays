@@ -44,6 +44,7 @@ class OurProcessController extends Controller
             ),
         ], 201);
     }
+
     public function update(
         UpdateOurProcessRequest $request,
         OurProcess $ourProcess

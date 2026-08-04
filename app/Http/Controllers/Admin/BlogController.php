@@ -326,7 +326,7 @@ class BlogController extends Controller
                 )
                 ->exists()
         ) {
-            $slug = $baseSlug . '-' . $number;
+            $slug = $baseSlug.'-'.$number;
             $number++;
         }
 

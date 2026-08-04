@@ -24,10 +24,8 @@ class AdventureController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Adventures retrieved successfully.',
-            'data' =>
-                AdventureResource::collection($adventures),
+            'message' => 'Adventures retrieved successfully.',
+            'data' => AdventureResource::collection($adventures),
         ], 200);
     }
 
@@ -58,10 +56,8 @@ class AdventureController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Adventure created successfully.',
-            'data' =>
-                new AdventureResource($adventure),
+            'message' => 'Adventure created successfully.',
+            'data' => new AdventureResource($adventure),
         ], 201);
     }
 
@@ -72,10 +68,8 @@ class AdventureController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Adventure retrieved successfully.',
-            'data' =>
-                new AdventureResource($adventure),
+            'message' => 'Adventure retrieved successfully.',
+            'data' => new AdventureResource($adventure),
         ], 200);
     }
 
@@ -115,12 +109,10 @@ class AdventureController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Adventure updated successfully.',
-            'data' =>
-                new AdventureResource(
-                    $adventure->fresh()->load('category')
-                ),
+            'message' => 'Adventure updated successfully.',
+            'data' => new AdventureResource(
+                $adventure->fresh()->load('category')
+            ),
         ], 200);
     }
 
@@ -134,8 +126,7 @@ class AdventureController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Adventure deleted successfully.',
+            'message' => 'Adventure deleted successfully.',
             'data' => null,
         ], 200);
     }
@@ -156,21 +147,18 @@ class AdventureController extends Controller
             )
             ->first();
 
-        if (!$adventure) {
+        if (! $adventure) {
             return response()->json([
                 'success' => false,
-                'message' =>
-                    'Active adventure not found.',
+                'message' => 'Active adventure not found.',
                 'data' => null,
             ], 404);
         }
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Adventure retrieved successfully.',
-            'data' =>
-                new AdventureResource($adventure),
+            'message' => 'Adventure retrieved successfully.',
+            'data' => new AdventureResource($adventure),
         ], 200);
     }
 

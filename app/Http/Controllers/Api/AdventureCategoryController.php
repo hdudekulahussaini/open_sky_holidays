@@ -19,12 +19,10 @@ class AdventureCategoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Adventure categories retrieved successfully.',
-            'data' =>
-                AdventureCategoryResource::collection(
-                    $categories
-                ),
+            'message' => 'Adventure categories retrieved successfully.',
+            'data' => AdventureCategoryResource::collection(
+                $categories
+            ),
         ], 200);
     }
 
@@ -37,10 +35,8 @@ class AdventureCategoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Adventure category created successfully.',
-            'data' =>
-                new AdventureCategoryResource($category),
+            'message' => 'Adventure category created successfully.',
+            'data' => new AdventureCategoryResource($category),
         ], 201);
     }
 
@@ -49,12 +45,10 @@ class AdventureCategoryController extends Controller
     ): JsonResponse {
         return response()->json([
             'success' => true,
-            'message' =>
-                'Adventure category retrieved successfully.',
-            'data' =>
-                new AdventureCategoryResource(
-                    $adventureCategory
-                ),
+            'message' => 'Adventure category retrieved successfully.',
+            'data' => new AdventureCategoryResource(
+                $adventureCategory
+            ),
         ], 200);
     }
 
@@ -68,12 +62,10 @@ class AdventureCategoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Adventure category updated successfully.',
-            'data' =>
-                new AdventureCategoryResource(
-                    $adventureCategory->fresh()
-                ),
+            'message' => 'Adventure category updated successfully.',
+            'data' => new AdventureCategoryResource(
+                $adventureCategory->fresh()
+            ),
         ], 200);
     }
 
@@ -84,8 +76,7 @@ class AdventureCategoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Adventure category deleted successfully.',
+            'message' => 'Adventure category deleted successfully.',
             'data' => null,
         ], 200);
     }

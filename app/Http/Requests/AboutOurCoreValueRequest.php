@@ -31,23 +31,17 @@ class AboutOurCoreValueRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'title.required' =>
-                'Please enter the core value title.',
+            'title.required' => 'Please enter the core value title.',
 
-            'title.string' =>
-                'The title must contain valid text.',
+            'title.string' => 'The title must contain valid text.',
 
-            'title.max' =>
-                'The title must not exceed 255 characters.',
+            'title.max' => 'The title must not exceed 255 characters.',
 
-            'description.required' =>
-                'Please enter the core value description.',
+            'description.required' => 'Please enter the core value description.',
 
-            'description.string' =>
-                'The description must contain valid text.',
+            'description.string' => 'The description must contain valid text.',
 
-            'description.max' =>
-                'The description must not exceed 3000 characters.',
+            'description.max' => 'The description must not exceed 3000 characters.',
         ];
     }
 }

@@ -66,7 +66,7 @@ class BlogDetailResource extends JsonResource
 
             'featured_image' => $this->featured_image
                 ? asset(
-                    'storage/' . $this->featured_image
+                    'storage/'.$this->featured_image
                 )
                 : null,
 
@@ -78,27 +78,22 @@ class BlogDetailResource extends JsonResource
 
                 'image' => $this->author?->image
                     ? asset(
-                        'storage/' . $this->author->image
+                        'storage/'.$this->author->image
                     )
                     : null,
 
-                'description' =>
-                    $this->author?->description,
+                'description' => $this->author?->description,
 
-                'twitter_url' =>
-                    $this->author?->twitter_url,
+                'twitter_url' => $this->author?->twitter_url,
 
-                'facebook_url' =>
-                    $this->author?->facebook_url,
+                'facebook_url' => $this->author?->facebook_url,
 
-                'linkedin_url' =>
-                    $this->author?->linkedin_url,
+                'linkedin_url' => $this->author?->linkedin_url,
             ],
 
             'read_time' => $this->read_time,
 
-            'read_time_text' =>
-                $this->read_time . ' min read',
+            'read_time_text' => $this->read_time.' min read',
 
             'published_at' => $this->published_at
                 ?->toISOString(),

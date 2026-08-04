@@ -21,13 +21,11 @@ class WhatWeOfferController extends Controller
         return response()->json([
             'success' => true,
 
-            'message' =>
-                'What We Offer items retrieved successfully.',
+            'message' => 'What We Offer items retrieved successfully.',
 
-            'data' =>
-                WhatWeOfferResource::collection(
-                    $whatWeOffers
-                ),
+            'data' => WhatWeOfferResource::collection(
+                $whatWeOffers
+            ),
         ], 200);
     }
 
@@ -50,13 +48,11 @@ class WhatWeOfferController extends Controller
         return response()->json([
             'success' => true,
 
-            'message' =>
-                'What We Offer item created successfully.',
+            'message' => 'What We Offer item created successfully.',
 
-            'data' =>
-                new WhatWeOfferResource(
-                    $whatWeOffer
-                ),
+            'data' => new WhatWeOfferResource(
+                $whatWeOffer
+            ),
         ], 201);
     }
 
@@ -66,13 +62,11 @@ class WhatWeOfferController extends Controller
         return response()->json([
             'success' => true,
 
-            'message' =>
-                'What We Offer item retrieved successfully.',
+            'message' => 'What We Offer item retrieved successfully.',
 
-            'data' =>
-                new WhatWeOfferResource(
-                    $whatWeOffer
-                ),
+            'data' => new WhatWeOfferResource(
+                $whatWeOffer
+            ),
         ], 200);
     }
 
@@ -102,13 +96,11 @@ class WhatWeOfferController extends Controller
         return response()->json([
             'success' => true,
 
-            'message' =>
-                'What We Offer item updated successfully.',
+            'message' => 'What We Offer item updated successfully.',
 
-            'data' =>
-                new WhatWeOfferResource(
-                    $whatWeOffer->fresh()
-                ),
+            'data' => new WhatWeOfferResource(
+                $whatWeOffer->fresh()
+            ),
         ], 200);
     }
 
@@ -124,8 +116,7 @@ class WhatWeOfferController extends Controller
         return response()->json([
             'success' => true,
 
-            'message' =>
-                'What We Offer item deleted successfully.',
+            'message' => 'What We Offer item deleted successfully.',
 
             'data' => null,
         ], 200);

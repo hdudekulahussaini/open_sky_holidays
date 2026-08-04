@@ -20,15 +20,13 @@ class AboutWhyChooseUsResource extends JsonResource
 
             'image_url' => filled($this->image)
                 ? asset(
-                    'storage/' . $this->image
+                    'storage/'.$this->image
                 )
                 : null,
 
-            'features_title' =>
-                $this->features_title ?? [],
+            'features_title' => $this->features_title ?? [],
 
-            'features_description' =>
-                $this->features_description ?? [],
+            'features_description' => $this->features_description ?? [],
 
             'status' => $this->status,
         ];

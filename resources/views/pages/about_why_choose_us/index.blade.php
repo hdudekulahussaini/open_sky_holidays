@@ -4,21 +4,45 @@
 @section('page-title', 'About Why Choose Us')
 
 @section('content')
-    <div class="admin-card">
-        <div class="admin-card-header">
+    <div class="ts-page-wrapper">
+
+        {{-- Page Header --}}
+        <div class="ts-page-header">
             <div>
-                <h3>About Why Choose Us</h3>
-                <p>Manage title, description, image, features, and status.</p>
+                <span class="ts-page-eyebrow">
+                    About Management
+                </span>
+
+                <h1>About Why Choose Us</h1>
+
+                <p>
+                    Manage title, description, image, features, and status.
+                </p>
             </div>
 
-            <a href="{{ route('admin.about-why-choose-us.create') }}" class="btn btn-primary">
-                + Add Section
+            <a href="{{ route('admin.about-why-choose-us.create') }}"
+                class="ts-primary-btn">
+                <span>+</span>
+                Add Section
             </a>
         </div>
 
-        @if ($sections->count() > 0)
-            <div class="table-responsive">
-                <table class="admin-table">
+        {{-- List Card --}}
+        <div class="ts-list-card">
+
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>Why Choose Us List</h2>
+
+                    <p>
+                        Total records:
+                        <strong>{{ $sections->total() }}</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -26,11 +50,11 @@
                             <th>Title</th>
                             <th>Description</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <th class="ts-action-column">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($sections as $section)
+                        @forelse ($sections as $section)
                             <tr>
                                 <td>#{{ $section->id }}</td>
                                 <td>
@@ -48,49 +72,53 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <div class="table-actions">
-                                        <a href="{{ route('admin.about-why-choose-us.edit', $section) }}" class="action-button action-edit">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M12 20h9"></path>
-                                                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"></path>
-                                            </svg>
+                                    <div class="ts-actions">
+                                        <a href="{{ route('admin.about-why-choose-us.edit', $section) }}"
+                                            class="ts-action-btn ts-edit-btn">
                                             Edit
                                         </a>
-                                        <form action="{{ route('admin.about-why-choose-us.destroy', $section) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this record?')">
+                                        <form action="{{ route('admin.about-why-choose-us.destroy', $section) }}"
+                                            method="POST"
+                                            onsubmit="return confirm('Are you sure you want to delete this record?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="action-button action-delete">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                                    <path d="M19 6l-1 14H6L5 6"></path>
-                                                    <path d="M10 11v6"></path>
-                                                    <path d="M14 11v6"></path>
-                                                    <path d="M9 6V4h6v2"></path>
-                                                </svg>
+                                            <button type="submit" class="ts-action-btn ts-delete-btn">
                                                 Delete
                                             </button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="6">
+                                    <div class="ts-empty-state">
+                                        <div class="ts-empty-icon">
+                                            ✦
+                                        </div>
+
+                                        <h3>No sections found</h3>
+
+                                        <p>
+                                            Create your first About Why Choose Us section.
+                                        </p>
+
+                                        <a href="{{ route('admin.about-why-choose-us.create') }}" class="ts-primary-btn">
+                                            Create Section
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
 
             @if ($sections->hasPages())
-                <div class="pagination-wrapper">
+                <div class="ts-pagination">
                     {{ $sections->links() }}
                 </div>
             @endif
-        @else
-            <div class="empty-table">
-                <strong>No sections found.</strong>
-                <p>Create your first About Why Choose Us section.</p>
-                <a href="{{ route('admin.about-why-choose-us.create') }}" class="btn btn-primary">
-                    Create Section
-                </a>
-            </div>
-        @endif
+        </div>
     </div>
 @endsection

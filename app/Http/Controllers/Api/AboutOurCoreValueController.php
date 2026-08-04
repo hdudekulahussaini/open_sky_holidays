@@ -19,13 +19,11 @@ class AboutOurCoreValueController extends Controller
         return response()->json([
             'success' => true,
 
-            'message' =>
-                'Core values retrieved successfully.',
+            'message' => 'Core values retrieved successfully.',
 
-            'data' =>
-                AboutOurCoreValueResource::collection(
-                    $coreValues
-                ),
+            'data' => AboutOurCoreValueResource::collection(
+                $coreValues
+            ),
         ], 200);
     }
 
@@ -39,13 +37,11 @@ class AboutOurCoreValueController extends Controller
         return response()->json([
             'success' => true,
 
-            'message' =>
-                'Core value created successfully.',
+            'message' => 'Core value created successfully.',
 
-            'data' =>
-                new AboutOurCoreValueResource(
-                    $coreValue
-                ),
+            'data' => new AboutOurCoreValueResource(
+                $coreValue
+            ),
         ], 201);
     }
 
@@ -55,13 +51,11 @@ class AboutOurCoreValueController extends Controller
         return response()->json([
             'success' => true,
 
-            'message' =>
-                'Core value retrieved successfully.',
+            'message' => 'Core value retrieved successfully.',
 
-            'data' =>
-                new AboutOurCoreValueResource(
-                    $aboutOurCoreValue
-                ),
+            'data' => new AboutOurCoreValueResource(
+                $aboutOurCoreValue
+            ),
         ], 200);
     }
 
@@ -76,13 +70,11 @@ class AboutOurCoreValueController extends Controller
         return response()->json([
             'success' => true,
 
-            'message' =>
-                'Core value updated successfully.',
+            'message' => 'Core value updated successfully.',
 
-            'data' =>
-                new AboutOurCoreValueResource(
-                    $aboutOurCoreValue->fresh()
-                ),
+            'data' => new AboutOurCoreValueResource(
+                $aboutOurCoreValue->fresh()
+            ),
         ], 200);
     }
 
@@ -94,8 +86,7 @@ class AboutOurCoreValueController extends Controller
         return response()->json([
             'success' => true,
 
-            'message' =>
-                'Core value deleted successfully.',
+            'message' => 'Core value deleted successfully.',
 
             'data' => null,
         ], 200);

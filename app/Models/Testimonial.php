@@ -25,6 +25,4 @@ class Testimonial extends Model
         'reviewed_at' => 'datetime',
         'status' => 'boolean',
     ];
-
-
 }

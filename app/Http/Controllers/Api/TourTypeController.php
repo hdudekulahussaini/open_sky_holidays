@@ -45,6 +45,7 @@ class TourTypeController extends Controller
             'data' => new TourTypeResource($tourType),
         ], 201);
     }
+
     /**
      * Update a tour type.
      */

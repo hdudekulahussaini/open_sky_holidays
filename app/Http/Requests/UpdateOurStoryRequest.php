@@ -56,7 +56,7 @@ class UpdateOurStoryRequest extends FormRequest
             'images' => [
                 'nullable',
                 'array',
-                'max:' . $allowedNewImages,
+                'max:'.$allowedNewImages,
             ],
 
             'images.*' => [
@@ -106,18 +106,15 @@ class UpdateOurStoryRequest extends FormRequest
         return [
             'heading.required' => 'The main heading is required.',
 
-            'images.max' =>
-                'The total number of existing and newly uploaded images cannot exceed 3.',
+            'images.max' => 'The total number of existing and newly uploaded images cannot exceed 3.',
 
             'images.*.image' => 'Every uploaded file must be an image.',
             'images.*.mimes' => 'Images must be JPG, JPEG, PNG or WebP.',
             'images.*.max' => 'Each image must not exceed 5 MB.',
 
-            'features.*.heading.required_with' =>
-                'The feature heading is required when a sub heading is entered.',
+            'features.*.heading.required_with' => 'The feature heading is required when a sub heading is entered.',
 
-            'features.*.sub_heading.required_with' =>
-                'The feature sub heading is required when a heading is entered.',
+            'features.*.sub_heading.required_with' => 'The feature sub heading is required when a heading is entered.',
         ];
     }
 }

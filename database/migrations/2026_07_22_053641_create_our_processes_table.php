@@ -14,13 +14,13 @@ return new class extends Migration
             $table->string('small_heading')->nullable();
             $table->string('heading');
             $table->text('description')->nullable();
-           /*
-             * Example:
-             * [
-             *     {"text": "Quality construction"},
-             *     {"text": "On-time delivery"}
-             * ]
-             */
+            /*
+              * Example:
+              * [
+              *     {"text": "Quality construction"},
+              *     {"text": "On-time delivery"}
+              * ]
+              */
             $table->json('promises')->nullable();
 
             $table->enum('status', [

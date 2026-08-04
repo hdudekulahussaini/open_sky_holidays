@@ -56,44 +56,31 @@ class WhatWeOfferRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'title.required' =>
-                'Please enter the title.',
+            'title.required' => 'Please enter the title.',
 
-            'title.string' =>
-                'The title must contain valid text.',
+            'title.string' => 'The title must contain valid text.',
 
-            'title.max' =>
-                'The title must not exceed 255 characters.',
+            'title.max' => 'The title must not exceed 255 characters.',
 
-            'subtitle.string' =>
-                'The subtitle must contain valid text.',
+            'subtitle.string' => 'The subtitle must contain valid text.',
 
-            'subtitle.max' =>
-                'The subtitle must not exceed 255 characters.',
+            'subtitle.max' => 'The subtitle must not exceed 255 characters.',
 
-            'description.string' =>
-                'The description must contain valid text.',
+            'description.string' => 'The description must contain valid text.',
 
-            'description.max' =>
-                'The description must not exceed 3000 characters.',
+            'description.max' => 'The description must not exceed 3000 characters.',
 
-            'image.required' =>
-                'Please select an image.',
+            'image.required' => 'Please select an image.',
 
-            'image.image' =>
-                'The selected file must be a valid image.',
+            'image.image' => 'The selected file must be a valid image.',
 
-            'image.mimes' =>
-                'The image must be JPG, JPEG, PNG or WEBP.',
+            'image.mimes' => 'The image must be JPG, JPEG, PNG or WEBP.',
 
-            'image.max' =>
-                'The image size must not exceed 5 MB.',
+            'image.max' => 'The image size must not exceed 5 MB.',
 
-            'status.required' =>
-                'Please select the status.',
+            'status.required' => 'Please select the status.',
 
-            'status.in' =>
-                'Status must be active or inactive.',
+            'status.in' => 'Status must be active or inactive.',
         ];
     }
 }

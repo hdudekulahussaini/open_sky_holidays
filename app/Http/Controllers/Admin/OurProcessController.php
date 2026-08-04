@@ -47,8 +47,6 @@ class OurProcessController extends Controller
             );
     }
 
-
-
     public function edit(OurProcess $ourProcess): View
     {
         return view(

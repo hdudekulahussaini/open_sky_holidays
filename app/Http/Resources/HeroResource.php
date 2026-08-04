@@ -17,7 +17,7 @@ class HeroResource extends JsonResource
             'image' => $this->image,
 
             'image_url' => $this->image
-                ? asset('storage/' . $this->image)
+                ? asset('storage/'.$this->image)
                 : null,
 
             'status' => (bool) $this->status,

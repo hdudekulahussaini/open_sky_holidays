@@ -27,7 +27,6 @@ return new class extends Migration
             $table->string('slug')
                 ->unique();
 
-
             $table->json('table_of_contents')
                 ->nullable();
 

@@ -12,7 +12,6 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class BlogController extends Controller
 {
-
     public function index(
         Request $request
     ): AnonymousResourceCollection {
@@ -80,7 +79,6 @@ class BlogController extends Controller
         return BlogCardResource::collection($blogs);
     }
 
-
     public function show(
         Request $request,
         string $slug
@@ -109,7 +107,6 @@ class BlogController extends Controller
             ->limit(4)
             ->get();
 
-  
         $relatedBlogs = Blog::query()
             ->with([
                 'category:id,name,slug',
@@ -162,22 +159,19 @@ class BlogController extends Controller
         return response()->json([
             'success' => true,
 
-            'message' =>
-                'Blog details retrieved successfully.',
+            'message' => 'Blog details retrieved successfully.',
 
             'blog' => (
                 new BlogDetailResource($blog)
             )->resolve($request),
 
-            'recent_blogs' =>
-                BlogCardResource::collection(
-                    $recentBlogs
-                )->resolve($request),
+            'recent_blogs' => BlogCardResource::collection(
+                $recentBlogs
+            )->resolve($request),
 
-            'related_blogs' =>
-                BlogCardResource::collection(
-                    $relatedBlogs
-                )->resolve($request),
+            'related_blogs' => BlogCardResource::collection(
+                $relatedBlogs
+            )->resolve($request),
 
             'previous_blog' => $previousBlog
                 ? (

@@ -107,45 +107,31 @@ class StoreBlogRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'category_id.required' =>
-                'Please select a category.',
+            'category_id.required' => 'Please select a category.',
 
-            'category_id.exists' =>
-                'Selected category does not exist.',
+            'category_id.exists' => 'Selected category does not exist.',
 
-            'title.required' =>
-                'Blog title is required.',
+            'title.required' => 'Blog title is required.',
 
-            'table_of_contents.required' =>
-                'Please add at least one Table of Contents section.',
+            'table_of_contents.required' => 'Please add at least one Table of Contents section.',
 
-            'table_of_contents.array' =>
-                'Table of Contents must be a valid list.',
+            'table_of_contents.array' => 'Table of Contents must be a valid list.',
 
-            'table_of_contents.min' =>
-                'Please add at least one Table of Contents section.',
+            'table_of_contents.min' => 'Please add at least one Table of Contents section.',
 
-            'table_of_contents.*.required' =>
-                'Each Table of Contents section is required.',
+            'table_of_contents.*.required' => 'Each Table of Contents section is required.',
 
-            'table_of_contents.*.max' =>
-                'Each Table of Contents section cannot exceed 255 characters.',
+            'table_of_contents.*.max' => 'Each Table of Contents section cannot exceed 255 characters.',
 
-            'content.required' =>
-                'Blog content is required.',
+            'content.required' => 'Blog content is required.',
 
-            'featured_image.required' =>
-                'Featured image is required.',
+            'featured_image.required' => 'Featured image is required.',
 
-            'featured_image.image' =>
-                'The selected file must be an image.',
+            'featured_image.image' => 'The selected file must be an image.',
 
-            'featured_image.mimes' =>
-                'Image must be JPG, JPEG, PNG or WEBP.',
+            'featured_image.mimes' => 'Image must be JPG, JPEG, PNG or WEBP.',
 
-
-            'read_time.required' =>
-                'Reading time is required.',
+            'read_time.required' => 'Reading time is required.',
         ];
     }
 }

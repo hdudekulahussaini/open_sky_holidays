@@ -40,7 +40,7 @@ class AuthController extends Controller
             'is_admin' => true,
         ], $remember);
 
-        if (!$authenticated) {
+        if (! $authenticated) {
             return back()
                 ->withErrors([
                     'email' => 'Invalid admin email or password.',

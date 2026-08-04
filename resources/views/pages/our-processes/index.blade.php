@@ -4,32 +4,56 @@
 @section('page-title', 'Our Processes')
 
 @section('content')
-    <div class="admin-card">
-        <div class="admin-card-header">
+    <div class="ts-page-wrapper">
+
+        {{-- Page Header --}}
+        <div class="ts-page-header">
             <div>
-                <h3>Our Processes</h3>
-                <p>Manage process sections displayed on the website.</p>
+                <span class="ts-page-eyebrow">
+                    Our Processes
+                </span>
+
+                <h1>Our Processes</h1>
+
+                <p>
+                    Manage process sections displayed on the website.
+                </p>
             </div>
 
-            <a href="{{ route('admin.our-processes.create') }}" class="btn btn-primary">
-                + Add Our Process
+            <a href="{{ route('admin.our-processes.create') }}"
+                class="ts-primary-btn">
+                <span>+</span>
+                Add Our Process
             </a>
         </div>
 
-        @if ($ourProcesses->count() > 0)
-            <div class="table-responsive">
-                <table class="admin-table">
+        {{-- List Card --}}
+        <div class="ts-list-card">
+
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>Our Processes List</h2>
+
+                    <p>
+                        Total records:
+                        <strong>{{ $ourProcesses->total() }}</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Heading</th>
                             <th>Description</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <th class="ts-action-column">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($ourProcesses as $ourProcess)
+                        @forelse ($ourProcesses as $ourProcess)
                             <tr>
                                 <td>#{{ $ourProcess->id }}</td>
                                 <td>
@@ -45,49 +69,53 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <div class="table-actions">
-                                        <a href="{{ route('admin.our-processes.edit', $ourProcess) }}" class="action-button action-edit">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M12 20h9"></path>
-                                                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"></path>
-                                            </svg>
+                                    <div class="ts-actions">
+                                        <a href="{{ route('admin.our-processes.edit', $ourProcess) }}"
+                                            class="ts-action-btn ts-edit-btn">
                                             Edit
                                         </a>
-                                        <form action="{{ route('admin.our-processes.destroy', $ourProcess) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this process?')">
+                                        <form action="{{ route('admin.our-processes.destroy', $ourProcess) }}"
+                                            method="POST"
+                                            onsubmit="return confirm('Are you sure you want to delete this process?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="action-button action-delete">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                                    <path d="M19 6l-1 14H6L5 6"></path>
-                                                    <path d="M10 11v6"></path>
-                                                    <path d="M14 11v6"></path>
-                                                    <path d="M9 6V4h6v2"></path>
-                                                </svg>
+                                            <button type="submit" class="ts-action-btn ts-delete-btn">
                                                 Delete
                                             </button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="5">
+                                    <div class="ts-empty-state">
+                                        <div class="ts-empty-icon">
+                                            ✦
+                                        </div>
+
+                                        <h3>No processes found</h3>
+
+                                        <p>
+                                            Add your first Our Process item.
+                                        </p>
+
+                                        <a href="{{ route('admin.our-processes.create') }}" class="ts-primary-btn">
+                                            Create Process
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
 
             @if ($ourProcesses->hasPages())
-                <div class="pagination-wrapper">
+                <div class="ts-pagination">
                     {{ $ourProcesses->links() }}
                 </div>
             @endif
-        @else
-            <div class="empty-table">
-                <strong>No processes found.</strong>
-                <p>Add your first Our Process item.</p>
-                <a href="{{ route('admin.our-processes.create') }}" class="btn btn-primary">
-                    Create Process
-                </a>
-            </div>
-        @endif
+        </div>
     </div>
 @endsection

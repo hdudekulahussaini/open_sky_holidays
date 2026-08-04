@@ -22,13 +22,11 @@ class AboutWhyChooseUsController extends Controller
         return response()->json([
             'success' => true,
 
-            'message' =>
-                'About Why Choose Us retrieved successfully.',
+            'message' => 'About Why Choose Us retrieved successfully.',
 
-            'data' =>
-                AboutWhyChooseUsResource::collection(
-                    $sections
-                ),
+            'data' => AboutWhyChooseUsResource::collection(
+                $sections
+            ),
         ], 200);
     }
 
@@ -64,13 +62,11 @@ class AboutWhyChooseUsController extends Controller
             return response()->json([
                 'success' => true,
 
-                'message' =>
-                    'About Why Choose Us created successfully.',
+                'message' => 'About Why Choose Us created successfully.',
 
-                'data' =>
-                    new AboutWhyChooseUsResource(
-                        $section
-                    ),
+                'data' => new AboutWhyChooseUsResource(
+                    $section
+                ),
             ], 201);
         } catch (Throwable $exception) {
             $this->deleteImage($uploadedImage);
@@ -79,8 +75,7 @@ class AboutWhyChooseUsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' =>
-                    'Unable to create About Why Choose Us.',
+                'message' => 'Unable to create About Why Choose Us.',
                 'data' => null,
             ], 500);
         }
@@ -92,13 +87,11 @@ class AboutWhyChooseUsController extends Controller
         return response()->json([
             'success' => true,
 
-            'message' =>
-                'About Why Choose Us retrieved successfully.',
+            'message' => 'About Why Choose Us retrieved successfully.',
 
-            'data' =>
-                new AboutWhyChooseUsResource(
-                    $aboutWhyChooseUs
-                ),
+            'data' => new AboutWhyChooseUsResource(
+                $aboutWhyChooseUs
+            ),
         ], 200);
     }
 
@@ -144,13 +137,11 @@ class AboutWhyChooseUsController extends Controller
             return response()->json([
                 'success' => true,
 
-                'message' =>
-                    'About Why Choose Us updated successfully.',
+                'message' => 'About Why Choose Us updated successfully.',
 
-                'data' =>
-                    new AboutWhyChooseUsResource(
-                        $aboutWhyChooseUs->fresh()
-                    ),
+                'data' => new AboutWhyChooseUsResource(
+                    $aboutWhyChooseUs->fresh()
+                ),
             ], 200);
         } catch (Throwable $exception) {
             $this->deleteImage($newImage);
@@ -159,8 +150,7 @@ class AboutWhyChooseUsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' =>
-                    'Unable to update About Why Choose Us.',
+                'message' => 'Unable to update About Why Choose Us.',
                 'data' => null,
             ], 500);
         }
@@ -178,8 +168,7 @@ class AboutWhyChooseUsController extends Controller
         return response()->json([
             'success' => true,
 
-            'message' =>
-                'About Why Choose Us deleted successfully.',
+            'message' => 'About Why Choose Us deleted successfully.',
 
             'data' => null,
         ], 200);

@@ -19,10 +19,8 @@ class PageBannerController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Page banners retrieved successfully.',
-            'data' =>
-                PageBannerResource::collection($pageBanners),
+            'message' => 'Page banners retrieved successfully.',
+            'data' => PageBannerResource::collection($pageBanners),
         ], 200);
     }
 
@@ -46,10 +44,8 @@ class PageBannerController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Page banner created successfully.',
-            'data' =>
-                new PageBannerResource($pageBanner),
+            'message' => 'Page banner created successfully.',
+            'data' => new PageBannerResource($pageBanner),
         ], 201);
     }
 
@@ -58,10 +54,8 @@ class PageBannerController extends Controller
     ): JsonResponse {
         return response()->json([
             'success' => true,
-            'message' =>
-                'Page banner retrieved successfully.',
-            'data' =>
-                new PageBannerResource($pageBanner),
+            'message' => 'Page banner retrieved successfully.',
+            'data' => new PageBannerResource($pageBanner),
         ], 200);
     }
 
@@ -85,12 +79,10 @@ class PageBannerController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Page banner updated successfully.',
-            'data' =>
-                new PageBannerResource(
-                    $pageBanner->fresh()
-                ),
+            'message' => 'Page banner updated successfully.',
+            'data' => new PageBannerResource(
+                $pageBanner->fresh()
+            ),
         ], 200);
     }
 
@@ -103,8 +95,7 @@ class PageBannerController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Page banner deleted successfully.',
+            'message' => 'Page banner deleted successfully.',
             'data' => null,
         ], 200);
     }
@@ -117,21 +108,18 @@ class PageBannerController extends Controller
             ->where('status', true)
             ->first();
 
-        if (!$pageBanner) {
+        if (! $pageBanner) {
             return response()->json([
                 'success' => false,
-                'message' =>
-                    'Active page banner not found.',
+                'message' => 'Active page banner not found.',
                 'data' => null,
             ], 404);
         }
 
         return response()->json([
             'success' => true,
-            'message' =>
-                'Page banner retrieved successfully.',
-            'data' =>
-                new PageBannerResource($pageBanner),
+            'message' => 'Page banner retrieved successfully.',
+            'data' => new PageBannerResource($pageBanner),
         ], 200);
     }
 

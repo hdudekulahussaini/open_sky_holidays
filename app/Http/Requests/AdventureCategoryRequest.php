@@ -66,20 +66,15 @@ class AdventureCategoryRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' =>
-                'Please enter the category name.',
+            'name.required' => 'Please enter the category name.',
 
-            'slug.required' =>
-                'Please enter the category slug.',
+            'slug.required' => 'Please enter the category slug.',
 
-            'slug.unique' =>
-                'This category slug already exists.',
+            'slug.unique' => 'This category slug already exists.',
 
-            'status.required' =>
-                'Please select the category status.',
+            'status.required' => 'Please select the category status.',
 
-            'status.in' =>
-                'Status must be active or inactive.',
+            'status.in' => 'Status must be active or inactive.',
         ];
     }
 }

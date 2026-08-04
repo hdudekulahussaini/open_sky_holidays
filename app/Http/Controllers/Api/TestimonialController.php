@@ -118,7 +118,7 @@ class TestimonialController extends Controller
             'customer_image' => $testimonial->customer_image,
 
             'customer_image_url' => $testimonial->customer_image
-                ? asset('storage/' . $testimonial->customer_image)
+                ? asset('storage/'.$testimonial->customer_image)
                 : null,
 
             'location' => $testimonial->location,

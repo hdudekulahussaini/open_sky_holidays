@@ -22,7 +22,7 @@ class WhatWeOfferResource extends JsonResource
 
             'image_url' => filled($this->image)
                 ? asset(
-                    'storage/' . $this->image
+                    'storage/'.$this->image
                 )
                 : null,
 

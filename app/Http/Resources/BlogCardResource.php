@@ -42,14 +42,14 @@ class BlogCardResource extends JsonResource
 
             'featured_image' => $this->featured_image
                 ? asset(
-                    'storage/' . $this->featured_image
+                    'storage/'.$this->featured_image
                 )
                 : null,
 
             'read_time' => $this->read_time,
 
             'read_time_text' => $this->read_time
-                . ' min read',
+                .' min read',
 
             'published_at' => $this->published_at
                 ?->toISOString(),

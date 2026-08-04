@@ -88,56 +88,39 @@ class AdventureRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'adventure_category_id.required' =>
-                'Please select an adventure category.',
+            'adventure_category_id.required' => 'Please select an adventure category.',
 
-            'adventure_category_id.exists' =>
-                'The selected category does not exist.',
+            'adventure_category_id.exists' => 'The selected category does not exist.',
 
-            'adventure_category_id.unique' =>
-                'This category already has adventure content.',
+            'adventure_category_id.unique' => 'This category already has adventure content.',
 
-            'title.required' =>
-                'Please enter the adventure title.',
+            'title.required' => 'Please enter the adventure title.',
 
-            'features.array' =>
-                'Features must be submitted correctly.',
+            'features.array' => 'Features must be submitted correctly.',
 
-            'features.max' =>
-                'You can add a maximum of 10 features.',
+            'features.max' => 'You can add a maximum of 10 features.',
 
-            'features.*.string' =>
-                'Every feature must be valid text.',
+            'features.*.string' => 'Every feature must be valid text.',
 
-            'features.*.max' =>
-                'Each feature must not exceed 255 characters.',
+            'features.*.max' => 'Each feature must not exceed 255 characters.',
 
-            'video_link.url' =>
-                'Please enter a valid video URL.',
+            'video_link.url' => 'Please enter a valid video URL.',
 
-            'image_one.image' =>
-                'The first selected file must be an image.',
+            'image_one.image' => 'The first selected file must be an image.',
 
-            'image_one.mimes' =>
-                'The first image must be JPG, JPEG, PNG or WEBP.',
+            'image_one.mimes' => 'The first image must be JPG, JPEG, PNG or WEBP.',
 
-            'image_one.max' =>
-                'The first image must not exceed 5 MB.',
+            'image_one.max' => 'The first image must not exceed 5 MB.',
 
-            'image_two.image' =>
-                'The second selected file must be an image.',
+            'image_two.image' => 'The second selected file must be an image.',
 
-            'image_two.mimes' =>
-                'The second image must be JPG, JPEG, PNG or WEBP.',
+            'image_two.mimes' => 'The second image must be JPG, JPEG, PNG or WEBP.',
 
-            'image_two.max' =>
-                'The second image must not exceed 5 MB.',
+            'image_two.max' => 'The second image must not exceed 5 MB.',
 
-            'status.required' =>
-                'Please select the adventure status.',
+            'status.required' => 'Please select the adventure status.',
 
-            'status.in' =>
-                'Status must be active or inactive.',
+            'status.in' => 'Status must be active or inactive.',
         ];
     }
 }

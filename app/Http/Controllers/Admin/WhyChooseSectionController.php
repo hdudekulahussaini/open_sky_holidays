@@ -43,7 +43,6 @@ class WhyChooseSectionController extends Controller
             ->with('success', 'Why choose section created successfully.');
     }
 
-   
     public function edit(WhyChooseSection $whyChooseSection): View
     {
         return view(

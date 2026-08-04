@@ -29,7 +29,7 @@ class StoreOurStoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-             'heading' => [
+            'heading' => [
                 'required',
                 'string',
                 'max:255',
@@ -88,11 +88,9 @@ class StoreOurStoryRequest extends FormRequest
             'images.*.mimes' => 'Images must be JPG, JPEG, PNG or WebP.',
             'images.*.max' => 'Each image must not exceed 5 MB.',
 
-            'features.*.heading.required_with' =>
-                'The feature heading is required when a sub heading is entered.',
+            'features.*.heading.required_with' => 'The feature heading is required when a sub heading is entered.',
 
-            'features.*.sub_heading.required_with' =>
-                'The feature sub heading is required when a heading is entered.',
+            'features.*.sub_heading.required_with' => 'The feature sub heading is required when a heading is entered.',
         ];
     }
 }
