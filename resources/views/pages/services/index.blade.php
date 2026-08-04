@@ -31,7 +31,7 @@
                         <th>About Title</th>
                         <th>Status</th>
                         <th>Created Date</th>
-                        <th class="text-center">Actions</th>
+                        <th class="ts-action-column">Actions</th>
                     </tr>
                 </thead>
 
@@ -72,11 +72,11 @@
                                 {{ $service->created_at?->format('d M Y') }}
                             </td>
                             <td>
-                                <div class="action-buttons">
-                                    <a href="{{ route('admin.services.show', $service) }}" class="action-btn view-btn">
+                                <div class="ts-actions">
+                                    <a href="{{ route('admin.services.show', $service) }}" class="ts-action-btn">
                                         View
                                     </a>
-                                    <a href="{{ route('admin.services.edit', $service) }}" class="action-btn edit-btn">
+                                    <a href="{{ route('admin.services.edit', $service) }}" class="ts-action-btn ts-edit-btn">
                                         Edit
                                     </a>
                                     <form
@@ -86,7 +86,7 @@
                                     >
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="action-btn delete-btn">
+                                        <button type="submit" class="ts-action-btn ts-delete-btn">
                                             Delete
                                         </button>
                                     </form>

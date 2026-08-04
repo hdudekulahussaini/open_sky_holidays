@@ -59,7 +59,7 @@
                             <th>Discount</th>
                             <th>Subtitle</th>
                             <th>Status</th>
-                            <th class="text-end pe-4">Actions</th>
+                            <th class="ts-action-column">Actions</th>
                         </tr>
                     </thead>
 
@@ -120,38 +120,39 @@
                                     @endif
                                 </td>
 
-                                <td class="text-end pe-4">
-                                    <a
-                                        href="{{ route(
-                                            'admin.offer-banners.edit',
-                                            $offerBanner
-                                        ) }}"
-                                        class="btn btn-sm btn-outline-primary"
-                                    >
-                                        Edit
-                                    </a>
-
-                                    <form
-                                        action="{{ route(
-                                            'admin.offer-banners.destroy',
-                                            $offerBanner
-                                        ) }}"
-                                        method="POST"
-                                        class="d-inline"
-                                        onsubmit="return confirm(
-                                            'Are you sure you want to delete this offer banner?'
-                                        )"
-                                    >
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button
-                                            type="submit"
-                                            class="btn btn-sm btn-outline-danger"
+                                <td>
+                                    <div class="ts-actions">
+                                        <a
+                                            href="{{ route(
+                                                'admin.offer-banners.edit',
+                                                $offerBanner
+                                            ) }}"
+                                            class="ts-action-btn ts-edit-btn"
                                         >
-                                            Delete
-                                        </button>
-                                    </form>
+                                            Edit
+                                        </a>
+
+                                        <form
+                                            action="{{ route(
+                                                'admin.offer-banners.destroy',
+                                                $offerBanner
+                                            ) }}"
+                                            method="POST"
+                                            onsubmit="return confirm(
+                                                'Are you sure you want to delete this offer banner?'
+                                            )"
+                                        >
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button
+                                                type="submit"
+                                                class="ts-action-btn ts-delete-btn"
+                                            >
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty

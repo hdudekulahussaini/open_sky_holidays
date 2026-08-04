@@ -68,7 +68,7 @@
                         <th>Travelers</th>
                         <th>Submitted Date</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <th class="ts-action-column">Actions</th>
                     </tr>
                 </thead>
 
@@ -123,16 +123,11 @@
                             </td>
 
                             <td>
-                                <div class="action-buttons-group" style="display: flex; gap: 8px;">
+                                <div class="ts-actions">
                                     <a
                                         href="{{ route('admin.tour-inquiries.show', $inquiry) }}"
-                                        class="action-button"
-                                        title="View Details"
+                                        class="ts-action-btn"
                                     >
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path>
-                                            <circle cx="12" cy="12" r="3"></circle>
-                                        </svg>
                                         View
                                     </a>
 
@@ -140,22 +135,13 @@
                                         method="POST"
                                         action="{{ route('admin.tour-inquiries.destroy', $inquiry) }}"
                                         onsubmit="return confirm('Are you sure you want to delete this tour inquiry? This action cannot be undone.');"
-                                        style="margin: 0; display: inline;"
                                     >
                                         @csrf
                                         @method('DELETE')
                                         <button
                                             type="submit"
-                                            class="action-button"
-                                            title="Delete Inquiry"
-                                            style="background: none; border: none; padding: 0; color: #e15b5b; cursor: pointer; display: flex; align-items: center; gap: 4px; font: inherit;"
+                                            class="ts-action-btn ts-delete-btn"
                                         >
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
-                                                <polyline points="3 6 5 6 21 6"></polyline>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                <line x1="14" y1="11" x2="14" y2="17"></line>
-                                            </svg>
                                             Delete
                                         </button>
                                     </form>

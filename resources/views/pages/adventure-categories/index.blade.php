@@ -45,7 +45,7 @@
                             <th>Slug</th>
                             <th>Adventure Content</th>
                             <th>Status</th>
-                            <th class="text-end px-4">Actions</th>
+                            <th class="ts-action-column">Actions</th>
                         </tr>
                     </thead>
 
@@ -78,25 +78,20 @@
 
                             <td>
                                 @if ($category->status === 'active')
-                                <span class="badge bg-success">
-                                    Active
-                                </span>
+                                <span class="badge bg-success">Active</span>
                                 @else
-                                <span class="badge bg-danger">
-                                    Inactive
-                                </span>
+                                <span class="badge bg-danger">Inactive</span>
                                 @endif
                             </td>
 
-                            <td class="text-end px-4">
-                                <div class="d-flex justify-content-end gap-2">
+                            <td>
+                                <div class="ts-actions">
                                     <a
                                         href="{{ route(
                                                 'admin.adventure-categories.edit',
                                                 $category
                                             ) }}"
-                                        class="btn btn-sm btn-outline-primary">
-                                        <i class="fas fa-pen me-1"></i>
+                                        class="ts-action-btn ts-edit-btn">
                                         Edit
                                     </a>
 
@@ -116,8 +111,7 @@
 
                                         <button
                                             type="submit"
-                                            class="btn btn-sm btn-outline-danger">
-                                            <i class="fas fa-trash me-1"></i>
+                                            class="ts-action-btn ts-delete-btn">
                                             Delete
                                         </button>
                                     </form>
