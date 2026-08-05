@@ -1,5 +1,3 @@
-@csrf
-
 <div class="admin-form-grid">
 
     {{-- Title --}}
@@ -36,54 +34,59 @@
         @enderror
     </div>
 
-</div>
-{{-- Sort Order --}}
-<div class="admin-form-group">
-    <label for="sort_order">
-        Sort Order
-        <span class="required">*</span>
-    </label>
+    {{-- Sort Order --}}
+    <div class="admin-form-group">
+        <label for="sort_order">
+            Sort Order
+            <span class="required">*</span>
+        </label>
 
-    <input type="number" name="sort_order" id="sort_order" min="0"
-        class="admin-form-control @error('sort_order') is-invalid @enderror"
-        value="{{ old('sort_order', $whyChooseSection->sort_order ?? 0) }}" placeholder="Enter display order" required>
+        <input type="number" name="sort_order" id="sort_order" min="0"
+            class="admin-form-control @error('sort_order') is-invalid @enderror"
+            value="{{ old('sort_order', $whyChooseSection->sort_order ?? 0) }}" placeholder="Enter display order" required>
 
-    @error('sort_order')
-        <span class="admin-form-error">
-            {{ $message }}
-        </span>
-    @enderror
-</div>
+        @error('sort_order')
+            <span class="admin-form-error">
+                {{ $message }}
+            </span>
+        @enderror
+    </div>
 
-</div>
+    {{-- Publishing Status --}}
+    <div class="admin-form-group">
 
+        <label for="status">
+            Status
+            <span class="required">*</span>
+        </label>
 
-{{-- Publishing Status --}}
-<div class="admin-form-group">
+        <select id="status" name="status"
+            class="admin-form-control @error('status') is-invalid @enderror" required>
+            <option value="1" @selected(old('status', $whyChooseSection->status ?? 1) == 1)>
+                Active
+            </option>
 
-    <label for="status">
-        Status
-        <span class="required">*</span>
-    </label>
+            <option value="0" @selected(old('status', $whyChooseSection->status ?? 1) == 0)>
+                Inactive
+            </option>
+        </select>
 
-    <select id="status" name="status"
-        class="admin-form-control
-                                @error('status') is-invalid @enderror" required>
-        <option value="1" @selected(old('status', 1) == 1)>
-            Active
-        </option>
+        @error('status')
+            <span class="admin-form-error">
+                {{ $message }}
+            </span>
+        @enderror
 
-        <option value="0" @selected(old('status', 1) == 0)>
-            Inactive
-        </option>
-    </select>
-
-    @error('status')
-        <span class="admin-form-error">
-            {{ $message }}
-        </span>
-    @enderror
+    </div>
 
 </div>
 
+<div class="admin-form-actions">
+    <a href="{{ route('admin.why-choose-sections.index') }}" class="btn btn-light">
+        Cancel
+    </a>
 
+    <button type="submit" class="btn btn-primary">
+        {{ $buttonText ?? 'Save Section' }}
+    </button>
+</div>

@@ -1,648 +1,288 @@
 @php
-    $isEdit = isset($aboutWhyChooseUs);
-
-    $oldTitles = old(
-        'features_title',
-        $isEdit
-            ? ($aboutWhyChooseUs->features_title ?? [])
-            : ['']
-    );
-
-    $oldDescriptions = old(
-        'features_description',
-        $isEdit
-            ? ($aboutWhyChooseUs->features_description ?? [])
-            : ['']
-    );
-
-    $featureCount = max(
-        count($oldTitles),
-        count($oldDescriptions),
-        1
-    );
+    $oldTitles = old('features_title', $aboutWhyChooseUs->features_title ?? ['']);
+    $oldDescriptions = old('features_description', $aboutWhyChooseUs->features_description ?? ['']);
+    // Ensure both arrays have the same length based on titles
+    $featuresCount = max(count($oldTitles), 1);
 @endphp
 
-<div class="row g-4">
-    <div class="col-xl-8 col-lg-7">
+<div class="ts-form-grid">
+    <div class="ts-form-main">
 
-        <div class="card border-0 shadow-sm mb-4">
-            <div
-                class="card-header bg-white
-                       border-bottom py-3 px-4"
-            >
-                <h5 class="fw-semibold mb-0">
-                    Section Information
-                </h5>
-            </div>
+        {{-- Title --}}
+        <div class="ts-form-group">
+            <label for="title" class="ts-label">
+                Title
+                <span class="ts-required">*</span>
+            </label>
 
-            <div class="card-body p-4">
-                <div class="mb-4">
-                    <label
-                        for="title"
-                        class="form-label fw-semibold"
-                    >
-                        Title
-                        <span class="text-danger">*</span>
-                    </label>
+            <input type="text" name="title" id="title"
+                class="ts-input @error('title') ts-input-error @enderror"
+                value="{{ old('title', $aboutWhyChooseUs->title ?? '') }}"
+                placeholder="Example: Why Choose Open Sky">
 
-                    <input
-                        type="text"
-                        id="title"
-                        name="title"
-                        value="{{ old(
-                            'title',
-                            $aboutWhyChooseUs->title ?? ''
-                        ) }}"
-                        class="form-control
-                            @error('title')
-                                is-invalid
-                            @enderror"
-                        placeholder="Setting Standard for Trust and Comfort."
-                    >
+            @error('title')
+                <span class="ts-error-message">
+                    {{ $message }}
+                </span>
+            @enderror
+        </div>
 
-                    @error('title')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
+        {{-- Subtitle --}}
+        <div class="ts-form-group">
+            <label for="subtitle" class="ts-label">
+                Subtitle
+            </label>
 
+            <input type="text" name="subtitle" id="subtitle"
+                class="ts-input @error('subtitle') ts-input-error @enderror"
+                value="{{ old('subtitle', $aboutWhyChooseUs->subtitle ?? '') }}"
+                placeholder="Example: The Best Agency">
+
+            @error('subtitle')
+                <span class="ts-error-message">
+                    {{ $message }}
+                </span>
+            @enderror
+        </div>
+
+        {{-- Description --}}
+        <div class="ts-form-group">
+            <label for="description" class="ts-label">
+                Description
+            </label>
+
+            <textarea name="description" id="description" rows="6"
+                class="ts-textarea @error('description') ts-input-error @enderror" placeholder="Enter description">{{ old('description', $aboutWhyChooseUs->description ?? '') }}</textarea>
+
+            @error('description')
+                <span class="ts-error-message">
+                    {{ $message }}
+                </span>
+            @enderror
+        </div>
+
+        {{-- Features Builder --}}
+        <div class="ts-form-group">
+            <div class="ts-feature-heading">
                 <div>
-                    <label
-                        for="description"
-                        class="form-label fw-semibold"
-                    >
-                        Description
+                    <label class="ts-label">
+                        Features
                     </label>
 
-                    <textarea
-                        id="description"
-                        name="description"
-                        rows="6"
-                        class="form-control
-                            @error('description')
-                                is-invalid
-                            @enderror"
-                        placeholder="Enter the section description"
-                    >{{ old(
-                        'description',
-                        $aboutWhyChooseUs->description ?? ''
-                    ) }}</textarea>
+                    <p class="ts-field-note">
+                        Add one or more features.
+                    </p>
+                </div>
 
-                    @error('description')
-                        <div class="invalid-feedback">
-                            {{ $message }}
+                <button type="button" class="ts-add-feature-btn" id="addFeatureButton">
+                    <span>+</span>
+                    Add Feature
+                </button>
+            </div>
+
+            <div id="featuresContainer" class="ts-features-container mt-3">
+                @for ($index = 0; $index < $featuresCount; $index++)
+                    <div class="feature-card border rounded-3 p-3 mb-3" style="background: #f8fafc; border-color: #e2e8f0 !important;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="feature-number fw-semibold mb-0">
+                                Feature {{ $index + 1 }}
+                            </h6>
+
+                            <button type="button" class="btn btn-sm btn-outline-danger remove-feature" title="Delete feature">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
                         </div>
-                    @enderror
-                </div>
-            </div>
-        </div>
 
-        <div class="card border-0 shadow-sm">
-            <div
-                class="card-header bg-white
-                       border-bottom py-3 px-4"
-            >
-                <div
-                    class="d-flex flex-wrap
-                           justify-content-between
-                           align-items-center gap-3"
-                >
-                    <div>
-                        <h5 class="fw-semibold mb-1">
-                            Why Choose Us Features
-                        </h5>
-
-                        <p class="small text-muted mb-0">
-                            Add or remove feature titles
-                            and descriptions.
-                        </p>
-                    </div>
-
-                    <button
-                        type="button"
-                        id="addFeatureButton"
-                        class="btn btn-primary btn-sm"
-                    >
-                        <i class="fa-solid fa-plus me-1"></i>
-                        Add Feature
-                    </button>
-                </div>
-            </div>
-
-            <div class="card-body p-4">
-                <div id="featuresContainer">
-                    @for (
-                        $index = 0;
-                        $index < $featureCount;
-                        $index++
-                    )
-                        <div
-                            class="feature-card border
-                                   rounded-3 p-3 mb-3"
-                        >
-                            <div
-                                class="d-flex justify-content-between
-                                       align-items-center mb-3"
-                            >
-                                <h6
-                                    class="feature-number
-                                           fw-semibold mb-0"
-                                >
-                                    Feature {{ $index + 1 }}
-                                </h6>
-
-                                <button
-                                    type="button"
-                                    class="btn btn-sm
-                                           btn-outline-danger
-                                           remove-feature"
-                                    title="Delete feature"
-                                >
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </div>
-
-                            <div class="mb-3">
-                                <label
-                                    class="form-label fw-semibold"
-                                >
-                                    Feature Title
-                                    <span class="text-danger">*</span>
-                                </label>
-
-                                <input
-                                    type="text"
-                                    name="features_title[]"
-                                    data-field="title"
-                                    value="{{ $oldTitles[$index] ?? '' }}"
-                                    class="form-control
-                                        @error(
-                                            'features_title.' .
-                                            $index
-                                        )
-                                            is-invalid
-                                        @enderror"
-                                    placeholder="24/7 Expert Support"
-                                >
-
-                                @error(
-                                    'features_title.' .
-                                    $index
-                                )
-                                    <div class="invalid-feedback">
+                        <div class="feature-fields">
+                            <div class="ts-form-group mb-3">
+                                <label class="ts-label form-label fw-semibold">Feature Title <span class="ts-required">*</span></label>
+                                <input type="text" name="features_title[]"
+                                    value="{{ $oldTitles[$index] ?? '' }}" class="ts-input form-control @error('features_title.' . $index) ts-input-error @enderror"
+                                    placeholder="24/7 Expert Support">
+                                @error('features_title.' . $index)
+                                    <span class="ts-error-message">
                                         {{ $message }}
-                                    </div>
+                                    </span>
                                 @enderror
                             </div>
 
-                            <div>
-                                <label
-                                    class="form-label fw-semibold"
-                                >
-                                    Feature Description
-                                </label>
-
-                                <textarea
-                                    name="features_description[]"
-                                    data-field="description"
-                                    rows="3"
-                                    class="form-control
-                                        @error(
-                                            'features_description.' .
-                                            $index
-                                        )
-                                            is-invalid
-                                        @enderror"
-                                    placeholder="Enter feature description"
-                                >{{ $oldDescriptions[$index] ?? '' }}</textarea>
-
-                                @error(
-                                    'features_description.' .
-                                    $index
-                                )
-                                    <div class="invalid-feedback">
+                            <div class="ts-form-group mb-0">
+                                <label class="ts-label form-label fw-semibold">Feature Description</label>
+                                <textarea name="features_description[]" rows="3"
+                                    class="ts-textarea form-control @error('features_description.' . $index) ts-input-error @enderror"
+                                    placeholder="Enter feature description">{{ $oldDescriptions[$index] ?? '' }}</textarea>
+                                @error('features_description.' . $index)
+                                    <span class="ts-error-message">
                                         {{ $message }}
-                                    </div>
+                                    </span>
                                 @enderror
                             </div>
                         </div>
-                    @endfor
-                </div>
-
-                @error('features_title')
-                    <div class="text-danger small">
-                        {{ $message }}
                     </div>
-                @enderror
+                @endfor
             </div>
+
+            @error('features_title')
+                <span class="ts-error-message">
+                    {{ $message }}
+                </span>
+            @enderror
         </div>
+
     </div>
 
-    <div class="col-xl-4 col-lg-5">
+    <div class="ts-form-sidebar">
 
-        <div class="card border-0 shadow-sm mb-4">
-            <div
-                class="card-header bg-white
-                       border-bottom py-3 px-4"
-            >
-                <h5 class="fw-semibold mb-0">
-                    Section Image
-                </h5>
+        {{-- Image --}}
+        <div class="ts-side-card">
+            <div class="ts-side-card-header">
+                <h3>Section Image</h3>
+                <p>Upload the section image.</p>
             </div>
 
-            <div class="card-body p-4">
-                <label
-                    for="image"
-                    class="form-label fw-semibold"
-                >
-                    Image
+            <div class="ts-image-preview-box">
+                <img src="{{ isset($aboutWhyChooseUs) && $aboutWhyChooseUs->image ? asset('storage/' . $aboutWhyChooseUs->image) : '' }}"
+                    alt="Image preview" id="imagePreview"
+                    class="ts-image-preview
+                        {{ isset($aboutWhyChooseUs) && $aboutWhyChooseUs->image ? '' : 'ts-hidden' }}">
 
-                    @unless ($isEdit)
-                        <span class="text-danger">*</span>
-                    @endunless
-                </label>
-
-                <input
-                    type="file"
-                    id="image"
-                    name="image"
-                    accept=".jpg,.jpeg,.png,.webp"
-                    class="form-control
-                        @error('image')
-                            is-invalid
-                        @enderror"
-                >
-
-                <div class="form-text">
-                    JPG, JPEG, PNG or WEBP.
-                    Maximum size 5 MB.
+                <div id="imagePlaceholder"
+                    class="ts-image-placeholder
+                        {{ isset($aboutWhyChooseUs) && $aboutWhyChooseUs->image ? 'ts-hidden' : '' }}">
+                    <span class="ts-image-placeholder-icon">✦</span>
+                    <strong>No image selected</strong>
+                    <small>JPG, PNG or WEBP</small>
                 </div>
-
-                @error('image')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-
-                @if (
-                    $isEdit &&
-                    filled($aboutWhyChooseUs->image)
-                )
-                    <div id="currentImage" class="mt-3">
-                        <p class="small text-muted mb-2">
-                            Current image
-                        </p>
-
-                        <img
-                            src="{{ asset(
-                                'storage/' .
-                                $aboutWhyChooseUs->image
-                            ) }}"
-                            alt="{{ $aboutWhyChooseUs->title }}"
-                            class="section-preview-image"
-                        >
-                    </div>
-                @endif
-
-                <div
-                    id="imagePreview"
-                    class="mt-3"
-                ></div>
             </div>
+
+            <label for="image" class="ts-upload-label">
+                Choose Image
+            </label>
+
+            <input type="file" name="image" id="image" class="ts-file-input" accept=".jpg,.jpeg,.png,.webp">
+
+            @error('image')
+                <span class="ts-error-message">
+                    {{ $message }}
+                </span>
+            @enderror
+
         </div>
 
-        <div class="card border-0 shadow-sm">
-            <div
-                class="card-header bg-white
-                       border-bottom py-3 px-4"
-            >
-                <h5 class="fw-semibold mb-0">
-                    Publish Settings
-                </h5>
-            </div>
+        {{-- Status --}}
+        <div class="admin-form-group">
 
-            <div class="card-body p-4">
-                <div class="mb-4">
-                    <label
-                        for="status"
-                        class="form-label fw-semibold"
-                    >
-                        Status
-                        <span class="text-danger">*</span>
-                    </label>
+            <label for="status">
+                Status
+                <span class="required">*</span>
+            </label>
 
-                    <select
-                        id="status"
-                        name="status"
-                        class="form-select
-                            @error('status')
-                                is-invalid
-                            @enderror"
-                    >
-                        <option
-                            value="active"
-                            @selected(
-                                old(
-                                    'status',
-                                    $aboutWhyChooseUs->status
-                                        ?? 'active'
-                                ) === 'active'
-                            )
-                        >
-                            Active
-                        </option>
+            <select id="status" name="status"
+                class="admin-form-control
+                                @error('status') is-invalid @enderror"
+                required>
+                <option value="active" @selected(old('status', $aboutWhyChooseUs->status ?? 'active') == 'active')>
+                    Active
+                </option>
 
-                        <option
-                            value="inactive"
-                            @selected(
-                                old(
-                                    'status',
-                                    $aboutWhyChooseUs->status
-                                        ?? 'active'
-                                ) === 'inactive'
-                            )
-                        >
-                            Inactive
-                        </option>
-                    </select>
+                <option value="inactive" @selected(old('status', $aboutWhyChooseUs->status ?? 'active') == 'inactive')>
+                    Inactive
+                </option>
+            </select>
 
-                    @error('status')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
+            @error('status')
+                <span class="admin-form-error">
+                    {{ $message }}
+                </span>
+            @enderror
 
-                <button
-                    type="submit"
-                    class="btn btn-primary w-100"
-                >
-                    <i
-                        class="fa-solid
-                               fa-floppy-disk me-2"
-                    ></i>
-
-                    {{ $isEdit
-                        ? 'Update Section'
-                        : 'Save Section' }}
-                </button>
-
-                <a
-                    href="{{ route(
-                        'admin.about-why-choose-us.index'
-                    ) }}"
-                    class="btn btn-light w-100 mt-2"
-                >
-                    Cancel
-                </a>
-            </div>
         </div>
     </div>
 </div>
 
-<style>
-    .section-preview-image {
-        width: 100%;
-        height: 230px;
-        object-fit: cover;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-    }
-
-    .feature-card {
-        background: #f8fafc;
-        border-color: #e2e8f0 !important;
-    }
-</style>
-
+@push('scripts')
 <script>
-    document.addEventListener(
-        'DOMContentLoaded',
-        function () {
-            const container =
-                document.getElementById(
-                    'featuresContainer'
-                );
+    document.addEventListener('DOMContentLoaded', function () {
+        const container = document.getElementById('featuresContainer');
+        const addButton = document.getElementById('addFeatureButton');
 
-            const addButton =
-                document.getElementById(
-                    'addFeatureButton'
-                );
-
-            function updateNumbers() {
-                const cards =
-                    container.querySelectorAll(
-                        '.feature-card'
-                    );
-
-                cards.forEach(function (card, index) {
-                    const number =
-                        card.querySelector(
-                            '.feature-number'
-                        );
-
-                    number.textContent =
-                        `Feature ${index + 1}`;
-                });
-            }
-
-            function createFeatureCard() {
-                const card =
-                    document.createElement('div');
-
-                card.className =
-                    'feature-card border rounded-3 p-3 mb-3';
-
-                card.innerHTML = `
-                    <div
-                        class="d-flex
-                               justify-content-between
-                               align-items-center mb-3"
-                    >
-                        <h6
-                            class="feature-number
-                                   fw-semibold mb-0"
-                        >
-                            Feature
-                        </h6>
-
-                        <button
-                            type="button"
-                            class="btn btn-sm
-                                   btn-outline-danger
-                                   remove-feature"
-                            title="Delete feature"
-                        >
-                            <i
-                                class="fa-solid
-                                       fa-trash"
-                            ></i>
-                        </button>
-                    </div>
-
-                    <div class="mb-3">
-                        <label
-                            class="form-label
-                                   fw-semibold"
-                        >
-                            Feature Title
-                            <span class="text-danger">
-                                *
-                            </span>
-                        </label>
-
-                        <input
-                            type="text"
-                            name="features_title[]"
-                            class="form-control"
-                            placeholder="24/7 Expert Support"
-                        >
-                    </div>
-
-                    <div>
-                        <label
-                            class="form-label
-                                   fw-semibold"
-                        >
-                            Feature Description
-                        </label>
-
-                        <textarea
-                            name="features_description[]"
-                            rows="3"
-                            class="form-control"
-                            placeholder="Enter feature description"
-                        ></textarea>
-                    </div>
-                `;
-
-                return card;
-            }
-
-            addButton.addEventListener(
-                'click',
-                function () {
-                    const count =
-                        container.querySelectorAll(
-                            '.feature-card'
-                        ).length;
-
-                    if (count >= 10) {
-                        alert(
-                            'Maximum 10 features are allowed.'
-                        );
-
-                        return;
-                    }
-
-                    const card =
-                        createFeatureCard();
-
-                    container.appendChild(card);
-
-                    updateNumbers();
-
-                    card.querySelector(
-                        'input[name="features_title[]"]'
-                    ).focus();
+        function updateNumbers() {
+            const cards = container.querySelectorAll('.feature-card');
+            cards.forEach(function (card, index) {
+                const number = card.querySelector('.feature-number');
+                if (number) {
+                    number.textContent = `Feature ${index + 1}`;
                 }
-            );
-
-            container.addEventListener(
-                'click',
-                function (event) {
-                    const button =
-                        event.target.closest(
-                            '.remove-feature'
-                        );
-
-                    if (!button) {
-                        return;
-                    }
-
-                    const cards =
-                        container.querySelectorAll(
-                            '.feature-card'
-                        );
-
-                    if (cards.length === 1) {
-                        alert(
-                            'At least one feature is required.'
-                        );
-
-                        return;
-                    }
-
-                    button
-                        .closest('.feature-card')
-                        .remove();
-
-                    updateNumbers();
-                }
-            );
-
-            const imageInput =
-                document.getElementById('image');
-
-            const imagePreview =
-                document.getElementById(
-                    'imagePreview'
-                );
-
-            const currentImage =
-                document.getElementById(
-                    'currentImage'
-                );
-
-            if (imageInput && imagePreview) {
-                imageInput.addEventListener(
-                    'change',
-                    function () {
-                        imagePreview.innerHTML = '';
-
-                        const file =
-                            this.files[0];
-
-                        if (
-                            !file ||
-                            !file.type.startsWith(
-                                'image/'
-                            )
-                        ) {
-                            return;
-                        }
-
-                        if (currentImage) {
-                            currentImage.style.display =
-                                'none';
-                        }
-
-                        const reader =
-                            new FileReader();
-
-                        reader.onload =
-                            function (event) {
-                                imagePreview.innerHTML = `
-                                    <p
-                                        class="small
-                                               text-muted mb-2"
-                                    >
-                                        Selected image
-                                    </p>
-
-                                    <img
-                                        src="${event.target.result}"
-                                        alt="Selected image"
-                                        class="section-preview-image"
-                                    >
-                                `;
-                            };
-
-                        reader.readAsDataURL(file);
-                    }
-                );
-            }
+            });
         }
-    );
+
+        addButton.addEventListener('click', function () {
+            const count = container.querySelectorAll('.feature-card').length;
+            if (count >= 10) {
+                alert('Maximum 10 features are allowed.');
+                return;
+            }
+
+            const card = document.createElement('div');
+            card.className = 'feature-card border rounded-3 p-3 mb-3';
+            card.style.cssText = 'background: #f8fafc; border-color: #e2e8f0 !important;';
+
+            card.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="feature-number fw-semibold mb-0">Feature</h6>
+                    <button type="button" class="btn btn-sm btn-outline-danger remove-feature" title="Delete feature">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+                <div class="feature-fields">
+                    <div class="ts-form-group mb-3">
+                        <label class="ts-label form-label fw-semibold">Feature Title <span class="ts-required">*</span></label>
+                        <input type="text" name="features_title[]" class="ts-input form-control" placeholder="24/7 Expert Support">
+                    </div>
+                    <div class="ts-form-group mb-0">
+                        <label class="ts-label form-label fw-semibold">Feature Description</label>
+                        <textarea name="features_description[]" rows="3" class="ts-textarea form-control" placeholder="Enter feature description"></textarea>
+                    </div>
+                </div>
+            `;
+
+            container.appendChild(card);
+            updateNumbers();
+            card.querySelector('input[name="features_title[]"]').focus();
+        });
+
+        container.addEventListener('click', function (event) {
+            const button = event.target.closest('.remove-feature');
+            if (!button) return;
+
+            const cards = container.querySelectorAll('.feature-card');
+            if (cards.length === 1) {
+                alert('At least one feature is required.');
+                return;
+            }
+
+            button.closest('.feature-card').remove();
+            updateNumbers();
+        });
+
+        const imageInput = document.getElementById('image');
+        const imagePreview = document.getElementById('imagePreview');
+        const imagePlaceholder = document.getElementById('imagePlaceholder');
+
+        if (imageInput && imagePreview) {
+            imageInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    imagePreview.src = event.target.result;
+                    imagePreview.classList.remove('ts-hidden');
+                    if (imagePlaceholder) imagePlaceholder.classList.add('ts-hidden');
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    });
 </script>
+@endpush

@@ -1,73 +1,30 @@
 @extends('admin.layouts.app')
 
 @section('title', 'Edit What We Offer')
+@section('page-title', 'What We Offer')
 
 @section('content')
-<div class="container-fluid">
-
-    <div
-        class="d-flex flex-wrap
-               justify-content-between
-               align-items-center gap-3 mb-4"
-    >
-        <div>
-            <h2 class="fw-bold mb-1">
-                Edit What We Offer
-            </h2>
-
-            <p class="text-muted mb-0">
-                Update the selected travel solution.
-            </p>
-        </div>
-
-        <a
-            href="{{ route(
-                'admin.what-we-offers.index'
-            ) }}"
-            class="btn btn-outline-secondary"
-        >
-            <i
-                class="fa-solid
-                       fa-arrow-left me-2"
-            ></i>
-
-            Back
-        </a>
-    </div>
-
-    @if ($errors->any())
-        <div
-            class="alert alert-danger
-                   border-0 shadow-sm"
-        >
-            <div class="fw-semibold mb-2">
-                Please correct the following errors:
+    <div class="admin-form-card">
+        <div class="admin-form-header">
+            <div class="admin-form-header-content">
+                <h3>Edit What We Offer</h3>
+                <p>Update the selected travel solution.</p>
             </div>
-
-            <ul class="mb-0">
-                @foreach (
-                    $errors->all() as $error
-                )
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            <a href="{{ route('admin.what-we-offers.index') }}" class="btn btn-light">Back</a>
         </div>
-    @endif
 
-    <form
-        action="{{ route(
-            'admin.what-we-offers.update',
-            $whatWeOffer
-        ) }}"
-        method="POST"
-        enctype="multipart/form-data"
-    >
-        @csrf
-        @method('PUT')
+        <div class="admin-form-body">
+            <form action="{{ route('admin.what-we-offers.update', $whatWeOffer) }}" method="POST" enctype="multipart/form-data" class="admin-form">
+                @csrf
+                @method('PUT')
 
-        @include(
-            'pages.what-we-offers.form'
-        )
-    </form>
-</div>
+                @include('pages.what-we-offers.form')
+
+                <div class="admin-form-actions">
+                    <a href="{{ route('admin.what-we-offers.index') }}" class="btn btn-light">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Update What We Offer</button>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection

@@ -1,362 +1,160 @@
-@php
-    $isEdit = isset($whatWeOffer);
-@endphp
+<div class="ts-form-grid">
+    <div class="ts-form-main">
 
-<div class="row g-4">
-    <div class="col-lg-8">
+        {{-- Title --}}
+        <div class="ts-form-group">
+            <label for="title" class="ts-label">
+                Title
+                <span class="ts-required">*</span>
+            </label>
 
-        <div class="card border-0 shadow-sm">
-            <div
-                class="card-header bg-white
-                       border-bottom py-3 px-4"
-            >
-                <h5 class="fw-semibold mb-0">
-                    What We Offer Information
-                </h5>
+            <input type="text" name="title" id="title"
+                class="ts-input @error('title') ts-input-error @enderror"
+                value="{{ old('title', $whatWeOffer->title ?? '') }}"
+                placeholder="Example: Domestic Tours">
+
+            @error('title')
+                <span class="ts-error-message">
+                    {{ $message }}
+                </span>
+            @enderror
+        </div>
+
+        {{-- Subtitle --}}
+        <div class="ts-form-group">
+            <label for="subtitle" class="ts-label">
+                Subtitle
+            </label>
+
+            <input type="text" name="subtitle" id="subtitle"
+                class="ts-input @error('subtitle') ts-input-error @enderror"
+                value="{{ old('subtitle', $whatWeOffer->subtitle ?? '') }}"
+                placeholder="Example: Explore Service">
+
+            @error('subtitle')
+                <span class="ts-error-message">
+                    {{ $message }}
+                </span>
+            @enderror
+        </div>
+
+        {{-- Description --}}
+        <div class="ts-form-group">
+            <label for="description" class="ts-label">
+                Description
+            </label>
+
+            <textarea name="description" id="description" rows="7"
+                class="ts-textarea @error('description') ts-input-error @enderror" placeholder="Enter the What We Offer description">{{ old('description', $whatWeOffer->description ?? '') }}</textarea>
+
+            <div class="ts-field-note">
+                Maximum 3000 characters.
             </div>
 
-            <div class="card-body p-4">
-
-                {{-- Title --}}
-                <div class="mb-4">
-                    <label
-                        for="title"
-                        class="form-label fw-semibold"
-                    >
-                        Title
-                        <span class="text-danger">*</span>
-                    </label>
-
-                    <input
-                        type="text"
-                        id="title"
-                        name="title"
-                        value="{{ old(
-                            'title',
-                            $whatWeOffer->title ?? ''
-                        ) }}"
-                        class="form-control
-                            @error('title')
-                                is-invalid
-                            @enderror"
-                        placeholder="Domestic Tours"
-                    >
-
-                    @error('title')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
-                {{-- Subtitle --}}
-                <div class="mb-4">
-                    <label
-                        for="subtitle"
-                        class="form-label fw-semibold"
-                    >
-                        Subtitle
-                    </label>
-
-                    <input
-                        type="text"
-                        id="subtitle"
-                        name="subtitle"
-                        value="{{ old(
-                            'subtitle',
-                            $whatWeOffer->subtitle ?? ''
-                        ) }}"
-                        class="form-control
-                            @error('subtitle')
-                                is-invalid
-                            @enderror"
-                        placeholder="Explore Service"
-                    >
-
-                    @error('subtitle')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
-                {{-- Description --}}
-                <div>
-                    <label
-                        for="description"
-                        class="form-label fw-semibold"
-                    >
-                        Description
-                    </label>
-
-                    <textarea
-                        id="description"
-                        name="description"
-                        rows="7"
-                        class="form-control
-                            @error('description')
-                                is-invalid
-                            @enderror"
-                        placeholder="Enter the What We Offer description"
-                    >{{ old(
-                        'description',
-                        $whatWeOffer->description ?? ''
-                    ) }}</textarea>
-
-                    <div class="form-text">
-                        Maximum 3000 characters.
-                    </div>
-
-                    @error('description')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
-            </div>
+            @error('description')
+                <span class="ts-error-message">
+                    {{ $message }}
+                </span>
+            @enderror
         </div>
 
     </div>
 
-    <div class="col-lg-4">
+    <div class="ts-form-sidebar">
 
         {{-- Image --}}
-        <div class="card border-0 shadow-sm mb-4">
-            <div
-                class="card-header bg-white
-                       border-bottom py-3 px-4"
-            >
-                <h5 class="fw-semibold mb-0">
-                    Offer Image
-                </h5>
+        <div class="ts-side-card">
+            <div class="ts-side-card-header">
+                <h3>Offer Image</h3>
+                <p>Upload the what we offer image.</p>
             </div>
 
-            <div class="card-body p-4">
-                <label
-                    for="image"
-                    class="form-label fw-semibold"
-                >
-                    Image
+            <div class="ts-image-preview-box">
+                <img src="{{ isset($whatWeOffer) && $whatWeOffer->image ? asset('storage/' . $whatWeOffer->image) : '' }}"
+                    alt="Image preview" id="imagePreview"
+                    class="ts-image-preview
+                        {{ isset($whatWeOffer) && $whatWeOffer->image ? '' : 'ts-hidden' }}">
 
-                    @unless ($isEdit)
-                        <span class="text-danger">*</span>
-                    @endunless
-                </label>
-
-                <input
-                    type="file"
-                    id="image"
-                    name="image"
-                    accept=".jpg,.jpeg,.png,.webp"
-                    class="form-control
-                        @error('image')
-                            is-invalid
-                        @enderror"
-                >
-
-                <div class="form-text">
-                    JPG, JPEG, PNG or WEBP.
-                    Maximum size 5 MB.
+                <div id="imagePlaceholder"
+                    class="ts-image-placeholder
+                        {{ isset($whatWeOffer) && $whatWeOffer->image ? 'ts-hidden' : '' }}">
+                    <span class="ts-image-placeholder-icon">✦</span>
+                    <strong>No image selected</strong>
+                    <small>JPG, PNG or WEBP</small>
                 </div>
-
-                @error('image')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-
-                @if (
-                    $isEdit &&
-                    filled($whatWeOffer->image)
-                )
-                    <div
-                        id="currentImage"
-                        class="mt-3"
-                    >
-                        <p class="small text-muted mb-2">
-                            Current image
-                        </p>
-
-                        <img
-                            src="{{ asset(
-                                'storage/' .
-                                $whatWeOffer->image
-                            ) }}"
-                            alt="{{ $whatWeOffer->title }}"
-                            class="offer-preview-image"
-                        >
-                    </div>
-                @endif
-
-                <div
-                    id="imagePreview"
-                    class="mt-3"
-                ></div>
             </div>
+
+            <label for="image" class="ts-upload-label">
+                Choose Image
+            </label>
+
+            <input type="file" name="image" id="image" class="ts-file-input" accept=".jpg,.jpeg,.png,.webp">
+
+            @error('image')
+                <span class="ts-error-message">
+                    {{ $message }}
+                </span>
+            @enderror
+
         </div>
 
         {{-- Status --}}
-        <div class="card border-0 shadow-sm">
-            <div
-                class="card-header bg-white
-                       border-bottom py-3 px-4"
-            >
-                <h5 class="fw-semibold mb-0">
-                    Publish Settings
-                </h5>
-            </div>
+        <div class="admin-form-group">
 
-            <div class="card-body p-4">
-                <div class="mb-4">
-                    <label
-                        for="status"
-                        class="form-label fw-semibold"
-                    >
-                        Status
-                        <span class="text-danger">*</span>
-                    </label>
+            <label for="status">
+                Status
+                <span class="required">*</span>
+            </label>
 
-                    <select
-                        id="status"
-                        name="status"
-                        class="form-select
-                            @error('status')
-                                is-invalid
-                            @enderror"
-                    >
-                        <option
-                            value="active"
-                            @selected(
-                                old(
-                                    'status',
-                                    $whatWeOffer->status
-                                        ?? 'active'
-                                ) === 'active'
-                            )
-                        >
-                            Active
-                        </option>
+            <select id="status" name="status"
+                class="admin-form-control
+                                @error('status') is-invalid @enderror"
+                required>
+                <option value="active" @selected(old('status', $whatWeOffer->status ?? 'active') == 'active')>
+                    Active
+                </option>
 
-                        <option
-                            value="inactive"
-                            @selected(
-                                old(
-                                    'status',
-                                    $whatWeOffer->status
-                                        ?? 'active'
-                                ) === 'inactive'
-                            )
-                        >
-                            Inactive
-                        </option>
-                    </select>
+                <option value="inactive" @selected(old('status', $whatWeOffer->status ?? 'active') == 'inactive')>
+                    Inactive
+                </option>
+            </select>
 
-                    @error('status')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
+            @error('status')
+                <span class="admin-form-error">
+                    {{ $message }}
+                </span>
+            @enderror
 
-                <button
-                    type="submit"
-                    class="btn btn-primary w-100"
-                >
-                    <i
-                        class="fa-solid
-                               fa-floppy-disk me-2"
-                    ></i>
-
-                    {{ $isEdit
-                        ? 'Update What We Offer'
-                        : 'Save What We Offer' }}
-                </button>
-
-                <a
-                    href="{{ route(
-                        'admin.what-we-offers.index'
-                    ) }}"
-                    class="btn btn-light w-100 mt-2"
-                >
-                    Cancel
-                </a>
-            </div>
         </div>
-
     </div>
 </div>
 
-<style>
-    .offer-preview-image {
-        width: 100%;
-        height: 220px;
-        object-fit: cover;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-    }
-</style>
 
-<script>
-    document.addEventListener(
-        'DOMContentLoaded',
-        function () {
-            const imageInput =
-                document.getElementById('image');
 
-            const imagePreview =
-                document.getElementById(
-                    'imagePreview'
-                );
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageInput = document.getElementById('image');
+            const imagePreview = document.getElementById('imagePreview');
+            const imagePlaceholder = document.getElementById('imagePlaceholder');
 
-            const currentImage =
-                document.getElementById(
-                    'currentImage'
-                );
+            imageInput.addEventListener('change', function() {
+                const file = this.files[0];
 
-            if (!imageInput || !imagePreview) {
-                return;
-            }
-
-            imageInput.addEventListener(
-                'change',
-                function () {
-                    imagePreview.innerHTML = '';
-
-                    const file = this.files[0];
-
-                    if (
-                        !file ||
-                        !file.type.startsWith('image/')
-                    ) {
-                        return;
-                    }
-
-                    if (currentImage) {
-                        currentImage.style.display =
-                            'none';
-                    }
-
-                    const reader =
-                        new FileReader();
-
-                    reader.onload = function (event) {
-                        imagePreview.innerHTML = `
-                            <p class="small text-muted mb-2">
-                                Selected image
-                            </p>
-
-                            <img
-                                src="${event.target.result}"
-                                alt="What We Offer preview"
-                                class="offer-preview-image"
-                            >
-                        `;
-                    };
-
-                    reader.readAsDataURL(file);
+                if (!file) {
+                    return;
                 }
-            );
-        }
-    );
-</script>
+
+                const reader = new FileReader();
+
+                reader.onload = function(event) {
+                    imagePreview.src = event.target.result;
+                    imagePreview.classList.remove('ts-hidden');
+                    imagePlaceholder.classList.add('ts-hidden');
+                };
+
+                reader.readAsDataURL(file);
+            });
+        });
+    </script>
+@endpush

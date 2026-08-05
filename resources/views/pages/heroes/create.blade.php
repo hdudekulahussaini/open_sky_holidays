@@ -1,230 +1,29 @@
 @extends('admin.layouts.app')
 
 @section('title', 'Create Hero')
+@section('page-title', 'Hero Sliders')
 
 @section('content')
-    <div class="container-fluid">
-        <div
-            class="d-flex justify-content-between
-                   align-items-center mb-4"
-        >
-            <h2>Create Hero</h2>
-
-            <a
-                href="{{ route('admin.heroes.index') }}"
-                class="btn btn-secondary"
-            >
-                Back
-            </a>
+    <div class="admin-form-card">
+        <div class="admin-form-header">
+            <div class="admin-form-header-content">
+                <h3>Create Hero</h3>
+                <p>Add a new hero slider banner.</p>
+            </div>
+            <a href="{{ route('admin.heroes.index') }}" class="btn btn-light">Back</a>
         </div>
 
-        <div class="card">
-            <div class="card-body">
-                <form
-                    action="{{ route('admin.heroes.store') }}"
-                    method="POST"
-                    enctype="multipart/form-data"
-                >
-                    @csrf
+        <div class="admin-form-body">
+            <form action="{{ route('admin.heroes.store') }}" method="POST" enctype="multipart/form-data" class="admin-form">
+                @csrf
 
-                    <div class="mb-3">
-                        <label
-                            for="title"
-                            class="form-label"
-                        >
-                            Title
-                        </label>
+                @include('pages.heroes.form')
 
-                        <input
-                            type="text"
-                            id="title"
-                            name="title"
-                            class="form-control
-                                @error('title') is-invalid @enderror"
-                            value="{{ old('title') }}"
-                        >
-
-                        @error('title')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label
-                            for="description"
-                            class="form-label"
-                        >
-                            Description
-                        </label>
-
-                        <textarea
-                            id="description"
-                            name="description"
-                            rows="5"
-                            class="form-control
-                                @error('description') is-invalid @enderror"
-                        >{{ old('description') }}</textarea>
-
-                        @error('description')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label
-                            for="button_text"
-                            class="form-label"
-                        >
-                            Button Text
-                        </label>
-
-                        <input
-                            type="text"
-                            id="button_text"
-                            name="button_text"
-                            class="form-control
-                                @error('button_text') is-invalid @enderror"
-                            placeholder="e.g. Explore More"
-                            value="{{ old('button_text', 'Explore More') }}"
-                        >
-
-                        @error('button_text')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label
-                            for="button_link"
-                            class="form-label"
-                        >
-                            Button Link / URL
-                        </label>
-
-                        <input
-                            type="text"
-                            id="button_link"
-                            name="button_link"
-                            class="form-control
-                                @error('button_link') is-invalid @enderror"
-                            placeholder="e.g. /tours or https://example.com"
-                            value="{{ old('button_link', '/tours') }}"
-                        >
-
-                        <small class="form-text text-muted mt-1 d-block">
-                            Common site page links: 
-                            <code>/tours</code>, 
-                            <code>/about</code>, 
-                            <code>/services</code>, 
-                            <code>/blogs</code>, 
-                            <code>/contact</code>, 
-                            <code>/adventures</code>, 
-                            or full external URL (e.g. <code>https://example.com</code>).
-                        </small>
-
-                        @error('button_link')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label
-                            for="image"
-                            class="form-label"
-                        >
-                            Hero Image
-                        </label>
-
-                        <input
-                            type="file"
-                            id="image"
-                            name="image"
-                            accept=".jpg,.jpeg,.png,.webp"
-                            class="form-control
-                                @error('image') is-invalid @enderror"
-                        >
-
-                        @error('image')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label
-                            for="sort_order"
-                            class="form-label"
-                        >
-                            Slider Order
-                        </label>
-
-                        <input
-                            type="number"
-                            id="sort_order"
-                            name="sort_order"
-                            min="0"
-                            class="form-control
-                                @error('sort_order') is-invalid @enderror"
-                            value="{{ old('sort_order', 0) }}"
-                        >
-
-                        @error('sort_order')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-
-                    <input
-                        type="hidden"
-                        name="status"
-                        value="0"
-                    >
-
-                    <div class="form-check mb-3">
-                        <input
-                            type="checkbox"
-                            id="status"
-                            name="status"
-                            value="1"
-                            class="form-check-input"
-                            @checked(old('status', 1))
-                        >
-
-                        <label
-                            for="status"
-                            class="form-check-label"
-                        >
-                            Active
-                        </label>
-                    </div>
-
-                    <div class="d-flex gap-2">
-                        <button
-                            type="submit"
-                            class="btn btn-primary"
-                        >
-                            Save Hero
-                        </button>
-
-                        <a
-                            href="{{ route('admin.heroes.index') }}"
-                            class="btn btn-light"
-                        >
-                            Cancel
-                        </a>
-                    </div>
-                </form>
-            </div>
+                <div class="admin-form-actions">
+                    <a href="{{ route('admin.heroes.index') }}" class="btn btn-light">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Save Hero</button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection
