@@ -4,21 +4,34 @@
 @section('page-title', 'What We Offer')
 
 @section('content')
-    <div class="admin-card">
-        <div class="admin-card-header">
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
             <div>
-                <h3>What We Offer</h3>
+                <span class="ts-page-eyebrow">
+                    Website Content
+                </span>
+                <h1>What We Offer</h1>
                 <p>Manage travel solutions, descriptions, images, and status.</p>
             </div>
 
-            <a href="{{ route('admin.what-we-offers.create') }}" class="btn btn-primary">
-                + Add Offer
+            <a href="{{ route('admin.what-we-offers.create') }}" class="ts-primary-btn">
+                <span>+</span> Add Offer
             </a>
         </div>
 
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>What We Offer</h2>
+                    <p>Total records: <strong>{{ $whatWeOffers->count() }}</strong></p>
+                </div>
+            </div>
+
         @if ($whatWeOffers->count() > 0)
-            <div class="table-responsive">
-                <table class="admin-table">
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -45,7 +58,8 @@
                                 <td>{{ $offer->subtitle ?? '-' }}</td>
                                 <td>{{ \Illuminate\Support\Str::limit($offer->description, 90) }}</td>
                                 <td>
-                                    <span class="status-badge {{ $offer->status ? 'status-active' : 'status-inactive' }}">
+                                    <span class="ts-status-badge {{ $offer->status ? 'ts-active' : 'ts-inactive' }}">
+                                        <span></span>
                                         {{ $offer->status ? 'Active' : 'Inactive' }}
                                     </span>
                                 </td>
@@ -70,18 +84,21 @@
             </div>
 
             @if ($whatWeOffers->hasPages())
-                <div class="pagination-wrapper">
+                <div class="ts-pagination">
                     {{ $whatWeOffers->links() }}
                 </div>
             @endif
+            </div> {{-- end list card for when there are records --}}
         @else
-            <div class="empty-table">
-                <strong>No items found.</strong>
+            <div class="ts-empty-state">
+                <div class="ts-empty-icon">✦</div>
+                <h3>No items found.</h3>
                 <p>Add your first What We Offer item.</p>
-                <a href="{{ route('admin.what-we-offers.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.what-we-offers.create') }}" class="ts-primary-btn">
                     Create Item
                 </a>
             </div>
         @endif
+        </div>
     </div>
 @endsection

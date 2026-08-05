@@ -5,59 +5,48 @@
 
 @section('content')
 
-    <div class="admin-card">
-
-        <div class="admin-card-header">
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
             <div>
-                <h3>Tour Booking Inquiries</h3>
-                <p>
-                    View and manage tour-specific booking inquiries submitted through the website.
-                </p>
-            </div>
-            <div class="enquiry-count">
-                Total: {{ $inquiries->total() }}
+                <span class="ts-page-eyebrow">
+                    Bookings & Inquiries
+                </span>
+                <h1>Tour Booking Inquiries</h1>
+                <p>View and manage tour-specific booking inquiries submitted through the website.</p>
             </div>
         </div>
 
-        <form
-            method="GET"
-            action="{{ route('admin.tour-inquiries.index') }}"
-            class="table-filters"
-        >
-            <div class="filter-input">
-                <input
-                    type="text"
-                    name="search"
-                    value="{{ request('search') }}"
-                    placeholder="Search name, email, phone or tour"
-                >
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header" style="flex-wrap: wrap; gap: 1rem; align-items: center;">
+                <div>
+                    <h2>Inquiries List</h2>
+                    <p>Total records: <strong>{{ $inquiries->total() }}</strong></p>
+                </div>
+
+                <form method="GET" action="{{ route('admin.tour-inquiries.index') }}" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search name, email, phone or tour" style="padding: 8px 12px; border: 1px solid var(--ts-border); border-radius: 6px; outline: none; min-width: 250px;">
+                    
+                    <select name="status" style="padding: 8px 12px; border: 1px solid var(--ts-border); border-radius: 6px; outline: none; background: #fff;">
+                        <option value="">All Statuses</option>
+                        <option value="new" @selected(request('status') === 'new')>New</option>
+                        <option value="contacted" @selected(request('status') === 'contacted')>Contacted</option>
+                        <option value="closed" @selected(request('status') === 'closed')>Closed</option>
+                    </select>
+
+                    <button type="submit" class="ts-primary-btn" style="padding: 8px 16px;">
+                        Search
+                    </button>
+
+                    <a href="{{ route('admin.tour-inquiries.index') }}" class="ts-action-btn" style="padding: 8px 16px; border: 1px solid var(--ts-border); background: #fff; text-decoration: none; color: inherit;">
+                        Reset
+                    </a>
+                </form>
             </div>
 
-            <div class="filter-select">
-                <select name="status">
-                    <option value="">All Statuses</option>
-                    <option value="new" @selected(request('status') === 'new')>New</option>
-                    <option value="contacted" @selected(request('status') === 'contacted')>Contacted</option>
-                    <option value="closed" @selected(request('status') === 'closed')>Closed</option>
-                </select>
-            </div>
-
-            <button type="submit" class="btn btn-primary">
-                Search
-            </button>
-
-            <a
-                href="{{ route('admin.tour-inquiries.index') }}"
-                class="btn btn-light"
-            >
-                Reset
-            </a>
-        </form>
-
-        <div class="table-responsive">
-
-            <table class="admin-table">
-
+        <div class="ts-table-wrapper">
+            <table class="ts-table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -91,15 +80,16 @@
 
                             <td>
                                 <strong>{{ $inquiry->name }}</strong>
+                                <br>
                                 <small>
-                                    <a href="mailto:{{ $inquiry->email }}">
+                                    <a href="mailto:{{ $inquiry->email }}" style="color: var(--ts-text-muted); text-decoration: none;">
                                         {{ $inquiry->email }}
                                     </a>
                                 </small>
                             </td>
 
                             <td>
-                                <a href="tel:{{ $inquiry->phone }}">
+                                <a href="tel:{{ $inquiry->phone }}" style="color: var(--ts-text-main); text-decoration: none;">
                                     {{ $inquiry->phone }}
                                 </a>
                             </td>
@@ -117,7 +107,8 @@
                             </td>
 
                             <td>
-                                <span class="status-badge status-{{ $inquiry->status }}">
+                                <span class="ts-status-badge {{ $inquiry->status === 'new' ? 'ts-active' : ($inquiry->status === 'contacted' ? 'ts-primary' : 'ts-inactive') }}">
+                                    <span></span>
                                     {{ ucfirst($inquiry->status) }}
                                 </span>
                             </td>
@@ -152,11 +143,12 @@
                     @empty
 
                         <tr>
-                            <td colspan="9" class="empty-table">
-                                <strong>No tour inquiries found.</strong>
-                                <p>
-                                    Tour booking submissions from the website will appear here.
-                                </p>
+                            <td colspan="9">
+                                <div class="ts-empty-state">
+                                    <div class="ts-empty-icon">✦</div>
+                                    <h3>No tour inquiries found.</h3>
+                                    <p>Tour booking submissions from the website will appear here.</p>
+                                </div>
                             </td>
                         </tr>
 
@@ -169,11 +161,11 @@
         </div>
 
         @if ($inquiries->hasPages())
-            <div class="pagination-wrapper">
+            <div class="ts-pagination">
                 {{ $inquiries->links() }}
             </div>
         @endif
-
+        </div>
     </div>
 
 @endsection

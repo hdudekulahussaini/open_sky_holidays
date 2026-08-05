@@ -59,7 +59,8 @@
                                 <td>{{ \Illuminate\Support\Str::limit($section->description, 100) }}</td>
                                 <td>{{ $section->sort_order }}</td>
                                 <td>
-                                    <span class="status-badge {{ $section->status ? 'status-active' : 'status-inactive' }}">
+                                    <span class="ts-status-badge {{ $section->status ? 'ts-active' : 'ts-inactive' }}">
+                                        <span></span>
                                         {{ $section->status ? 'Active' : 'Inactive' }}
                                     </span>
                                 </td>

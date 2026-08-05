@@ -5,23 +5,33 @@
 
 @section('content')
 
-<div class="services-page">
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
+            <div>
+                <span class="ts-page-eyebrow">
+                    Website Content
+                </span>
+                <h1>Services</h1>
+                <p>Manage Visa, Passport and Flight Ticket services.</p>
+            </div>
 
-    <div class="page-header">
-        <div>
-            <h2>Services</h2>
-            <p>Manage Visa, Passport and Flight Ticket services.</p>
+            <a href="{{ route('admin.services.create') }}" class="ts-primary-btn">
+                <span>+</span> Add Service
+            </a>
         </div>
 
-        <a href="{{ route('admin.services.create') }}" class="add-service-btn">
-            + Add Service
-        </a>
-    </div>
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>Services List</h2>
+                    <p>Total records: <strong>{{ $services->total() }}</strong></p>
+                </div>
+            </div>
 
-
-    <div class="table-card">
-        <div class="table-responsive">
-            <table class="services-table">
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -63,9 +73,13 @@
                             </td>
                             <td>
                                 @if ($service->status)
-                                    <span class="status-badge active">Active</span>
+                                    <span class="ts-status-badge ts-active">
+                                        <span></span> Active
+                                    </span>
                                 @else
-                                    <span class="status-badge inactive">Inactive</span>
+                                    <span class="ts-status-badge ts-inactive">
+                                        <span></span> Inactive
+                                    </span>
                                 @endif
                             </td>
                             <td>
@@ -79,11 +93,7 @@
                                     <a href="{{ route('admin.services.edit', $service) }}" class="ts-action-btn ts-edit-btn">
                                         Edit
                                     </a>
-                                    <form
-                                        action="{{ route('admin.services.destroy', $service) }}"
-                                        method="POST"
-                                        onsubmit="return confirm('Are you sure you want to delete this service?');"
-                                    >
+                                    <form action="{{ route('admin.services.destroy', $service) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="ts-action-btn ts-delete-btn">
@@ -95,8 +105,15 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="empty-message">
-                                No services found.
+                            <td colspan="8">
+                                <div class="ts-empty-state">
+                                    <div class="ts-empty-icon">✦</div>
+                                    <h3>No services found.</h3>
+                                    <p>Create your first service.</p>
+                                    <a href="{{ route('admin.services.create') }}" class="ts-primary-btn">
+                                        Add Service
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     @endforelse
@@ -104,13 +121,12 @@
             </table>
         </div>
 
-        @if ($services->hasPages())
-            <div class="pagination-wrapper">
-                {{ $services->links() }}
-            </div>
-        @endif
+            @if ($services->hasPages())
+                <div class="ts-pagination">
+                    {{ $services->links() }}
+                </div>
+            @endif
+        </div>
     </div>
-
-</div>
 
 @endsection

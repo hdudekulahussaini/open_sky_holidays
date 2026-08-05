@@ -9,6 +9,7 @@
     >
 
     <title>Admin Login | Open Sky Holidays</title>
+    <link rel="icon" type="image/png" href="{{ asset('assets/admin/images/logo.png') }}">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">

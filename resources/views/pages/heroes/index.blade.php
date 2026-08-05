@@ -3,24 +3,33 @@
 @section('title', 'Hero Slides')
 
 @section('content')
-<div class="container-fluid">
-    <div
-        class="d-flex justify-content-between
-                   align-items-center mb-4">
-        <h2>Hero Slides</h2>
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
+            <div>
+                <span class="ts-page-eyebrow">
+                    Website Content
+                </span>
+                <h1>Hero Slides</h1>
+                <p>Manage hero slides displayed on the website.</p>
+            </div>
 
-        <a
-            href="{{ route('admin.heroes.create') }}"
-            class="btn btn-primary">
-            Add Hero
-        </a>
-    </div>
+            <a href="{{ route('admin.heroes.create') }}" class="ts-primary-btn">
+                <span>+</span> Add Hero
+            </a>
+        </div>
 
-
-    <div class="card">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered align-middle">
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>Hero Slides</h2>
+                    <p>Total records: <strong>{{ $heroes->total() }}</strong></p>
+                </div>
+            </div>
+        @if ($heroes->count() > 0)
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                     <thead>
                         <tr>
                             <thead>
@@ -70,9 +79,13 @@
 
                             <td>
                                 @if ($hero->status)
-                                <span class="badge bg-success">Active</span>
+                                <span class="ts-status-badge ts-active">
+                                    <span></span> Active
+                                </span>
                                 @else
-                                <span class="badge bg-danger">Inactive</span>
+                                <span class="ts-status-badge ts-inactive">
+                                    <span></span> Inactive
+                                </span>
                                 @endif
                             </td>
 
@@ -103,8 +116,15 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="8" class="text-center">
-                                No hero slides found.
+                            <td colspan="8">
+                                <div class="ts-empty-state">
+                                    <div class="ts-empty-icon">✦</div>
+                                    <h3>No hero slides found.</h3>
+                                    <p>Create your first hero slide.</p>
+                                    <a href="{{ route('admin.heroes.create') }}" class="ts-primary-btn">
+                                        Add Hero
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                         @endforelse
@@ -112,8 +132,21 @@
                 </table>
             </div>
 
-            {{ $heroes->links() }}
+            @if ($heroes->hasPages())
+                <div class="ts-pagination">
+                    {{ $heroes->links() }}
+                </div>
+            @endif
+        @else
+            <div class="ts-empty-state">
+                <div class="ts-empty-icon">✦</div>
+                <h3>No hero slides found.</h3>
+                <p>Create your first hero slide.</p>
+                <a href="{{ route('admin.heroes.create') }}" class="ts-primary-btn">
+                    Add Hero
+                </a>
+            </div>
+        @endif
         </div>
     </div>
-</div>
 @endsection

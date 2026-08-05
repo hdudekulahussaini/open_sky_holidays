@@ -3,33 +3,35 @@
 @section('title', 'Page Banners')
 
 @section('content')
-<div class="container-fluid">
-    <div
-        class="d-flex justify-content-between
-                   align-items-center mb-4">
-        <div>
-            <h2 class="mb-1">Page Banners</h2>
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
+            <div>
+                <span class="ts-page-eyebrow">
+                    Website Content
+                </span>
+                <h1>Page Banners</h1>
+                <p>Manage page banner sections.</p>
+            </div>
 
-            <p class="text-muted mb-0">
-                Manage page banner sections.
-            </p>
+            @if ($hasAvailablePages)
+            <a href="{{ route('admin.page-banners.create') }}" class="ts-primary-btn">
+                <span>+</span> Add Page Banner
+            </a>
+            @endif
         </div>
 
-        @if ($hasAvailablePages)
-        <a
-            href="{{ route('admin.page-banners.create') }}"
-            class="btn btn-primary">
-            Add Page Banner
-        </a>
-        @endif
-    </div>
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>Page Banners</h2>
+                    <p>Total records: <strong>{{ $pageBanners->total() }}</strong></p>
+                </div>
+            </div>
 
-    <div class="card">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table
-                    class="table table-bordered
-                               table-hover align-middle">
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -78,9 +80,13 @@
 
                             <td>
                                 @if ($banner->status)
-                                <span class="badge bg-success">Active</span>
+                                <span class="ts-status-badge ts-active">
+                                    <span></span> Active
+                                </span>
                                 @else
-                                <span class="badge bg-danger">Inactive</span>
+                                <span class="ts-status-badge ts-inactive">
+                                    <span></span> Inactive
+                                </span>
                                 @endif
                             </td>
 
@@ -110,8 +116,12 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="9" class="text-center">
-                                No page banners found.
+                            <td colspan="9">
+                                <div class="ts-empty-state">
+                                    <div class="ts-empty-icon">✦</div>
+                                    <h3>No page banners found.</h3>
+                                    <p>Create your first page banner.</p>
+                                </div>
                             </td>
                         </tr>
                         @endforelse
@@ -119,10 +129,11 @@
                 </table>
             </div>
 
-            <div class="mt-3">
-                {{ $pageBanners->links() }}
-            </div>
+            @if ($pageBanners->hasPages())
+                <div class="ts-pagination">
+                    {{ $pageBanners->links() }}
+                </div>
+            @endif
         </div>
     </div>
-</div>
 @endsection
