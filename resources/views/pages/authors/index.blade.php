@@ -79,7 +79,7 @@
                                         <a href="{{ route('admin.authors.edit', $author) }}" class="ts-action-btn ts-edit-btn">
                                             Edit
                                         </a>
-                                        <form action="{{ route('admin.authors.destroy', $author) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this author?')">
+                                        <form action="{{ route('admin.authors.destroy', $author) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this author?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="ts-action-btn ts-delete-btn">

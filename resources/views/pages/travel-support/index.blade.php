@@ -39,7 +39,7 @@
                             <th>Image</th>
                             <th>Features</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <th class="ts-action-column">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,8 +62,8 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if (is_array($support->features))
-                                        <div class="d-flex flex-wrap gap-1" style="max-width: 250px;">
+                                    @if ($support->features)
+                                        <div style="display: flex; flex-direction: column; gap: 2px;">
                                             @foreach ($support->features as $feature)
                                                 <span style="background-color: #f3f4f6; color: #4b5563; font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; border: 1px solid #e5e7eb; display: inline-block; white-space: nowrap; margin-bottom: 2px;">{{ $feature }}</span>
                                             @endforeach
@@ -83,7 +83,7 @@
                                         <a href="{{ route('admin.travel-support.edit', $support) }}" class="ts-action-btn ts-edit-btn">
                                             Edit
                                         </a>
-                                        <form action="{{ route('admin.travel-support.destroy', $support) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this support section?')">
+                                        <form action="{{ route('admin.travel-support.destroy', $support) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this support section?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="ts-action-btn ts-delete-btn">

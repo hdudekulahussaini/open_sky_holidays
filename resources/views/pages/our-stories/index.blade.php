@@ -39,7 +39,7 @@
                             <th>Heading</th>
                             <th>Description</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <th class="ts-action-column">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,7 +68,7 @@
                                         <a href="{{ route('admin.our-stories.edit', $story) }}" class="ts-action-btn ts-edit-btn">
                                             Edit
                                         </a>
-                                        <form action="{{ route('admin.our-stories.destroy', $story) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this story?')">
+                                        <form action="{{ route('admin.our-stories.destroy', $story) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this story?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="ts-action-btn ts-delete-btn">

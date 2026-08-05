@@ -69,19 +69,20 @@
 
                             <td>
                                 @if ($category->status === 'active')
-                                <span class="ts-status-badge ts-active">
-                                    <span></span> Active
-                                </span>
+                                <span class="badge bg-success">Active</span>
                                 @else
-                                <span class="ts-status-badge ts-inactive">
-                                    <span></span> Inactive
-                                </span>
+                                <span class="badge bg-danger">Inactive</span>
                                 @endif
                             </td>
 
                             <td>
                                 <div class="ts-actions">
-                                    <a href="{{ route('admin.adventure-categories.edit', $category) }}" class="ts-action-btn ts-edit-btn">
+                                    <a
+                                        href="{{ route(
+                                                'admin.adventure-categories.edit',
+                                                $category
+                                            ) }}"
+                                        class="ts-action-btn ts-edit-btn">
                                         Edit
                                     </a>
 
@@ -89,7 +90,9 @@
                                         @csrf
                                         @method('DELETE')
 
-                                        <button type="submit" class="ts-action-btn ts-delete-btn">
+                                        <button
+                                            type="submit"
+                                            class="ts-action-btn ts-delete-btn">
                                             Delete
                                         </button>
                                     </form>

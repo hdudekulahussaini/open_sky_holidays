@@ -198,7 +198,10 @@
                             <td>
                                 <div class="ts-actions">
                                     <a
-                                        href="{{ route('admin.adventures.edit', $adventure) }}"
+                                        href="{{ route(
+                                                'admin.adventures.edit',
+                                                $adventure
+                                            ) }}"
                                         class="ts-action-btn ts-edit-btn">
                                         Edit
                                     </a>

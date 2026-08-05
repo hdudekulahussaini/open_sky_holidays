@@ -42,7 +42,7 @@
                             <th>Title</th>
                             <th>Description</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <th class="ts-action-column">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,7 +69,7 @@
                                         <a href="{{ route('admin.about-why-choose-us.edit', $section) }}" class="ts-action-btn ts-edit-btn">
                                             Edit
                                         </a>
-                                        <form action="{{ route('admin.about-why-choose-us.destroy', $section) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this record?')">
+                                        <form action="{{ route('admin.about-why-choose-us.destroy', $section) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="ts-action-btn ts-delete-btn">

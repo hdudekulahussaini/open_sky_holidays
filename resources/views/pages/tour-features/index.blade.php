@@ -39,7 +39,7 @@
                             <th>Title</th>
                             <th>Type</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <th class="ts-action-column">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,7 +60,7 @@
                                         <a href="{{ route('admin.tour-features.edit', $feature) }}" class="ts-action-btn ts-edit-btn">
                                             Edit
                                         </a>
-                                        <form action="{{ route('admin.tour-features.destroy', $feature) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this feature?')">
+                                        <form action="{{ route('admin.tour-features.destroy', $feature) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this feature?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="ts-action-btn ts-delete-btn">

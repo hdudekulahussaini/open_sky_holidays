@@ -59,7 +59,7 @@
                         <th>Locations</th>
                         <th>Avatars</th>
                         <th>Status</th>
-                        <th>Actions</th>
+                        <th class="ts-action-column">Actions</th>
                     </tr>
                 </thead>
 
@@ -121,13 +121,12 @@
                                             </span>
                                         @endif
 
+                                        <a href="{{ route('admin.about-sections.avatars.index', $aboutSection) }}"
+                                            class="avatar-add-link">
+                                            Manage Images
+                                        </a>
+
                                     </div>
-
-                                    <a href="{{ route('admin.about-sections.edit', $aboutSection) }}#customer-avatars"
-                                        class="avatar-add-link">
-                                        Manage Images
-                                    </a>
-
                                 </div>
                             </td>
 
@@ -140,9 +139,7 @@
                             </td>
 
                             <td>
-
                                 <div class="ts-actions">
-
                                     <a href="{{ route('admin.about-sections.edit', $aboutSection) }}"
                                         class="ts-action-btn ts-edit-btn">
                                         Edit
@@ -150,21 +147,15 @@
 
                                     <form method="POST"
                                         action="{{ route('admin.about-sections.destroy', $aboutSection) }}"
-                                        class="delete-form"
-                                        onsubmit="return confirm(
-                                            'Are you sure you want to delete this About Section?'
-                                        )">
+                                        onsubmit="return confirm('Are you sure you want to delete this About Section?')">
                                         @csrf
                                         @method('DELETE')
 
                                         <button type="submit" class="ts-action-btn ts-delete-btn">
                                             Delete
                                         </button>
-
                                     </form>
-
                                 </div>
-
                             </td>
 
                         </tr>

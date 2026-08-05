@@ -87,7 +87,7 @@
                             </td>
                             <td>
                                 <div class="ts-actions">
-                                    <a href="{{ route('admin.services.show', $service) }}" class="ts-action-btn ts-edit-btn">
+                                    <a href="{{ route('admin.services.show', $service) }}" class="ts-action-btn">
                                         View
                                     </a>
                                     <a href="{{ route('admin.services.edit', $service) }}" class="ts-action-btn ts-edit-btn">

@@ -38,7 +38,7 @@
                             <th>Value</th>
                             <th>Name / Label</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <th class="ts-action-column">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,7 +58,7 @@
                                         <a href="{{ route('admin.counters.edit', $counter) }}" class="ts-action-btn ts-edit-btn">
                                             Edit
                                         </a>
-                                        <form action="{{ route('admin.counters.destroy', $counter) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this counter?')">
+                                        <form action="{{ route('admin.counters.destroy', $counter) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this counter?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="ts-action-btn ts-delete-btn">
