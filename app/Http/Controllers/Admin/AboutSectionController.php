@@ -15,10 +15,11 @@ class AboutSectionController extends Controller
 {
     public function index(): View
     {
-        $aboutSections = AboutSection::withCount([
-            'globeLocations',
-            'customerAvatars',
-        ])->latest()->paginate(10);
+        $aboutSections = AboutSection::with(['customerAvatars'])
+            ->withCount([
+                'globeLocations',
+                'customerAvatars',
+            ])->latest()->paginate(10);
 
         return view(
             'pages.about-sections.index',

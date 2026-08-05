@@ -122,30 +122,6 @@
                                     </div>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td
-                                    colspan="7"
-                                    class="text-center py-5"
-                                >
-                                    <h5 class="text-muted">
-                                        No offer banners found
-                                    </h5>
-
-                                    <p class="text-muted mb-3">
-                                        Create your first promotional offer.
-                                    </p>
-
-                                    <a
-                                        href="{{ route(
-                                            'admin.offer-banners.create'
-                                        ) }}"
-                                        class="btn btn-primary"
-                                    >
-                                        Add Offer Banner
-                                    </a>
-                                </td>
-                            </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -156,7 +132,6 @@
                     {{ $offerBanners->links() }}
                 </div>
             @endif
-            </div> {{-- end list card for when there are records --}}
         @else
             <div class="ts-empty-state">
                 <div class="ts-empty-icon">✦</div>
