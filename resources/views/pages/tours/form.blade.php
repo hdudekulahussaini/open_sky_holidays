@@ -66,19 +66,17 @@
     }
 @endphp
 
-<div class="combined-tour-container">
-
     {{-- =====================================================
         BASIC TOUR CARD
     ====================================================== --}}
-    <div class="admin-card mb-4">
-        <div class="td-card-header">
-            <div>
-                <h2>Basic Tour Information</h2>
+    <div class="admin-form-card mb-4">
+        <div class="admin-form-header">
+            <div class="admin-form-header-content">
+                <h3>Basic Tour Information</h3>
                 <p>Set core tour card information shown on listings.</p>
             </div>
         </div>
-        <div class="td-card-body">
+        <div class="admin-form-body">
             <div class="admin-form-grid">
                 {{-- Tour Type --}}
                 <div class="admin-form-group">
@@ -180,14 +178,14 @@
     ====================================================== --}}
     <div class="row mb-4">
         <div class="col-lg-8">
-            <div class="admin-card h-100">
-                <div class="td-card-header">
-                    <div>
-                        <h2>Detailed Information</h2>
+            <div class="admin-form-card h-100">
+                <div class="admin-form-header">
+                    <div class="admin-form-header-content">
+                        <h3>Detailed Information</h3>
                         <p>Write detailed introduction and description for this tour.</p>
                     </div>
                 </div>
-                <div class="td-card-body">
+                <div class="admin-form-body">
                     <div class="admin-form-group">
                         <label for="detail_heading">Intro Heading <span class="required">*</span></label>
                         <input type="text" name="detail[heading]" id="detail_heading" class="admin-form-control @error('detail.heading') is-invalid @enderror"
@@ -222,17 +220,17 @@
         </div>
 
         <div class="col-lg-4">
-            <div class="admin-card h-100">
-                <div class="td-card-header td-gallery-card-header">
-                    <div>
-                        <h2>Gallery Images</h2>
+            <div class="admin-form-card h-100">
+                <div class="admin-form-header">
+                    <div class="admin-form-header-content">
+                        <h3>Gallery Images</h3>
                         <p>Add up to 10 gallery images.</p>
                     </div>
-                    <button type="button" id="addGalleryImage" class="td-add-image-btn">
-                        <span class="td-add-icon">+</span> Add
+                    <button type="button" id="addGalleryImage" class="ts-add-feature-btn">
+                        <span>+</span> Add
                     </button>
                 </div>
-                <div class="td-card-body">
+                <div class="admin-form-body">
                     <div class="td-gallery-summary mb-3">
                         <span>Selected images</span>
                         <strong id="totalGalleryCount">{{ count($gallery) }} / 10</strong>
@@ -284,15 +282,17 @@
     {{-- =====================================================
         TOUR FEATURES (Package Inclusions)
     ====================================================== --}}
-    <div class="admin-card mb-4">
-        <div class="td-card-header d-flex justify-content-between align-items-center">
-            <div>
-                <h2>Package Inclusions</h2>
+    <div class="admin-form-card mb-4">
+        <div class="admin-form-header">
+            <div class="admin-form-header-content">
+                <h3>Package Inclusions</h3>
                 <p>Define items included in this tour package.</p>
             </div>
-            <button type="button" class="tf-add-button btn btn-primary btn-sm" id="addPackageInclusion">+ Add Inclusion</button>
+            <button type="button" class="ts-add-feature-btn" id="addPackageInclusion">
+                <span>+</span> Add Inclusion
+            </button>
         </div>
-        <div class="td-card-body">
+        <div class="admin-form-body">
             <div class="tf-repeat-list" id="packageInclusionList">
                 @foreach ($packageInclusions as $index => $item)
                     <div class="tf-repeat-item mb-3 p-3 border rounded bg-light" data-repeat-item>
@@ -326,15 +326,17 @@
     {{-- =====================================================
         TOUR FEATURES (Places Covered)
     ====================================================== --}}
-    <div class="admin-card mb-4">
-        <div class="td-card-header d-flex justify-content-between align-items-center">
-            <div>
-                <h2>Places Covered</h2>
+    <div class="admin-form-card mb-4">
+        <div class="admin-form-header">
+            <div class="admin-form-header-content">
+                <h3>Places Covered</h3>
                 <p>Destinations or sightseeing points included, with optional images.</p>
             </div>
-            <button type="button" class="tf-add-button btn btn-primary btn-sm" id="addPlaceCovered">+ Add Place</button>
+            <button type="button" class="ts-add-feature-btn" id="addPlaceCovered">
+                <span>+</span> Add Place
+            </button>
         </div>
-        <div class="td-card-body">
+        <div class="admin-form-body">
             <div class="tf-repeat-list" id="placeCoveredList">
                 @foreach ($placesCovered as $index => $item)
                     <div class="tf-repeat-item mb-3 p-3 border rounded bg-light" data-repeat-item>
@@ -391,15 +393,17 @@
     {{-- =====================================================
         TOUR FEATURES (Tour Highlights)
     ====================================================== --}}
-    <div class="admin-card mb-4">
-        <div class="td-card-header d-flex justify-content-between align-items-center">
-            <div>
-                <h2>Tour Highlights</h2>
+    <div class="admin-form-card mb-4">
+        <div class="admin-form-header">
+            <div class="admin-form-header-content">
+                <h3>Tour Highlights</h3>
                 <p>Key highlights or selling points of this tour.</p>
             </div>
-            <button type="button" class="tf-add-button btn btn-primary btn-sm" id="addTourHighlight">+ Add Highlight</button>
+            <button type="button" class="ts-add-feature-btn" id="addTourHighlight">
+                <span>+</span> Add Highlight
+            </button>
         </div>
-        <div class="td-card-body">
+        <div class="admin-form-body">
             <div class="tf-repeat-list" id="tourHighlightList">
                 @foreach ($tourHighlights as $index => $item)
                     <div class="tf-repeat-item mb-3 p-3 border rounded bg-light" data-repeat-item>
@@ -433,10 +437,7 @@
 </div>
 
 <div class="admin-form-actions mt-4">
-    <a href="{{ route('admin.tours.index') }}" class="btn btn-light">
-        Cancel
-    </a>
-
+    <a href="{{ route('admin.tours.index') }}" class="btn btn-light">Cancel</a>
     <button type="submit" class="btn btn-primary">
         {{ isset($tour) ? 'Update Tour' : 'Create Tour' }}
     </button>

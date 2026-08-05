@@ -1,75 +1,36 @@
 @extends('admin.layouts.app')
 
 @section('title', 'Edit About Why Choose Us')
+@section('page-title', 'About Why Choose Us')
 
 @section('content')
-<div class="container-fluid">
-
-    <div
-        class="d-flex flex-wrap
-               justify-content-between
-               align-items-center gap-3 mb-4"
-    >
-        <div>
-            <h2 class="fw-bold mb-1">
-                Edit About Why Choose Us
-            </h2>
-
-            <p class="text-muted mb-0">
-                Update title, description, image,
-                features and status.
-            </p>
+    <div class="admin-form-card">
+        <div class="admin-form-header">
+            <div class="admin-form-header-content">
+                <h3>Edit About Why Choose Us</h3>
+                <p>Update title, description, image, features and status.</p>
+            </div>
+            <a href="{{ route('admin.about-why-choose-us.index') }}" class="btn btn-light">Back</a>
         </div>
 
-        <a
-            href="{{ route(
-                'admin.about-why-choose-us.index'
-            ) }}"
-            class="btn btn-outline-secondary"
-        >
-            <i
-                class="fa-solid
-                       fa-arrow-left me-2"
-            ></i>
+        <div class="admin-form-body">
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
 
-            Back
-        </a>
+            <form action="{{ route('admin.about-why-choose-us.update', $aboutWhyChooseUs) }}" method="POST" enctype="multipart/form-data" class="admin-form">
+                @csrf
+                @method('PUT')
+
+                @include('pages.about_why_choose_us.form')
+
+                <div class="admin-form-actions">
+                    <a href="{{ route('admin.about-why-choose-us.index') }}" class="btn btn-light">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Update Section</button>
+                </div>
+            </form>
+        </div>
     </div>
-
-    @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>
-                Please correct the following errors:
-            </strong>
-
-            <ul class="mb-0 mt-2">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <form
-        action="{{ route(
-            'admin.about-why-choose-us.update',
-            $aboutWhyChooseUs
-        ) }}"
-        method="POST"
-        enctype="multipart/form-data"
-    >
-        @csrf
-        @method('PUT')
-
-        @include(
-            'pages.about_why_choose_us.form'
-        )
-    </form>
-</div>
 @endsection

@@ -73,38 +73,37 @@
                 </button>
             </div>
 
-            <div id="featuresContainer" class="ts-features-container">
+                        <div id="featuresContainer" class="ts-features-container mt-3">
                 @foreach ($storyFeatures as $index => $feature)
-                    <div class="feature-item">
-                        <div class="feature-item-header">
-                            <strong class="feature-number">
+                    <div class="feature-card border rounded-3 p-3 mb-3" style="background: #f8fafc; border-color: #e2e8f0 !important;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="feature-number fw-semibold mb-0">
                                 Feature {{ $loop->iteration }}
-                            </strong>
+                            </h6>
 
-                            <button type="button" class="remove-feature-button" aria-label="Remove feature">
-                                ×
+                            <button type="button" class="btn btn-sm btn-outline-danger remove-feature-button" aria-label="Remove feature" title="Delete feature">
+                                <i class="fa-solid fa-trash"></i>
                             </button>
                         </div>
 
                         <div class="feature-fields">
-                            <div class="ts-form-group">
-                                <label class="ts-label">Feature Heading</label>
+                            <div class="ts-form-group mb-3">
+                                <label class="ts-label form-label fw-semibold">Feature Heading</label>
                                 <input type="text" name="features[{{ $index }}][heading]"
-                                    value="{{ $feature['heading'] ?? '' }}" class="ts-input"
+                                    value="{{ $feature['heading'] ?? '' }}" class="ts-input form-control"
                                     placeholder="Enter feature heading">
                             </div>
 
-                            <div class="ts-form-group">
-                                <label class="ts-label">Feature Sub Heading</label>
+                            <div class="ts-form-group mb-0">
+                                <label class="ts-label form-label fw-semibold">Feature Sub Heading</label>
                                 <input type="text" name="features[{{ $index }}][sub_heading]"
-                                    value="{{ $feature['sub_heading'] ?? '' }}" class="ts-input"
+                                    value="{{ $feature['sub_heading'] ?? '' }}" class="ts-input form-control"
                                     placeholder="Enter feature sub heading">
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
-
             @error('features')
                 <span class="ts-error-message">
                     {{ $message }}
@@ -122,12 +121,28 @@
                 <p>Upload up to 3 images (JPG, PNG, WebP).</p>
             </div>
 
+            <div class="ts-image-preview-box" style="padding: 1.5rem; text-align: center; border: 1px dashed #cbd5e1; border-radius: 12px; background-color: #f8fafc; margin-bottom: 1rem; height: auto; min-height: 205px; overflow: visible;">
+                <div id="storyImagePreview" class="d-flex flex-wrap gap-2 justify-content-center">
+                    @foreach ($existingImages as $image)
+                        <div class="story-preview-item existing-image position-relative" data-existing-image="{{ $image }}">
+                            <img src="{{ asset('storage/' . $image) }}" alt="Story image" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <button type="button" class="story-image-remove remove-existing-image position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border-0" aria-label="Remove image">&times;</button>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div id="imagePlaceholder" class="ts-image-placeholder {{ count($existingImages) > 0 ? 'ts-hidden' : '' }}">
+                    <span class="ts-image-placeholder-icon">?</span>
+                    <strong>No image selected</strong>
+                    <small>JPG, PNG or WEBP</small>
+                </div>
+            </div>
+
             <label for="storyImages" class="ts-upload-label">
                 Choose Images (Max 3)
             </label>
 
-            <input type="file" name="images[]" id="storyImages" class="ts-file-input"
-                accept=".jpg,.jpeg,.png,.webp" multiple>
+            <input type="file" name="images[]" id="storyImages" class="ts-file-input" accept=".jpg,.jpeg,.png,.webp" multiple>
 
             @error('images')
                 <span class="ts-error-message">
@@ -141,45 +156,30 @@
                 </span>
             @enderror
 
-            <div id="storyImagePreview" class="story-image-preview">
-                @foreach ($existingImages as $image)
-                    <div class="story-preview-item existing-image" data-existing-image="{{ $image }}">
-                        <img src="{{ asset('storage/' . $image) }}" alt="Story image">
-                        <button type="button" class="story-image-remove remove-existing-image" aria-label="Remove image">&times;</button>
-                    </div>
-                @endforeach
-            </div>
-
             <div id="removedImagesContainer"></div>
         </div>
 
         {{-- Status --}}
-        <div class="ts-side-card">
-            <div class="ts-side-card-header">
-                <h3>Publication Status</h3>
-            </div>
+        <div class="admin-form-group">
+            <label for="status">
+                Status
+                <span class="required">*</span>
+            </label>
 
-            <div class="ts-form-group mb-0">
-                <label for="status" class="ts-label">
-                    Status
-                    <span class="ts-required">*</span>
-                </label>
+            <select id="status" name="status" class="admin-form-control @error('status') is-invalid @enderror" required>
+                <option value="1" @selected(old('status', $ourStory->status ?? true) == true)>
+                    Active
+                </option>
+                <option value="0" @selected(old('status', $ourStory->status ?? true) == false)>
+                    Inactive
+                </option>
+            </select>
 
-                <select id="status" name="status" class="admin-form-control @error('status') is-invalid @enderror" required>
-                    <option value="1" @selected(old('status', $ourStory->status ?? true) == true)>
-                        Active
-                    </option>
-                    <option value="0" @selected(old('status', $ourStory->status ?? true) == false)>
-                        Inactive
-                    </option>
-                </select>
-
-                @error('status')
-                    <span class="ts-error-message">
-                        {{ $message }}
-                    </span>
-                @enderror
-            </div>
+            @error('status')
+                <span class="admin-form-error">
+                    {{ $message }}
+                </span>
+            @enderror
         </div>
 
     </div>
@@ -201,6 +201,17 @@ document.addEventListener('DOMContentLoaded', function () {
         return previewContainer.querySelectorAll('.existing-image').length;
     }
 
+    function checkPlaceholder() {
+        const placeholder = document.getElementById('imagePlaceholder');
+        if (placeholder) {
+            if (getExistingImageCount() + selectedFiles.length === 0) {
+                placeholder.classList.remove('ts-hidden');
+            } else {
+                placeholder.classList.add('ts-hidden');
+            }
+        }
+    }
+
     function renderSelectedImages() {
         previewContainer.querySelectorAll('.new-image').forEach(item => item.remove());
 
@@ -209,18 +220,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
             reader.onload = function (event) {
                 const item = document.createElement('div');
-                item.className = 'story-preview-item new-image';
+                item.className = 'story-preview-item new-image position-relative';
                 item.innerHTML = `
-                    <img src="${event.target.result}" alt="Selected image">
-                    <button type="button" class="story-image-remove remove-new-image" data-index="${index}" aria-label="Remove image">&times;</button>
+                    <img src="${event.target.result}" alt="Selected image" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <button type="button" class="story-image-remove remove-new-image position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border-0" data-index="${index}" aria-label="Remove image">&times;</button>
                 `;
                 previewContainer.appendChild(item);
+                checkPlaceholder();
             };
 
                     reader.readAsDataURL(file);
                 });
 
                 updateFileInput();
+                checkPlaceholder();
             }
 
     function updateFileInput() {
@@ -261,6 +274,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const index = Number(newImageRemoveButton.dataset.index);
             selectedFiles.splice(index, 1);
             renderSelectedImages();
+            checkPlaceholder();
             return;
         }
 
@@ -274,6 +288,7 @@ document.addEventListener('DOMContentLoaded', function () {
             hiddenInput.value = imagePath;
             removedImagesContainer.appendChild(hiddenInput);
             item.remove();
+            checkPlaceholder();
         }
     });
 
@@ -282,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const addFeatureButton = document.getElementById('addFeatureButton');
 
     function updateFeatureIndexes() {
-        const featureItems = featuresContainer.querySelectorAll('.feature-item');
+        const featureItems = featuresContainer.querySelectorAll('.feature-card');
         featureItems.forEach(function (item, index) {
             const number = item.querySelector('.feature-number');
             if (number) {
@@ -298,25 +313,28 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     addFeatureButton.addEventListener('click', function () {
-        const featureIndex = featuresContainer.querySelectorAll('.feature-item').length;
-        const featureItem = document.createElement('div');
-        featureItem.className = 'feature-item';
+        const featureIndex = featuresContainer.querySelectorAll('.feature-card').length;
+                const featureItem = document.createElement('div');
+        featureItem.className = 'feature-card border rounded-3 p-3 mb-3';
+        featureItem.style.cssText = 'background: #f8fafc; border-color: #e2e8f0 !important;';
 
                 featureItem.innerHTML = `
-            <div class="feature-item-header">
-                <strong class="feature-number">Feature ${featureIndex + 1}</strong>
-                <button type="button" class="remove-feature-button" aria-label="Remove feature">&times;</button>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="feature-number fw-semibold mb-0">Feature ${featureIndex + 1}</h6>
+                <button type="button" class="btn btn-sm btn-outline-danger remove-feature-button" aria-label="Remove feature" title="Delete feature">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
             </div>
 
             <div class="feature-fields">
-                <div class="ts-form-group">
-                    <label class="ts-label">Feature Heading</label>
-                    <input type="text" name="features[${featureIndex}][heading]" class="ts-input" placeholder="Enter feature heading">
+                <div class="ts-form-group mb-3">
+                    <label class="ts-label form-label fw-semibold">Feature Heading</label>
+                    <input type="text" name="features[${featureIndex}][heading]" class="ts-input form-control" placeholder="Enter feature heading">
                 </div>
 
-                <div class="ts-form-group">
-                    <label class="ts-label">Feature Sub Heading</label>
-                    <input type="text" name="features[${featureIndex}][sub_heading]" class="ts-input" placeholder="Enter feature sub heading">
+                <div class="ts-form-group mb-0">
+                    <label class="ts-label form-label fw-semibold">Feature Sub Heading</label>
+                    <input type="text" name="features[${featureIndex}][sub_heading]" class="ts-input form-control" placeholder="Enter feature sub heading">
                 </div>
             </div>
         `;
@@ -328,13 +346,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const removeButton = event.target.closest('.remove-feature-button');
         if (!removeButton) return;
 
-        const featureItems = featuresContainer.querySelectorAll('.feature-item');
+        const featureItems = featuresContainer.querySelectorAll('.feature-card');
         if (featureItems.length === 1) {
             featureItems[0].querySelectorAll('input').forEach(input => input.value = '');
             return;
         }
 
-        removeButton.closest('.feature-item').remove();
+        removeButton.closest('.feature-card').remove();
         updateFeatureIndexes();
     });
 
@@ -342,3 +360,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     </script>
 @endpush
+
+
+
+

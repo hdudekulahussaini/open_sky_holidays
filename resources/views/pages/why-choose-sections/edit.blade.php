@@ -18,12 +18,7 @@
                 @csrf
                 @method('PUT')
 
-                @include('pages.why-choose-sections.form')
-
-                <div class="admin-form-actions">
-                    <a href="{{ route('admin.why-choose-sections.index') }}" class="btn btn-light">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Update Section</button>
-                </div>
+                @include('pages.why-choose-sections.form', ['buttonText' => 'Update Section'])
             </form>
         </div>
     </div>

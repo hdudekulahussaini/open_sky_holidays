@@ -17,12 +17,7 @@
             <form action="{{ route('admin.why-choose-sections.store') }}" method="POST" class="admin-form">
                 @csrf
 
-                @include('pages.why-choose-sections.form')
-
-                <div class="admin-form-actions">
-                    <a href="{{ route('admin.why-choose-sections.index') }}" class="btn btn-light">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Save Section</button>
-                </div>
+                @include('pages.why-choose-sections.form', ['buttonText' => 'Save Section'])
             </form>
         </div>
     </div>
