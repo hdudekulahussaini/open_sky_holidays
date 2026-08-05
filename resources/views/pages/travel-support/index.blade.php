@@ -4,21 +4,34 @@
 @section('page-title', 'Travel Support')
 
 @section('content')
-    <div class="admin-card">
-        <div class="admin-card-header">
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
             <div>
-                <h3>Travel Support</h3>
+                <span class="ts-page-eyebrow">
+                    Website Content
+                </span>
+                <h1>Travel Support</h1>
                 <p>Manage travel support sections and contact options.</p>
             </div>
 
-            <a href="{{ route('admin.travel-support.create') }}" class="btn btn-primary">
-                + Add Support Section
+            <a href="{{ route('admin.travel-support.create') }}" class="ts-primary-btn">
+                <span>+</span> Add Support Section
             </a>
         </div>
 
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>Travel Support</h2>
+                    <p>Total records: <strong>{{ $travelSupports->count() }}</strong></p>
+                </div>
+            </div>
+
         @if ($travelSupports->count() > 0)
-            <div class="table-responsive">
-                <table class="admin-table">
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                     <thead>
                         <tr>
                             <th>Heading</th>
@@ -60,30 +73,20 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <span class="status-badge {{ $support->status ? 'status-active' : 'status-inactive' }}">
+                                    <span class="ts-status-badge {{ $support->status ? 'ts-active' : 'ts-inactive' }}">
+                                        <span></span>
                                         {{ $support->status ? 'Active' : 'Inactive' }}
                                     </span>
                                 </td>
                                 <td>
-                                    <div class="table-actions">
-                                        <a href="{{ route('admin.travel-support.edit', $support) }}" class="action-button action-edit">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M12 20h9"></path>
-                                                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"></path>
-                                            </svg>
+                                    <div class="ts-actions">
+                                        <a href="{{ route('admin.travel-support.edit', $support) }}" class="ts-action-btn ts-edit-btn">
                                             Edit
                                         </a>
                                         <form action="{{ route('admin.travel-support.destroy', $support) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this support section?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="action-button action-delete">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                                    <path d="M19 6l-1 14H6L5 6"></path>
-                                                    <path d="M10 11v6"></path>
-                                                    <path d="M14 11v6"></path>
-                                                    <path d="M9 6V4h6v2"></path>
-                                                </svg>
+                                            <button type="submit" class="ts-action-btn ts-delete-btn">
                                                 Delete
                                             </button>
                                         </form>
@@ -96,18 +99,21 @@
             </div>
 
             @if ($travelSupports->hasPages())
-                <div class="pagination-wrapper">
+                <div class="ts-pagination">
                     {{ $travelSupports->links() }}
                 </div>
             @endif
+            </div> {{-- end list card for when there are records --}}
         @else
-            <div class="empty-table">
-                <strong>No support sections found.</strong>
+            <div class="ts-empty-state">
+                <div class="ts-empty-icon">✦</div>
+                <h3>No support sections found.</h3>
                 <p>Add your first Travel Support record.</p>
-                <a href="{{ route('admin.travel-support.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.travel-support.create') }}" class="ts-primary-btn">
                     Create Section
                 </a>
             </div>
         @endif
+        </div>
     </div>
 @endsection
