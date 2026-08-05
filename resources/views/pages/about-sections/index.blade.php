@@ -121,7 +121,7 @@
                                             </span>
                                         @endif
 
-                                        <a href="{{ route('admin.about-sections.avatars.index', $aboutSection) }}"
+                                        <a href="{{ route('admin.about-sections.edit', $aboutSection) }}#customer-avatars"
                                             class="avatar-add-link">
                                             Manage Images
                                         </a>

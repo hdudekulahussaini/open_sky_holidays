@@ -78,7 +78,6 @@
                     {{ $counters->links() }}
                 </div>
             @endif
-            </div> {{-- end list card for when there are records --}}
         @else
             <div class="ts-empty-state">
                 <div class="ts-empty-icon">✦</div>

@@ -43,189 +43,84 @@
                 </form>
             </div>
 
-            <button type="submit" class="btn btn-primary">
-                Search
-            </button>
-
-            <a
-                href="{{ route('admin.enquiries.index') }}"
-                class="btn btn-light"
-            >
-                Reset
-            </a>
-        </form>
-
-        <div class="table-responsive">
-
-            <table class="admin-table">
-
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Customer</th>
-                        <th>Phone</th>
-                        <th>Travel Date</th>
-                        <th>Destination</th>
-                        <th>Travelers</th>
-                        <th>Tour Type</th>
-                        <th>Status</th>
-                        <th class="ts-action-column">Actions</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    @forelse ($enquiries as $enquiry)
-
-                        <tr>
-                            <td>
-                                #{{ $enquiry->id }}
-                            </td>
-
-                            <td>
-                                <strong>{{ $enquiry->name }}</strong>
-                                <small>
-                                    <a href="mailto:{{ $enquiry->email }}">
-                                        {{ $enquiry->email }}
-                                    </a>
-                                </small>
-                            </td>
-
-                            <td>
-                                <a href="tel:{{ $enquiry->phone }}">
-                                    {{ $enquiry->phone }}
-                                </a>
-                            </td>
-
-                            <td>
-                                {{ $enquiry->travel_date ? $enquiry->travel_date->format('d M Y') : 'N/A' }}
-                            </td>
-
-                            <td>
-                                {{ $enquiry->destination ?: 'N/A' }}
-                            </td>
-
-                            <td>
-                                {{ $enquiry->no_of_travelers ?: 'N/A' }}
-                            </td>
-
-                            <td>
-                                {{ $enquiry->tourType ? $enquiry->tourType->name : 'N/A' }}
-                            </td>
-
-                            <td>
-                                <span class="status-badge status-{{ $enquiry->status }}">
-                                    {{ ucfirst($enquiry->status) }}
-                                </span>
-                            </td>
-
-                            <td>
-                                <div class="ts-actions">
-                                    <a
-                                        href="{{ route('admin.enquiries.show', $enquiry) }}"
-                                        class="ts-action-btn"
-                                    >
-                                        View
-                                    </a>
-
-                                    <form
-                                        action="{{ route('admin.enquiries.destroy', $enquiry) }}"
-                                        method="POST"
-                                        onsubmit="return confirm('Are you sure you want to delete this enquiry? This action cannot be undone.');"
-                                    >
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button
-                                            type="submit"
-                                            class="ts-action-btn ts-delete-btn"
-                                        >
-                                            Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-
-                    @empty
-
-                        <tr>
-                            <th>ID</th>
-                            <th>Customer</th>
-                            <th>Phone</th>
-                            <th>Travel Date</th>
-                            <th>Destination</th>
-                            <th>Travelers</th>
-                            <th>Tour Type</th>
-                            <th>Status</th>
-                            <th class="ts-action-column">Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @forelse ($enquiries as $enquiry)
+            @if ($enquiries->count() > 0)
+                <div class="ts-table-wrapper">
+                    <table class="ts-table">
+                        <thead>
                             <tr>
-                                <td>#{{ $enquiry->id }}</td>
-                                <td>
-                                    <strong>{{ $enquiry->name }}</strong>
-                                    <br>
-                                    <small>
-                                        <a href="mailto:{{ $enquiry->email }}" style="color: var(--ts-text-muted); text-decoration: none;">
-                                            {{ $enquiry->email }}
-                                        </a>
-                                    </small>
-                                </td>
-                                <td>
-                                    <a href="tel:{{ $enquiry->phone }}" style="color: var(--ts-text-main); text-decoration: none;">
-                                        {{ $enquiry->phone }}
-                                    </a>
-                                </td>
-                                <td>
-                                    {{ $enquiry->travel_date ? $enquiry->travel_date->format('d M Y') : 'Not provided' }}
-                                </td>
-                                <td>{{ $enquiry->destination ?: 'Not provided' }}</td>
-                                <td>{{ $enquiry->travelers ?: 'Not provided' }}</td>
-                                <td>{{ $enquiry->tour_type ?: 'Not provided' }}</td>
-                                <td>
-                                    <span class="ts-status-badge {{ $enquiry->status === 'new' ? 'ts-active' : ($enquiry->status === 'contacted' ? 'ts-primary' : 'ts-inactive') }}">
-                                        <span></span>
-                                        {{ ucfirst($enquiry->status) }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <div class="ts-actions">
-                                        <a href="{{ route('admin.enquiries.show', $enquiry) }}" class="ts-action-btn ts-edit-btn" title="View Enquiry">
-                                            View
-                                        </a>
-
-                                        <form action="{{ route('admin.enquiries.destroy', $enquiry) }}" method="POST" class="inline-form" onsubmit="return confirm('Are you sure you want to delete this enquiry? This action cannot be undone.');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="ts-action-btn ts-delete-btn" title="Delete Enquiry">
-                                                Delete
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Phone</th>
+                                <th>Travel Date</th>
+                                <th>Destination</th>
+                                <th>Travelers</th>
+                                <th>Tour Type</th>
+                                <th>Status</th>
+                                <th class="ts-action-column">Actions</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="9">
-                                    <div class="ts-empty-state">
-                                        <div class="ts-empty-icon">✦</div>
-                                        <h3>No enquiries found.</h3>
-                                        <p>Enquiries submitted from the website will appear here.</p>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
 
-            @if ($enquiries->hasPages())
-                <div class="ts-pagination">
-                    {{ $enquiries->links() }}
+                        <tbody>
+                            @foreach ($enquiries as $enquiry)
+                                <tr>
+                                    <td>#{{ $enquiry->id }}</td>
+                                    <td>
+                                        <strong>{{ $enquiry->name }}</strong>
+                                        <br>
+                                        <small class="text-muted">
+                                            <a href="mailto:{{ $enquiry->email }}" style="color: var(--ts-text-muted); text-decoration: none;">
+                                                {{ $enquiry->email }}
+                                            </a>
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <a href="tel:{{ $enquiry->phone }}" style="color: var(--ts-text-main); text-decoration: none;">
+                                            {{ $enquiry->phone }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ $enquiry->travel_date ? (is_string($enquiry->travel_date) ? $enquiry->travel_date : $enquiry->travel_date->format('d M Y')) : 'Not provided' }}
+                                    </td>
+                                    <td>{{ $enquiry->destination ?: 'Not provided' }}</td>
+                                    <td>{{ $enquiry->travelers ?: ($enquiry->no_of_travelers ?: 'Not provided') }}</td>
+                                    <td>{{ $enquiry->tour_type ?: ($enquiry->tourType ? $enquiry->tourType->name : 'Not provided') }}</td>
+                                    <td>
+                                        <span class="ts-status-badge {{ $enquiry->status === 'new' ? 'ts-active' : ($enquiry->status === 'contacted' ? 'ts-primary' : 'ts-inactive') }}">
+                                            <span></span>
+                                            {{ ucfirst($enquiry->status) }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="ts-actions">
+                                            <a href="{{ route('admin.enquiries.show', $enquiry) }}" class="ts-action-btn ts-edit-btn" title="View Enquiry">
+                                                View
+                                            </a>
+
+                                            <form action="{{ route('admin.enquiries.destroy', $enquiry) }}" method="POST" class="inline-form" onsubmit="return confirm('Are you sure you want to delete this enquiry? This action cannot be undone.');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="ts-action-btn ts-delete-btn" title="Delete Enquiry">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                @if ($enquiries->hasPages())
+                    <div class="ts-pagination">
+                        {{ $enquiries->links() }}
+                    </div>
+                @endif
+            @else
+                <div class="ts-empty-state">
+                    <div class="ts-empty-icon">✦</div>
+                    <h3>No enquiries found.</h3>
+                    <p>Enquiries submitted from the website will appear here.</p>
                 </div>
             @endif
         </div>
