@@ -4,21 +4,34 @@
 @section('page-title', 'Our Stories')
 
 @section('content')
-    <div class="admin-card">
-        <div class="admin-card-header">
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
             <div>
-                <h3>Our Stories</h3>
+                <span class="ts-page-eyebrow">
+                    Website Content
+                </span>
+                <h1>Our Stories</h1>
                 <p>Manage company stories and timeline milestones.</p>
             </div>
 
-            <a href="{{ route('admin.our-stories.create') }}" class="btn btn-primary">
-                + Add Our Story
+            <a href="{{ route('admin.our-stories.create') }}" class="ts-primary-btn">
+                <span>+</span> Add Our Story
             </a>
         </div>
 
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>Our Stories</h2>
+                    <p>Total records: <strong>{{ $ourStories->count() }}</strong></p>
+                </div>
+            </div>
+
         @if ($ourStories->count() > 0)
-            <div class="table-responsive">
-                <table class="admin-table">
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -45,7 +58,8 @@
                                 </td>
                                 <td>{{ \Illuminate\Support\Str::limit(strip_tags($story->description), 100) }}</td>
                                 <td>
-                                    <span class="status-badge {{ $story->status ? 'status-active' : 'status-inactive' }}">
+                                    <span class="ts-status-badge {{ $story->status ? 'ts-active' : 'ts-inactive' }}">
+                                        <span></span>
                                         {{ $story->status ? 'Active' : 'Inactive' }}
                                     </span>
                                 </td>
@@ -70,18 +84,21 @@
             </div>
 
             @if ($ourStories->hasPages())
-                <div class="pagination-wrapper">
+                <div class="ts-pagination">
                     {{ $ourStories->links() }}
                 </div>
             @endif
+            </div> {{-- end list card for when there are records --}}
         @else
-            <div class="empty-table">
-                <strong>No stories found.</strong>
+            <div class="ts-empty-state">
+                <div class="ts-empty-icon">✦</div>
+                <h3>No stories found.</h3>
                 <p>Add your first Our Story record.</p>
-                <a href="{{ route('admin.our-stories.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.our-stories.create') }}" class="ts-primary-btn">
                     Create Story
                 </a>
             </div>
         @endif
+        </div>
     </div>
 @endsection

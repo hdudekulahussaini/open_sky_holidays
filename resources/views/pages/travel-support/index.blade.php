@@ -4,21 +4,34 @@
 @section('page-title', 'Travel Support')
 
 @section('content')
-    <div class="admin-card">
-        <div class="admin-card-header">
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
             <div>
-                <h3>Travel Support</h3>
+                <span class="ts-page-eyebrow">
+                    Website Content
+                </span>
+                <h1>Travel Support</h1>
                 <p>Manage travel support sections and contact options.</p>
             </div>
 
-            <a href="{{ route('admin.travel-support.create') }}" class="btn btn-primary">
-                + Add Support Section
+            <a href="{{ route('admin.travel-support.create') }}" class="ts-primary-btn">
+                <span>+</span> Add Support Section
             </a>
         </div>
 
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>Travel Support</h2>
+                    <p>Total records: <strong>{{ $travelSupports->count() }}</strong></p>
+                </div>
+            </div>
+
         @if ($travelSupports->count() > 0)
-            <div class="table-responsive">
-                <table class="admin-table">
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                     <thead>
                         <tr>
                             <th>Heading</th>
@@ -60,7 +73,8 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <span class="status-badge {{ $support->status ? 'status-active' : 'status-inactive' }}">
+                                    <span class="ts-status-badge {{ $support->status ? 'ts-active' : 'ts-inactive' }}">
+                                        <span></span>
                                         {{ $support->status ? 'Active' : 'Inactive' }}
                                     </span>
                                 </td>
@@ -85,18 +99,21 @@
             </div>
 
             @if ($travelSupports->hasPages())
-                <div class="pagination-wrapper">
+                <div class="ts-pagination">
                     {{ $travelSupports->links() }}
                 </div>
             @endif
+            </div> {{-- end list card for when there are records --}}
         @else
-            <div class="empty-table">
-                <strong>No support sections found.</strong>
+            <div class="ts-empty-state">
+                <div class="ts-empty-icon">✦</div>
+                <h3>No support sections found.</h3>
                 <p>Add your first Travel Support record.</p>
-                <a href="{{ route('admin.travel-support.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.travel-support.create') }}" class="ts-primary-btn">
                     Create Section
                 </a>
             </div>
         @endif
+        </div>
     </div>
 @endsection

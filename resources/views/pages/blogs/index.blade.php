@@ -4,32 +4,34 @@
 @section('page-title', 'Blogs')
 
 @section('content')
-    <div class="admin-card">
-
-        <div class="admin-card-header">
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
             <div>
-                <h3>Travel Blogs</h3>
-
-                <p>
-                    Manage travel blog listings, table of contents,
-                    images, and complete blog content.
-                </p>
+                <span class="ts-page-eyebrow">
+                    Website Content
+                </span>
+                <h1>Travel Blogs</h1>
+                <p>Manage travel blog listings, table of contents, images, and complete blog content.</p>
             </div>
 
-            <a
-                href="{{ route('admin.blogs.create') }}"
-                class="btn btn-primary"
-            >
-                Add Blog
+            <a href="{{ route('admin.blogs.create') }}" class="ts-primary-btn">
+                <span>+</span> Add Blog
             </a>
         </div>
 
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>Travel Blogs</h2>
+                    <p>Total records: <strong>{{ $blogs->total() }}</strong></p>
+                </div>
+            </div>
 
         @if ($blogs->count() > 0)
-
-            <div class="table-responsive">
-                <table class="admin-table">
-
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -43,113 +45,56 @@
                             <th class="ts-action-column">Actions</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         @foreach ($blogs as $blog)
                             <tr>
-                                {{-- ID --}}
+                                <td>#{{ $blog->id }}</td>
                                 <td>
-                                    #{{ $blog->id }}
-                                </td>
-
-                                {{-- Blog --}}
-                                <td>
-                                    <div class="blog-table-info">
-
+                                    <div style="display: flex; gap: 12px; align-items: center;">
                                         @if ($blog->featured_image)
                                             <img
-                                                src="{{ asset(
-                                                    'storage/' .
-                                                    $blog->featured_image
-                                                ) }}"
+                                                src="{{ asset('storage/' . $blog->featured_image) }}"
                                                 alt="{{ $blog->title }}"
-                                                class="blog-table-image"
+                                                width="60"
+                                                height="40"
+                                                style="border-radius: 4px; object-fit: cover;"
                                             >
                                         @endif
-
                                         <div>
-                                            <strong>
-                                                {{ $blog->title }}
-                                            </strong>
-
-                                            <small>
-                                                {{ $blog->slug }}
-                                            </small>
-
+                                            <strong>{{ $blog->title }}</strong><br>
+                                            <small>{{ $blog->slug }}</small>
                                             @if ($blog->featured_image)
-                                                <a
-                                                    href="{{ asset(
-                                                        'storage/' .
-                                                        $blog->featured_image
-                                                    ) }}"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    class="blog-image-link"
-                                                >
+                                                <br>
+                                                <a href="{{ asset('storage/' . $blog->featured_image) }}" target="_blank" rel="noopener noreferrer" style="font-size: 12px; color: var(--ts-primary);">
                                                     View Image
                                                 </a>
                                             @endif
                                         </div>
-
                                     </div>
                                 </td>
-
-                                {{-- Category --}}
-                                <td>
-                                    {{ $blog->category?->name
-                                        ?? 'No Category' }}
-                                </td>
-
-                                {{-- Author --}}
-                                <td>
-                                    {{ $blog->author?->name
-                                        ?? 'Open Sky Team' }}
-                                </td>
-
-                                {{-- Table of Contents count --}}
+                                <td>{{ $blog->category?->name ?? 'No Category' }}</td>
+                                <td>{{ $blog->author?->name ?? 'Open Sky Team' }}</td>
                                 <td>
                                     @php
                                         $tocCount = $blog->sections
                                             ? count($blog->sections)
                                             : 0;
                                     @endphp
-
-                                    <span class="toc-count-badge">
-                                        {{ $tocCount }}
-                                        {{ $tocCount === 1
-                                            ? 'Section'
-                                            : 'Sections' }}
+                                    <span class="ts-status-badge ts-primary">
+                                        <span></span>
+                                        {{ $tocCount }} {{ $tocCount === 1 ? 'Section' : 'Sections' }}
                                     </span>
                                 </td>
-
-                                {{-- Read Time --}}
+                                <td>{{ $blog->read_time }} min</td>
                                 <td>
-                                    {{ $blog->read_time }} min
-                                </td>
-
-                                {{-- Status --}}
-                                <td>
-                                    <span
-                                        class="status-badge
-                                            {{ $blog->status
-                                                ? 'status-active'
-                                                : 'status-inactive' }}"
-                                    >
-                                        {{ $blog->status
-                                            ? 'Published'
-                                            : 'Draft' }}
+                                    <span class="ts-status-badge {{ $blog->status ? 'ts-active' : 'ts-inactive' }}">
+                                        <span></span>
+                                        {{ $blog->status ? 'Published' : 'Draft' }}
                                     </span>
                                 </td>
-
-                                {{-- Published date --}}
                                 <td>
-                                    {{ $blog->published_at
-                                        ? $blog->published_at
-                                            ->format('d M Y')
-                                        : 'Not Published' }}
+                                    {{ $blog->published_at ? $blog->published_at->format('d M Y') : 'Not Published' }}
                                 </td>
-
-                                {{-- Actions --}}
                                 <td>
                                     <div class="ts-actions">
                                         <a href="{{ route('admin.blogs.edit', $blog) }}" class="ts-action-btn ts-edit-btn">
@@ -170,35 +115,25 @@
                             </tr>
                         @endforeach
                     </tbody>
-
                 </table>
             </div>
 
-            {{-- Pagination --}}
             @if ($blogs->hasPages())
-                <div class="pagination-wrapper">
+                <div class="ts-pagination">
                     {{ $blogs->links() }}
                 </div>
             @endif
-
+            </div>
         @else
-
-            <div class="empty-table">
-                <strong>No blogs found.</strong>
-
-                <p>
-                    Create your first travel blog.
-                </p>
-
-                <a
-                    href="{{ route('admin.blogs.create') }}"
-                    class="btn btn-primary"
-                >
+            <div class="ts-empty-state">
+                <div class="ts-empty-icon">✦</div>
+                <h3>No blogs found.</h3>
+                <p>Create your first travel blog.</p>
+                <a href="{{ route('admin.blogs.create') }}" class="ts-primary-btn">
                     Create Blog
                 </a>
             </div>
-
         @endif
-        
+        </div>
     </div>
 @endsection

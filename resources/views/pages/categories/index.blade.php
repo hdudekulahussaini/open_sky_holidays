@@ -4,19 +4,21 @@
 @section('page-title', 'Categories')
 
 @section('content')
-    <div class="admin-card">
-
-        <div class="admin-card-header">
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
             <div>
-                <h3>Blog Categories</h3>
+                <span class="ts-page-eyebrow">
+                    Website Content
+                </span>
+                <h1>Blog Categories</h1>
                 <p>Manage categories used for travel blogs.</p>
             </div>
 
-            <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">
-                Add Category
+            <a href="{{ route('admin.categories.create') }}" class="ts-primary-btn">
+                <span>+</span> Add Category
             </a>
         </div>
-
 
         @if (session('error'))
             <div class="alert alert-danger">
@@ -24,9 +26,18 @@
             </div>
         @endif
 
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>Blog Categories</h2>
+                    <p>Total records: <strong>{{ $categories->count() }}</strong></p>
+                </div>
+            </div>
+
         @if ($categories->count() > 0)
-            <div class="table-responsive">
-                <table class="admin-table">
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -68,19 +79,21 @@
             </div>
 
             @if ($categories->hasPages())
-                <div class="pagination-wrapper" style="padding: 20px 24px;">
+                <div class="ts-pagination">
                     {{ $categories->links() }}
                 </div>
             @endif
+            </div>
         @else
-            <div class="empty-table" style="padding: 40px; text-align: center;">
-                <strong>No categories found.</strong>
+            <div class="ts-empty-state">
+                <div class="ts-empty-icon">✦</div>
+                <h3>No categories found.</h3>
                 <p>Create your first blog category.</p>
-                <a href="{{ route('admin.categories.create') }}" class="btn btn-primary" style="margin-top: 15px;">
+                <a href="{{ route('admin.categories.create') }}" class="ts-primary-btn">
                     Create Category
                 </a>
             </div>
         @endif
-
+        </div>
     </div>
 @endsection

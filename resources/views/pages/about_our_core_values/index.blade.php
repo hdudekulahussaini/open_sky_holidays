@@ -4,21 +4,37 @@
 @section('page-title', 'About Our Core Values')
 
 @section('content')
-    <div class="admin-card">
-        <div class="admin-card-header">
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
             <div>
-                <h3>About Our Core Values</h3>
+                <span class="ts-page-eyebrow">
+                    Website Content
+                </span>
+                <h1>About Our Core Values</h1>
                 <p>Manage the core value titles and descriptions.</p>
             </div>
 
-            <a href="{{ route('admin.about-our-core-values.create') }}" class="btn btn-primary">
-                + Add Core Value
+            <a href="{{ route('admin.about-our-core-values.create') }}"
+                class="ts-primary-btn">
+                <span>+</span> Add Core Value
             </a>
         </div>
 
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>About Our Core Values</h2>
+                    <p>
+                        Total records: <strong>{{ $coreValues->count() }}</strong>
+                    </p>
+                </div>
+            </div>
+
         @if ($coreValues->count() > 0)
-            <div class="table-responsive">
-                <table class="admin-table">
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -54,18 +70,20 @@
             </div>
 
             @if ($coreValues->hasPages())
-                <div class="pagination-wrapper">
+                <div class="ts-pagination">
                     {{ $coreValues->links() }}
                 </div>
             @endif
         @else
-            <div class="empty-table">
-                <strong>No core values found.</strong>
+            <div class="ts-empty-state">
+                <div class="ts-empty-icon">✦</div>
+                <h3>No core values found.</h3>
                 <p>Add your first About Our Core Value.</p>
-                <a href="{{ route('admin.about-our-core-values.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.about-our-core-values.create') }}" class="ts-primary-btn">
                     Create Core Value
                 </a>
             </div>
         @endif
+        </div>
     </div>
 @endsection

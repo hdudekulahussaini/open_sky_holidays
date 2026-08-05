@@ -4,21 +4,37 @@
 @section('page-title', 'About Why Choose Us')
 
 @section('content')
-    <div class="admin-card">
-        <div class="admin-card-header">
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
             <div>
-                <h3>About Why Choose Us</h3>
+                <span class="ts-page-eyebrow">
+                    Website Content
+                </span>
+                <h1>About Why Choose Us</h1>
                 <p>Manage title, description, image, features, and status.</p>
             </div>
 
-            <a href="{{ route('admin.about-why-choose-us.create') }}" class="btn btn-primary">
-                + Add Section
+            <a href="{{ route('admin.about-why-choose-us.create') }}"
+                class="ts-primary-btn">
+                <span>+</span> Add Section
             </a>
         </div>
 
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>About Why Choose Us</h2>
+                    <p>
+                        Total records: <strong>{{ $sections->count() }}</strong>
+                    </p>
+                </div>
+            </div>
+
         @if ($sections->count() > 0)
-            <div class="table-responsive">
-                <table class="admin-table">
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -43,7 +59,8 @@
                                 <td><strong>{{ $section->title }}</strong></td>
                                 <td>{{ \Illuminate\Support\Str::limit($section->description, 100) }}</td>
                                 <td>
-                                    <span class="status-badge {{ $section->status ? 'status-active' : 'status-inactive' }}">
+                                    <span class="ts-status-badge {{ $section->status ? 'ts-active' : 'ts-inactive' }}">
+                                        <span></span>
                                         {{ $section->status ? 'Active' : 'Inactive' }}
                                     </span>
                                 </td>
@@ -68,18 +85,21 @@
             </div>
 
             @if ($sections->hasPages())
-                <div class="pagination-wrapper">
+                <div class="ts-pagination">
                     {{ $sections->links() }}
                 </div>
             @endif
+            </div> {{-- end list card for when there are records --}}
         @else
-            <div class="empty-table">
-                <strong>No sections found.</strong>
+            <div class="ts-empty-state">
+                <div class="ts-empty-icon">✦</div>
+                <h3>No sections found.</h3>
                 <p>Create your first About Why Choose Us section.</p>
-                <a href="{{ route('admin.about-why-choose-us.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.about-why-choose-us.create') }}" class="ts-primary-btn">
                     Create Section
                 </a>
             </div>
         @endif
+        </div>
     </div>
 @endsection

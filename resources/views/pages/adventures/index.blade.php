@@ -3,46 +3,46 @@
 @section('title', 'Adventures')
 
 @section('content')
-<div class="container-fluid">
+    <div class="ts-page-wrapper">
 
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
-        <div>
-            <h2 class="fw-bold mb-1">
-                Adventure Management
-            </h2>
-
-            <p class="text-muted mb-0">
-                Manage adventure content, features, video and images.
-            </p>
-        </div>
-
-        <a
-            href="{{ route('admin.adventures.create') }}"
-            class="btn btn-primary">
-            <i class="fas fa-plus me-2"></i>
-            Add Adventure
-        </a>
-    </div>
-
-    <div class="card border-0 shadow-sm">
-        <div class="card-header bg-white border-bottom py-3">
-            <div class="d-flex justify-content-between align-items-center">
-                <h5 class="fw-semibold mb-0">
-                    Adventure List
-                </h5>
-
-                <span class="badge bg-light text-dark">
-                    Total: {{ $adventures->total() }}
+        {{-- Page Header --}}
+        <div class="ts-page-header">
+            <div>
+                <span class="ts-page-eyebrow">
+                    Adventures
                 </span>
+                <h1>Adventure Management</h1>
+
+                <p>
+                    Manage adventure content, features, video and images.
+                </p>
             </div>
+
+            <a href="{{ route('admin.adventures.create') }}"
+                class="ts-primary-btn">
+                <span>+</span> Add Adventure
+            </a>
         </div>
 
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light">
+        {{-- List Card --}}
+        <div class="ts-list-card">
+
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>Adventure List</h2>
+
+                    <p>
+                        Total records:
+                        <strong>{{ $adventures->total() }}</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
+                    <thead>
                         <tr>
-                            <th class="px-4">ID</th>
+                            <th>ID</th>
                             <th>Category</th>
                             <th>Images</th>
                             <th>Title</th>
@@ -57,7 +57,7 @@
                     <tbody>
                         @forelse ($adventures as $adventure)
                         <tr>
-                            <td class="px-4">
+                            <td>
                                 #{{ $adventure->id }}
                             </td>
 
@@ -185,12 +185,12 @@
 
                             <td>
                                 @if ($adventure->status === 'active')
-                                <span class="badge bg-success">
-                                    Active
+                                <span class="ts-status-badge ts-active">
+                                    <span></span> Active
                                 </span>
                                 @else
-                                <span class="badge bg-danger">
-                                    Inactive
+                                <span class="ts-status-badge ts-inactive">
+                                    <span></span> Inactive
                                 </span>
                                 @endif
                             </td>
@@ -207,16 +207,9 @@
                                     </a>
 
                                     <form
-                                        action="{{ route(
-                                                'admin.adventures.destroy',
-                                                $adventure
-                                            ) }}"
+                                        action="{{ route('admin.adventures.destroy', $adventure) }}"
                                         method="POST"
-                                        onsubmit="
-                                                return confirm(
-                                                    'Delete this adventure?'
-                                                );
-                                            ">
+                                        onsubmit="return confirm('Delete this adventure?');">
                                         @csrf
                                         @method('DELETE')
 
@@ -231,23 +224,12 @@
                         </tr>
                         @empty
                         <tr>
-                            <td
-                                colspan="9"
-                                class="text-center py-5">
-                                <div class="text-muted">
-                                    <i class="fas fa-mountain fa-3x mb-3"></i>
-
-                                    <h5>No Adventures Found</h5>
-
-                                    <p>
-                                        Add your first adventure content.
-                                    </p>
-
-                                    <a
-                                        href="{{ route(
-                                                'admin.adventures.create'
-                                            ) }}"
-                                        class="btn btn-primary">
+                            <td colspan="9">
+                                <div class="ts-empty-state">
+                                    <div class="ts-empty-icon">✦</div>
+                                    <h3>No Adventures Found</h3>
+                                    <p>Add your first adventure content.</p>
+                                    <a href="{{ route('admin.adventures.create') }}" class="ts-primary-btn">
                                         Add Adventure
                                     </a>
                                 </div>
@@ -259,11 +241,11 @@
             </div>
         </div>
 
-        @if ($adventures->hasPages())
-        <div class="card-footer bg-white border-top py-3">
-            {{ $adventures->links() }}
+            @if ($adventures->hasPages())
+                <div class="ts-pagination">
+                    {{ $adventures->links() }}
+                </div>
+            @endif
         </div>
-        @endif
     </div>
-</div>
 @endsection

@@ -4,21 +4,34 @@
 @section('page-title', 'Counters')
 
 @section('content')
-    <div class="admin-card">
-        <div class="admin-card-header">
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
             <div>
-                <h3>Counters</h3>
+                <span class="ts-page-eyebrow">
+                    Website Content
+                </span>
+                <h1>Counters</h1>
                 <p>Manage counter statistics displayed on the website.</p>
             </div>
 
-            <a href="{{ route('admin.counters.create') }}" class="btn btn-primary">
-                + Add Counter
+            <a href="{{ route('admin.counters.create') }}" class="ts-primary-btn">
+                <span>+</span> Add Counter
             </a>
         </div>
 
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>Counters</h2>
+                    <p>Total records: <strong>{{ $counters->count() }}</strong></p>
+                </div>
+            </div>
+
         @if ($counters->count() > 0)
-            <div class="table-responsive">
-                <table class="admin-table">
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -35,7 +48,8 @@
                                 <td><strong>{{ $counter->value }}</strong></td>
                                 <td>{{ $counter->name }}</td>
                                 <td>
-                                    <span class="status-badge {{ $counter->status ? 'status-active' : 'status-inactive' }}">
+                                    <span class="ts-status-badge {{ $counter->status ? 'ts-active' : 'ts-inactive' }}">
+                                        <span></span>
                                         {{ $counter->status ? 'Active' : 'Inactive' }}
                                     </span>
                                 </td>
@@ -60,18 +74,21 @@
             </div>
 
             @if ($counters->hasPages())
-                <div class="pagination-wrapper">
+                <div class="ts-pagination">
                     {{ $counters->links() }}
                 </div>
             @endif
+            </div> {{-- end list card for when there are records --}}
         @else
-            <div class="empty-table">
-                <strong>No counters found.</strong>
+            <div class="ts-empty-state">
+                <div class="ts-empty-icon">✦</div>
+                <h3>No counters found.</h3>
                 <p>Add your first Counter statistic.</p>
-                <a href="{{ route('admin.counters.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.counters.create') }}" class="ts-primary-btn">
                     Create Counter
                 </a>
             </div>
         @endif
+        </div>
     </div>
 @endsection

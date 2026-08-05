@@ -3,57 +3,44 @@
 @section('title', 'Offer Banners')
 
 @section('content')
-<div class="container-fluid py-4">
-
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
-        <div>
-            <h2 class="mb-1">Offer Banners</h2>
-
-            <p class="text-muted mb-0">
-                Manage website promotional deals and offers.
-            </p>
-        </div>
-
-        <a
-            href="{{ route('admin.offer-banners.create') }}"
-            class="btn btn-primary"
-        >
-            Add Offer Banner
-        </a>
-    </div>
-
-
-    @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show">
-            {{ session('error') }}
-
-            <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-            ></button>
-        </div>
-    @endif
-
-    <div class="card border-0 shadow-sm">
-        <div class="card-header bg-white py-3">
-            <div class="d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">
-                    Offer Banner List
-                </h5>
-
-                <span class="badge bg-light text-dark border">
-                    Total: {{ $offerBanners->total() }}
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
+            <div>
+                <span class="ts-page-eyebrow">
+                    Website Content
                 </span>
+                <h1>Offer Banners</h1>
+                <p>Manage website promotional deals and offers.</p>
             </div>
+
+            <a href="{{ route('admin.offer-banners.create') }}" class="ts-primary-btn">
+                <span>+</span> Add Offer Banner
+            </a>
         </div>
 
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light">
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>Offer Banner List</h2>
+                    <p>Total records: <strong>{{ $offerBanners->total() }}</strong></p>
+                </div>
+            </div>
+            
+        @if ($offerBanners->count() > 0)
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
+                    <thead>
                         <tr>
-                            <th class="ps-4">ID</th>
+                            <th>ID</th>
                             <th>Image</th>
                             <th>Title</th>
                             <th>Discount</th>
@@ -64,58 +51,38 @@
                     </thead>
 
                     <tbody>
-                        @forelse ($offerBanners as $offerBanner)
+                        @foreach ($offerBanners as $offerBanner)
                             <tr>
-                                <td class="ps-4">
-                                    {{ $offerBanner->id }}
-                                </td>
+                                <td>{{ $offerBanner->id }}</td>
 
                                 <td>
                                     @if ($offerBanner->image)
-                                        <img
-                                            src="{{ asset(
-                                                'storage/' . $offerBanner->image
-                                            ) }}"
-                                            alt="{{ $offerBanner->title }}"
-                                            width="110"
-                                            height="70"
-                                            class="rounded border"
-                                            style="object-fit: cover;"
-                                        >
+                                        <img src="{{ asset('storage/' . $offerBanner->image) }}" alt="{{ $offerBanner->title }}" width="110" height="70" style="object-fit: cover; border-radius: 8px;">
                                     @else
-                                        <span class="text-muted">
-                                            No image
-                                        </span>
+                                        <span class="text-muted">No image</span>
                                     @endif
                                 </td>
 
                                 <td>
-                                    <strong>
-                                        {{ $offerBanner->title }}
-                                    </strong>
+                                    <strong>{{ $offerBanner->title }}</strong>
                                 </td>
 
                                 <td>
-                                    <span class="fw-semibold text-primary">
-                                        {{ $offerBanner->discount_text }}
-                                    </span>
+                                    <strong>{{ $offerBanner->discount_text }}</strong>
                                 </td>
 
                                 <td>
-                                    {{ \Illuminate\Support\Str::limit(
-                                        $offerBanner->subtitle,
-                                        50
-                                    ) }}
+                                    {{ \Illuminate\Support\Str::limit($offerBanner->subtitle, 50) }}
                                 </td>
 
                                 <td>
                                     @if ($offerBanner->status)
-                                        <span class="badge bg-success">
-                                            Active
+                                        <span class="ts-status-badge ts-active">
+                                            <span></span> Active
                                         </span>
                                     @else
-                                        <span class="badge bg-secondary">
-                                            Inactive
+                                        <span class="ts-status-badge ts-inactive">
+                                            <span></span> Inactive
                                         </span>
                                     @endif
                                 </td>
@@ -179,17 +146,27 @@
                                     </a>
                                 </td>
                             </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-        </div>
 
-        @if ($offerBanners->hasPages())
-            <div class="card-footer bg-white py-3">
-                {{ $offerBanners->links() }}
+            @if ($offerBanners->hasPages())
+                <div class="ts-pagination">
+                    {{ $offerBanners->links() }}
+                </div>
+            @endif
+            </div> {{-- end list card for when there are records --}}
+        @else
+            <div class="ts-empty-state">
+                <div class="ts-empty-icon">✦</div>
+                <h3>No offer banners found.</h3>
+                <p>Create your first promotional offer.</p>
+                <a href="{{ route('admin.offer-banners.create') }}" class="ts-primary-btn">
+                    Add Offer Banner
+                </a>
             </div>
         @endif
+        </div>
     </div>
-</div>
 @endsection
