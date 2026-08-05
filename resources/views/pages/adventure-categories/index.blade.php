@@ -3,58 +3,49 @@
 @section('title', 'Adventure Categories')
 
 @section('content')
-<div class="container-fluid">
-
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
-        <div>
-            <h2 class="fw-bold mb-1">Adventure Categories</h2>
-
-            <p class="text-muted mb-0">
-                Manage category names, slugs and status.
-            </p>
-        </div>
-
-        <a
-            href="{{ route('admin.adventure-categories.create') }}"
-            class="btn btn-primary">
-            <i class="fas fa-plus me-2"></i>
-            Add Category
-        </a>
-    </div>
-
-    <div class="card border-0 shadow-sm">
-        <div class="card-header bg-white border-bottom py-3">
-            <div class="d-flex justify-content-between align-items-center">
-                <h5 class="fw-semibold mb-0">
-                    Category List
-                </h5>
-
-                <span class="badge bg-light text-dark">
-                    Total: {{ $categories->total() }}
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
+            <div>
+                <span class="ts-page-eyebrow">
+                    Adventures Management
                 </span>
+                <h1>Adventure Categories</h1>
+                <p>Manage category names, slugs and status.</p>
             </div>
+
+            <a href="{{ route('admin.adventure-categories.create') }}" class="ts-primary-btn">
+                <span>+</span> Add Category
+            </a>
         </div>
 
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light">
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>Category List</h2>
+                    <p>Total records: <strong>{{ $categories->total() }}</strong></p>
+                </div>
+            </div>
+
+        @if ($categories->count() > 0)
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
+                    <thead>
                         <tr>
-                            <th class="px-4">ID</th>
+                            <th>ID</th>
                             <th>Name</th>
                             <th>Slug</th>
                             <th>Adventure Content</th>
                             <th>Status</th>
-                            <th class="text-end px-4">Actions</th>
+                            <th class="ts-action-column">Actions</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @forelse ($categories as $category)
+                        @foreach ($categories as $category)
                         <tr>
-                            <td class="px-4">
-                                #{{ $category->id }}
-                            </td>
+                            <td>#{{ $category->id }}</td>
 
                             <td>
                                 <strong>{{ $category->name }}</strong>
@@ -66,99 +57,66 @@
 
                             <td>
                                 @if ($category->adventure)
-                                <span class="badge bg-success">
-                                    Content Added
+                                <span class="ts-status-badge ts-active">
+                                    <span></span> Content Added
                                 </span>
                                 @else
-                                <span class="badge bg-warning text-dark">
-                                    Content Pending
+                                <span class="ts-status-badge ts-inactive">
+                                    <span></span> Content Pending
                                 </span>
                                 @endif
                             </td>
 
                             <td>
                                 @if ($category->status === 'active')
-                                <span class="badge bg-success">
-                                    Active
+                                <span class="ts-status-badge ts-active">
+                                    <span></span> Active
                                 </span>
                                 @else
-                                <span class="badge bg-danger">
-                                    Inactive
+                                <span class="ts-status-badge ts-inactive">
+                                    <span></span> Inactive
                                 </span>
                                 @endif
                             </td>
 
-                            <td class="text-end px-4">
-                                <div class="d-flex justify-content-end gap-2">
-                                    <a
-                                        href="{{ route(
-                                                'admin.adventure-categories.edit',
-                                                $category
-                                            ) }}"
-                                        class="btn btn-sm btn-outline-primary">
-                                        <i class="fas fa-pen me-1"></i>
+                            <td>
+                                <div class="ts-actions">
+                                    <a href="{{ route('admin.adventure-categories.edit', $category) }}" class="ts-action-btn ts-edit-btn">
                                         Edit
                                     </a>
 
-                                    <form
-                                        action="{{ route(
-                                                'admin.adventure-categories.destroy',
-                                                $category
-                                            ) }}"
-                                        method="POST"
-                                        onsubmit="
-                                                return confirm(
-                                                    'Delete this category? Related adventure content will also be deleted.'
-                                                );
-                                            ">
+                                    <form action="{{ route('admin.adventure-categories.destroy', $category) }}" method="POST" onsubmit="return confirm('Delete this category? Related adventure content will also be deleted.');">
                                         @csrf
                                         @method('DELETE')
 
-                                        <button
-                                            type="submit"
-                                            class="btn btn-sm btn-outline-danger">
-                                            <i class="fas fa-trash me-1"></i>
+                                        <button type="submit" class="ts-action-btn ts-delete-btn">
                                             Delete
                                         </button>
                                     </form>
                                 </div>
                             </td>
                         </tr>
-                        @empty
-                        <tr>
-                            <td
-                                colspan="6"
-                                class="text-center py-5">
-                                <div class="text-muted">
-                                    <i class="fas fa-folder-open fa-3x mb-3"></i>
-
-                                    <h5>No Categories Found</h5>
-
-                                    <p>
-                                        Add your first adventure category.
-                                    </p>
-
-                                    <a
-                                        href="{{ route(
-                                                'admin.adventure-categories.create'
-                                            ) }}"
-                                        class="btn btn-primary">
-                                        Add Category
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-        </div>
 
-        @if ($categories->hasPages())
-        <div class="card-footer bg-white border-top py-3">
-            {{ $categories->links() }}
-        </div>
+            @if ($categories->hasPages())
+                <div class="ts-pagination">
+                    {{ $categories->links() }}
+                </div>
+            @endif
+            </div> {{-- end list card for when there are records --}}
+        @else
+            <div class="ts-empty-state">
+                <div class="ts-empty-icon">✦</div>
+                <h3>No Categories Found</h3>
+                <p>Add your first adventure category.</p>
+                <a href="{{ route('admin.adventure-categories.create') }}" class="ts-primary-btn">
+                    Add Category
+                </a>
+            </div>
         @endif
+        </div>
     </div>
-</div>
 @endsection

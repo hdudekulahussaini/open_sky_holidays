@@ -4,21 +4,34 @@
 @section('page-title', 'Tour Features')
 
 @section('content')
-    <div class="admin-card">
-        <div class="admin-card-header">
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
             <div>
-                <h3>Tour Features</h3>
+                <span class="ts-page-eyebrow">
+                    Tour Management
+                </span>
+                <h1>Tour Features</h1>
                 <p>Manage tour package inclusions, highlights, and covered places.</p>
             </div>
 
-            <a href="{{ route('admin.tour-features.create') }}" class="btn btn-primary">
-                + Add Tour Feature
+            <a href="{{ route('admin.tour-features.create') }}" class="ts-primary-btn">
+                <span>+</span> Add Tour Feature
             </a>
         </div>
 
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>Tour Features</h2>
+                    <p>Total records: <strong>{{ $tourFeatures->count() }}</strong></p>
+                </div>
+            </div>
+
         @if ($tourFeatures->count() > 0)
-            <div class="table-responsive">
-                <table class="admin-table">
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -37,30 +50,20 @@
                                 <td>{{ $feature->title }}</td>
                                 <td><span class="toc-count-badge">{{ ucfirst(str_replace('_', ' ', $feature->type ?? 'feature')) }}</span></td>
                                 <td>
-                                    <span class="status-badge {{ $feature->status ? 'status-active' : 'status-inactive' }}">
+                                    <span class="ts-status-badge {{ $feature->status ? 'ts-active' : 'ts-inactive' }}">
+                                        <span></span>
                                         {{ $feature->status ? 'Active' : 'Inactive' }}
                                     </span>
                                 </td>
                                 <td>
-                                    <div class="table-actions">
-                                        <a href="{{ route('admin.tour-features.edit', $feature) }}" class="action-button action-edit">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M12 20h9"></path>
-                                                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"></path>
-                                            </svg>
+                                    <div class="ts-actions">
+                                        <a href="{{ route('admin.tour-features.edit', $feature) }}" class="ts-action-btn ts-edit-btn">
                                             Edit
                                         </a>
                                         <form action="{{ route('admin.tour-features.destroy', $feature) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this feature?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="action-button action-delete">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                                    <path d="M19 6l-1 14H6L5 6"></path>
-                                                    <path d="M10 11v6"></path>
-                                                    <path d="M14 11v6"></path>
-                                                    <path d="M9 6V4h6v2"></path>
-                                                </svg>
+                                            <button type="submit" class="ts-action-btn ts-delete-btn">
                                                 Delete
                                             </button>
                                         </form>
@@ -73,18 +76,21 @@
             </div>
 
             @if ($tourFeatures->hasPages())
-                <div class="pagination-wrapper">
+                <div class="ts-pagination">
                     {{ $tourFeatures->links() }}
                 </div>
             @endif
+            </div> {{-- end list card for when there are records --}}
         @else
-            <div class="empty-table">
-                <strong>No tour features found.</strong>
+            <div class="ts-empty-state">
+                <div class="ts-empty-icon">✦</div>
+                <h3>No tour features found.</h3>
                 <p>Add your first Tour Feature record.</p>
-                <a href="{{ route('admin.tour-features.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.tour-features.create') }}" class="ts-primary-btn">
                     Create Feature
                 </a>
             </div>
         @endif
+        </div>
     </div>
 @endsection

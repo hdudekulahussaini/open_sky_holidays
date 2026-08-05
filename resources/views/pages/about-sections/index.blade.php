@@ -5,12 +5,16 @@
 
 @section('content')
 
-    <div class="admin-card">
+    <div class="ts-page-wrapper">
 
-        <div class="admin-card-header">
-
+        {{-- Page Header --}}
+        <div class="ts-page-header">
             <div>
-                <h3>About Section</h3>
+                <span class="ts-page-eyebrow">
+                    Website Content
+                </span>
+
+                <h1>About Section</h1>
 
                 <p>
                     View and manage the About Section content,
@@ -18,24 +22,32 @@
                 </p>
             </div>
 
-            <div class="admin-header-actions">
+            @if ($aboutSections->total() === 0)
+                <a href="{{ route('admin.about-sections.create') }}"
+                    class="ts-primary-btn">
+                    <span>+</span>
+                    Add About Section
+                </a>
+            @endif
+        </div>
 
-                <div class="enquiry-count">
-                    Total: {{ $aboutSections->total() }}
+        {{-- List Card --}}
+        <div class="ts-list-card">
+
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>About Section</h2>
+
+                    <p>
+                        Total records:
+                        <strong>{{ $aboutSections->total() }}</strong>
+                    </p>
                 </div>
-
-                @if ($aboutSections->total() === 0)
-                    <a href="{{ route('admin.about-sections.create') }}" class="btn btn-primary">
-                        Add About Section
-                    </a>
-                @endif
-
             </div>
 
-        </div>
-        <div class="table-responsive">
+            <div class="ts-table-wrapper">
 
-            <table class="admin-table">
+                <table class="ts-table">
 
                 <thead>
                     <tr>
@@ -121,24 +133,18 @@
 
                             <td>
                                 <span
-                                    class="status-badge {{ $aboutSection->status ? 'status-active' : 'status-inactive' }}">
+                                    class="ts-status-badge {{ $aboutSection->status ? 'ts-active' : 'ts-inactive' }}">
+                                    <span></span>
                                     {{ $aboutSection->status ? 'Active' : 'Inactive' }}
                                 </span>
                             </td>
 
                             <td>
 
-                                <div class="table-actions">
+                                <div class="ts-actions">
 
                                     <a href="{{ route('admin.about-sections.edit', $aboutSection) }}"
-                                        class="action-button action-edit">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M12 20h9"></path>
-
-                                            <path d="M16.5 3.5a2.12 2.12 0 0 1
-                                                        3 3L7 19l-4 1 1-4z"></path>
-                                        </svg>
-
+                                        class="ts-action-btn ts-edit-btn">
                                         Edit
                                     </a>
 
@@ -151,19 +157,7 @@
                                         @csrf
                                         @method('DELETE')
 
-                                        <button type="submit" class="action-button action-delete">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"></polyline>
-
-                                                <path d="M19 6l-1 14H6L5 6"></path>
-
-                                                <path d="M10 11v6"></path>
-
-                                                <path d="M14 11v6"></path>
-
-                                                <path d="M9 6V4h6v2"></path>
-                                            </svg>
-
+                                        <button type="submit" class="ts-action-btn ts-delete-btn">
                                             Delete
                                         </button>
 
@@ -178,21 +172,23 @@
                     @empty
 
                         <tr>
-                            <td colspan="9" class="empty-table">
+                            <td colspan="9">
+                                <div class="ts-empty-state">
+                                    <div class="ts-empty-icon">
+                                        ✦
+                                    </div>
 
-                                <strong>
-                                    No About Section found.
-                                </strong>
+                                    <h3>No About Section found.</h3>
 
-                                <p>
-                                    Create an About Section to manage
-                                    your website content.
-                                </p>
+                                    <p>
+                                        Create an About Section to manage
+                                        your website content.
+                                    </p>
 
-                                <a href="{{ route('admin.about-sections.create') }}" class="btn btn-primary">
-                                    Add About Section
-                                </a>
-
+                                    <a href="{{ route('admin.about-sections.create') }}" class="ts-primary-btn">
+                                        Add About Section
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     @endforelse
@@ -204,11 +200,11 @@
         </div>
 
         @if ($aboutSections->hasPages())
-            <div class="pagination-wrapper">
+            <div class="ts-pagination">
                 {{ $aboutSections->links() }}
             </div>
         @endif
-
+        </div>
     </div>
 
 @endsection

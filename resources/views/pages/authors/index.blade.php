@@ -4,23 +4,34 @@
 @section('page-title', 'Authors')
 
 @section('content')
-    <div class="admin-card">
-
-        <div class="admin-card-header">
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
             <div>
-                <h3>Blog Authors</h3>
+                <span class="ts-page-eyebrow">
+                    Website Content
+                </span>
+                <h1>Blog Authors</h1>
                 <p>Manage blog authors and their social profiles.</p>
             </div>
 
-            <a href="{{ route('admin.authors.create') }}" class="btn btn-primary">
-                Add Author
+            <a href="{{ route('admin.authors.create') }}" class="ts-primary-btn">
+                <span>+</span> Add Author
             </a>
         </div>
 
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>Blog Authors</h2>
+                    <p>Total records: <strong>{{ $authors->count() }}</strong></p>
+                </div>
+            </div>
 
         @if ($authors->count() > 0)
-            <div class="table-responsive">
-                <table class="admin-table">
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -28,7 +39,7 @@
                             <th>Description</th>
                             <th>Status</th>
                             <th>Created</th>
-                            <th>Actions</th>
+                            <th class="ts-action-column">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,7 +66,8 @@
                                 </td>
                                 <td>{{ \Illuminate\Support\Str::limit($author->description, 80) }}</td>
                                 <td>
-                                    <span class="status-badge {{ $author->status ? 'status-active' : 'status-inactive' }}">
+                                    <span class="ts-status-badge {{ $author->status ? 'ts-active' : 'ts-inactive' }}">
+                                        <span></span>
                                         {{ $author->status ? 'Active' : 'Inactive' }}
                                     </span>
                                 </td>
@@ -63,25 +75,14 @@
                                     {{ $author->created_at ? $author->created_at->format('d M Y') : 'Not Set' }}
                                 </td>
                                 <td>
-                                    <div class="table-actions">
-                                        <a href="{{ route('admin.authors.edit', $author) }}" class="action-button action-edit">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M12 20h9"></path>
-                                                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"></path>
-                                            </svg>
+                                    <div class="ts-actions">
+                                        <a href="{{ route('admin.authors.edit', $author) }}" class="ts-action-btn ts-edit-btn">
                                             Edit
                                         </a>
                                         <form action="{{ route('admin.authors.destroy', $author) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this author?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="action-button action-delete">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                                    <path d="M19 6l-1 14H6L5 6"></path>
-                                                    <path d="M10 11v6"></path>
-                                                    <path d="M14 11v6"></path>
-                                                    <path d="M9 6V4h6v2"></path>
-                                                </svg>
+                                            <button type="submit" class="ts-action-btn ts-delete-btn">
                                                 Delete
                                             </button>
                                         </form>
@@ -94,19 +95,21 @@
             </div>
 
             @if ($authors->hasPages())
-                <div class="pagination-wrapper" style="padding: 20px 24px;">
+                <div class="ts-pagination">
                     {{ $authors->links() }}
                 </div>
             @endif
+            </div>
         @else
-            <div class="empty-table" style="padding: 40px; text-align: center;">
-                <strong>No authors found.</strong>
+            <div class="ts-empty-state">
+                <div class="ts-empty-icon">✦</div>
+                <h3>No authors found.</h3>
                 <p>Create your first blog author.</p>
-                <a href="{{ route('admin.authors.create') }}" class="btn btn-primary" style="margin-top: 15px;">
+                <a href="{{ route('admin.authors.create') }}" class="ts-primary-btn">
                     Create Author
                 </a>
             </div>
         @endif
-
+        </div>
     </div>
 @endsection

@@ -4,21 +4,34 @@
 @section('page-title', 'What We Offer')
 
 @section('content')
-    <div class="admin-card">
-        <div class="admin-card-header">
+    <div class="ts-page-wrapper">
+        {{-- Page Header --}}
+        <div class="ts-page-header">
             <div>
-                <h3>What We Offer</h3>
+                <span class="ts-page-eyebrow">
+                    Website Content
+                </span>
+                <h1>What We Offer</h1>
                 <p>Manage travel solutions, descriptions, images, and status.</p>
             </div>
 
-            <a href="{{ route('admin.what-we-offers.create') }}" class="btn btn-primary">
-                + Add Offer
+            <a href="{{ route('admin.what-we-offers.create') }}" class="ts-primary-btn">
+                <span>+</span> Add Offer
             </a>
         </div>
 
+        {{-- List Card --}}
+        <div class="ts-list-card">
+            <div class="ts-list-card-header">
+                <div>
+                    <h2>What We Offer</h2>
+                    <p>Total records: <strong>{{ $whatWeOffers->count() }}</strong></p>
+                </div>
+            </div>
+
         @if ($whatWeOffers->count() > 0)
-            <div class="table-responsive">
-                <table class="admin-table">
+            <div class="ts-table-wrapper">
+                <table class="ts-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -45,30 +58,20 @@
                                 <td>{{ $offer->subtitle ?? '-' }}</td>
                                 <td>{{ \Illuminate\Support\Str::limit($offer->description, 90) }}</td>
                                 <td>
-                                    <span class="status-badge {{ $offer->status ? 'status-active' : 'status-inactive' }}">
+                                    <span class="ts-status-badge {{ $offer->status ? 'ts-active' : 'ts-inactive' }}">
+                                        <span></span>
                                         {{ $offer->status ? 'Active' : 'Inactive' }}
                                     </span>
                                 </td>
                                 <td>
-                                    <div class="table-actions">
-                                        <a href="{{ route('admin.what-we-offers.edit', $offer) }}" class="action-button action-edit">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M12 20h9"></path>
-                                                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"></path>
-                                            </svg>
+                                    <div class="ts-actions">
+                                        <a href="{{ route('admin.what-we-offers.edit', $offer) }}" class="ts-action-btn ts-edit-btn">
                                             Edit
                                         </a>
                                         <form action="{{ route('admin.what-we-offers.destroy', $offer) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this offer?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="action-button action-delete">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                                    <path d="M19 6l-1 14H6L5 6"></path>
-                                                    <path d="M10 11v6"></path>
-                                                    <path d="M14 11v6"></path>
-                                                    <path d="M9 6V4h6v2"></path>
-                                                </svg>
+                                            <button type="submit" class="ts-action-btn ts-delete-btn">
                                                 Delete
                                             </button>
                                         </form>
@@ -81,18 +84,21 @@
             </div>
 
             @if ($whatWeOffers->hasPages())
-                <div class="pagination-wrapper">
+                <div class="ts-pagination">
                     {{ $whatWeOffers->links() }}
                 </div>
             @endif
+            </div> {{-- end list card for when there are records --}}
         @else
-            <div class="empty-table">
-                <strong>No items found.</strong>
+            <div class="ts-empty-state">
+                <div class="ts-empty-icon">✦</div>
+                <h3>No items found.</h3>
                 <p>Add your first What We Offer item.</p>
-                <a href="{{ route('admin.what-we-offers.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.what-we-offers.create') }}" class="ts-primary-btn">
                     Create Item
                 </a>
             </div>
         @endif
+        </div>
     </div>
 @endsection
