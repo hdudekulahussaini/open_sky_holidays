@@ -81,27 +81,32 @@
                 </button>
             </div>
 
-            <div id="featuresContainer" class="ts-features-container">
+            <div id="featuresContainer" class="ts-features-container mt-3">
                 @foreach ($featureValues as $index => $feature)
-                    <div class="ts-feature-row">
-                        <div class="ts-feature-number">
-                            {{ $index + 1 }}
+                    <div class="feature-card border rounded-3 p-3 mb-3 js-feature-row" style="background: #f8fafc; border-color: #e2e8f0 !important;">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center gap-3 flex-grow-1 me-3">
+                                <span class="ts-feature-number fw-bold text-primary fs-5" style="min-width: 30px;">
+                                    {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}.
+                                </span>
+                                
+                                <div class="flex-grow-1">
+                                    <input type="text" name="features[]"
+                                        class="ts-input w-100 m-0 ts-feature-input @error('features.' . $index) ts-input-error @enderror"
+                                        value="{{ $feature }}" placeholder="Enter feature">
+                                    
+                                    @error('features.' . $index)
+                                        <span class="ts-error-message ts-feature-error">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-sm btn-outline-danger ts-remove-feature-btn" title="Remove feature">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
                         </div>
-
-                        <input type="text" name="features[]"
-                            class="ts-input ts-feature-input
-                                @error('features.' . $index) ts-input-error @enderror"
-                            value="{{ $feature }}" placeholder="Enter feature">
-
-                        <button type="button" class="ts-remove-feature-btn" title="Remove feature">
-                            ×
-                        </button>
-
-                        @error('features.' . $index)
-                            <span class="ts-error-message ts-feature-error">
-                                {{ $message }}
-                            </span>
-                        @enderror
                     </div>
                 @endforeach
             </div>
@@ -202,40 +207,37 @@
             const imagePlaceholder = document.getElementById('imagePlaceholder');
 
             function updateFeatureNumbers() {
-                const rows = container.querySelectorAll('.ts-feature-row');
+                const rows = container.querySelectorAll('.js-feature-row');
 
                 rows.forEach(function(row, index) {
                     const number = row.querySelector('.ts-feature-number');
 
                     if (number) {
-                        number.textContent = index + 1;
+                        number.textContent = String(index + 1).padStart(2, '0') + '.';
                     }
                 });
             }
 
             function createFeatureRow() {
                 const row = document.createElement('div');
-
-                row.className = 'ts-feature-row';
+                row.className = 'feature-card border rounded-3 p-3 mb-3 js-feature-row';
+                row.style.cssText = 'background: #f8fafc; border-color: #e2e8f0 !important;';
 
                 row.innerHTML = `
-            <div class="ts-feature-number"></div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center gap-3 flex-grow-1 me-3">
+                            <span class="ts-feature-number fw-bold text-primary fs-5" style="min-width: 30px;"></span>
+                            
+                            <div class="flex-grow-1">
+                                <input type="text" name="features[]" class="ts-input w-100 m-0 ts-feature-input" placeholder="Enter feature" required>
+                            </div>
+                        </div>
 
-            <input
-                type="text"
-                name="features[]"
-                class="ts-input ts-feature-input"
-                placeholder="Enter feature"
-            >
-
-            <button
-                type="button"
-                class="ts-remove-feature-btn"
-                title="Remove feature"
-            >
-                ×
-            </button>
-        `;
+                        <button type="button" class="btn btn-sm btn-outline-danger ts-remove-feature-btn" title="Remove feature">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                `;
 
                 container.appendChild(row);
                 updateFeatureNumbers();
@@ -254,7 +256,7 @@
                     return;
                 }
 
-                const rows = container.querySelectorAll('.ts-feature-row');
+                const rows = container.querySelectorAll('.js-feature-row');
 
                 if (rows.length === 1) {
                     const input = rows[0].querySelector('input');
@@ -263,7 +265,7 @@
                     return;
                 }
 
-                removeButton.closest('.ts-feature-row').remove();
+                removeButton.closest('.js-feature-row').remove();
                 updateFeatureNumbers();
             });
 

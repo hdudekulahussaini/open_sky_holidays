@@ -1,33 +1,34 @@
 @extends('admin.layouts.app')
 
 @section('title', 'Edit Tour Type')
+@section('page-title', 'Tour Types')
 
 @section('content')
-    <div class="admin-page-header">
-        <div>
-            <h1>Edit Tour Type</h1>
-
-            <p>
-                Update the {{ $tourType->name }} tour category.
-            </p>
+    <div class="admin-form-card">
+        <div class="admin-form-header">
+            <div class="admin-form-header-content">
+                <h3>Edit Tour Type</h3>
+                <p>Update the {{ $tourType->name }} tour category.</p>
+            </div>
+            <a href="{{ route('admin.tour-types.index') }}" class="btn btn-light">Back</a>
         </div>
-    </div>
 
-    @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
+        <div class="admin-form-body">
+            @if (session('error'))
+                <div class="alert alert-danger mb-4">{{ session('error') }}</div>
+            @endif
+
+            <form action="{{ route('admin.tour-types.update', $tourType) }}" method="POST" class="admin-form">
+                @csrf
+                @method('PUT')
+
+                @include('pages.tour-types.form')
+
+                <div class="admin-form-actions">
+                    <a href="{{ route('admin.tour-types.index') }}" class="btn btn-light">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Update Tour Type</button>
+                </div>
+            </form>
         </div>
-    @endif
-
-    <div class="admin-card">
-        <form
-            action="{{ route('admin.tour-types.update', $tourType) }}"
-            method="POST"
-        >
-            @csrf
-            @method('PUT')
-
-            @include('pages.tour-types.form')
-        </form>
     </div>
 @endsection
