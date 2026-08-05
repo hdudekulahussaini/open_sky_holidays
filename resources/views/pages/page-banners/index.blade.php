@@ -92,15 +92,22 @@
 
                             <td>
                                 <div class="ts-actions">
-                                    <a href="{{ route('admin.page-banners.edit', $banner) }}" class="ts-action-btn ts-edit-btn">
+                                    <a
+                                        href="{{ route('admin.page-banners.edit', $banner) }}"
+                                        class="ts-action-btn ts-edit-btn">
                                         Edit
                                     </a>
 
-                                    <form action="{{ route('admin.page-banners.destroy', $banner) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this banner?')">
+                                    <form
+                                        action="{{ route('admin.page-banners.destroy', $banner) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Delete this banner?')">
                                         @csrf
                                         @method('DELETE')
 
-                                        <button type="submit" class="ts-action-btn ts-delete-btn">
+                                        <button
+                                            type="submit"
+                                            class="ts-action-btn ts-delete-btn">
                                             Delete
                                         </button>
                                     </form>

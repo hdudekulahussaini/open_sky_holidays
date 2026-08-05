@@ -32,14 +32,18 @@
                 <table class="ts-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Image</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Button Text & Link</th>
-                            <th>Status</th>
-                            <th>Slider Order</th>
-                            <th class="ts-action-column">Actions</th>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Button Text & Link</th>
+                                    <th>Status</th>
+                                    <th>Slider Order</th>
+                                    <th class="ts-action-column">Actions</th>
+                                </tr>
+                            </thead>
                         </tr>
                     </thead>
 
@@ -89,15 +93,21 @@
 
                             <td>
                                 <div class="ts-actions">
-                                    <a href="{{ route('admin.heroes.edit', $hero) }}" class="ts-action-btn ts-edit-btn">
+                                    <a href="{{ route('admin.heroes.edit', $hero) }}"
+                                        class="ts-action-btn ts-edit-btn">
                                         Edit
                                     </a>
 
-                                    <form action="{{ route('admin.heroes.destroy', $hero) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this hero?')">
+                                    <form
+                                        action="{{ route('admin.heroes.destroy', $hero) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Delete this hero?')">
                                         @csrf
                                         @method('DELETE')
 
-                                        <button type="submit" class="ts-action-btn ts-delete-btn">
+                                        <button
+                                            type="submit"
+                                            class="ts-action-btn ts-delete-btn">
                                             Delete
                                         </button>
                                     </form>

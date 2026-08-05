@@ -63,7 +63,7 @@
                                         <a href="{{ route('admin.categories.edit', $category) }}" class="ts-action-btn ts-edit-btn">
                                             Edit
                                         </a>
-                                        <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this category?')">
+                                        <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this category?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="ts-action-btn ts-delete-btn">

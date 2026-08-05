@@ -58,7 +58,7 @@
                                         <a href="{{ route('admin.core-values.edit', $coreValue) }}" class="ts-action-btn ts-edit-btn">
                                             Edit
                                         </a>
-                                        <form action="{{ route('admin.core-values.destroy', $coreValue) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this core value?')">
+                                        <form action="{{ route('admin.core-values.destroy', $coreValue) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this core value?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="ts-action-btn ts-delete-btn">

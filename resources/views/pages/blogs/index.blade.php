@@ -76,7 +76,9 @@
                                 <td>{{ $blog->author?->name ?? 'Open Sky Team' }}</td>
                                 <td>
                                     @php
-                                        $tocCount = is_array($blog->table_of_contents) ? count($blog->table_of_contents) : 0;
+                                        $tocCount = $blog->sections
+                                            ? count($blog->sections)
+                                            : 0;
                                     @endphp
                                     <span class="ts-status-badge ts-primary">
                                         <span></span>
@@ -98,9 +100,12 @@
                                         <a href="{{ route('admin.blogs.edit', $blog) }}" class="ts-action-btn ts-edit-btn">
                                             Edit
                                         </a>
-                                        <form action="{{ route('admin.blogs.destroy', $blog) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this blog?')">
+
+                                        <form action="{{ route('admin.blogs.destroy', $blog) }}" method="POST"
+                                            onsubmit="return confirm('Are you sure you want to delete this blog?')">
                                             @csrf
                                             @method('DELETE')
+
                                             <button type="submit" class="ts-action-btn ts-delete-btn">
                                                 Delete
                                             </button>

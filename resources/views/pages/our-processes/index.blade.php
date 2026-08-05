@@ -38,7 +38,7 @@
                             <th>Heading</th>
                             <th>Description</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <th class="ts-action-column">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,7 +63,7 @@
                                         <a href="{{ route('admin.our-processes.edit', $ourProcess) }}" class="ts-action-btn ts-edit-btn">
                                             Edit
                                         </a>
-                                        <form action="{{ route('admin.our-processes.destroy', $ourProcess) }}" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this process?')">
+                                        <form action="{{ route('admin.our-processes.destroy', $ourProcess) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this process?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="ts-action-btn ts-delete-btn">

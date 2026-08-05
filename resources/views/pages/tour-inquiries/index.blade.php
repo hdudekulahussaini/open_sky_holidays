@@ -57,7 +57,7 @@
                         <th>Travelers</th>
                         <th>Submitted Date</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <th class="ts-action-column">Actions</th>
                     </tr>
                 </thead>
 
@@ -115,14 +115,24 @@
 
                             <td>
                                 <div class="ts-actions">
-                                    <a href="{{ route('admin.tour-inquiries.show', $inquiry) }}" class="ts-action-btn ts-edit-btn" title="View Details">
+                                    <a
+                                        href="{{ route('admin.tour-inquiries.show', $inquiry) }}"
+                                        class="ts-action-btn"
+                                    >
                                         View
                                     </a>
 
-                                    <form method="POST" action="{{ route('admin.tour-inquiries.destroy', $inquiry) }}" onsubmit="return confirm('Are you sure you want to delete this tour inquiry? This action cannot be undone.');">
+                                    <form
+                                        method="POST"
+                                        action="{{ route('admin.tour-inquiries.destroy', $inquiry) }}"
+                                        onsubmit="return confirm('Are you sure you want to delete this tour inquiry? This action cannot be undone.');"
+                                    >
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="ts-action-btn ts-delete-btn" title="Delete Inquiry">
+                                        <button
+                                            type="submit"
+                                            class="ts-action-btn ts-delete-btn"
+                                        >
                                             Delete
                                         </button>
                                     </form>
