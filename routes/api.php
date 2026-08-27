@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AboutWhyChooseUsController;
 use App\Http\Controllers\Api\AdventureCategoryController;
 use App\Http\Controllers\Api\AdventureController;
 use App\Http\Controllers\Api\BlogController;
+use App\Http\Controllers\Api\ContactSectionController;
 use App\Http\Controllers\Api\CoreValueController;
 use App\Http\Controllers\Api\CounterController;
 use App\Http\Controllers\Api\EnquiryController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Api\OurStoryController;
 use App\Http\Controllers\Api\PageBannerController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\TestimonialController;
+use App\Http\Controllers\Api\TopHeaderController;
 use App\Http\Controllers\Api\TourController;
 use App\Http\Controllers\Api\TourDetailController;
 use App\Http\Controllers\Api\TourFeatureController;
@@ -259,3 +261,35 @@ Route::apiResource('tours', TourController::class);
 Route::apiResource('tour-inquiries', TourInquiryController::class);
 Route::apiResource('tour-details', TourDetailController::class);
 Route::apiResource('tour-features', TourFeatureController::class);
+
+/*
+|--------------------------------------------------------------------------
+| Contact Section
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/contact-section/active', [
+    ContactSectionController::class,
+    'active',
+])->name('api.contact-section.active');
+
+Route::apiResource(
+    'contact-sections',
+    ContactSectionController::class
+);
+
+/*
+|--------------------------------------------------------------------------
+| Top Header
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/top-header/active', [
+    TopHeaderController::class,
+    'active',
+])->name('api.top-header.active');
+
+Route::apiResource(
+    'top-headers',
+    TopHeaderController::class
+);

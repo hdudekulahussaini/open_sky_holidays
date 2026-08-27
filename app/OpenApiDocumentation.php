@@ -34,6 +34,7 @@ use OpenApi\Attributes as OA;
 #[OA\Tag(name: 'Core Values', description: 'Company core values')]
 #[OA\Tag(name: 'Counters', description: 'Homepage statistic counters')]
 #[OA\Tag(name: 'Our Story', description: 'Company history and story')]
+#[OA\Tag(name: 'Contact Section', description: 'Contact page details, support cards, phone, email, and office location')]
 class OpenApiDocumentation
 {
 }

@@ -16,6 +16,7 @@ class UpdateWhyChooseSectionRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
+            'icon' => ['nullable', 'string', 'max:255'],
             'background_color' => [
                 'nullable',
                 'string',

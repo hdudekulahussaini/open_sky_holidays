@@ -154,6 +154,7 @@ class OpenApiSchemas
             new OA\Property(property: 'id', type: 'integer', example: 1),
             new OA\Property(property: 'title', type: 'string', example: '24/7 Dedicated Support'),
             new OA\Property(property: 'description', type: 'string', example: 'Our team is available round the clock to assist you.'),
+            new OA\Property(property: 'icon', type: 'string', example: 'fa-solid fa-headset', nullable: true),
             new OA\Property(property: 'background_color', type: 'string', example: '#ffffff'),
             new OA\Property(property: 'text_color', type: 'string', example: '#000000'),
             new OA\Property(property: 'sort_order', type: 'integer', example: 1),
@@ -394,5 +395,91 @@ class OpenApiSchemas
         ]
     )]
     public static function whatWeOfferSchema() {}
+
+    #[OA\Schema(
+        schema: 'ContactSectionInput',
+        type: 'object',
+        properties: [
+            new OA\Property(property: 'phone', type: 'string', example: '+91 99081 17712', nullable: true),
+            new OA\Property(property: 'email', type: 'string', example: 'info@openskyholidays.com', nullable: true),
+            new OA\Property(property: 'address', type: 'string', example: '#1-11-110, Shyamlal Building, Begumpet, Hyderabad - 500018', nullable: true),
+            new OA\Property(property: 'map_link', type: 'string', example: 'https://www.google.com/maps/search/?api=1&query=Shyamlal+Building+Begumpet+Hyderabad+500018', nullable: true),
+            new OA\Property(property: 'whatsapp_number', type: 'string', example: '+91 99081 17712', nullable: true),
+            new OA\Property(property: 'map_embed_url', type: 'string', example: 'https://maps.google.com/maps?q=Begumpet&output=embed', nullable: true),
+            new OA\Property(property: 'status', type: 'boolean', example: true),
+        ]
+    )]
+    public static function contactSectionInputSchema() {}
+
+    #[OA\Schema(
+        schema: 'ContactSection',
+        type: 'object',
+        properties: [
+            new OA\Property(property: 'id', type: 'integer', example: 1),
+            new OA\Property(property: 'phone', type: 'string', example: '+91 99081 17712'),
+            new OA\Property(property: 'email', type: 'string', example: 'info@openskyholidays.com'),
+            new OA\Property(property: 'address', type: 'string', example: '#1-11-110, Shyamlal Building, Begumpet, Hyderabad - 500018'),
+            new OA\Property(property: 'map_link', type: 'string', example: 'https://www.google.com/maps/search/?api=1&query=Shyamlal+Building+Begumpet+Hyderabad+500018'),
+            new OA\Property(property: 'whatsapp_number', type: 'string', example: '+91 99081 17712'),
+            new OA\Property(property: 'map_embed_url', type: 'string', example: 'https://maps.google.com/maps?q=Begumpet&output=embed', nullable: true),
+            new OA\Property(property: 'status', type: 'boolean', example: true),
+            new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-08-20T11:00:00.000000Z'),
+            new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-08-20T11:00:00.000000Z'),
+        ]
+    )]
+    public static function contactSectionSchema() {}
+
+    #[OA\Schema(
+        schema: 'TopHeaderInput',
+        type: 'object',
+        properties: [
+            new OA\Property(property: 'email', type: 'string', example: 'info@openskyholidays.com', nullable: true),
+            new OA\Property(property: 'tagline', type: 'string', example: 'The World Is Waiting. One Stop Destination For All Your Tours & Travels Needs.', nullable: true),
+            new OA\Property(property: 'button_text', type: 'string', example: 'Book Your Tour', nullable: true),
+            new OA\Property(property: 'button_url', type: 'string', example: '/tours', nullable: true),
+            new OA\Property(
+                property: 'social_links',
+                type: 'array',
+                items: new OA\Items(
+                    properties: [
+                        new OA\Property(property: 'platform', type: 'string', example: 'facebook'),
+                        new OA\Property(property: 'icon', type: 'string', example: 'fa-brands fa-facebook-f'),
+                        new OA\Property(property: 'url', type: 'string', example: 'https://facebook.com/openskyholidays'),
+                    ]
+                ),
+                nullable: true
+            ),
+            new OA\Property(property: 'status', type: 'boolean', example: true),
+        ]
+    )]
+    public static function topHeaderInputSchema() {}
+
+    #[OA\Schema(
+        schema: 'TopHeader',
+        type: 'object',
+        properties: [
+            new OA\Property(property: 'id', type: 'integer', example: 1),
+            new OA\Property(property: 'email', type: 'string', example: 'info@openskyholidays.com'),
+            new OA\Property(property: 'tagline', type: 'string', example: 'The World Is Waiting. One Stop Destination For All Your Tours & Travels Needs.'),
+            new OA\Property(property: 'button_text', type: 'string', example: 'Book Your Tour'),
+            new OA\Property(property: 'button_url', type: 'string', example: '/tours'),
+            new OA\Property(
+                property: 'social_links',
+                type: 'array',
+                items: new OA\Items(
+                    properties: [
+                        new OA\Property(property: 'platform', type: 'string', example: 'facebook'),
+                        new OA\Property(property: 'icon', type: 'string', example: 'fa-brands fa-facebook-f'),
+                        new OA\Property(property: 'url', type: 'string', example: 'https://facebook.com/openskyholidays'),
+                    ]
+                )
+            ),
+            new OA\Property(property: 'status', type: 'boolean', example: true),
+            new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-08-27T12:00:00.000000Z'),
+            new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-08-27T12:00:00.000000Z'),
+        ]
+    )]
+    public static function topHeaderSchema() {}
 }
+
 

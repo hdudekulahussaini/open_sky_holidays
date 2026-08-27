@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ContactSectionController;
 use App\Http\Controllers\Admin\CoreValueController;
 use App\Http\Controllers\Admin\CounterController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\Admin\TourDetailController;
 use App\Http\Controllers\Admin\TourFeatureController;
 use App\Http\Controllers\Admin\TourInquiryController;
 use App\Http\Controllers\Admin\TourTypeController;
+use App\Http\Controllers\Admin\TopHeaderController;
 use App\Http\Controllers\Admin\TravelSupportSectionController;
 use App\Http\Controllers\Admin\WhatWeOfferController;
 use App\Http\Controllers\Admin\WhyChooseSectionController;
@@ -153,6 +155,8 @@ Route::prefix('admin')
             Route::resource('tour-inquiries', TourInquiryController::class)->except(['create', 'store', 'edit']);
             Route::resource('tour-details', TourDetailController::class);
             Route::resource('tour-features', TourFeatureController::class);
+            Route::resource('contact-sections', ContactSectionController::class);
+            Route::resource('top-headers', TopHeaderController::class);
 
             /*
             |--------------------------------------------------------------------------

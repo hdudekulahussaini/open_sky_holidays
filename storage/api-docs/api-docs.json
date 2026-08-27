@@ -881,6 +881,323 @@
                 }
             }
         },
+        "/api/contact-section/active": {
+            "get": {
+                "tags": [
+                    "Contact Section"
+                ],
+                "summary": "Get active contact section data",
+                "description": "Retrieves the active contact information section for the website contact page.",
+                "operationId": "ebffd429abe241c623db5e91a5af6970",
+                "responses": {
+                    "200": {
+                        "description": "Active contact section retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Active contact section retrieved successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/ContactSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No active contact section found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No active contact section found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/contact-sections": {
+            "get": {
+                "tags": [
+                    "Contact Section"
+                ],
+                "summary": "List all contact sections",
+                "description": "Retrieves all contact section records.",
+                "operationId": "2fff65d4bf270cf914ae9bc824f79c5b",
+                "responses": {
+                    "200": {
+                        "description": "Contact sections retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Contact sections retrieved successfully."
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ContactSection"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Contact Section"
+                ],
+                "summary": "Create a new contact section",
+                "description": "Stores a new contact section record.",
+                "operationId": "774f040a633cf6e47d14a15c443d1a5b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ContactSectionInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Contact section created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Contact section created successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/ContactSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/contact-sections/{id}": {
+            "get": {
+                "tags": [
+                    "Contact Section"
+                ],
+                "summary": "Get a specific contact section",
+                "description": "Retrieves a single contact section by its ID.",
+                "operationId": "df0b9d8630eb061c9b001add09716428",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the contact section",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Contact section retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Contact section retrieved successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/ContactSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Contact section not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Contact section not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Contact Section"
+                ],
+                "summary": "Update an existing contact section",
+                "description": "Updates a contact section by its ID.",
+                "operationId": "85035c15779c62ffde68cca03fd4b649",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the contact section to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ContactSectionInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Contact section updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Contact section updated successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/ContactSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Contact Section"
+                ],
+                "summary": "Delete a contact section",
+                "description": "Deletes a contact section by its ID.",
+                "operationId": "6161b496133bf0b0e4a3d532a6a35acc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the contact section to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Contact section deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Contact section deleted successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/core-values": {
             "get": {
                 "tags": [
@@ -4145,6 +4462,93 @@
                     }
                 },
                 "type": "object"
+            },
+            "ContactSectionInput": {
+                "properties": {
+                    "phone": {
+                        "type": "string",
+                        "example": "+91 99081 17712",
+                        "nullable": true
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "info@openskyholidays.com",
+                        "nullable": true
+                    },
+                    "address": {
+                        "type": "string",
+                        "example": "#1-11-110, Shyamlal Building, Begumpet, Hyderabad - 500018",
+                        "nullable": true
+                    },
+                    "map_link": {
+                        "type": "string",
+                        "example": "https://www.google.com/maps/search/?api=1&query=Shyamlal+Building+Begumpet+Hyderabad+500018",
+                        "nullable": true
+                    },
+                    "whatsapp_number": {
+                        "type": "string",
+                        "example": "+91 99081 17712",
+                        "nullable": true
+                    },
+                    "map_embed_url": {
+                        "type": "string",
+                        "example": "https://maps.google.com/maps?q=Begumpet&output=embed",
+                        "nullable": true
+                    },
+                    "status": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                },
+                "type": "object"
+            },
+            "ContactSection": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "+91 99081 17712"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "info@openskyholidays.com"
+                    },
+                    "address": {
+                        "type": "string",
+                        "example": "#1-11-110, Shyamlal Building, Begumpet, Hyderabad - 500018"
+                    },
+                    "map_link": {
+                        "type": "string",
+                        "example": "https://www.google.com/maps/search/?api=1&query=Shyamlal+Building+Begumpet+Hyderabad+500018"
+                    },
+                    "whatsapp_number": {
+                        "type": "string",
+                        "example": "+91 99081 17712"
+                    },
+                    "map_embed_url": {
+                        "type": "string",
+                        "example": "https://maps.google.com/maps?q=Begumpet&output=embed",
+                        "nullable": true
+                    },
+                    "status": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2026-08-20T11:00:00.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2026-08-20T11:00:00.000000Z"
+                    }
+                },
+                "type": "object"
             }
         }
     },
@@ -4232,6 +4636,10 @@
         {
             "name": "Our Story",
             "description": "Company history and story"
+        },
+        {
+            "name": "Contact Section",
+            "description": "Contact page details, support cards, phone, email, and office location"
         },
         {
             "name": "What We Offer",

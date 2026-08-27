@@ -31,6 +31,11 @@
                 <i class="fa-solid fa-chevron-down chevron-icon"></i>
             </button>
             <div class="nav-dropdown-menu">
+   
+                <a href="{{ route('admin.top-headers.index') }}" class="nav-item {{ request()->routeIs('admin.top-headers.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-heading menu-icon"></i>
+                    <span>Top Header Bar</span>
+                </a>
                 <a href="{{ route('admin.heroes.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.heroes.*') ? 'active' : '' }}">
                     <i class="fa-solid fa-sliders submenu-icon"></i>
                     <span>Hero Slides</span>
@@ -42,6 +47,48 @@
                 <a href="{{ route('admin.offer-banners.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.offer-banners.*') ? 'active' : '' }}">
                     <i class="fa-solid fa-tags submenu-icon"></i>
                     <span>Offer Banners</span>
+                </a>
+            </div>
+        </div>
+
+                <!-- About Management Dropdown -->
+        <div class="nav-dropdown-wrapper {{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*', 'admin.what-we-offers.*', 'admin.about-why-choose-us.*', 'admin.about-our-core-values.*') ? 'open' : '' }}">
+            <button
+                type="button"
+                class="nav-dropdown-toggle nav-item {{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*', 'admin.what-we-offers.*', 'admin.about-why-choose-us.*', 'admin.about-our-core-values.*') ? 'active' : '' }}"
+                aria-expanded="{{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*', 'admin.what-we-offers.*', 'admin.about-why-choose-us.*', 'admin.about-our-core-values.*') ? 'true' : 'false' }}">
+                <i class="fa-solid fa-circle-info menu-icon"></i>
+                <span>About Management</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+            </button>
+            <div class="nav-dropdown-menu">
+                <a href="{{ route('admin.about-sections.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.about-sections.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-building submenu-icon"></i>
+                    <span>About Section</span>
+                </a>
+                <a href="{{ route('admin.our-stories.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.our-stories.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-book-open submenu-icon"></i>
+                    <span>Our Story</span>
+                </a>
+                <a href="{{ route('admin.our-processes.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.our-processes.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-gears submenu-icon"></i>
+                    <span>Our Process</span>
+                </a>
+                <a href="{{ route('admin.counters.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.counters.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-calculator submenu-icon"></i>
+                    <span>Counters</span>
+                </a>
+                <a href="{{ route('admin.what-we-offers.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.what-we-offers.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-handshake submenu-icon"></i>
+                    <span>What We Offer</span>
+                </a>
+                <a href="{{ route('admin.about-why-choose-us.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.about-why-choose-us.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-award submenu-icon"></i>
+                    <span>Why Choose Us</span>
+                </a>
+                <a href="{{ route('admin.about-our-core-values.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.about-our-core-values.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-heart submenu-icon"></i>
+                    <span>Core Values</span>
                 </a>
             </div>
         </div>
@@ -134,48 +181,6 @@
             <span>Services</span>
         </a>
 
-        <!-- About Management Dropdown -->
-        <div class="nav-dropdown-wrapper {{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*', 'admin.what-we-offers.*', 'admin.about-why-choose-us.*', 'admin.about-our-core-values.*') ? 'open' : '' }}">
-            <button
-                type="button"
-                class="nav-dropdown-toggle nav-item {{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*', 'admin.what-we-offers.*', 'admin.about-why-choose-us.*', 'admin.about-our-core-values.*') ? 'active' : '' }}"
-                aria-expanded="{{ request()->routeIs('admin.about-sections.*', 'admin.our-stories.*', 'admin.our-processes.*', 'admin.counters.*', 'admin.what-we-offers.*', 'admin.about-why-choose-us.*', 'admin.about-our-core-values.*') ? 'true' : 'false' }}">
-                <i class="fa-solid fa-circle-info menu-icon"></i>
-                <span>About Management</span>
-                <i class="fa-solid fa-chevron-down chevron-icon"></i>
-            </button>
-            <div class="nav-dropdown-menu">
-                <a href="{{ route('admin.about-sections.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.about-sections.*') ? 'active' : '' }}">
-                    <i class="fa-solid fa-building submenu-icon"></i>
-                    <span>About Section</span>
-                </a>
-                <a href="{{ route('admin.our-stories.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.our-stories.*') ? 'active' : '' }}">
-                    <i class="fa-solid fa-book-open submenu-icon"></i>
-                    <span>Our Story</span>
-                </a>
-                <a href="{{ route('admin.our-processes.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.our-processes.*') ? 'active' : '' }}">
-                    <i class="fa-solid fa-gears submenu-icon"></i>
-                    <span>Our Process</span>
-                </a>
-                <a href="{{ route('admin.counters.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.counters.*') ? 'active' : '' }}">
-                    <i class="fa-solid fa-calculator submenu-icon"></i>
-                    <span>Counters</span>
-                </a>
-                <a href="{{ route('admin.what-we-offers.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.what-we-offers.*') ? 'active' : '' }}">
-                    <i class="fa-solid fa-handshake submenu-icon"></i>
-                    <span>What We Offer</span>
-                </a>
-                <a href="{{ route('admin.about-why-choose-us.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.about-why-choose-us.*') ? 'active' : '' }}">
-                    <i class="fa-solid fa-award submenu-icon"></i>
-                    <span>Why Choose Us</span>
-                </a>
-                <a href="{{ route('admin.about-our-core-values.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.about-our-core-values.*') ? 'active' : '' }}">
-                    <i class="fa-solid fa-heart submenu-icon"></i>
-                    <span>Core Values</span>
-                </a>
-            </div>
-        </div>
-
         <!-- Travel Support -->
         <a href="{{ route('admin.travel-support.index') }}" class="nav-item {{ request()->routeIs('admin.travel-support.*') ? 'active' : '' }}">
             <i class="fa-solid fa-headset menu-icon"></i>
@@ -186,6 +191,12 @@
         <a href="{{ route('admin.why-choose-sections.index') }}" class="nav-item {{ request()->routeIs('admin.why-choose-sections.*') ? 'active' : '' }}">
             <i class="fa-solid fa-shield-halved menu-icon"></i>
             <span>Why Choose Us</span>
+        </a>
+
+        <!-- Contact Section -->
+        <a href="{{ route('admin.contact-sections.index') }}" class="nav-item {{ request()->routeIs('admin.contact-sections.*') ? 'active' : '' }}">
+            <i class="fa-solid fa-address-book menu-icon"></i>
+            <span>Contact Section</span>
         </a>
 
         <!-- Testimonials -->

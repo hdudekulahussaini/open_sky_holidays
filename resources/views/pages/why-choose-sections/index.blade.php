@@ -44,6 +44,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Icon</th>
                             <th>Title</th>
                             <th>Description</th>
                             <th>Sort Order</th>
@@ -55,6 +56,17 @@
                         @forelse ($whyChooseSections as $section)
                             <tr>
                                 <td>#{{ $section->id }}</td>
+                                <td>
+                                    @if ($section->icon)
+                                        <div style="width: 38px; height: 38px; border-radius: 8px; background: #eff6ff; color: #0056b3; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; border: 1px solid #bfdbfe;">
+                                            <i class="{{ $section->icon }}"></i>
+                                        </div>
+                                    @else
+                                        <div style="width: 38px; height: 38px; border-radius: 8px; background: #f1f5f9; color: #94a3b8; display: flex; align-items: center; justify-content: center; font-size: 1rem;">
+                                            ✦
+                                        </div>
+                                    @endif
+                                </td>
                                 <td><strong>{{ $section->title }}</strong></td>
                                 <td>{{ \Illuminate\Support\Str::limit($section->description, 100) }}</td>
                                 <td>{{ $section->sort_order }}</td>
@@ -81,7 +93,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6">
+                                <td colspan="7">
                                     <div class="ts-empty-state">
                                         <div class="ts-empty-icon">
                                             ✦

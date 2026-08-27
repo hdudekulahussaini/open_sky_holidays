@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WhyChooseSection extends Model
+class ContactSection extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'description',
-        'icon',
-        'sort_order',
+        'phone',
+        'email',
+        'address',
+        'map_link',
+        'whatsapp_number',
+        'map_embed_url',
         'status',
     ];
 
@@ -21,7 +23,6 @@ class WhyChooseSection extends Model
     {
         return [
             'status' => 'boolean',
-            'sort_order' => 'integer',
         ];
     }
 }
