@@ -152,12 +152,10 @@ class OpenApiSchemas
         type: 'object',
         properties: [
             new OA\Property(property: 'id', type: 'integer', example: 1),
-            new OA\Property(property: 'title', type: 'string', example: '24/7 Dedicated Support'),
-            new OA\Property(property: 'description', type: 'string', example: 'Our team is available round the clock to assist you.'),
-            new OA\Property(property: 'icon', type: 'string', example: 'fa-solid fa-headset', nullable: true),
-            new OA\Property(property: 'background_color', type: 'string', example: '#ffffff'),
-            new OA\Property(property: 'text_color', type: 'string', example: '#000000'),
-            new OA\Property(property: 'sort_order', type: 'integer', example: 1),
+            new OA\Property(property: 'title', type: 'string', example: 'Worldwide Coverage'),
+            new OA\Property(property: 'description', type: 'string', example: 'Explore domestic and international destinations with complete planning and trusted travel support.'),
+            new OA\Property(property: 'icon', type: 'string', example: 'fa-solid fa-earth-americas', nullable: true),
+            new OA\Property(property: 'sort_order', type: 'integer', example: 0),
             new OA\Property(property: 'status', type: 'boolean', example: true),
         ]
     )]

@@ -17,18 +17,6 @@ class UpdateWhyChooseSectionRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'icon' => ['nullable', 'string', 'max:255'],
-            'background_color' => [
-                'nullable',
-                'string',
-                'max:20',
-                'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
-            ],
-            'text_color' => [
-                'nullable',
-                'string',
-                'max:20',
-                'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
-            ],
             'sort_order' => ['nullable', 'integer', 'min:0'],
             'status' => ['nullable', 'boolean'],
         ];

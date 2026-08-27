@@ -14,8 +14,6 @@ class WhyChooseSectionResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'icon' => $this->icon,
-            'background_color' => $this->background_color,
-            'text_color' => $this->text_color,
             'sort_order' => $this->sort_order,
             'status' => $this->status,
             'created_at' => $this->created_at?->toDateTimeString(),
