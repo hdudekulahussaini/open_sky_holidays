@@ -68,20 +68,16 @@
                                 "properties": {
                                     "title": {
                                         "type": "string",
-                                        "example": "Customer First"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "We prioritize customer satisfaction."
+                                        "example": "Integrity"
                                     },
                                     "icon": {
                                         "type": "string",
-                                        "example": "fas fa-heart",
+                                        "example": "fa-solid fa-handshake",
                                         "nullable": true
                                     },
-                                    "status": {
+                                    "description": {
                                         "type": "string",
-                                        "example": "active"
+                                        "example": "We operate with complete honesty — no hidden fees, no misleading itineraries, just clear and ethical service."
                                     }
                                 },
                                 "type": "object"
@@ -191,20 +187,16 @@
                                 "properties": {
                                     "title": {
                                         "type": "string",
-                                        "example": "Updated Core Value Title"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "Updated core value description."
+                                        "example": "Excellence"
                                     },
                                     "icon": {
                                         "type": "string",
-                                        "example": "fas fa-star",
+                                        "example": "fa-solid fa-star",
                                         "nullable": true
                                     },
-                                    "status": {
+                                    "description": {
                                         "type": "string",
-                                        "example": "active"
+                                        "example": "From the first query to post-trip support, we hold ourselves to the highest standards in everything we do."
                                     }
                                 },
                                 "type": "object"
@@ -400,8 +392,7 @@
                         "multipart/form-data": {
                             "schema": {
                                 "required": [
-                                    "main_heading",
-                                    "main_description",
+                                    "title",
                                     "features_title"
                                 ],
                                 "properties": {
@@ -409,31 +400,46 @@
                                         "type": "string",
                                         "example": "Why Choose Us"
                                     },
-                                    "main_heading": {
+                                    "title": {
                                         "type": "string",
-                                        "example": "Your Trusted Partner"
+                                        "example": "Setting Standard for Trust and Comfort."
                                     },
-                                    "main_description": {
+                                    "description": {
                                         "type": "string",
-                                        "example": "We deliver exceptional travel experiences."
+                                        "example": "We believe that traveling shouldn't be stressful."
                                     },
                                     "image": {
                                         "type": "string",
                                         "format": "binary"
                                     },
+                                    "features_icon[]": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "fa-solid fa-headset"
+                                        }
+                                    },
                                     "features_title[]": {
                                         "type": "array",
                                         "items": {
                                             "type": "string",
-                                            "example": "Best Prices"
+                                            "example": "24/7 Expert Support"
                                         }
                                     },
                                     "features_description[]": {
                                         "type": "array",
                                         "items": {
                                             "type": "string",
-                                            "example": "Competitive rates guaranteed"
+                                            "example": "Our travel assistants are always available."
                                         }
+                                    },
+                                    "badge_title": {
+                                        "type": "string",
+                                        "example": "Trusted by 15,000+"
+                                    },
+                                    "badge_subtitle": {
+                                        "type": "string",
+                                        "example": "Happy travelers worldwide"
                                     },
                                     "status": {
                                         "type": "string",
@@ -474,6 +480,44 @@
                     },
                     "500": {
                         "description": "Server Error"
+                    }
+                }
+            }
+        },
+        "/api/about-why-choose-us/active": {
+            "get": {
+                "tags": [
+                    "About Why Choose Us"
+                ],
+                "summary": "Get active About Why Choose Us section for website",
+                "description": "Retrieves the latest active About Why Choose Us section record for the frontend.",
+                "operationId": "f1b59a779896fc7d0a0a6e3ed6c26ab1",
+                "responses": {
+                    "200": {
+                        "description": "Active About Why Choose Us retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Active About Why Choose Us retrieved successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/AboutWhyChooseUs"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Active About Why Choose Us not found"
                     }
                 }
             }
@@ -550,34 +594,49 @@
                                 "properties": {
                                     "subtitle": {
                                         "type": "string",
-                                        "example": "Updated Subtitle"
+                                        "example": "Why Choose Us"
                                     },
-                                    "main_heading": {
+                                    "title": {
                                         "type": "string",
-                                        "example": "Updated Main Heading"
+                                        "example": "Setting Standard for Trust and Comfort."
                                     },
-                                    "main_description": {
+                                    "description": {
                                         "type": "string",
-                                        "example": "Updated Main Description"
+                                        "example": "We believe that traveling shouldn't be stressful."
                                     },
                                     "image": {
                                         "type": "string",
                                         "format": "binary",
                                         "nullable": true
                                     },
+                                    "features_icon[]": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "fa-solid fa-headset"
+                                        }
+                                    },
                                     "features_title[]": {
                                         "type": "array",
                                         "items": {
                                             "type": "string",
-                                            "example": "Feature Title"
+                                            "example": "24/7 Expert Support"
                                         }
                                     },
                                     "features_description[]": {
                                         "type": "array",
                                         "items": {
                                             "type": "string",
-                                            "example": "Feature Description"
+                                            "example": "Our travel assistants are always available."
                                         }
+                                    },
+                                    "badge_title": {
+                                        "type": "string",
+                                        "example": "Trusted by 15,000+"
+                                    },
+                                    "badge_subtitle": {
+                                        "type": "string",
+                                        "example": "Happy travelers worldwide"
                                     },
                                     "status": {
                                         "type": "string",
@@ -1516,21 +1575,21 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "count_number",
-                                    "count_title"
+                                    "value",
+                                    "name"
                                 ],
                                 "properties": {
-                                    "count_number": {
+                                    "value": {
                                         "type": "string",
                                         "example": "10K+"
                                     },
-                                    "count_title": {
+                                    "name": {
                                         "type": "string",
                                         "example": "Happy Travelers"
                                     },
                                     "icon": {
                                         "type": "string",
-                                        "example": "fas fa-smile",
+                                        "example": "fa-solid fa-users",
                                         "nullable": true
                                     },
                                     "status": {
@@ -1573,6 +1632,44 @@
                 }
             }
         },
+        "/api/counters/active": {
+            "get": {
+                "tags": [
+                    "Counters"
+                ],
+                "summary": "Get active statistic counters for website",
+                "description": "Retrieves all active statistic counters with icons and values for frontend display.",
+                "operationId": "fc6dc062390bfac72b2bcb6d401b771e",
+                "responses": {
+                    "200": {
+                        "description": "Active counters retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Active counters retrieved successfully."
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Counter"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/counters/{counter}": {
             "put": {
                 "tags": [
@@ -1597,17 +1694,17 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "count_number": {
+                                    "value": {
                                         "type": "string",
                                         "example": "15K+"
                                     },
-                                    "count_title": {
+                                    "name": {
                                         "type": "string",
                                         "example": "Happy Customers"
                                     },
                                     "icon": {
                                         "type": "string",
-                                        "example": "fas fa-heart",
+                                        "example": "fa-solid fa-face-smile",
                                         "nullable": true
                                     },
                                     "status": {
@@ -2283,22 +2380,23 @@
                 }
             }
         },
-        "/api/services/{id}": {
+        "/api/services/{slugOrId}": {
             "get": {
                 "tags": [
                     "Services"
                 ],
-                "summary": "Get service details by ID",
-                "description": "Retrieves complete details for a specific travel service.",
-                "operationId": "dce5b306a141bdec91eff8a15534d7d7",
+                "summary": "Get service details by Slug or ID",
+                "description": "Retrieves complete details for a specific travel service using its slug (e.g. visa) or numeric ID.",
+                "operationId": "f9abfaa2d656f3b00db640347a9e516e",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "slugOrId",
                         "in": "path",
-                        "description": "ID of the service",
+                        "description": "Slug (e.g. \"visa\") or numeric ID of the service",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string",
+                            "example": "visa"
                         }
                     }
                 ],
@@ -4297,35 +4395,120 @@
                         "type": "integer",
                         "example": 1
                     },
-                    "title": {
-                        "type": "string",
-                        "example": "Exotic Dubai & Desert Safari"
-                    },
-                    "slug": {
-                        "type": "string",
-                        "example": "exotic-dubai-desert-safari"
-                    },
                     "tour_type_id": {
                         "type": "integer",
                         "example": 1
                     },
-                    "price": {
-                        "type": "number",
-                        "format": "float",
-                        "example": 49999
+                    "tour_type": {
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "Domestic Tours"
+                            },
+                            "slug": {
+                                "type": "string",
+                                "example": "domestic"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Kerala"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "example": "kerala"
+                    },
+                    "country": {
+                        "type": "string",
+                        "example": "INDIA"
+                    },
+                    "state": {
+                        "type": "string",
+                        "example": "Kerala",
+                        "nullable": true
                     },
                     "duration": {
                         "type": "string",
-                        "example": "5 Nights / 6 Days"
+                        "example": "4 Nights / 5 Days"
                     },
-                    "description": {
+                    "thumbnail": {
                         "type": "string",
-                        "example": "Experience luxury and adventure in Dubai."
+                        "example": "tours/kerala.jpg"
                     },
-                    "image": {
+                    "thumbnail_url": {
                         "type": "string",
-                        "example": "tours/dubai.jpg",
-                        "nullable": true
+                        "example": "http://127.0.0.1:8000/storage/tours/kerala.jpg"
+                    },
+                    "areas": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "Munnar",
+                            "Alleppey",
+                            "Thekkady",
+                            "Kochi Fort"
+                        ]
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "Munnar",
+                            "Alleppey",
+                            "Thekkady",
+                            "Kochi Fort"
+                        ]
+                    },
+                    "highlights": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "Munnar",
+                            "Alleppey",
+                            "Thekkady",
+                            "Kochi Fort"
+                        ]
+                    },
+                    "package_inclusions": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TourFeature"
+                        }
+                    },
+                    "places_covered": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TourFeature"
+                        }
+                    },
+                    "detail": {
+                        "properties": {
+                            "heading": {
+                                "type": "string",
+                                "example": "About This Tour"
+                            },
+                            "description": {
+                                "type": "string",
+                                "example": "Experience the tranquil backwaters..."
+                            },
+                            "status": {
+                                "type": "string",
+                                "example": "active"
+                            }
+                        },
+                        "type": "object"
                     },
                     "status": {
                         "type": "boolean",
@@ -4342,20 +4525,115 @@
                     },
                     "title": {
                         "type": "string",
-                        "example": "Visa Assistance"
+                        "example": "Visa Assistance Services"
                     },
                     "slug": {
                         "type": "string",
-                        "example": "visa-assistance"
+                        "example": "visa-assistance-services"
                     },
-                    "short_description": {
+                    "about_title": {
                         "type": "string",
-                        "example": "Hassle-free tourist visa processing for all countries."
-                    },
-                    "image": {
-                        "type": "string",
-                        "example": "services/visa.jpg",
+                        "example": "Your Gateway to Seamless Global Travel",
                         "nullable": true
+                    },
+                    "about_description": {
+                        "type": "string",
+                        "example": "Navigating international visa requirements can be overwhelming.",
+                        "nullable": true
+                    },
+                    "about_image_url": {
+                        "type": "string",
+                        "example": "http://127.0.0.1:8000/storage/services/about/visa.jpg",
+                        "nullable": true
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "icon": {
+                                    "type": "string",
+                                    "example": "fa-solid fa-clipboard-list"
+                                },
+                                "title": {
+                                    "type": "string",
+                                    "example": "Best Fares"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "example": "Competitive pricing on all routes"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "service_items": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "process_steps": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "icon": {
+                                    "type": "string",
+                                    "example": "01"
+                                },
+                                "title": {
+                                    "type": "string",
+                                    "example": "Document Review"
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "example": "We verify your documents"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "documents": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "why_choose_items": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "cta_title": {
+                        "type": "string",
+                        "example": "Ready To Start Your Journey?",
+                        "nullable": true
+                    },
+                    "cta_description": {
+                        "type": "string",
+                        "example": "Let us take care of your visa process while you focus on making unforgettable memories.",
+                        "nullable": true
+                    },
+                    "cta_background_image_url": {
+                        "type": "string",
+                        "example": "http://127.0.0.1:8000/storage/services/cta/banner.jpg",
+                        "nullable": true
+                    },
+                    "stats": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "number": {
+                                    "type": "string",
+                                    "example": "10,000+"
+                                },
+                                "label": {
+                                    "type": "string",
+                                    "example": "Visas Processed"
+                                }
+                            },
+                            "type": "object"
+                        }
                     },
                     "status": {
                         "type": "boolean",
@@ -4372,32 +4650,134 @@
                     },
                     "title": {
                         "type": "string",
-                        "example": "Top 10 Places to Visit in Dubai"
+                        "example": "Top 10 Must-Visit Destinations in India in 2026"
                     },
                     "slug": {
                         "type": "string",
-                        "example": "top-10-places-to-visit-in-dubai"
+                        "example": "top-10-must-visit-destinations-in-india-in-2026"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Explore the most breathtaking destinations across India with travel tips and budget guides.",
+                        "nullable": true
+                    },
+                    "short_description": {
+                        "type": "string",
+                        "example": "Explore the most breathtaking destinations across India with travel tips and budget guides."
+                    },
+                    "category": {
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "Destinations"
+                            },
+                            "slug": {
+                                "type": "string",
+                                "example": "destinations"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "author": {
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "Open Sky Team"
+                            },
+                            "image": {
+                                "type": "string",
+                                "example": "http://127.0.0.1:8000/storage/authors/team.jpg",
+                                "nullable": true
+                            },
+                            "description": {
+                                "type": "string",
+                                "example": "Travel enthusiast sharing guides and tips.",
+                                "nullable": true
+                            },
+                            "twitter_url": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "facebook_url": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "linkedin_url": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "social_links": {
+                                "type": "array",
+                                "items": {
+                                    "properties": {
+                                        "platform": {
+                                            "type": "string",
+                                            "example": "Instagram"
+                                        },
+                                        "icon": {
+                                            "type": "string",
+                                            "example": "fa-brands fa-instagram"
+                                        },
+                                        "url": {
+                                            "type": "string",
+                                            "example": "https://instagram.com/opensky"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "table_of_contents": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "number": {
+                                    "type": "string",
+                                    "example": "01"
+                                },
+                                "title": {
+                                    "type": "string",
+                                    "example": "The Backwaters of Kerala"
+                                }
+                            },
+                            "type": "object"
+                        }
                     },
                     "content": {
                         "type": "string",
-                        "example": "Discover the world tallest building, luxury shopping..."
+                        "example": "1. Book Your Flights in Advance..."
                     },
-                    "image": {
+                    "featured_image": {
                         "type": "string",
-                        "example": "blogs/dubai-guide.jpg",
+                        "example": "http://127.0.0.1:8000/storage/blogs/featured-images/taj.jpg",
                         "nullable": true
                     },
-                    "category_id": {
+                    "read_time": {
                         "type": "integer",
-                        "example": 1
+                        "example": 3
                     },
-                    "author_id": {
-                        "type": "integer",
-                        "example": 1
+                    "read_time_text": {
+                        "type": "string",
+                        "example": "3 min read"
                     },
-                    "status": {
-                        "type": "boolean",
-                        "example": true
+                    "published_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2026-08-31T10:00:00.000000Z"
+                    },
+                    "published_date": {
+                        "type": "string",
+                        "example": "August 31, 2026"
                     }
                 },
                 "type": "object"
@@ -4687,6 +5067,67 @@
                 },
                 "type": "object"
             },
+            "CounterInput": {
+                "required": [
+                    "value",
+                    "name"
+                ],
+                "properties": {
+                    "value": {
+                        "type": "string",
+                        "example": "25+"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Years Of Experience"
+                    },
+                    "icon": {
+                        "type": "string",
+                        "example": "fa-solid fa-trophy",
+                        "nullable": true
+                    },
+                    "status": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                },
+                "type": "object"
+            },
+            "Counter": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "value": {
+                        "type": "string",
+                        "example": "25+"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Years Of Experience"
+                    },
+                    "icon": {
+                        "type": "string",
+                        "example": "fa-solid fa-trophy"
+                    },
+                    "status": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2026-08-31T10:00:00.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2026-08-31T10:00:00.000000Z"
+                    }
+                },
+                "type": "object"
+            },
             "TourType": {
                 "properties": {
                     "id": {
@@ -4826,20 +5267,16 @@
                     },
                     "title": {
                         "type": "string",
-                        "example": "Customer First"
-                    },
-                    "description": {
-                        "type": "string",
-                        "example": "We prioritize our customers experience above everything else."
+                        "example": "Integrity"
                     },
                     "icon": {
                         "type": "string",
-                        "example": "fas fa-heart",
+                        "example": "fa-solid fa-handshake",
                         "nullable": true
                     },
-                    "status": {
+                    "description": {
                         "type": "string",
-                        "example": "active"
+                        "example": "We operate with complete honesty — no hidden fees, no misleading itineraries, just clear and ethical service."
                     }
                 },
                 "type": "object"
@@ -4852,34 +5289,54 @@
                     },
                     "subtitle": {
                         "type": "string",
-                        "example": "Why Choose Open Sky"
+                        "example": "Why Choose Us"
                     },
-                    "main_heading": {
+                    "title": {
                         "type": "string",
-                        "example": "Your Trusted Travel Partner"
+                        "example": "Setting Standard for Trust and Comfort."
                     },
-                    "main_description": {
+                    "description": {
                         "type": "string",
-                        "example": "We provide seamless travel booking and custom tour packages."
+                        "example": "We believe that traveling shouldn't be stressful. We ensure every segment of your journey is organized with precise dedication."
                     },
                     "image": {
                         "type": "string",
                         "example": "about_why_choose_us/photo.jpg",
                         "nullable": true
                     },
+                    "image_url": {
+                        "type": "string",
+                        "example": "https://openskyholidays.com/storage/about_why_choose_us/photo.jpg",
+                        "nullable": true
+                    },
+                    "features_icon": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "fa-solid fa-headset"
+                        }
+                    },
                     "features_title": {
                         "type": "array",
                         "items": {
                             "type": "string",
-                            "example": "Best Price Guarantee"
+                            "example": "24/7 Expert Support"
                         }
                     },
                     "features_description": {
                         "type": "array",
                         "items": {
                             "type": "string",
-                            "example": "No hidden charges on any package"
+                            "example": "Our travel assistants are always available to help you navigate queries or itinerary shifts."
                         }
+                    },
+                    "badge_title": {
+                        "type": "string",
+                        "example": "Trusted by 15,000+"
+                    },
+                    "badge_subtitle": {
+                        "type": "string",
+                        "example": "Happy travelers worldwide"
                     },
                     "status": {
                         "type": "string",
@@ -4914,32 +5371,6 @@
                     "status": {
                         "type": "string",
                         "example": "active"
-                    }
-                },
-                "type": "object"
-            },
-            "Counter": {
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "count_number": {
-                        "type": "string",
-                        "example": "10K+"
-                    },
-                    "count_title": {
-                        "type": "string",
-                        "example": "Happy Travelers"
-                    },
-                    "icon": {
-                        "type": "string",
-                        "example": "fas fa-smile",
-                        "nullable": true
-                    },
-                    "status": {
-                        "type": "boolean",
-                        "example": true
                     }
                 },
                 "type": "object"

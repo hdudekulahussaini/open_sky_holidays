@@ -112,7 +112,7 @@
                 <div id="imagePlaceholder" class="ts-image-placeholder {{ isset($testimonial) && $testimonial->customer_image ? 'ts-hidden' : '' }}">
                     <span class="ts-image-placeholder-icon">✦</span>
                     <strong>No image selected</strong>
-                    <small>JPG, PNG or WEBP</small>
+                    <small>JPG, PNG, WEBP or AVIF</small>
                 </div>
             </div>
 
@@ -120,7 +120,7 @@
                 Choose Image
             </label>
 
-            <input type="file" name="customer_image" id="customer_image" class="ts-file-input" accept=".jpg,.jpeg,.png,.webp">
+            <input type="file" name="customer_image" id="customer_image" class="ts-file-input" accept=".jpg,.jpeg,.png,.webp,.avif,image/*">
 
             @error('customer_image')
                 <span class="ts-error-message">

@@ -1131,7 +1131,7 @@
                         id="${inputId}"
                         name="gallery[]"
                         class="td-gallery-file-input"
-                        accept=".jpg,.jpeg,.png,.webp"
+                        accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
                         required
                     >
 

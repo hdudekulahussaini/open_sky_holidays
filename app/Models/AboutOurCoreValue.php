@@ -13,6 +13,7 @@ class AboutOurCoreValue extends Model
 
     protected $fillable = [
         'title',
+        'icon',
         'description',
     ];
 }

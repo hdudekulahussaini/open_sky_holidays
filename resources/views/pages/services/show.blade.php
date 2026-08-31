@@ -46,16 +46,21 @@
 
         <hr class="divider">
 
-        <!-- Features (Title & Description) -->
+        <!-- Features (Icon, Title & Description) -->
         <div class="detail-section">
             <h3 class="section-title">Features</h3>
             @if (!empty($service->features))
                 <div class="grid-list">
                     @foreach ($service->features as $feature)
                         <div class="info-card">
-                            <strong>{{ is_array($feature) ? ($feature['title'] ?? 'N/A') : $feature }}</strong>
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                @if(is_array($feature) && !empty($feature['icon']))
+                                    <i class="{{ $feature['icon'] }} text-primary"></i>
+                                @endif
+                                <strong>{{ is_array($feature) ? ($feature['title'] ?? 'N/A') : $feature }}</strong>
+                            </div>
                             @if(is_array($feature) && !empty($feature['description']))
-                                <p>{{ $feature['description'] }}</p>
+                                <p class="mb-0 text-muted">{{ $feature['description'] }}</p>
                             @endif
                         </div>
                     @endforeach
@@ -129,6 +134,41 @@
                 </ul>
             @else
                 <p class="muted">No items added.</p>
+            @endif
+        </div>
+
+        <hr class="divider">
+
+        <!-- CTA & Statistics Banner -->
+        <div class="detail-section">
+            <h3 class="section-title">Call To Action & Statistics Banner</h3>
+            <div class="detail-row">
+                <span class="detail-label">Banner Title</span>
+                <p class="detail-value">{{ $service->cta_title ?? 'N/A' }}</p>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Banner Description</span>
+                <p class="detail-value">{{ $service->cta_description ?? 'N/A' }}</p>
+            </div>
+            @if ($service->cta_background_image)
+                <div class="detail-row">
+                    <span class="detail-label">Banner Background</span>
+                    <img src="{{ asset('storage/' . $service->cta_background_image) }}" alt="CTA Banner" class="preview-img">
+                </div>
+            @endif
+
+            @if (!empty($service->stats))
+                <div class="mt-3">
+                    <span class="detail-label d-block mb-2">Statistics Counters</span>
+                    <div class="d-flex flex-wrap gap-2">
+                        @foreach ($service->stats as $st)
+                            <div class="p-2 border rounded bg-light text-center" style="min-width: 130px;">
+                                <div class="fw-bold text-primary fs-5">{{ $st['number'] ?? '' }}</div>
+                                <small class="text-muted">{{ $st['label'] ?? '' }}</small>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             @endif
         </div>
     </div>

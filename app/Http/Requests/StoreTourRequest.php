@@ -46,16 +46,32 @@ class StoreTourRequest extends FormRequest
                 'max:100',
             ],
 
+            'state' => [
+                'nullable',
+                'string',
+                'max:100',
+            ],
+
             'duration' => [
                 'required',
                 'string',
                 'max:100',
             ],
 
+            'areas' => [
+                'nullable',
+                'array',
+            ],
+
+            'features' => [
+                'nullable',
+                'array',
+            ],
+
             'thumbnail' => [
                 'required',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
             'status' => [
@@ -95,7 +111,7 @@ class StoreTourRequest extends FormRequest
             'gallery.*' => [
                 'required',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
             // Package Inclusions
@@ -147,7 +163,7 @@ class StoreTourRequest extends FormRequest
             'places_covered.*.image' => [
                 'nullable',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
         ];

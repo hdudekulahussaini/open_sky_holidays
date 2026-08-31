@@ -34,6 +34,7 @@ class CounterController extends Controller
             Counter::create([
                 'value' => $counterData['value'],
                 'name' => $counterData['name'],
+                'icon' => $counterData['icon'] ?? 'fa-solid fa-users',
                 'status' => $status,
             ]);
         }
@@ -65,6 +66,7 @@ class CounterController extends Controller
                     $existing->update([
                         'value' => $data['value'],
                         'name' => $data['name'],
+                        'icon' => $data['icon'] ?? 'fa-solid fa-users',
                         'status' => $status,
                     ]);
                     $submittedIds[] = $existing->id;
@@ -76,6 +78,7 @@ class CounterController extends Controller
                 $newCounter = Counter::create([
                     'value' => $data['value'],
                     'name' => $data['name'],
+                    'icon' => $data['icon'] ?? 'fa-solid fa-users',
                     'status' => $status,
                 ]);
                 $submittedIds[] = $newCounter->id;

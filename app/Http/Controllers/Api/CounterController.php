@@ -47,6 +47,43 @@ class CounterController extends Controller
         ]);
     }
 
+    #[OA\Get(
+        path: '/api/counters/active',
+        summary: 'Get active statistic counters for website',
+        description: 'Retrieves all active statistic counters with icons and values for frontend display.',
+        tags: ['Counters'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Active counters retrieved successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'status', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Active counters retrieved successfully.'),
+                        new OA\Property(
+                            property: 'data',
+                            type: 'array',
+                            items: new OA\Items(ref: '#/components/schemas/Counter')
+                        ),
+                    ]
+                )
+            ),
+        ]
+    )]
+    public function active(): JsonResponse
+    {
+        $counters = Counter::query()
+            ->where('status', true)
+            ->oldest('id')
+            ->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Active counters retrieved successfully.',
+            'data' => $counters,
+        ]);
+    }
+
     #[OA\Post(
         path: '/api/counters',
         summary: 'Store a new counter',
@@ -55,11 +92,11 @@ class CounterController extends Controller
         requestBody: new OA\RequestBody(
             required: true,
             content: new OA\JsonContent(
-                required: ['count_number', 'count_title'],
+                required: ['value', 'name'],
                 properties: [
-                    new OA\Property(property: 'count_number', type: 'string', example: '10K+'),
-                    new OA\Property(property: 'count_title', type: 'string', example: 'Happy Travelers'),
-                    new OA\Property(property: 'icon', type: 'string', example: 'fas fa-smile', nullable: true),
+                    new OA\Property(property: 'value', type: 'string', example: '10K+'),
+                    new OA\Property(property: 'name', type: 'string', example: 'Happy Travelers'),
+                    new OA\Property(property: 'icon', type: 'string', example: 'fa-solid fa-users', nullable: true),
                     new OA\Property(property: 'status', type: 'boolean', example: true),
                 ]
             )
@@ -82,15 +119,31 @@ class CounterController extends Controller
     public function store(StoreCounterRequest $request): JsonResponse
     {
         $data = $request->validated();
+        $status = $request->boolean('status', true);
+        $createdCounters = [];
 
-        $data['status'] = $request->boolean('status', true);
-
-        $counter = Counter::create($data);
+        if (isset($data['counters']) && is_array($data['counters'])) {
+            foreach ($data['counters'] as $counterData) {
+                $createdCounters[] = Counter::create([
+                    'value' => $counterData['value'],
+                    'name' => $counterData['name'],
+                    'icon' => $counterData['icon'] ?? 'fa-solid fa-users',
+                    'status' => $status,
+                ]);
+            }
+        } elseif (isset($data['value']) && isset($data['name'])) {
+            $createdCounters[] = Counter::create([
+                'value' => $data['value'],
+                'name' => $data['name'],
+                'icon' => $data['icon'] ?? 'fa-solid fa-users',
+                'status' => $status,
+            ]);
+        }
 
         return response()->json([
             'status' => true,
-            'message' => 'Counter created successfully.',
-            'data' => $counter,
+            'message' => 'Counters created successfully.',
+            'data' => count($createdCounters) === 1 ? $createdCounters[0] : $createdCounters,
         ], 201);
     }
 
@@ -106,9 +159,9 @@ class CounterController extends Controller
             required: true,
             content: new OA\JsonContent(
                 properties: [
-                    new OA\Property(property: 'count_number', type: 'string', example: '15K+'),
-                    new OA\Property(property: 'count_title', type: 'string', example: 'Happy Customers'),
-                    new OA\Property(property: 'icon', type: 'string', example: 'fas fa-heart', nullable: true),
+                    new OA\Property(property: 'value', type: 'string', example: '15K+'),
+                    new OA\Property(property: 'name', type: 'string', example: 'Happy Customers'),
+                    new OA\Property(property: 'icon', type: 'string', example: 'fa-solid fa-face-smile', nullable: true),
                     new OA\Property(property: 'status', type: 'boolean', example: true),
                 ]
             )
@@ -132,13 +185,28 @@ class CounterController extends Controller
         UpdateCounterRequest $request,
         Counter $counter
     ): JsonResponse {
-        $data = $request->validated();
+        $status = $request->boolean('status', $counter->status);
 
-        if ($request->has('status')) {
-            $data['status'] = $request->boolean('status');
+        if ($request->has('counters')) {
+            $countersData = $request->input('counters', []);
+            foreach ($countersData as $data) {
+                if (isset($data['id']) && (int) $data['id'] === $counter->id) {
+                    $counter->update([
+                        'value' => $data['value'],
+                        'name' => $data['name'],
+                        'icon' => $data['icon'] ?? $counter->icon ?? 'fa-solid fa-users',
+                        'status' => $status,
+                    ]);
+                }
+            }
+        } else {
+            $counter->update([
+                'value' => $request->input('value', $counter->value),
+                'name' => $request->input('name', $counter->name),
+                'icon' => $request->input('icon', $counter->icon ?? 'fa-solid fa-users'),
+                'status' => $status,
+            ]);
         }
-
-        $counter->update($data);
 
         return response()->json([
             'status' => true,

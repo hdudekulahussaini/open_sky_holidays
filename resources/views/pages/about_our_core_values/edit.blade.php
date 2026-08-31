@@ -18,23 +18,7 @@
                 @csrf
                 @method('PUT')
 
-                <div class="admin-form-grid">
-                    <div class="admin-form-group full-width">
-                        <label for="title">Title <span class="required">*</span></label>
-                        <input type="text" id="title" name="title" value="{{ old('title', $aboutOurCoreValue->title) }}" class="admin-form-control @error('title') is-invalid @enderror" required>
-                        @error('title')
-                            <span class="admin-form-error">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="admin-form-group full-width">
-                        <label for="description">Description <span class="required">*</span></label>
-                        <textarea id="description" name="description" rows="5" class="admin-form-control @error('description') is-invalid @enderror" required>{{ old('description', $aboutOurCoreValue->description) }}</textarea>
-                        @error('description')
-                            <span class="admin-form-error">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
+                @include('pages.about_our_core_values.form')
 
                 <div class="admin-form-actions">
                     <a href="{{ route('admin.about-our-core-values.index') }}" class="btn btn-light">Cancel</a>

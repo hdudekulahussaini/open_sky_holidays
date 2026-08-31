@@ -339,7 +339,7 @@
 
                                             <input type="file" name="places_covered[{{ $index }}][image]"
                                                 id="places_covered_{{ $index }}_image" class="tf-file-input"
-                                                accept=".jpg,.jpeg,.png,.webp" data-image-input>
+                                                accept=".jpg,.jpeg,.png,.webp,.avif,image/*" data-image-input>
 
                                             <span class="tf-file-name" data-file-name>
                                                 No file selected
@@ -598,7 +598,7 @@
                             Choose Image
 
                             <input type="file" data-name="places_covered[__INDEX__][image]" class="tf-file-input"
-                                accept=".jpg,.jpeg,.png,.webp" data-image-input>
+                                accept=".jpg,.jpeg,.png,.webp,.avif,image/*" data-image-input>
                         </label>
 
                         <span class="tf-file-name" data-file-name>

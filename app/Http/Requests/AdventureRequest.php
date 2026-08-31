@@ -66,13 +66,13 @@ class AdventureRequest extends FormRequest
             'image_one' => [
                 'nullable',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
             'image_two' => [
                 'nullable',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
             'status' => [

@@ -283,7 +283,7 @@
                                 type="file"
                                 id="image_one"
                                 name="image_one"
-                                accept=".jpg,.jpeg,.png,.webp"
+                                accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
                                 class="form-control
                                     @error('image_one') is-invalid @enderror"
                             >
@@ -329,7 +329,7 @@
                                 type="file"
                                 id="image_two"
                                 name="image_two"
-                                accept=".jpg,.jpeg,.png,.webp"
+                                accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
                                 class="form-control
                                     @error('image_two') is-invalid @enderror"
                             >

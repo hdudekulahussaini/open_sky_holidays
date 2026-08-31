@@ -50,6 +50,11 @@ class StoreBlogRequest extends FormRequest
                 'unique:blogs,slug',
             ],
 
+            'description' => [
+                'nullable',
+                'string',
+            ],
+
             /*
             |--------------------------------------------------------------------------
             | Table of Contents
@@ -82,7 +87,7 @@ class StoreBlogRequest extends FormRequest
             'featured_image' => [
                 'required',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
             'read_time' => [
@@ -141,7 +146,7 @@ class StoreBlogRequest extends FormRequest
                 'The selected file must be an image.',
 
             'featured_image.mimes' =>
-                'Image must be JPG, JPEG, PNG or WEBP.',
+                'Image must be JPG, JPEG, PNG, WEBP, or AVIF.',
 
 
             'read_time.required' =>

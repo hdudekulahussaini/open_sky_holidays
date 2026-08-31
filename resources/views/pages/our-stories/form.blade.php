@@ -142,7 +142,7 @@
                 Choose Images (Max 3)
             </label>
 
-            <input type="file" name="images[]" id="storyImages" class="ts-file-input" accept=".jpg,.jpeg,.png,.webp" multiple>
+            <input type="file" name="images[]" id="storyImages" class="ts-file-input" accept=".jpg,.jpeg,.png,.webp,.avif,image/*" multiple>
 
             @error('images')
                 <span class="ts-error-message">

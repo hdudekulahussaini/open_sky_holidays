@@ -14,6 +14,8 @@ class AboutOurCoreValueResource extends JsonResource
 
             'title' => $this->title,
 
+            'icon' => $this->icon,
+
             'description' => $this->description,
         ];
     }

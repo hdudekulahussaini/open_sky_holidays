@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AboutSectionController;
 use App\Http\Controllers\Api\AboutWhyChooseUsController;
 use App\Http\Controllers\Api\AdventureCategoryController;
 use App\Http\Controllers\Api\AdventureController;
+use App\Http\Controllers\Api\AuthorController;
 use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\ContactSectionController;
 use App\Http\Controllers\Api\CoreValueController;
@@ -200,6 +201,11 @@ Route::apiResource(
 |--------------------------------------------------------------------------
 */
 
+Route::get('/about-why-choose-us/active', [
+    AboutWhyChooseUsController::class,
+    'active',
+])->name('api.about-why-choose-us.active');
+
 Route::apiResource(
     'about-why-choose-us',
     AboutWhyChooseUsController::class
@@ -254,6 +260,7 @@ Route::apiResource(
 */
 
 Route::apiResource('core-values', CoreValueController::class);
+Route::get('/counters/active', [CounterController::class, 'active'])->name('api.counters.active');
 Route::apiResource('counters', CounterController::class);
 Route::apiResource('services', ServiceController::class);
 Route::apiResource('tour-types', TourTypeController::class);

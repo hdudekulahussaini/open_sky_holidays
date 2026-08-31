@@ -105,7 +105,12 @@
                                 </td>
 
                                 <td>
-                                    {{ $tour->country }}
+                                    <div><strong>{{ $tour->country }}</strong></div>
+                                    @if ($tour->state)
+                                        <div class="text-muted small">
+                                            <span>{{ $tour->state }}</span>
+                                        </div>
+                                    @endif
                                 </td>
 
                                 <td>

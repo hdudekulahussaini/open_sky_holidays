@@ -61,11 +61,16 @@
                                             >
                                         @endif
                                         <div>
-                                            <strong>{{ $blog->title }}</strong><br>
-                                            <small>{{ $blog->slug }}</small>
+                                            <strong>{{ $blog->title }}</strong>
+                                            @if ($blog->description)
+                                                <div style="font-size: 12px; color: #64748b; max-width: 280px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ $blog->description }}">
+                                                    {{ $blog->description }}
+                                                </div>
+                                            @else
+                                                <div style="font-size: 12px; color: #94a3b8;">{{ $blog->slug }}</div>
+                                            @endif
                                             @if ($blog->featured_image)
-                                                <br>
-                                                <a href="{{ asset('storage/' . $blog->featured_image) }}" target="_blank" rel="noopener noreferrer" style="font-size: 12px; color: var(--ts-primary);">
+                                                <a href="{{ asset('storage/' . $blog->featured_image) }}" target="_blank" rel="noopener noreferrer" style="font-size: 11px; color: var(--ts-primary);">
                                                     View Image
                                                 </a>
                                             @endif
@@ -76,8 +81,8 @@
                                 <td>{{ $blog->author?->name ?? 'Open Sky Team' }}</td>
                                 <td>
                                     @php
-                                        $tocCount = $blog->sections
-                                            ? count($blog->sections)
+                                        $tocCount = is_array($blog->table_of_contents)
+                                            ? count($blog->table_of_contents)
                                             : 0;
                                     @endphp
                                     <span class="ts-status-badge ts-primary">

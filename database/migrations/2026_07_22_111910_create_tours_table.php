@@ -25,10 +25,13 @@ return new class extends Migration
                 ->unique();
 
             $table->string('country');
+            $table->string('state')->nullable();
 
             $table->string('duration');
 
             $table->string('thumbnail');
+            $table->json('areas')->nullable();
+            $table->json('features')->nullable();
 
             $table->boolean('status')
                 ->default(true);

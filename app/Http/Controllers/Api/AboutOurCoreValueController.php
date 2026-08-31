@@ -63,10 +63,9 @@ class AboutOurCoreValueController extends Controller
             content: new OA\JsonContent(
                 required: ['title', 'description'],
                 properties: [
-                    new OA\Property(property: 'title', type: 'string', example: 'Customer First'),
-                    new OA\Property(property: 'description', type: 'string', example: 'We prioritize customer satisfaction.'),
-                    new OA\Property(property: 'icon', type: 'string', example: 'fas fa-heart', nullable: true),
-                    new OA\Property(property: 'status', type: 'string', example: 'active'),
+                    new OA\Property(property: 'title', type: 'string', example: 'Integrity'),
+                    new OA\Property(property: 'icon', type: 'string', example: 'fa-solid fa-handshake', nullable: true),
+                    new OA\Property(property: 'description', type: 'string', example: 'We operate with complete honesty — no hidden fees, no misleading itineraries, just clear and ethical service.'),
                 ]
             )
         ),
@@ -156,10 +155,9 @@ class AboutOurCoreValueController extends Controller
             required: true,
             content: new OA\JsonContent(
                 properties: [
-                    new OA\Property(property: 'title', type: 'string', example: 'Updated Core Value Title'),
-                    new OA\Property(property: 'description', type: 'string', example: 'Updated core value description.'),
-                    new OA\Property(property: 'icon', type: 'string', example: 'fas fa-star', nullable: true),
-                    new OA\Property(property: 'status', type: 'string', example: 'active'),
+                    new OA\Property(property: 'title', type: 'string', example: 'Excellence'),
+                    new OA\Property(property: 'icon', type: 'string', example: 'fa-solid fa-star', nullable: true),
+                    new OA\Property(property: 'description', type: 'string', example: 'From the first query to post-trip support, we hold ourselves to the highest standards in everything we do.'),
                 ]
             )
         ),

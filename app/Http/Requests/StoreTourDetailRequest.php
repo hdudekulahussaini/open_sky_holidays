@@ -46,7 +46,7 @@ class StoreTourDetailRequest extends FormRequest
 
             'gallery.*' => [
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
             'status' => [

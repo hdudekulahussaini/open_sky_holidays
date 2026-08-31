@@ -43,24 +43,65 @@
             </div>
             
             <div id="serviceFeaturesContainer" class="ts-features-container mt-3">
-                @php $oldFeatures = old('features', isset($service) ? $service->features : [['title' => '', 'description' => '']]); 
-                     if (is_string($oldFeatures)) $oldFeatures = json_decode($oldFeatures, true) ?? [['title' => '', 'description' => '']];
-                     if (empty($oldFeatures)) $oldFeatures = [['title' => '', 'description' => '']];
+                @php 
+                    $featureIcons = [
+                        'fa-solid fa-clipboard-list' => '📋 Clipboard / Best Fares',
+                        'fa-solid fa-shield-halved' => '🛡️ Shield / Global Reach & Security',
+                        'fa-solid fa-clock' => '⏱️ Clock / Instant Booking',
+                        'fa-solid fa-user' => '👤 User / Flexible Dates & Personal',
+                        'fa-solid fa-headset' => '🎧 Headset / 24/7 Support',
+                        'fa-solid fa-plane-departure' => '🛫 Airplane / Flight Tickets',
+                        'fa-solid fa-hotel' => '🏨 Hotel / Luxury Accommodations',
+                        'fa-solid fa-passport' => '🛂 Passport / Visa Services',
+                        'fa-solid fa-wallet' => '👛 Wallet / Transparent Pricing',
+                        'fa-solid fa-car' => '🚗 Car / Airport & Transfers',
+                        'fa-solid fa-shield-heart' => '💖 Shield / Travel Insurance',
+                        'fa-solid fa-star' => '⭐ Star / VIP Experience',
+                        'fa-solid fa-tags' => '🏷️ Tags / Special Deals & Offers',
+                        'fa-solid fa-globe' => '🌐 Globe / Worldwide Network',
+                        'fa-solid fa-calendar-check' => '📅 Calendar / Easy Booking',
+                        'fa-solid fa-phone-volume' => '📞 Phone / Dedicated Hotline',
+                    ];
+                    $oldFeatures = old('features', isset($service) ? $service->features : [['icon' => 'fa-solid fa-clipboard-list', 'title' => '', 'description' => '']]); 
+                    if (is_string($oldFeatures)) $oldFeatures = json_decode($oldFeatures, true) ?? [['icon' => 'fa-solid fa-clipboard-list', 'title' => '', 'description' => '']];
+                    if (!is_array($oldFeatures) || empty($oldFeatures)) $oldFeatures = [['icon' => 'fa-solid fa-clipboard-list', 'title' => '', 'description' => '']];
+                    if (!isset($oldFeatures[0])) $oldFeatures = [$oldFeatures];
+                    $oldFeatures = array_values($oldFeatures);
                 @endphp
-                @foreach ($oldFeatures as $i => $item)
+                @foreach ($oldFeatures as $item)
+                    @php 
+                        $curIcon = is_array($item) ? ($item['icon'] ?? 'fa-solid fa-clipboard-list') : 'fa-solid fa-clipboard-list';
+                        $curTitle = is_array($item) ? ($item['title'] ?? '') : $item;
+                        $curDesc = is_array($item) ? ($item['description'] ?? '') : '';
+                    @endphp
                     <div class="feature-card border rounded-3 p-3 mb-3 s-feature-row" style="background: #f8fafc; border-color: #e2e8f0 !important;">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h6 class="fw-semibold mb-0 text-primary">Feature</h6>
-                            <button type="button" class="btn btn-sm btn-outline-danger s-remove-btn"><i class="fa-solid fa-trash"></i></button>
+                            <h6 class="fw-semibold mb-0 text-primary">Feature #<span class="js-feature-index">{{ $loop->iteration }}</span></h6>
+                            <button type="button" class="btn btn-sm btn-outline-danger s-remove-btn" title="Remove"><i class="fa-solid fa-trash"></i></button>
                         </div>
                         <div class="row g-3">
-                            <div class="col-md-12">
+                            <div class="col-md-5">
+                                <label class="ts-label form-label fw-semibold">Feature Icon</label>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="rounded-3 bg-white border d-flex align-items-center justify-content-center text-primary flex-shrink-0 shadow-sm" style="width: 44px; height: 42px; font-size: 1.25rem;">
+                                        <i class="{{ $curIcon }} js-feature-icon-preview"></i>
+                                    </div>
+                                    <select name="features[{{ $loop->index }}][icon]" class="ts-input m-0 js-feature-icon-select">
+                                        @foreach ($featureIcons as $class => $label)
+                                            <option value="{{ $class }}" @selected($curIcon === $class)>
+                                                {{ $label }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
                                 <label class="ts-label form-label fw-semibold">Feature Title <span class="ts-required">*</span></label>
-                                <input type="text" name="features[{{ $i }}][title]" value="{{ is_array($item) ? ($item['title'] ?? '') : $item }}" class="ts-input" placeholder="Enter feature title" required>
+                                <input type="text" name="features[{{ $loop->index }}][title]" value="{{ $curTitle }}" class="ts-input" placeholder="e.g. Best Fares" required>
                             </div>
                             <div class="col-md-12">
                                 <label class="ts-label form-label fw-semibold">Feature Description</label>
-                                <input type="text" name="features[{{ $i }}][description]" value="{{ is_array($item) ? ($item['description'] ?? '') : '' }}" class="ts-input" placeholder="Enter feature description">
+                                <input type="text" name="features[{{ $loop->index }}][description]" value="{{ $curDesc }}" class="ts-input" placeholder="e.g. Competitive pricing on all routes">
                             </div>
                         </div>
                     </div>
@@ -111,26 +152,28 @@
             <div id="svcStepsContainer" class="ts-features-container mt-3">
                 @php $oldSteps = old('process_steps', isset($service) ? $service->process_steps : [['icon' => '', 'title' => '', 'description' => '']]); 
                      if (is_string($oldSteps)) $oldSteps = json_decode($oldSteps, true) ?? [['icon' => '', 'title' => '', 'description' => '']];
-                     if (empty($oldSteps)) $oldSteps = [['icon' => '', 'title' => '', 'description' => '']];
+                     if (!is_array($oldSteps) || empty($oldSteps)) $oldSteps = [['icon' => '', 'title' => '', 'description' => '']];
+                     if (!isset($oldSteps[0])) $oldSteps = [$oldSteps];
+                     $oldSteps = array_values($oldSteps);
                 @endphp
-                @foreach ($oldSteps as $i => $step)
+                @foreach ($oldSteps as $step)
                     <div class="feature-card border rounded-3 p-3 mb-3 s-step-row" style="background: #f8fafc; border-color: #e2e8f0 !important;">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h6 class="fw-semibold mb-0 text-primary">Process Step</h6>
+                            <h6 class="fw-semibold mb-0 text-primary">Process Step #<span class="js-step-index">{{ $loop->iteration }}</span></h6>
                             <button type="button" class="btn btn-sm btn-outline-danger s-remove-btn"><i class="fa-solid fa-trash"></i></button>
                         </div>
                         <div class="row g-3">
                             <div class="col-md-4">
                                 <label class="ts-label form-label fw-semibold">Icon / Number</label>
-                                <input type="text" name="process_steps[{{ $i }}][icon]" value="{{ $step['icon'] ?? '' }}" class="ts-input" placeholder="e.g. 01">
+                                <input type="text" name="process_steps[{{ $loop->index }}][icon]" value="{{ is_array($step) ? ($step['icon'] ?? '') : '' }}" class="ts-input" placeholder="e.g. 01">
                             </div>
                             <div class="col-md-8">
                                 <label class="ts-label form-label fw-semibold">Step Title <span class="ts-required">*</span></label>
-                                <input type="text" name="process_steps[{{ $i }}][title]" value="{{ $step['title'] ?? '' }}" class="ts-input" placeholder="Enter step title" required>
+                                <input type="text" name="process_steps[{{ $loop->index }}][title]" value="{{ is_array($step) ? ($step['title'] ?? '') : '' }}" class="ts-input" placeholder="Enter step title" required>
                             </div>
                             <div class="col-md-12">
                                 <label class="ts-label form-label fw-semibold">Step Description</label>
-                                <input type="text" name="process_steps[{{ $i }}][description]" value="{{ $step['description'] ?? '' }}" class="ts-input" placeholder="Enter step description">
+                                <input type="text" name="process_steps[{{ $loop->index }}][description]" value="{{ is_array($step) ? ($step['description'] ?? '') : '' }}" class="ts-input" placeholder="Enter step description">
                             </div>
                         </div>
                     </div>
@@ -196,6 +239,62 @@
             </div>
         </div>
 
+        {{-- Call To Action Banner & Statistics Section --}}
+        <hr class="my-4" style="border-color: #e2e8f0;">
+        <div class="ts-section-header">
+            <h3>Call To Action & Statistics Banner</h3>
+            <p>Configure the bottom full-width banner ("Ready To Start Your Journey?", stats counters, and contact button).</p>
+        </div>
+
+        <div class="row g-3 mt-1">
+            <div class="col-md-12">
+                <label for="cta_title" class="ts-label">Banner Title</label>
+                <input type="text" name="cta_title" id="cta_title" value="{{ old('cta_title', $service->cta_title ?? '') }}" class="ts-input" placeholder="e.g. Ready To Start Your Journey?">
+            </div>
+
+            <div class="col-md-12">
+                <label for="cta_description" class="ts-label">Banner Description</label>
+                <textarea name="cta_description" id="cta_description" rows="2" class="ts-input" placeholder="e.g. Let us take care of your visa process while you focus on making unforgettable memories.">{{ old('cta_description', $service->cta_description ?? '') }}</textarea>
+            </div>
+        </div>
+
+        {{-- Stats / Counters Repeater --}}
+        <div class="ts-form-group mt-4">
+            <div class="ts-feature-heading">
+                <div>
+                    <label class="ts-label">Statistics / Counters</label>
+                    <p class="ts-field-note">Counters displayed in banner (e.g. 10,000+ Visas Processed, 25+ Countries, 98% Success Rate)</p>
+                </div>
+                <button type="button" class="ts-add-feature-btn" id="addSvcStatBtn"><span>+</span> Add Stat</button>
+            </div>
+            
+            <div id="svcStatsContainer" class="ts-features-container mt-3">
+                @php $oldStats = old('stats', isset($service) ? $service->stats : [['number' => '10,000+', 'label' => 'Visas Processed'], ['number' => '25+', 'label' => 'Countries Covered'], ['number' => '98%', 'label' => 'Success Rate']]); 
+                     if (is_string($oldStats)) $oldStats = json_decode($oldStats, true) ?? [['number' => '', 'label' => '']];
+                     if (!is_array($oldStats) || empty($oldStats)) $oldStats = [['number' => '', 'label' => '']];
+                     if (!isset($oldStats[0])) $oldStats = [$oldStats];
+                     $oldStats = array_values($oldStats);
+                @endphp
+                @foreach ($oldStats as $stat)
+                    <div class="feature-card border rounded-3 p-3 mb-2.5 s-stat-row" style="background: #f8fafc; border-color: #e2e8f0 !important;">
+                        <div class="d-flex align-items-center gap-3">
+                            <div style="width: 35%;">
+                                <label class="ts-label form-label fw-semibold small mb-1">Counter / Number</label>
+                                <input type="text" name="stats[{{ $loop->index }}][number]" value="{{ is_array($stat) ? ($stat['number'] ?? '') : '' }}" class="ts-input m-0" placeholder="e.g. 10,000+">
+                            </div>
+                            <div class="flex-grow-1">
+                                <label class="ts-label form-label fw-semibold small mb-1">Label / Description</label>
+                                <input type="text" name="stats[{{ $loop->index }}][label]" value="{{ is_array($stat) ? ($stat['label'] ?? '') : '' }}" class="ts-input m-0" placeholder="e.g. Visas Processed">
+                            </div>
+                            <div class="pt-3">
+                                <button type="button" class="btn btn-sm btn-outline-danger s-remove-btn" title="Remove"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
     </div>
 
     <div class="ts-form-sidebar">
@@ -222,12 +321,39 @@
                 Choose Image
             </label>
 
-            <input type="file" name="about_image" id="about_image" class="ts-file-input" accept=".jpg,.jpeg,.png,.webp">
+            <input type="file" name="about_image" id="about_image" class="ts-file-input" accept=".jpg,.jpeg,.png,.webp,.avif,image/*">
             @error('about_image')<span class="ts-error-message">{{ $message }}</span>@enderror
         </div>
 
+        {{-- CTA Banner Background Image --}}
+        <div class="ts-side-card mt-3">
+            <div class="ts-side-card-header">
+                <h3>CTA Banner Background</h3>
+                <p>Upload background image for the CTA banner.</p>
+            </div>
+
+            <div class="ts-image-preview-box">
+                <img src="{{ isset($service) && $service->cta_background_image ? asset('storage/' . $service->cta_background_image) : '' }}"
+                    alt="CTA Image preview" id="ctaImagePreview"
+                    class="ts-image-preview {{ isset($service) && $service->cta_background_image ? '' : 'ts-hidden' }}">
+
+                <div id="ctaImagePlaceholder" class="ts-image-placeholder {{ isset($service) && $service->cta_background_image ? 'ts-hidden' : '' }}">
+                    <span class="ts-image-placeholder-icon">✦</span>
+                    <strong>No banner image selected</strong>
+                    <small>JPG, PNG or WEBP</small>
+                </div>
+            </div>
+
+            <label for="cta_background_image" class="ts-upload-label">
+                Choose Banner Image
+            </label>
+
+            <input type="file" name="cta_background_image" id="cta_background_image" class="ts-file-input" accept=".jpg,.jpeg,.png,.webp,.avif,image/*">
+            @error('cta_background_image')<span class="ts-error-message">{{ $message }}</span>@enderror
+        </div>
+
         {{-- Status --}}
-        <div class="admin-form-group">
+        <div class="admin-form-group mt-3">
             <label for="status">Status <span class="required">*</span></label>
             <select id="status" name="status" class="admin-form-control @error('status') is-invalid @enderror" required>
                 <option value="1" @selected(old('status', $service->status ?? 1) == 1)>Active</option>
@@ -241,25 +367,30 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Image Preview
-        const imageInput = document.getElementById('about_image');
-        const imagePreview = document.getElementById('imagePreview');
-        const imagePlaceholder = document.getElementById('imagePlaceholder');
+        // Image Previews
+        function setupImagePreview(inputId, previewId, placeholderId) {
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            const placeholder = document.getElementById(placeholderId);
 
-        if (imageInput && imagePreview) {
-            imageInput.addEventListener('change', function () {
-                const file = this.files[0];
-                if (!file) return;
+            if (input && preview) {
+                input.addEventListener('change', function () {
+                    const file = this.files[0];
+                    if (!file) return;
 
-                const reader = new FileReader();
-                reader.onload = function (event) {
-                    imagePreview.src = event.target.result;
-                    imagePreview.classList.remove('ts-hidden');
-                    if (imagePlaceholder) imagePlaceholder.classList.add('ts-hidden');
-                };
-                reader.readAsDataURL(file);
-            });
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        preview.src = event.target.result;
+                        preview.classList.remove('ts-hidden');
+                        if (placeholder) placeholder.classList.add('ts-hidden');
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
         }
+
+        setupImagePreview('about_image', 'imagePreview', 'imagePlaceholder');
+        setupImagePreview('cta_background_image', 'ctaImagePreview', 'ctaImagePlaceholder');
 
         // Generic Repeater Logic
         function setupRepeater(containerId, addBtnId, rowClass, templateFn) {
@@ -293,22 +424,62 @@
             return `
                 <div class="feature-card border rounded-3 p-3 mb-3 s-feature-row" style="background: #f8fafc; border-color: #e2e8f0 !important;">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h6 class="fw-semibold mb-0 text-primary">Feature</h6>
-                        <button type="button" class="btn btn-sm btn-outline-danger s-remove-btn"><i class="fa-solid fa-trash"></i></button>
+                        <h6 class="fw-semibold mb-0 text-primary">Feature #\${index + 1}</h6>
+                        <button type="button" class="btn btn-sm btn-outline-danger s-remove-btn" title="Remove"><i class="fa-solid fa-trash"></i></button>
                     </div>
                     <div class="row g-3">
-                        <div class="col-md-12">
+                        <div class="col-md-5">
+                            <label class="ts-label form-label fw-semibold">Feature Icon</label>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="rounded-3 bg-white border d-flex align-items-center justify-content-center text-primary flex-shrink-0 shadow-sm" style="width: 44px; height: 42px; font-size: 1.25rem;">
+                                    <i class="fa-solid fa-clipboard-list js-feature-icon-preview"></i>
+                                </div>
+                                <select name="features[\${index}][icon]" class="ts-input m-0 js-feature-icon-select">
+                                    <option value="fa-solid fa-clipboard-list">📋 Clipboard / Best Fares</option>
+                                    <option value="fa-solid fa-shield-halved">🛡️ Shield / Global Reach & Security</option>
+                                    <option value="fa-solid fa-clock">⏱️ Clock / Instant Booking</option>
+                                    <option value="fa-solid fa-user">👤 User / Flexible Dates & Personal</option>
+                                    <option value="fa-solid fa-headset">🎧 Headset / 24/7 Support</option>
+                                    <option value="fa-solid fa-plane-departure">🛫 Airplane / Flight Tickets</option>
+                                    <option value="fa-solid fa-hotel">🏨 Hotel / Luxury Accommodations</option>
+                                    <option value="fa-solid fa-passport">🛂 Passport / Visa Services</option>
+                                    <option value="fa-solid fa-wallet">👛 Wallet / Transparent Pricing</option>
+                                    <option value="fa-solid fa-car">🚗 Car / Airport & Transfers</option>
+                                    <option value="fa-solid fa-shield-heart">💖 Shield / Travel Insurance</option>
+                                    <option value="fa-solid fa-star">⭐ Star / VIP Experience</option>
+                                    <option value="fa-solid fa-tags">🏷️ Tags / Special Deals & Offers</option>
+                                    <option value="fa-solid fa-globe">🌐 Globe / Worldwide Network</option>
+                                    <option value="fa-solid fa-calendar-check">📅 Calendar / Easy Booking</option>
+                                    <option value="fa-solid fa-phone-volume">📞 Phone / Dedicated Hotline</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
                             <label class="ts-label form-label fw-semibold">Feature Title <span class="ts-required">*</span></label>
-                            <input type="text" name="features[${index}][title]" class="ts-input" placeholder="Enter feature title" required>
+                            <input type="text" name="features[\${index}][title]" class="ts-input" placeholder="e.g. Best Fares" required>
                         </div>
                         <div class="col-md-12">
                             <label class="ts-label form-label fw-semibold">Feature Description</label>
-                            <input type="text" name="features[${index}][description]" class="ts-input" placeholder="Enter feature description">
+                            <input type="text" name="features[\${index}][description]" class="ts-input" placeholder="e.g. Competitive pricing on all routes">
                         </div>
                     </div>
                 </div>
             `;
         });
+
+        // Live icon preview handler for features select dropdown
+        const featuresContainer = document.getElementById('serviceFeaturesContainer');
+        if (featuresContainer) {
+            featuresContainer.addEventListener('change', function(e) {
+                if (e.target.classList.contains('js-feature-icon-select')) {
+                    const row = e.target.closest('.s-feature-row');
+                    const preview = row ? row.querySelector('.js-feature-icon-preview') : null;
+                    if (preview) {
+                        preview.className = e.target.value + ' js-feature-icon-preview';
+                    }
+                }
+            });
+        }
 
         setupRepeater('svcItemsContainer', 'addSvcItemBtn', 's-item-row', function(index) {
             return `
@@ -369,6 +540,26 @@
                             <input type="text" name="why_choose_items[]" class="ts-input m-0" placeholder="Enter why choose point">
                         </div>
                         <button type="button" class="btn btn-sm btn-outline-danger s-remove-btn"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+            `;
+        });
+
+        setupRepeater('svcStatsContainer', 'addSvcStatBtn', 's-stat-row', function(index) {
+            return `
+                <div class="feature-card border rounded-3 p-3 mb-2.5 s-stat-row" style="background: #f8fafc; border-color: #e2e8f0 !important;">
+                    <div class="d-flex align-items-center gap-3">
+                        <div style="width: 35%;">
+                            <label class="ts-label form-label fw-semibold small mb-1">Counter / Number</label>
+                            <input type="text" name="stats[\${index}][number]" class="ts-input m-0" placeholder="e.g. 10,000+">
+                        </div>
+                        <div class="flex-grow-1">
+                            <label class="ts-label form-label fw-semibold small mb-1">Label / Description</label>
+                            <input type="text" name="stats[\${index}][label]" class="ts-input m-0" placeholder="e.g. Visas Processed">
+                        </div>
+                        <div class="pt-3">
+                            <button type="button" class="btn btn-sm btn-outline-danger s-remove-btn" title="Remove"><i class="fa-solid fa-trash"></i></button>
+                        </div>
                     </div>
                 </div>
             `;

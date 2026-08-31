@@ -139,7 +139,7 @@
                         {{ isset($travelSupport) && $travelSupport->image ? 'ts-hidden' : '' }}">
                     <span class="ts-image-placeholder-icon">✦</span>
                     <strong>No image selected</strong>
-                    <small>JPG, PNG or WEBP</small>
+                    <small>JPG, PNG, WEBP or AVIF</small>
                 </div>
             </div>
 
@@ -147,7 +147,7 @@
                 Choose Image
             </label>
 
-            <input type="file" name="image" id="image" class="ts-file-input" accept=".jpg,.jpeg,.png,.webp">
+            <input type="file" name="image" id="image" class="ts-file-input" accept=".jpg,.jpeg,.png,.webp,.avif,image/*">
 
             @error('image')
                 <span class="ts-error-message">

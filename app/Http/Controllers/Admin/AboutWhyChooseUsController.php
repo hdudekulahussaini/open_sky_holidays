@@ -50,9 +50,11 @@ class AboutWhyChooseUsController extends Controller
 
             [
                 $validated['features_title'],
+                $validated['features_icon'],
                 $validated['features_description'],
             ] = $this->prepareFeatures(
                 $validated['features_title'],
+                $validated['features_icon'] ?? [],
                 $validated['features_description'] ?? []
             );
 
@@ -114,9 +116,11 @@ class AboutWhyChooseUsController extends Controller
 
             [
                 $validated['features_title'],
+                $validated['features_icon'],
                 $validated['features_description'],
             ] = $this->prepareFeatures(
                 $validated['features_title'],
+                $validated['features_icon'] ?? [],
                 $validated['features_description'] ?? []
             );
 
@@ -169,9 +173,11 @@ class AboutWhyChooseUsController extends Controller
 
     private function prepareFeatures(
         array $titles,
-        array $descriptions
+        array $icons = [],
+        array $descriptions = []
     ): array {
         $preparedTitles = [];
+        $preparedIcons = [];
         $preparedDescriptions = [];
 
         foreach ($titles as $index => $title) {
@@ -181,17 +187,16 @@ class AboutWhyChooseUsController extends Controller
 
             $preparedTitles[] = trim($title);
 
-            $description =
-                $descriptions[$index] ?? null;
+            $icon = $icons[$index] ?? null;
+            $preparedIcons[] = filled($icon) ? trim($icon) : 'fa-solid fa-circle-check';
 
-            $preparedDescriptions[] =
-                filled($description)
-                    ? trim($description)
-                    : null;
+            $description = $descriptions[$index] ?? null;
+            $preparedDescriptions[] = filled($description) ? trim($description) : null;
         }
 
         return [
             $preparedTitles,
+            $preparedIcons,
             $preparedDescriptions,
         ];
     }

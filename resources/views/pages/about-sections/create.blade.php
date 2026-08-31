@@ -425,7 +425,7 @@
                             <label class="avatar-upload-box">
 
                                 <input type="file" name="avatar_images[]" class="avatar-file-input"
-                                    accept=".jpg,.jpeg,.png,.webp">
+                                    accept=".jpg,.jpeg,.png,.webp,.avif,image/*">
 
                                 <img src="" alt="Customer avatar preview" class="avatar-local-preview">
 
@@ -718,7 +718,7 @@
                             type="file"
                             name="avatar_images[]"
                             class="avatar-file-input"
-                            accept=".jpg,.jpeg,.png,.webp"
+                            accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
                         >
 
                         <img

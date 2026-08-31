@@ -59,7 +59,7 @@ class UpdateTourFeatureRequest extends FormRequest
                 ),
                 'nullable',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
             'remove_image' => [

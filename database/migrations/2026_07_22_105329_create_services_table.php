@@ -24,6 +24,11 @@ return new class extends Migration
             $table->json('documents')->nullable();
             $table->json('why_choose_items')->nullable();
 
+            $table->string('cta_title')->nullable();
+            $table->text('cta_description')->nullable();
+            $table->string('cta_background_image')->nullable();
+            $table->json('stats')->nullable();
+
             $table->boolean('status')->default(true);
 
             $table->timestamps();

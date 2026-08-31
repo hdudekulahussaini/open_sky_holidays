@@ -50,16 +50,32 @@ class UpdateTourRequest extends FormRequest
                 'max:100',
             ],
 
+            'state' => [
+                'nullable',
+                'string',
+                'max:100',
+            ],
+
             'duration' => [
                 'required',
                 'string',
                 'max:100',
             ],
 
+            'areas' => [
+                'nullable',
+                'array',
+            ],
+
+            'features' => [
+                'nullable',
+                'array',
+            ],
+
             'thumbnail' => [
                 'nullable',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
             'status' => [
@@ -99,7 +115,7 @@ class UpdateTourRequest extends FormRequest
             'gallery.*' => [
                 'required',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
             // Existing Gallery Paths
@@ -174,7 +190,7 @@ class UpdateTourRequest extends FormRequest
             'places_covered.*.image' => [
                 'nullable',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
         ];

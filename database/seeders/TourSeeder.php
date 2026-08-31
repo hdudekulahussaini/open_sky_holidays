@@ -12,79 +12,111 @@ class TourSeeder extends Seeder
     public function run(): void
     {
         // 1. Create Tour Types
-        $adventureType = TourType::updateOrCreate(['slug' => 'adventure'], ['name' => 'Adventure']);
-        $honeymoonType = TourType::updateOrCreate(['slug' => 'honeymoon'], ['name' => 'Honeymoon']);
-        $familyType = TourType::updateOrCreate(['slug' => 'family-tours'], ['name' => 'Family Tours']);
-        $culturalType = TourType::updateOrCreate(['slug' => 'cultural'], ['name' => 'Cultural']);
+        $domesticType = TourType::updateOrCreate(['slug' => 'domestic'], ['name' => 'Domestic Tours']);
+        $internationalType = TourType::updateOrCreate(['slug' => 'international'], ['name' => 'International Tours']);
+        $adventureType = TourType::updateOrCreate(['slug' => 'adventure'], ['name' => 'Adventure Tours']);
+        $honeymoonType = TourType::updateOrCreate(['slug' => 'honeymoon'], ['name' => 'Honeymoon Tours']);
 
-        // 2. Create a fully populated Tour
-        $tour = Tour::create([
-            'tour_type_id' => $adventureType->id,
-            'title' => 'Dubai Red Dunes Desert Safari',
-            'slug' => 'dubai-red-dunes-desert-safari',
-            'country' => 'United Arab Emirates',
-            'duration' => '6 Hours',
-            'thumbnail' => 'tours/desert_safari.jpg',
-            'status' => true,
+        // 2. Kerala Domestic Tour
+        $kerala = Tour::updateOrCreate(
+            ['slug' => 'kerala'],
+            [
+                'tour_type_id' => $domesticType->id,
+                'title' => 'Kerala',
+                'country' => 'India',
+                'state' => 'Kerala',
+                'duration' => '4 NIGHTS / 5 DAYS',
+                'thumbnail' => 'tours/kerala.jpg',
+                'areas' => ['Munnar', 'Alleppey', 'Thekkady', 'Kochi Fort'],
+                'features' => ['Munnar', 'Alleppey', 'Thekkady', 'Kochi Fort'],
+                'status' => true,
+            ]
+        );
+        $kerala->detail()->updateOrCreate(
+            ['tour_id' => $kerala->id],
+            [
+                'heading' => 'About This Tour',
+                'description' => 'Experience the tranquil backwaters, mist-covered tea gardens of Munnar, and pristine wildlife sanctuaries of God’s Own Country.',
+                'status' => 'active',
+            ]
+        );
+        $kerala->features()->delete();
+        $kerala->features()->createMany([
+            ['type' => TourFeature::TYPE_PACKAGE_INCLUSION, 'title' => '4 Star Accommodation', 'description' => 'Handpicked premium hotels', 'sort_order' => 1, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PACKAGE_INCLUSION, 'title' => 'Daily Meal', 'description' => 'Buffet breakfast & dinner', 'sort_order' => 2, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PACKAGE_INCLUSION, 'title' => 'All Sightseeing', 'description' => 'Private AC cab with chauffeur', 'sort_order' => 3, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PACKAGE_INCLUSION, 'title' => '24/7 Support', 'description' => 'Dedicated local tour manager', 'sort_order' => 4, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PLACE_COVERED, 'title' => 'Munnar', 'description' => 'Lush tea plantations & viewpoints', 'image' => null, 'sort_order' => 1, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PLACE_COVERED, 'title' => 'Alleppey', 'description' => 'Scenic backwater houseboat cruise', 'image' => null, 'sort_order' => 2, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PLACE_COVERED, 'title' => 'Thekkady', 'description' => 'Periyar wildlife & spice gardens', 'image' => null, 'sort_order' => 3, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PLACE_COVERED, 'title' => 'Kochi Fort', 'description' => 'Colonial heritage & Chinese fishing nets', 'image' => null, 'sort_order' => 4, 'status' => 'active'],
         ]);
 
-        // 3. Create Tour Detail
-        $tour->detail()->create([
-            'heading' => 'Experience the magic of the Arabian Desert',
-            'description' => 'Embark on an unforgettable adventure into the heart of the Dubai desert. Feel the thrill of dune bashing in a luxury 4x4, ride camels over sand dunes, and experience traditional Emirati culture at our desert camp. End your evening with a delicious BBQ dinner under the stars while watching live entertainment.',
-            'status' => 'active',
+        // 3. Jammu Kashmir & Srinagar
+        $jk = Tour::updateOrCreate(
+            ['slug' => 'jammu-kashmir-srinagar'],
+            [
+                'tour_type_id' => $domesticType->id,
+                'title' => 'Jammu Kashmir & Srinagar',
+                'country' => 'India',
+                'state' => 'Jammu & Kashmir',
+                'duration' => '3 NIGHTS / 4 DAYS',
+                'thumbnail' => 'tours/kashmir.jpg',
+                'areas' => ['Tulip Garden', 'Ropeway', 'River Rafting', 'Gulmarg'],
+                'features' => ['Tulip Garden', 'Ropeway', 'River Rafting', 'Gulmarg'],
+                'status' => true,
+            ]
+        );
+        $jk->detail()->updateOrCreate(
+            ['tour_id' => $jk->id],
+            [
+                'heading' => 'About This Tour',
+                'description' => 'Discover paradise on earth with snow-capped Himalayan peaks, Dal Lake shikara rides, and vibrant tulip meadows.',
+                'status' => 'active',
+            ]
+        );
+        $jk->features()->delete();
+        $jk->features()->createMany([
+            ['type' => TourFeature::TYPE_PACKAGE_INCLUSION, 'title' => '4 Star Accommodation', 'description' => 'Houseboat and luxury stay', 'sort_order' => 1, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PACKAGE_INCLUSION, 'title' => 'Daily Meal', 'description' => 'Breakfast & dinner included', 'sort_order' => 2, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PACKAGE_INCLUSION, 'title' => 'All Sightseeing', 'description' => 'Sightseeing transfers included', 'sort_order' => 3, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PLACE_COVERED, 'title' => 'Tulip Garden', 'description' => 'Asia’s largest tulip sanctuary', 'image' => null, 'sort_order' => 1, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PLACE_COVERED, 'title' => 'Ropeway', 'description' => 'Gulmarg Gondola scenic ride', 'image' => null, 'sort_order' => 2, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PLACE_COVERED, 'title' => 'River Rafting', 'description' => 'White water rafting in Pahalgam', 'image' => null, 'sort_order' => 3, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PLACE_COVERED, 'title' => 'Gulmarg', 'description' => 'Meadow of flowers & snow activities', 'image' => null, 'sort_order' => 4, 'status' => 'active'],
         ]);
 
-        // 4. Create Gallery Images (relational)
-        $tour->gallery()->createMany([
-            ['image' => 'tour-details/gallery/dune_bashing.jpg'],
-            ['image' => 'tour-details/gallery/camel_riding.jpg'],
-            ['image' => 'tour-details/gallery/desert_dinner.jpg'],
-        ]);
-
-        // 5. Create Inclusions
-        $tour->features()->createMany([
+        // 4. Goa
+        $goa = Tour::updateOrCreate(
+            ['slug' => 'goa'],
             [
-                'type' => TourFeature::TYPE_PACKAGE_INCLUSION,
-                'title' => 'Hotel pick up and drop off in 4x4 SUV',
-                'description' => 'Convenient transfer from any hotel in Dubai.',
-                'sort_order' => 1,
-                'status' => 'active',
-            ],
+                'tour_type_id' => $domesticType->id,
+                'title' => 'Goa',
+                'country' => 'India',
+                'state' => 'Goa',
+                'duration' => '3 NIGHTS / 4 DAYS',
+                'thumbnail' => 'tours/goa.jpg',
+                'areas' => ['Anjuna Beach', 'Baga Beach', 'Old Goa Church', 'Fort Aguada', 'Night Life'],
+                'features' => ['Anjuna Beach', 'Baga Beach', 'Old Goa Church', 'Fort Aguada', 'Night Life'],
+                'status' => true,
+            ]
+        );
+        $goa->detail()->updateOrCreate(
+            ['tour_id' => $goa->id],
             [
-                'type' => TourFeature::TYPE_PACKAGE_INCLUSION,
-                'title' => 'Barbecue dinner buffet',
-                'description' => 'With vegetarian and non-vegetarian selections.',
-                'sort_order' => 2,
+                'heading' => 'About This Tour',
+                'description' => 'Golden sand beaches, vibrant water sports, historic Portuguese churches, and relaxed coastal nightlife.',
                 'status' => 'active',
-            ],
-            [
-                'type' => TourFeature::TYPE_PACKAGE_INCLUSION,
-                'title' => 'Sandboarding and camel riding',
-                'description' => 'Guided sand adventure equipment included.',
-                'sort_order' => 3,
-                'status' => 'active',
-            ],
-        ]);
-
-        // 6. Create Places Covered
-        $tour->features()->createMany([
-            [
-                'type' => TourFeature::TYPE_PLACE_COVERED,
-                'title' => 'Lahbab Red Sand Desert',
-                'description' => 'Known for its stunning red dunes and tall slopes.',
-                'image' => 'tour-features/lahbab.jpg',
-                'sort_order' => 1,
-                'status' => 'active',
-            ],
-            [
-                'type' => TourFeature::TYPE_PLACE_COVERED,
-                'title' => 'Al Aweer Bedouin Camp',
-                'description' => 'A traditional camp showcasing Arabic culture and hospitality.',
-                'image' => 'tour-features/camp.jpg',
-                'sort_order' => 2,
-                'status' => 'active',
-            ],
+            ]
+        );
+        $goa->features()->delete();
+        $goa->features()->createMany([
+            ['type' => TourFeature::TYPE_PACKAGE_INCLUSION, 'title' => 'Resort Stay', 'description' => 'Beachside 4 star resort', 'sort_order' => 1, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PACKAGE_INCLUSION, 'title' => 'Daily Meal', 'description' => 'Buffet breakfast included', 'sort_order' => 2, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PLACE_COVERED, 'title' => 'Anjuna Beach', 'description' => 'Famous flea market & sunsets', 'image' => null, 'sort_order' => 1, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PLACE_COVERED, 'title' => 'Baga Beach', 'description' => 'Water sports and beach shacks', 'image' => null, 'sort_order' => 2, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PLACE_COVERED, 'title' => 'Old Goa Church', 'description' => 'Basilica of Bom Jesus heritage', 'image' => null, 'sort_order' => 3, 'status' => 'active'],
+            ['type' => TourFeature::TYPE_PLACE_COVERED, 'title' => 'Fort Aguada', 'description' => '17th-century lighthouse fort', 'image' => null, 'sort_order' => 4, 'status' => 'active'],
         ]);
     }
 }

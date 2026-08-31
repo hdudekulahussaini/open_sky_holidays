@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ServiceResource;
 use App\Models\Service;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -37,15 +38,12 @@ class ServiceController extends Controller
         $services = Service::query()
             ->where('status', true)
             ->latest()
-            ->get()
-            ->map(function (Service $service) {
-                return $this->formatService($service);
-            });
+            ->get();
 
         return response()->json([
             'status' => true,
             'message' => 'Services fetched successfully.',
-            'data' => $services,
+            'data' => ServiceResource::collection($services),
         ]);
     }
 
@@ -61,12 +59,16 @@ class ServiceController extends Controller
             'slug' => ['required', 'string', 'max:255', 'unique:services,slug'],
             'about_title' => ['required', 'string', 'max:255'],
             'about_description' => ['nullable', 'string'],
-            'about_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp'],
+            'about_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif'],
             'features' => ['nullable', 'array'],
             'service_items' => ['nullable', 'array'],
             'process_steps' => ['nullable', 'array'],
             'documents' => ['nullable', 'array'],
             'why_choose_items' => ['nullable', 'array'],
+            'cta_title' => ['nullable', 'string', 'max:255'],
+            'cta_description' => ['nullable', 'string'],
+            'cta_background_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif'],
+            'stats' => ['nullable', 'array'],
             'status' => ['nullable', 'boolean'],
         ]);
 
@@ -76,25 +78,37 @@ class ServiceController extends Controller
                 ->store('services/about', 'public');
         }
 
+        if ($request->hasFile('cta_background_image')) {
+            $validatedData['cta_background_image'] = $request
+                ->file('cta_background_image')
+                ->store('services/cta', 'public');
+        }
+
         $service = Service::create($validatedData);
 
         return response()->json([
             'status' => true,
             'message' => 'Service created successfully.',
-            'data' => $this->formatService($service),
+            'data' => new ServiceResource($service),
         ], 201);
     }
 
     /**
-     * Display one service by slug.
+     * Display one service by slug or ID.
      */
     #[OA\Get(
-        path: '/api/services/{id}',
-        summary: 'Get service details by ID',
-        description: 'Retrieves complete details for a specific travel service.',
+        path: '/api/services/{slugOrId}',
+        summary: 'Get service details by Slug or ID',
+        description: 'Retrieves complete details for a specific travel service using its slug (e.g. visa) or numeric ID.',
         tags: ['Services'],
         parameters: [
-            new OA\Parameter(name: 'id', in: 'path', required: true, description: 'ID of the service', schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(
+                name: 'slugOrId',
+                in: 'path',
+                required: true,
+                description: 'Slug (e.g. "visa") or numeric ID of the service',
+                schema: new OA\Schema(type: 'string', example: 'visa')
+            ),
         ],
         responses: [
             new OA\Response(
@@ -111,12 +125,24 @@ class ServiceController extends Controller
             new OA\Response(response: 404, description: 'Service not found'),
         ]
     )]
-    public function show(Service $service): JsonResponse
+    public function show(string $slugOrId): JsonResponse
     {
+        $service = Service::query()
+            ->where('slug', $slugOrId)
+            ->orWhere('id', $slugOrId)
+            ->first();
+
+        if (! $service) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Service not found.',
+            ], 404);
+        }
+
         return response()->json([
             'status' => true,
             'message' => 'Service fetched successfully.',
-            'data' => $this->formatService($service),
+            'data' => new ServiceResource($service),
         ]);
     }
 
@@ -132,12 +158,16 @@ class ServiceController extends Controller
             'slug' => ['sometimes', 'required', 'string', 'max:255', Rule::unique('services', 'slug')->ignore($service->id)],
             'about_title' => ['sometimes', 'required', 'string', 'max:255'],
             'about_description' => ['nullable', 'string'],
-            'about_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp'],
+            'about_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif'],
             'features' => ['nullable', 'array'],
             'service_items' => ['nullable', 'array'],
             'process_steps' => ['nullable', 'array'],
             'documents' => ['nullable', 'array'],
             'why_choose_items' => ['nullable', 'array'],
+            'cta_title' => ['nullable', 'string', 'max:255'],
+            'cta_description' => ['nullable', 'string'],
+            'cta_background_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif'],
+            'stats' => ['nullable', 'array'],
             'status' => ['nullable', 'boolean'],
         ]);
 
@@ -151,12 +181,22 @@ class ServiceController extends Controller
                 ->store('services/about', 'public');
         }
 
+        if ($request->hasFile('cta_background_image')) {
+            if ($service->cta_background_image) {
+                Storage::disk('public')->delete($service->cta_background_image);
+            }
+
+            $validatedData['cta_background_image'] = $request
+                ->file('cta_background_image')
+                ->store('services/cta', 'public');
+        }
+
         $service->update($validatedData);
 
         return response()->json([
             'status' => true,
             'message' => 'Service updated successfully.',
-            'data' => $this->formatService($service->fresh()),
+            'data' => new ServiceResource($service->fresh()),
         ]);
     }
 
@@ -167,6 +207,10 @@ class ServiceController extends Controller
     {
         if ($service->about_image) {
             Storage::disk('public')->delete($service->about_image);
+        }
+
+        if ($service->cta_background_image) {
+            Storage::disk('public')->delete($service->cta_background_image);
         }
 
         $service->delete();
@@ -194,6 +238,7 @@ class ServiceController extends Controller
             'process_steps',
             'documents',
             'why_choose_items',
+            'stats',
         ];
 
         foreach ($jsonFields as $field) {
@@ -207,19 +252,5 @@ class ServiceController extends Controller
                 }
             }
         }
-    }
-
-    /**
-     * Format response data with full image URL.
-     */
-    private function formatService(Service $service): array
-    {
-        $data = $service->toArray();
-
-        $data['about_image_url'] = $service->about_image
-            ? asset('storage/'.$service->about_image)
-            : null;
-
-        return $data;
     }
 }

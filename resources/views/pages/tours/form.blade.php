@@ -105,11 +105,23 @@
                     <label for="country">Country <span class="required">*</span></label>
                     <input type="text" name="country" id="country" value="{{ old('country', $tour->country ?? '') }}"
                         class="admin-form-control @error('country') is-invalid @enderror" maxlength="150"
-                        placeholder="Example: United Arab Emirates" required>
+                        placeholder="Example: India" required>
                     @error('country')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+
+                {{-- State --}}
+                <div class="admin-form-group">
+                    <label for="state">State</label>
+                    <input type="text" name="state" id="state" value="{{ old('state', $tour->state ?? '') }}"
+                        class="admin-form-control @error('state') is-invalid @enderror" maxlength="150"
+                        placeholder="Example: Kerala, Goa, Jammu & Kashmir">
+                    @error('state')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
 
                 {{-- Duration --}}
                 <div class="admin-form-group">
@@ -134,13 +146,43 @@
                     @enderror
                 </div>
 
+                {{-- Areas Covered (Pills on Card) --}}
+                <div class="admin-form-group admin-form-group-full">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <label class="mb-0 fw-bold">Areas Covered (Pills on Card)</label>
+                        <button type="button" class="btn btn-outline-primary btn-sm" id="addCardAreaBtn">
+                            + Add Area Pill
+                        </button>
+                    </div>
+                    <p class="form-help-text">City and area tags displayed on the tour card (e.g. Munnar, Alleppey, Thekkady, Kochi Fort).</p>
+                    <div id="cardAreasList" class="d-flex flex-wrap gap-2 pt-1">
+                        @php
+                            $cardAreas = old('areas', isset($tour) && is_array($tour->areas) ? $tour->areas : (isset($tour) && is_array($tour->features) ? $tour->features : []));
+                        @endphp
+                        @forelse ($cardAreas as $aIndex => $areaItem)
+                            @php
+                                $aVal = is_array($areaItem) ? ($areaItem['title'] ?? '') : $areaItem;
+                            @endphp
+                            <div class="input-group input-group-sm" style="width: auto; max-width: 250px;" data-card-area-item>
+                                <input type="text" name="areas[]" class="form-control form-control-sm" value="{{ $aVal }}" placeholder="e.g. Munnar">
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="this.closest('[data-card-area-item]').remove()">×</button>
+                            </div>
+                        @empty
+                            <div class="input-group input-group-sm" style="width: auto; max-width: 250px;" data-card-area-item>
+                                <input type="text" name="areas[]" class="form-control form-control-sm" value="" placeholder="e.g. Munnar">
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="this.closest('[data-card-area-item]').remove()">×</button>
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
+
                 {{-- Thumbnail --}}
                 <div class="admin-form-group admin-form-group-full">
                     <label for="tourThumbnail">Tour Thumbnail @if (!isset($tour)) <span class="required">*</span> @endif</label>
-                    <p class="form-help-text">Supported formats: JPG, JPEG, PNG and WebP.</p>
+                    <p class="form-help-text">Supported formats: JPG, JPEG, PNG, WebP and AVIF.</p>
                     <input type="file" name="thumbnail" id="tourThumbnail"
                         class="admin-form-control @error('thumbnail') is-invalid @enderror"
-                        accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" {{ isset($tour) ? '' : 'required' }}>
+                        accept=".jpg,.jpeg,.png,.webp,.avif,image/*" {{ isset($tour) ? '' : 'required' }}>
                     @error('thumbnail')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -355,7 +397,7 @@
                                     </div>
                                     <div class="tf-place-image-actions">
                                         <label for="places_covered_{{ $index }}_image" class="btn btn-outline-secondary btn-sm mb-0">Choose Image</label>
-                                        <input type="file" name="places_covered[{{ $index }}][image]" id="places_covered_{{ $index }}_image" class="d-none" accept=".jpg,.jpeg,.png,.webp" data-image-input>
+                                        <input type="file" name="places_covered[{{ $index }}][image]" id="places_covered_{{ $index }}_image" class="d-none" accept=".jpg,.jpeg,.png,.webp,.avif,image/*" data-image-input>
                                         <span class="small text-muted ms-2" data-file-name>
                                             @if (!empty($item['image']))
                                                 {{ basename($item['image']) }}
@@ -437,7 +479,7 @@
                     </div>
                     <div class="tf-place-image-actions">
                         <label data-file-label class="btn btn-outline-secondary btn-sm mb-0">Choose Image
-                            <input type="file" data-name="places_covered[__INDEX__][image]" class="d-none" accept=".jpg,.jpeg,.png,.webp" data-image-input>
+                            <input type="file" data-name="places_covered[__INDEX__][image]" class="d-none" accept=".jpg,.jpeg,.png,.webp,.avif,image/*" data-image-input>
                         </label>
                         <span class="small text-muted ms-2" data-file-name>No file selected</span>
                     </div>
@@ -763,7 +805,7 @@
                             <span class="td-image-file-name">Select image</span>
                             <strong>Browse</strong>
                         </label>
-                        <input type="file" id="${inputId}" name="gallery[]" class="td-gallery-file-input" accept=".jpg,.jpeg,.png,.webp" required>
+                        <input type="file" id="${inputId}" name="gallery[]" class="td-gallery-file-input" accept=".jpg,.jpeg,.png,.webp,.avif,image/*" required>
                     </div>
                     <button type="button" class="td-remove-new-image" aria-label="Remove image">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18"></path><path d="M6 6l12 12"></path></svg>
@@ -981,6 +1023,25 @@
             });
 
 
+
+            // Card Areas dynamic add
+            const addCardAreaBtn = document.getElementById('addCardAreaBtn');
+            const cardAreasList = document.getElementById('cardAreasList');
+            if (addCardAreaBtn && cardAreasList) {
+                addCardAreaBtn.addEventListener('click', function() {
+                    const div = document.createElement('div');
+                    div.className = 'input-group input-group-sm';
+                    div.style.width = 'auto';
+                    div.style.maxWidth = '250px';
+                    div.setAttribute('data-card-area-item', '');
+                    div.innerHTML = `
+                        <input type="text" name="areas[]" class="form-control form-control-sm" value="" placeholder="e.g. Munnar">
+                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="this.closest('[data-card-area-item]').remove()">×</button>
+                    `;
+                    cardAreasList.appendChild(div);
+                    div.querySelector('input').focus();
+                });
+            }
 
             // Initialize gallery count display
             updateGalleryStatus();

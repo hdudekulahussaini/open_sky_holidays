@@ -34,7 +34,7 @@ class UpdateTravelSupportSectionRequest extends FormRequest
             'image' => [
                 'nullable',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
                 'max:2048',
             ],
 

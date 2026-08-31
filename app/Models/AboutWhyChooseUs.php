@@ -13,14 +13,19 @@ class AboutWhyChooseUs extends Model
 
     protected $fillable = [
         'title',
+        'subtitle',
         'description',
         'image',
+        'features_icon',
         'features_title',
         'features_description',
+        'badge_title',
+        'badge_subtitle',
         'status',
     ];
 
     protected $casts = [
+        'features_icon' => 'array',
         'features_title' => 'array',
         'features_description' => 'array',
     ];

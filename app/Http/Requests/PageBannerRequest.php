@@ -89,7 +89,7 @@ class PageBannerRequest extends FormRequest
                 $imageRequired ? 'required' : 'nullable',
                 'file',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
                 'max:5120',
             ],
 

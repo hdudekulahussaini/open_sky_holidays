@@ -12,6 +12,7 @@ class Counter extends Model
     protected $fillable = [
         'value',
         'name',
+        'icon',
         'status',
     ];
 

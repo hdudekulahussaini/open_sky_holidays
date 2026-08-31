@@ -20,6 +20,12 @@ class AboutOurCoreValueRequest extends FormRequest
                 'max:255',
             ],
 
+            'icon' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+
             'description' => [
                 'required',
                 'string',
@@ -39,6 +45,12 @@ class AboutOurCoreValueRequest extends FormRequest
 
             'title.max' =>
                 'The title must not exceed 255 characters.',
+
+            'icon.string' =>
+                'The icon must contain valid text.',
+
+            'icon.max' =>
+                'The icon must not exceed 255 characters.',
 
             'description.required' =>
                 'Please enter the core value description.',

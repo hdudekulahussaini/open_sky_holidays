@@ -32,6 +32,12 @@ class StoreCounterRequest extends FormRequest
                 'max:255',
             ],
 
+            'counters.*.icon' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+
             'status' => [
                 'nullable',
                 'boolean',

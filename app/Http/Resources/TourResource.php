@@ -32,6 +32,8 @@ class TourResource extends JsonResource
 
             'country' => $this->country,
 
+            'state' => $this->state,
+
             'duration' => $this->duration,
 
             'thumbnail' => $this->thumbnail,
@@ -40,6 +42,24 @@ class TourResource extends JsonResource
                 ? Storage::disk('public')
                     ->url($this->thumbnail)
                 : null,
+
+            'areas' => is_array($this->areas) ? $this->areas : (is_array($this->features) ? $this->features : []),
+
+            'features' => is_array($this->features) ? $this->features : (is_array($this->areas) ? $this->areas : []),
+
+            'highlights' => ! empty($this->areas) && is_array($this->areas)
+                ? array_values(array_map(fn($a) => is_array($a) ? ($a['title'] ?? '') : (string)$a, $this->areas))
+                : (! empty($this->features) && is_array($this->features)
+                    ? array_values(array_map(fn($f) => is_array($f) ? ($f['title'] ?? '') : (string)$f, $this->features))
+                    : ($this->relationLoaded('features')
+                        ? $this->getRelation('features')
+                            ->where('type', 'place_covered')
+                            ->where('status', 'active')
+                            ->sortBy('sort_order')
+                            ->pluck('title')
+                            ->values()
+                            ->all()
+                        : [])),
 
             'status' => (bool) $this->status,
 
@@ -67,8 +87,34 @@ class TourResource extends JsonResource
                 }
             ),
 
-            'features' => TourFeatureResource::collection(
+            'tour_features' => TourFeatureResource::collection(
                 $this->whenLoaded('features')
+            ),
+
+            'package_inclusions' => $this->whenLoaded(
+                'features',
+                function () {
+                    return TourFeatureResource::collection(
+                        $this->getRelation('features')
+                            ->where('type', 'package_inclusion')
+                            ->where('status', 'active')
+                            ->sortBy('sort_order')
+                            ->values()
+                    );
+                }
+            ),
+
+            'places_covered' => $this->whenLoaded(
+                'features',
+                function () {
+                    return TourFeatureResource::collection(
+                        $this->getRelation('features')
+                            ->where('type', 'place_covered')
+                            ->where('status', 'active')
+                            ->sortBy('sort_order')
+                            ->values()
+                    );
+                }
             ),
 
             'created_at' => $this->created_at?->toISOString(),

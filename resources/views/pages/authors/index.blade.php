@@ -37,6 +37,7 @@
                             <th>ID</th>
                             <th>Author</th>
                             <th>Description</th>
+                            <th>Social Profiles</th>
                             <th>Status</th>
                             <th>Created</th>
                             <th class="ts-action-column">Actions</th>
@@ -65,6 +66,34 @@
                                     </div>
                                 </td>
                                 <td>{{ \Illuminate\Support\Str::limit($author->description, 80) }}</td>
+                                <td>
+                                    <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                                        @php
+                                            $renderedSocials = [];
+                                            if (is_array($author->social_links) && count($author->social_links) > 0) {
+                                                $renderedSocials = $author->social_links;
+                                            } else {
+                                                if ($author->twitter_url) $renderedSocials[] = ['platform' => 'Twitter / X', 'icon' => 'fa-brands fa-x-twitter', 'url' => $author->twitter_url];
+                                                if ($author->facebook_url) $renderedSocials[] = ['platform' => 'Facebook', 'icon' => 'fa-brands fa-facebook-f', 'url' => $author->facebook_url];
+                                                if ($author->linkedin_url) $renderedSocials[] = ['platform' => 'LinkedIn', 'icon' => 'fa-brands fa-linkedin-in', 'url' => $author->linkedin_url];
+                                            }
+                                        @endphp
+
+                                        @php $hasValidLink = false; @endphp
+                                        @foreach ($renderedSocials as $link)
+                                            @if (!empty($link['url']))
+                                                @php $hasValidLink = true; @endphp
+                                                <a href="{{ $link['url'] }}" target="_blank" rel="noopener noreferrer" title="{{ $link['platform'] ?? 'Social Profile' }}" style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; background: #f1f5f9; color: #334155; text-decoration: none; font-size: 13px; border: 1px solid #cbd5e1;">
+                                                    <i class="{{ $link['icon'] ?? 'fa-solid fa-globe' }}"></i>
+                                                </a>
+                                            @endif
+                                        @endforeach
+
+                                        @if (!$hasValidLink)
+                                            <span style="font-size: 12px; color: #94a3b8;">No links</span>
+                                        @endif
+                                    </div>
+                                </td>
                                 <td>
                                     <span class="ts-status-badge {{ $author->status ? 'ts-active' : 'ts-inactive' }}">
                                         <span></span>

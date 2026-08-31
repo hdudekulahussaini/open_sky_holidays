@@ -79,6 +79,11 @@ class UpdateBlogRequest extends FormRequest
                     ->ignore($blog?->id),
             ],
 
+            'description' => [
+                'nullable',
+                'string',
+            ],
+
             /*
             |--------------------------------------------------------------------------
             | Table of Contents
@@ -115,7 +120,7 @@ class UpdateBlogRequest extends FormRequest
             'featured_image' => [
                 'nullable',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
             'read_time' => [
@@ -174,7 +179,7 @@ class UpdateBlogRequest extends FormRequest
                 'The selected file must be an image.',
 
             'featured_image.mimes' =>
-                'Image must be JPG, JPEG, PNG or WEBP.',
+                'Image must be JPG, JPEG, PNG, WEBP, or AVIF.',
 
 
             'read_time.required' =>

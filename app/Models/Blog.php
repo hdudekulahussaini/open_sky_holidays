@@ -13,6 +13,7 @@ class Blog extends Model
         'author_id',
         'title',
         'slug',
+        'description',
         'table_of_contents',
         'content',
         'featured_image',

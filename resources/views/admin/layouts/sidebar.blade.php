@@ -27,7 +27,7 @@
                 class="nav-dropdown-toggle nav-item {{ request()->routeIs('admin.top-headers.*', 'admin.heroes.*', 'admin.offer-banners.*', 'admin.page-banners.*') ? 'active' : '' }}"
                 aria-expanded="{{ request()->routeIs('admin.top-headers.*', 'admin.heroes.*', 'admin.offer-banners.*', 'admin.page-banners.*') ? 'true' : 'false' }}">
                 <i class="fa-solid fa-images menu-icon"></i>
-                <span>Hero &amp; Banners</span>
+                <span>Home Page</span>
                 <i class="fa-solid fa-chevron-down chevron-icon"></i>
             </button>
             <div class="nav-dropdown-menu">

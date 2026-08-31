@@ -39,7 +39,7 @@ class WhatWeOfferRequest extends FormRequest
                     : 'nullable',
 
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
             'status' => [

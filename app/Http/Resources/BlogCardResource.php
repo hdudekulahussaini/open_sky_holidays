@@ -29,11 +29,9 @@ class BlogCardResource extends JsonResource
                     ?? 'Open Sky Team',
             ],
 
-            /*
-             * Automatically create a short description
-             * from the complete blog content.
-             */
-            'short_description' => Str::limit(
+            'description' => $this->description,
+
+            'short_description' => $this->description ?: Str::limit(
                 Str::squish(
                     strip_tags($this->content ?? '')
                 ),

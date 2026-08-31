@@ -45,14 +45,50 @@ class AboutWhyChooseUsController extends Controller
 
         return response()->json([
             'success' => true,
+            'message' => 'About Why Choose Us retrieved successfully.',
+            'data' => AboutWhyChooseUsResource::collection($sections),
+        ], 200);
+    }
 
-            'message' =>
-                'About Why Choose Us retrieved successfully.',
+    #[OA\Get(
+        path: '/api/about-why-choose-us/active',
+        summary: 'Get active About Why Choose Us section for website',
+        description: 'Retrieves the latest active About Why Choose Us section record for the frontend.',
+        tags: ['About Why Choose Us'],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Active About Why Choose Us retrieved successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean', example: true),
+                        new OA\Property(property: 'message', type: 'string', example: 'Active About Why Choose Us retrieved successfully.'),
+                        new OA\Property(property: 'data', ref: '#/components/schemas/AboutWhyChooseUs'),
+                    ]
+                )
+            ),
+            new OA\Response(response: 404, description: 'Active About Why Choose Us not found'),
+        ]
+    )]
+    public function active(): JsonResponse
+    {
+        $section = AboutWhyChooseUs::query()
+            ->where('status', 'active')
+            ->latest('id')
+            ->first();
 
-            'data' =>
-                AboutWhyChooseUsResource::collection(
-                    $sections
-                ),
+        if (! $section) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Active About Why Choose Us not found.',
+                'data' => null,
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Active About Why Choose Us retrieved successfully.',
+            'data' => new AboutWhyChooseUsResource($section),
         ], 200);
     }
 
@@ -66,22 +102,29 @@ class AboutWhyChooseUsController extends Controller
             content: new OA\MediaType(
                 mediaType: 'multipart/form-data',
                 schema: new OA\Schema(
-                    required: ['main_heading', 'main_description', 'features_title'],
+                    required: ['title', 'features_title'],
                     properties: [
                         new OA\Property(property: 'subtitle', type: 'string', example: 'Why Choose Us'),
-                        new OA\Property(property: 'main_heading', type: 'string', example: 'Your Trusted Partner'),
-                        new OA\Property(property: 'main_description', type: 'string', example: 'We deliver exceptional travel experiences.'),
+                        new OA\Property(property: 'title', type: 'string', example: 'Setting Standard for Trust and Comfort.'),
+                        new OA\Property(property: 'description', type: 'string', example: 'We believe that traveling shouldn\'t be stressful.'),
                         new OA\Property(property: 'image', type: 'string', format: 'binary'),
+                        new OA\Property(
+                            property: 'features_icon[]',
+                            type: 'array',
+                            items: new OA\Items(type: 'string', example: 'fa-solid fa-headset')
+                        ),
                         new OA\Property(
                             property: 'features_title[]',
                             type: 'array',
-                            items: new OA\Items(type: 'string', example: 'Best Prices')
+                            items: new OA\Items(type: 'string', example: '24/7 Expert Support')
                         ),
                         new OA\Property(
                             property: 'features_description[]',
                             type: 'array',
-                            items: new OA\Items(type: 'string', example: 'Competitive rates guaranteed')
+                            items: new OA\Items(type: 'string', example: 'Our travel assistants are always available.')
                         ),
+                        new OA\Property(property: 'badge_title', type: 'string', example: 'Trusted by 15,000+'),
+                        new OA\Property(property: 'badge_subtitle', type: 'string', example: 'Happy travelers worldwide'),
                         new OA\Property(property: 'status', type: 'string', example: 'active'),
                     ]
                 )
@@ -122,26 +165,20 @@ class AboutWhyChooseUsController extends Controller
 
             [
                 $validated['features_title'],
+                $validated['features_icon'],
                 $validated['features_description'],
             ] = $this->prepareFeatures(
                 $validated['features_title'],
+                $validated['features_icon'] ?? [],
                 $validated['features_description'] ?? []
             );
 
-            $section = AboutWhyChooseUs::create(
-                $validated
-            );
+            $section = AboutWhyChooseUs::create($validated);
 
             return response()->json([
                 'success' => true,
-
-                'message' =>
-                    'About Why Choose Us created successfully.',
-
-                'data' =>
-                    new AboutWhyChooseUsResource(
-                        $section
-                    ),
+                'message' => 'About Why Choose Us created successfully.',
+                'data' => new AboutWhyChooseUsResource($section),
             ], 201);
         } catch (Throwable $exception) {
             $this->deleteImage($uploadedImage);
@@ -150,8 +187,7 @@ class AboutWhyChooseUsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' =>
-                    'Unable to create About Why Choose Us.',
+                'message' => 'Unable to create About Why Choose Us.',
                 'data' => null,
             ], 500);
         }
@@ -185,14 +221,8 @@ class AboutWhyChooseUsController extends Controller
     ): JsonResponse {
         return response()->json([
             'success' => true,
-
-            'message' =>
-                'About Why Choose Us retrieved successfully.',
-
-            'data' =>
-                new AboutWhyChooseUsResource(
-                    $aboutWhyChooseUs
-                ),
+            'message' => 'About Why Choose Us retrieved successfully.',
+            'data' => new AboutWhyChooseUsResource($aboutWhyChooseUs),
         ], 200);
     }
 
@@ -210,20 +240,27 @@ class AboutWhyChooseUsController extends Controller
                 mediaType: 'multipart/form-data',
                 schema: new OA\Schema(
                     properties: [
-                        new OA\Property(property: 'subtitle', type: 'string', example: 'Updated Subtitle'),
-                        new OA\Property(property: 'main_heading', type: 'string', example: 'Updated Main Heading'),
-                        new OA\Property(property: 'main_description', type: 'string', example: 'Updated Main Description'),
+                        new OA\Property(property: 'subtitle', type: 'string', example: 'Why Choose Us'),
+                        new OA\Property(property: 'title', type: 'string', example: 'Setting Standard for Trust and Comfort.'),
+                        new OA\Property(property: 'description', type: 'string', example: 'We believe that traveling shouldn\'t be stressful.'),
                         new OA\Property(property: 'image', type: 'string', format: 'binary', nullable: true),
+                        new OA\Property(
+                            property: 'features_icon[]',
+                            type: 'array',
+                            items: new OA\Items(type: 'string', example: 'fa-solid fa-headset')
+                        ),
                         new OA\Property(
                             property: 'features_title[]',
                             type: 'array',
-                            items: new OA\Items(type: 'string', example: 'Feature Title')
+                            items: new OA\Items(type: 'string', example: '24/7 Expert Support')
                         ),
                         new OA\Property(
                             property: 'features_description[]',
                             type: 'array',
-                            items: new OA\Items(type: 'string', example: 'Feature Description')
+                            items: new OA\Items(type: 'string', example: 'Our travel assistants are always available.')
                         ),
+                        new OA\Property(property: 'badge_title', type: 'string', example: 'Trusted by 15,000+'),
+                        new OA\Property(property: 'badge_subtitle', type: 'string', example: 'Happy travelers worldwide'),
                         new OA\Property(property: 'status', type: 'string', example: 'active'),
                     ]
                 )
@@ -270,15 +307,15 @@ class AboutWhyChooseUsController extends Controller
 
             [
                 $validated['features_title'],
+                $validated['features_icon'],
                 $validated['features_description'],
             ] = $this->prepareFeatures(
                 $validated['features_title'],
+                $validated['features_icon'] ?? [],
                 $validated['features_description'] ?? []
             );
 
-            $aboutWhyChooseUs->update(
-                $validated
-            );
+            $aboutWhyChooseUs->update($validated);
 
             if ($newImage) {
                 $this->deleteImage($oldImage);
@@ -286,14 +323,8 @@ class AboutWhyChooseUsController extends Controller
 
             return response()->json([
                 'success' => true,
-
-                'message' =>
-                    'About Why Choose Us updated successfully.',
-
-                'data' =>
-                    new AboutWhyChooseUsResource(
-                        $aboutWhyChooseUs->fresh()
-                    ),
+                'message' => 'About Why Choose Us updated successfully.',
+                'data' => new AboutWhyChooseUsResource($aboutWhyChooseUs->fresh()),
             ], 200);
         } catch (Throwable $exception) {
             $this->deleteImage($newImage);
@@ -302,8 +333,7 @@ class AboutWhyChooseUsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' =>
-                    'Unable to update About Why Choose Us.',
+                'message' => 'Unable to update About Why Choose Us.',
                 'data' => null,
             ], 500);
         }
@@ -343,19 +373,18 @@ class AboutWhyChooseUsController extends Controller
 
         return response()->json([
             'success' => true,
-
-            'message' =>
-                'About Why Choose Us deleted successfully.',
-
+            'message' => 'About Why Choose Us deleted successfully.',
             'data' => null,
         ], 200);
     }
 
     private function prepareFeatures(
         array $titles,
-        array $descriptions
+        array $icons = [],
+        array $descriptions = []
     ): array {
         $preparedTitles = [];
+        $preparedIcons = [];
         $preparedDescriptions = [];
 
         foreach ($titles as $index => $title) {
@@ -365,17 +394,16 @@ class AboutWhyChooseUsController extends Controller
 
             $preparedTitles[] = trim($title);
 
-            $description =
-                $descriptions[$index] ?? null;
+            $icon = $icons[$index] ?? null;
+            $preparedIcons[] = filled($icon) ? trim($icon) : 'fa-solid fa-circle-check';
 
-            $preparedDescriptions[] =
-                filled($description)
-                    ? trim($description)
-                    : null;
+            $description = $descriptions[$index] ?? null;
+            $preparedDescriptions[] = filled($description) ? trim($description) : null;
         }
 
         return [
             $preparedTitles,
+            $preparedIcons,
             $preparedDescriptions,
         ];
     }

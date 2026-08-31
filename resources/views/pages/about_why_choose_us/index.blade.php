@@ -12,7 +12,7 @@
                     Website Content
                 </span>
                 <h1>About Why Choose Us</h1>
-                <p>Manage title, description, image, features, and status.</p>
+                <p>Manage title, description, features list with icons, image, and trust badge.</p>
             </div>
 
             <a href="{{ route('admin.about-why-choose-us.create') }}"
@@ -39,29 +39,64 @@
                         <tr>
                             <th>ID</th>
                             <th>Image</th>
-                            <th>Title</th>
-                            <th>Description</th>
+                            <th>Heading &amp; Subtitle</th>
+                            <th>Features &amp; Icons</th>
+                            <th>Trust Badge</th>
                             <th>Status</th>
                             <th class="ts-action-column">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($sections as $section)
+                            @php
+                                $titles = $section->features_title ?? [];
+                                $icons = $section->features_icon ?? [];
+                            @endphp
                             <tr>
                                 <td>#{{ $section->id }}</td>
                                 <td>
                                     @if ($section->image)
-                                        <img src="{{ asset('storage/' . $section->image) }}" alt="{{ $section->title }}" class="blog-table-image">
+                                        <img src="{{ asset('storage/' . $section->image) }}" alt="{{ $section->title }}" class="blog-table-image" style="width: 60px; height: 45px; object-fit: cover; border-radius: 6px;">
                                     @else
-                                        <small>No image</small>
+                                        <small class="text-muted">No image</small>
                                     @endif
                                 </td>
-                                <td><strong>{{ $section->title }}</strong></td>
-                                <td>{{ \Illuminate\Support\Str::limit($section->description, 100) }}</td>
                                 <td>
-                                    <span class="ts-status-badge {{ $section->status ? 'ts-active' : 'ts-inactive' }}">
+                                    @if ($section->subtitle)
+                                        <span class="badge bg-light text-secondary mb-1" style="font-size: 0.72rem;">{{ $section->subtitle }}</span><br>
+                                    @endif
+                                    <strong>{{ $section->title }}</strong>
+                                    <div class="text-muted small mt-1">
+                                        {{ \Illuminate\Support\Str::limit($section->description, 70) }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-column gap-1">
+                                        @foreach(array_slice($titles, 0, 3) as $idx => $featTitle)
+                                            <div class="d-flex align-items-center gap-1 small">
+                                                <i class="{{ $icons[$idx] ?? 'fa-solid fa-circle-check' }} text-primary" style="font-size: 0.85rem; width: 16px;"></i>
+                                                <span>{{ $featTitle }}</span>
+                                            </div>
+                                        @endforeach
+                                        @if(count($titles) > 3)
+                                            <small class="text-muted">+{{ count($titles) - 3 }} more features</small>
+                                        @endif
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 8px; display: inline-block;">
+                                        <div class="fw-bold text-dark" style="font-size: 0.8rem;">
+                                            <i class="fa-solid fa-circle-check text-primary me-1"></i> {{ $section->badge_title ?? 'Trusted by 15,000+' }}
+                                        </div>
+                                        <div class="text-muted" style="font-size: 0.72rem;">
+                                            {{ $section->badge_subtitle ?? 'Happy travelers worldwide' }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="ts-status-badge {{ $section->status === 'active' ? 'ts-active' : 'ts-inactive' }}">
                                         <span></span>
-                                        {{ $section->status ? 'Active' : 'Inactive' }}
+                                        {{ ucfirst($section->status ?? 'active') }}
                                     </span>
                                 </td>
                                 <td>

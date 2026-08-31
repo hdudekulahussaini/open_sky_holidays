@@ -54,7 +54,7 @@ class StoreTourFeatureRequest extends FormRequest
                 ),
                 'nullable',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
             'sort_order' => [

@@ -56,6 +56,14 @@ class TourController extends Controller
             $validated['title']
         );
 
+        if (isset($validated['areas']) && is_array($validated['areas'])) {
+            $validated['areas'] = array_values(array_filter($validated['areas'], fn($f) => filled($f)));
+        }
+
+        if (isset($validated['features']) && is_array($validated['features'])) {
+            $validated['features'] = array_values(array_filter($validated['features'], fn($f) => filled($f)));
+        }
+
         $uploadedFiles = [];
 
         try {
@@ -178,6 +186,14 @@ class TourController extends Controller
             $validated['title'],
             $tour->id
         );
+
+        if (isset($validated['areas']) && is_array($validated['areas'])) {
+            $validated['areas'] = array_values(array_filter($validated['areas'], fn($f) => filled($f)));
+        }
+
+        if (isset($validated['features']) && is_array($validated['features'])) {
+            $validated['features'] = array_values(array_filter($validated['features'], fn($f) => filled($f)));
+        }
 
         $oldThumbnail = $tour->thumbnail;
         $newThumbnail = null;

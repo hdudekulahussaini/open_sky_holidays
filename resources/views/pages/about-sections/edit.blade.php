@@ -683,7 +683,7 @@
                                         type="file"
                                         name="avatar_images[]"
                                         class="avatar-file-input"
-                                        accept=".jpg,.jpeg,.png,.webp"
+                                        accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
                                     >
 
                                     <img
@@ -1034,7 +1034,7 @@
                             type="file"
                             name="avatar_images[]"
                             class="avatar-file-input"
-                            accept=".jpg,.jpeg,.png,.webp"
+                            accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
                         >
 
                         <img

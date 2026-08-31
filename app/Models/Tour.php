@@ -18,12 +18,17 @@ class Tour extends Model
         'title',
         'slug',
         'country',
+        'state',
         'duration',
         'thumbnail',
+        'areas',
+        'features',
         'status',
     ];
 
     protected $casts = [
+        'areas' => 'array',
+        'features' => 'array',
         'status' => 'boolean',
     ];
 

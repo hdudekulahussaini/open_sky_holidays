@@ -11,6 +11,7 @@ test('edit page can be rendered for about our core values', function () {
 
     $coreValue = AboutOurCoreValue::create([
         'title' => 'Integrity',
+        'icon' => 'fa-solid fa-heart',
         'description' => 'We act with honesty and transparency.',
     ]);
 
@@ -26,11 +27,13 @@ test('core value can be updated', function () {
 
     $coreValue = AboutOurCoreValue::create([
         'title' => 'Integrity',
+        'icon' => 'fa-solid fa-heart',
         'description' => 'We act with honesty and transparency.',
     ]);
 
     $response = $this->actingAs($user)->put(route('admin.about-our-core-values.update', $coreValue), [
         'title' => 'Excellence',
+        'icon' => 'fa-solid fa-gem',
         'description' => 'We strive for the highest quality.',
     ]);
 
@@ -38,6 +41,7 @@ test('core value can be updated', function () {
     $this->assertDatabaseHas('about_our_core_values', [
         'id' => $coreValue->id,
         'title' => 'Excellence',
+        'icon' => 'fa-solid fa-gem',
         'description' => 'We strive for the highest quality.',
     ]);
 });

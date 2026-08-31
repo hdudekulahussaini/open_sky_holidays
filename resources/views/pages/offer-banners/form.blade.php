@@ -78,7 +78,7 @@
                     class="ts-image-placeholder {{ isset($offerBanner) && $offerBanner->image ? 'ts-hidden' : '' }}">
                     <span class="ts-image-placeholder-icon">&#10022;</span>
                     <strong>No image selected</strong>
-                    <small>JPG, PNG or WEBP &middot; Max 5 MB</small>
+                    <small>JPG, PNG, WEBP or AVIF &middot; Max 5 MB</small>
                 </div>
             </div>
 
@@ -86,7 +86,7 @@
                 Choose Image
             </label>
 
-            <input type="file" name="image" id="image" class="ts-file-input" accept=".jpg,.jpeg,.png,.webp">
+            <input type="file" name="image" id="image" class="ts-file-input" accept=".jpg,.jpeg,.png,.webp,.avif,image/*">
 
             @error('image')
                 <span class="ts-error-message">{{ $message }}</span>

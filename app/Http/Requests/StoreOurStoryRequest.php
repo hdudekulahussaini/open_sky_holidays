@@ -49,7 +49,7 @@ class StoreOurStoryRequest extends FormRequest
             'images.*' => [
                 'required',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
             'features' => [

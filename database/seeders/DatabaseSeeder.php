@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             TourSeeder::class,
             ContactSectionSeeder::class,
+            AboutWhyChooseUsSeeder::class,
+            BlogSeeder::class,
+            ServiceSeeder::class,
         ]);
     }
 }

@@ -49,8 +49,9 @@ class AuthorController extends Controller
 
             'image' => [
                 'nullable',
-                'image',
-                'mimes:jpg,jpeg,png,webp',
+                'file',
+                'mimes:jpg,jpeg,png,webp,avif',
+                'max:5120',
             ],
 
             'description' => [
@@ -77,11 +78,54 @@ class AuthorController extends Controller
                 'max:500',
             ],
 
+            'social_links' => [
+                'nullable',
+                'array',
+            ],
+
+            'social_links.*.platform' => [
+                'nullable',
+                'string',
+                'max:100',
+            ],
+
+            'social_links.*.icon' => [
+                'nullable',
+                'string',
+                'max:100',
+            ],
+
+            'social_links.*.url' => [
+                'nullable',
+                'string',
+                'max:2000',
+            ],
+
             'status' => [
                 'required',
                 'boolean',
             ],
         ]);
+
+        if (isset($validated['social_links']) && is_array($validated['social_links'])) {
+            $validated['social_links'] = array_values(array_filter($validated['social_links'], function ($link) {
+                return !empty($link['url']) || !empty($link['platform']);
+            }));
+
+            foreach ($validated['social_links'] as $link) {
+                $plat = strtolower($link['platform'] ?? '');
+                $icon = strtolower($link['icon'] ?? '');
+                if (str_contains($plat, 'twitter') || str_contains($icon, 'twitter') || str_contains($plat, 'x')) {
+                    $validated['twitter_url'] = $link['url'] ?? null;
+                } elseif (str_contains($plat, 'facebook') || str_contains($icon, 'facebook')) {
+                    $validated['facebook_url'] = $link['url'] ?? null;
+                } elseif (str_contains($plat, 'linkedin') || str_contains($icon, 'linkedin')) {
+                    $validated['linkedin_url'] = $link['url'] ?? null;
+                }
+            }
+        } elseif ($request->has('social_links')) {
+            $validated['social_links'] = [];
+        }
 
         if ($request->hasFile('image')) {
             $validated['image'] = $request
@@ -126,8 +170,9 @@ class AuthorController extends Controller
 
             'image' => [
                 'nullable',
-                'image',
-                'mimes:jpg,jpeg,png,webp',
+                'file',
+                'mimes:jpg,jpeg,png,webp,avif',
+                'max:5120',
             ],
 
             'description' => [
@@ -154,11 +199,54 @@ class AuthorController extends Controller
                 'max:500',
             ],
 
+            'social_links' => [
+                'nullable',
+                'array',
+            ],
+
+            'social_links.*.platform' => [
+                'nullable',
+                'string',
+                'max:100',
+            ],
+
+            'social_links.*.icon' => [
+                'nullable',
+                'string',
+                'max:100',
+            ],
+
+            'social_links.*.url' => [
+                'nullable',
+                'string',
+                'max:2000',
+            ],
+
             'status' => [
                 'required',
                 'boolean',
             ],
         ]);
+
+        if (isset($validated['social_links']) && is_array($validated['social_links'])) {
+            $validated['social_links'] = array_values(array_filter($validated['social_links'], function ($link) {
+                return !empty($link['url']) || !empty($link['platform']);
+            }));
+
+            foreach ($validated['social_links'] as $link) {
+                $plat = strtolower($link['platform'] ?? '');
+                $icon = strtolower($link['icon'] ?? '');
+                if (str_contains($plat, 'twitter') || str_contains($icon, 'twitter') || str_contains($plat, 'x')) {
+                    $validated['twitter_url'] = $link['url'] ?? null;
+                } elseif (str_contains($plat, 'facebook') || str_contains($icon, 'facebook')) {
+                    $validated['facebook_url'] = $link['url'] ?? null;
+                } elseif (str_contains($plat, 'linkedin') || str_contains($icon, 'linkedin')) {
+                    $validated['linkedin_url'] = $link['url'] ?? null;
+                }
+            }
+        } elseif ($request->has('social_links')) {
+            $validated['social_links'] = [];
+        }
 
         /*
          * Keep the old image when no new image is selected.

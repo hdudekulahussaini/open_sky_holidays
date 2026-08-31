@@ -69,13 +69,60 @@ class OpenApiSchemas
         type: 'object',
         properties: [
             new OA\Property(property: 'id', type: 'integer', example: 1),
-            new OA\Property(property: 'title', type: 'string', example: 'Exotic Dubai & Desert Safari'),
-            new OA\Property(property: 'slug', type: 'string', example: 'exotic-dubai-desert-safari'),
             new OA\Property(property: 'tour_type_id', type: 'integer', example: 1),
-            new OA\Property(property: 'price', type: 'number', format: 'float', example: 49999.00),
-            new OA\Property(property: 'duration', type: 'string', example: '5 Nights / 6 Days'),
-            new OA\Property(property: 'description', type: 'string', example: 'Experience luxury and adventure in Dubai.'),
-            new OA\Property(property: 'image', type: 'string', example: 'tours/dubai.jpg', nullable: true),
+            new OA\Property(
+                property: 'tour_type',
+                type: 'object',
+                properties: [
+                    new OA\Property(property: 'id', type: 'integer', example: 1),
+                    new OA\Property(property: 'name', type: 'string', example: 'Domestic Tours'),
+                    new OA\Property(property: 'slug', type: 'string', example: 'domestic'),
+                ]
+            ),
+            new OA\Property(property: 'title', type: 'string', example: 'Kerala'),
+            new OA\Property(property: 'slug', type: 'string', example: 'kerala'),
+            new OA\Property(property: 'country', type: 'string', example: 'INDIA'),
+            new OA\Property(property: 'state', type: 'string', example: 'Kerala', nullable: true),
+            new OA\Property(property: 'duration', type: 'string', example: '4 Nights / 5 Days'),
+            new OA\Property(property: 'thumbnail', type: 'string', example: 'tours/kerala.jpg'),
+            new OA\Property(property: 'thumbnail_url', type: 'string', example: 'http://127.0.0.1:8000/storage/tours/kerala.jpg'),
+            new OA\Property(
+                property: 'areas',
+                type: 'array',
+                items: new OA\Items(type: 'string'),
+                example: ['Munnar', 'Alleppey', 'Thekkady', 'Kochi Fort']
+            ),
+            new OA\Property(
+                property: 'features',
+                type: 'array',
+                items: new OA\Items(type: 'string'),
+                example: ['Munnar', 'Alleppey', 'Thekkady', 'Kochi Fort']
+            ),
+            new OA\Property(
+                property: 'highlights',
+                type: 'array',
+                items: new OA\Items(type: 'string'),
+                example: ['Munnar', 'Alleppey', 'Thekkady', 'Kochi Fort']
+            ),
+            new OA\Property(
+                property: 'package_inclusions',
+                type: 'array',
+                items: new OA\Items(ref: '#/components/schemas/TourFeature')
+            ),
+            new OA\Property(
+                property: 'places_covered',
+                type: 'array',
+                items: new OA\Items(ref: '#/components/schemas/TourFeature')
+            ),
+            new OA\Property(
+                property: 'detail',
+                type: 'object',
+                properties: [
+                    new OA\Property(property: 'heading', type: 'string', example: 'About This Tour'),
+                    new OA\Property(property: 'description', type: 'string', example: 'Experience the tranquil backwaters...'),
+                    new OA\Property(property: 'status', type: 'string', example: 'active'),
+                ]
+            ),
             new OA\Property(property: 'status', type: 'boolean', example: true),
         ]
     )]
@@ -86,10 +133,49 @@ class OpenApiSchemas
         type: 'object',
         properties: [
             new OA\Property(property: 'id', type: 'integer', example: 1),
-            new OA\Property(property: 'title', type: 'string', example: 'Visa Assistance'),
-            new OA\Property(property: 'slug', type: 'string', example: 'visa-assistance'),
-            new OA\Property(property: 'short_description', type: 'string', example: 'Hassle-free tourist visa processing for all countries.'),
-            new OA\Property(property: 'image', type: 'string', example: 'services/visa.jpg', nullable: true),
+            new OA\Property(property: 'title', type: 'string', example: 'Visa Assistance Services'),
+            new OA\Property(property: 'slug', type: 'string', example: 'visa-assistance-services'),
+            new OA\Property(property: 'about_title', type: 'string', example: 'Your Gateway to Seamless Global Travel', nullable: true),
+            new OA\Property(property: 'about_description', type: 'string', example: 'Navigating international visa requirements can be overwhelming.', nullable: true),
+            new OA\Property(property: 'about_image_url', type: 'string', example: 'http://127.0.0.1:8000/storage/services/about/visa.jpg', nullable: true),
+            new OA\Property(
+                property: 'features',
+                type: 'array',
+                items: new OA\Items(
+                    properties: [
+                        new OA\Property(property: 'icon', type: 'string', example: 'fa-solid fa-clipboard-list'),
+                        new OA\Property(property: 'title', type: 'string', example: 'Best Fares'),
+                        new OA\Property(property: 'description', type: 'string', example: 'Competitive pricing on all routes'),
+                    ]
+                )
+            ),
+            new OA\Property(property: 'service_items', type: 'array', items: new OA\Items(type: 'string')),
+            new OA\Property(
+                property: 'process_steps',
+                type: 'array',
+                items: new OA\Items(
+                    properties: [
+                        new OA\Property(property: 'icon', type: 'string', example: '01'),
+                        new OA\Property(property: 'title', type: 'string', example: 'Document Review'),
+                        new OA\Property(property: 'description', type: 'string', example: 'We verify your documents'),
+                    ]
+                )
+            ),
+            new OA\Property(property: 'documents', type: 'array', items: new OA\Items(type: 'string')),
+            new OA\Property(property: 'why_choose_items', type: 'array', items: new OA\Items(type: 'string')),
+            new OA\Property(property: 'cta_title', type: 'string', example: 'Ready To Start Your Journey?', nullable: true),
+            new OA\Property(property: 'cta_description', type: 'string', example: 'Let us take care of your visa process while you focus on making unforgettable memories.', nullable: true),
+            new OA\Property(property: 'cta_background_image_url', type: 'string', example: 'http://127.0.0.1:8000/storage/services/cta/banner.jpg', nullable: true),
+            new OA\Property(
+                property: 'stats',
+                type: 'array',
+                items: new OA\Items(
+                    properties: [
+                        new OA\Property(property: 'number', type: 'string', example: '10,000+'),
+                        new OA\Property(property: 'label', type: 'string', example: 'Visas Processed'),
+                    ]
+                )
+            ),
             new OA\Property(property: 'status', type: 'boolean', example: true),
         ]
     )]
@@ -100,13 +186,59 @@ class OpenApiSchemas
         type: 'object',
         properties: [
             new OA\Property(property: 'id', type: 'integer', example: 1),
-            new OA\Property(property: 'title', type: 'string', example: 'Top 10 Places to Visit in Dubai'),
-            new OA\Property(property: 'slug', type: 'string', example: 'top-10-places-to-visit-in-dubai'),
-            new OA\Property(property: 'content', type: 'string', example: 'Discover the world tallest building, luxury shopping...'),
-            new OA\Property(property: 'image', type: 'string', example: 'blogs/dubai-guide.jpg', nullable: true),
-            new OA\Property(property: 'category_id', type: 'integer', example: 1),
-            new OA\Property(property: 'author_id', type: 'integer', example: 1),
-            new OA\Property(property: 'status', type: 'boolean', example: true),
+            new OA\Property(property: 'title', type: 'string', example: 'Top 10 Must-Visit Destinations in India in 2026'),
+            new OA\Property(property: 'slug', type: 'string', example: 'top-10-must-visit-destinations-in-india-in-2026'),
+            new OA\Property(property: 'description', type: 'string', example: 'Explore the most breathtaking destinations across India with travel tips and budget guides.', nullable: true),
+            new OA\Property(property: 'short_description', type: 'string', example: 'Explore the most breathtaking destinations across India with travel tips and budget guides.'),
+            new OA\Property(
+                property: 'category',
+                type: 'object',
+                properties: [
+                    new OA\Property(property: 'id', type: 'integer', example: 1),
+                    new OA\Property(property: 'name', type: 'string', example: 'Destinations'),
+                    new OA\Property(property: 'slug', type: 'string', example: 'destinations'),
+                ]
+            ),
+            new OA\Property(
+                property: 'author',
+                type: 'object',
+                properties: [
+                    new OA\Property(property: 'id', type: 'integer', example: 1),
+                    new OA\Property(property: 'name', type: 'string', example: 'Open Sky Team'),
+                    new OA\Property(property: 'image', type: 'string', example: 'http://127.0.0.1:8000/storage/authors/team.jpg', nullable: true),
+                    new OA\Property(property: 'description', type: 'string', example: 'Travel enthusiast sharing guides and tips.', nullable: true),
+                    new OA\Property(property: 'twitter_url', type: 'string', nullable: true),
+                    new OA\Property(property: 'facebook_url', type: 'string', nullable: true),
+                    new OA\Property(property: 'linkedin_url', type: 'string', nullable: true),
+                    new OA\Property(
+                        property: 'social_links',
+                        type: 'array',
+                        items: new OA\Items(
+                            properties: [
+                                new OA\Property(property: 'platform', type: 'string', example: 'Instagram'),
+                                new OA\Property(property: 'icon', type: 'string', example: 'fa-brands fa-instagram'),
+                                new OA\Property(property: 'url', type: 'string', example: 'https://instagram.com/opensky'),
+                            ]
+                        )
+                    ),
+                ]
+            ),
+            new OA\Property(
+                property: 'table_of_contents',
+                type: 'array',
+                items: new OA\Items(
+                    properties: [
+                        new OA\Property(property: 'number', type: 'string', example: '01'),
+                        new OA\Property(property: 'title', type: 'string', example: 'The Backwaters of Kerala'),
+                    ]
+                )
+            ),
+            new OA\Property(property: 'content', type: 'string', example: '1. Book Your Flights in Advance...'),
+            new OA\Property(property: 'featured_image', type: 'string', example: 'http://127.0.0.1:8000/storage/blogs/featured-images/taj.jpg', nullable: true),
+            new OA\Property(property: 'read_time', type: 'integer', example: 3),
+            new OA\Property(property: 'read_time_text', type: 'string', example: '3 min read'),
+            new OA\Property(property: 'published_at', type: 'string', format: 'date-time', example: '2026-08-31T10:00:00.000000Z'),
+            new OA\Property(property: 'published_date', type: 'string', example: 'August 31, 2026'),
         ]
     )]
     public static function blogSchema() {}
@@ -231,6 +363,34 @@ class OpenApiSchemas
     public static function ourProcessSchema() {}
 
     #[OA\Schema(
+        schema: 'CounterInput',
+        type: 'object',
+        required: ['value', 'name'],
+        properties: [
+            new OA\Property(property: 'value', type: 'string', example: '25+'),
+            new OA\Property(property: 'name', type: 'string', example: 'Years Of Experience'),
+            new OA\Property(property: 'icon', type: 'string', example: 'fa-solid fa-trophy', nullable: true),
+            new OA\Property(property: 'status', type: 'boolean', example: true),
+        ]
+    )]
+    public static function counterInputSchema() {}
+
+    #[OA\Schema(
+        schema: 'Counter',
+        type: 'object',
+        properties: [
+            new OA\Property(property: 'id', type: 'integer', example: 1),
+            new OA\Property(property: 'value', type: 'string', example: '25+'),
+            new OA\Property(property: 'name', type: 'string', example: 'Years Of Experience'),
+            new OA\Property(property: 'icon', type: 'string', example: 'fa-solid fa-trophy'),
+            new OA\Property(property: 'status', type: 'boolean', example: true),
+            new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-08-31T10:00:00.000000Z'),
+            new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-08-31T10:00:00.000000Z'),
+        ]
+    )]
+    public static function counterSchema() {}
+
+    #[OA\Schema(
         schema: 'TourType',
         type: 'object',
         properties: [
@@ -309,10 +469,9 @@ class OpenApiSchemas
         type: 'object',
         properties: [
             new OA\Property(property: 'id', type: 'integer', example: 1),
-            new OA\Property(property: 'title', type: 'string', example: 'Customer First'),
-            new OA\Property(property: 'description', type: 'string', example: 'We prioritize our customers experience above everything else.'),
-            new OA\Property(property: 'icon', type: 'string', example: 'fas fa-heart', nullable: true),
-            new OA\Property(property: 'status', type: 'string', example: 'active'),
+            new OA\Property(property: 'title', type: 'string', example: 'Integrity'),
+            new OA\Property(property: 'icon', type: 'string', example: 'fa-solid fa-handshake', nullable: true),
+            new OA\Property(property: 'description', type: 'string', example: 'We operate with complete honesty — no hidden fees, no misleading itineraries, just clear and ethical service.'),
         ]
     )]
     public static function aboutOurCoreValueSchema() {}
@@ -322,12 +481,16 @@ class OpenApiSchemas
         type: 'object',
         properties: [
             new OA\Property(property: 'id', type: 'integer', example: 1),
-            new OA\Property(property: 'subtitle', type: 'string', example: 'Why Choose Open Sky'),
-            new OA\Property(property: 'main_heading', type: 'string', example: 'Your Trusted Travel Partner'),
-            new OA\Property(property: 'main_description', type: 'string', example: 'We provide seamless travel booking and custom tour packages.'),
+            new OA\Property(property: 'subtitle', type: 'string', example: 'Why Choose Us'),
+            new OA\Property(property: 'title', type: 'string', example: 'Setting Standard for Trust and Comfort.'),
+            new OA\Property(property: 'description', type: 'string', example: 'We believe that traveling shouldn\'t be stressful. We ensure every segment of your journey is organized with precise dedication.'),
             new OA\Property(property: 'image', type: 'string', example: 'about_why_choose_us/photo.jpg', nullable: true),
-            new OA\Property(property: 'features_title', type: 'array', items: new OA\Items(type: 'string', example: 'Best Price Guarantee')),
-            new OA\Property(property: 'features_description', type: 'array', items: new OA\Items(type: 'string', example: 'No hidden charges on any package')),
+            new OA\Property(property: 'image_url', type: 'string', example: 'https://openskyholidays.com/storage/about_why_choose_us/photo.jpg', nullable: true),
+            new OA\Property(property: 'features_icon', type: 'array', items: new OA\Items(type: 'string', example: 'fa-solid fa-headset')),
+            new OA\Property(property: 'features_title', type: 'array', items: new OA\Items(type: 'string', example: '24/7 Expert Support')),
+            new OA\Property(property: 'features_description', type: 'array', items: new OA\Items(type: 'string', example: 'Our travel assistants are always available to help you navigate queries or itinerary shifts.')),
+            new OA\Property(property: 'badge_title', type: 'string', example: 'Trusted by 15,000+'),
+            new OA\Property(property: 'badge_subtitle', type: 'string', example: 'Happy travelers worldwide'),
             new OA\Property(property: 'status', type: 'string', example: 'active'),
         ]
     )]
@@ -346,19 +509,6 @@ class OpenApiSchemas
         ]
     )]
     public static function coreValueSchema() {}
-
-    #[OA\Schema(
-        schema: 'Counter',
-        type: 'object',
-        properties: [
-            new OA\Property(property: 'id', type: 'integer', example: 1),
-            new OA\Property(property: 'count_number', type: 'string', example: '10K+'),
-            new OA\Property(property: 'count_title', type: 'string', example: 'Happy Travelers'),
-            new OA\Property(property: 'icon', type: 'string', example: 'fas fa-smile', nullable: true),
-            new OA\Property(property: 'status', type: 'boolean', example: true),
-        ]
-    )]
-    public static function counterSchema() {}
 
     #[OA\Schema(
         schema: 'OurStory',

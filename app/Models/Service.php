@@ -17,6 +17,10 @@ class Service extends Model
         'process_steps',
         'documents',
         'why_choose_items',
+        'cta_title',
+        'cta_description',
+        'cta_background_image',
+        'stats',
         'status',
     ];
 
@@ -26,6 +30,7 @@ class Service extends Model
         'process_steps' => 'array',
         'documents' => 'array',
         'why_choose_items' => 'array',
+        'stats' => 'array',
         'status' => 'boolean',
     ];
 

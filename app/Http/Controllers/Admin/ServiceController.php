@@ -34,12 +34,16 @@ class ServiceController extends Controller
             'slug' => ['nullable', 'string', 'max:255', 'unique:services,slug'],
             'about_title' => ['required', 'string', 'max:255'],
             'about_description' => ['nullable', 'string'],
-            'about_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp'],
+            'about_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif'],
             'features' => ['nullable', 'array'],
             'service_items' => ['nullable', 'array'],
             'process_steps' => ['nullable', 'array'],
             'documents' => ['nullable', 'array'],
             'why_choose_items' => ['nullable', 'array'],
+            'cta_title' => ['nullable', 'string', 'max:255'],
+            'cta_description' => ['nullable', 'string'],
+            'cta_background_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif'],
+            'stats' => ['nullable', 'array'],
             'status' => ['nullable', 'boolean'],
         ]);
 
@@ -53,6 +57,12 @@ class ServiceController extends Controller
             $validatedData['about_image'] = $request
                 ->file('about_image')
                 ->store('services/about', 'public');
+        }
+
+        if ($request->hasFile('cta_background_image')) {
+            $validatedData['cta_background_image'] = $request
+                ->file('cta_background_image')
+                ->store('services/cta', 'public');
         }
 
         Service::create($validatedData);
@@ -81,12 +91,16 @@ class ServiceController extends Controller
             'slug' => ['required', 'string', 'max:255', Rule::unique('services', 'slug')->ignore($service->id)],
             'about_title' => ['required', 'string', 'max:255'],
             'about_description' => ['nullable', 'string'],
-            'about_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp'],
+            'about_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif'],
             'features' => ['nullable', 'array'],
             'service_items' => ['nullable', 'array'],
             'process_steps' => ['nullable', 'array'],
             'documents' => ['nullable', 'array'],
             'why_choose_items' => ['nullable', 'array'],
+            'cta_title' => ['nullable', 'string', 'max:255'],
+            'cta_description' => ['nullable', 'string'],
+            'cta_background_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif'],
+            'stats' => ['nullable', 'array'],
             'status' => ['nullable', 'boolean'],
         ]);
 
@@ -102,6 +116,16 @@ class ServiceController extends Controller
                 ->store('services/about', 'public');
         }
 
+        if ($request->hasFile('cta_background_image')) {
+            if ($service->cta_background_image) {
+                Storage::disk('public')->delete($service->cta_background_image);
+            }
+
+            $validatedData['cta_background_image'] = $request
+                ->file('cta_background_image')
+                ->store('services/cta', 'public');
+        }
+
         $service->update($validatedData);
 
         return redirect()
@@ -113,6 +137,10 @@ class ServiceController extends Controller
     {
         if ($service->about_image) {
             Storage::disk('public')->delete($service->about_image);
+        }
+
+        if ($service->cta_background_image) {
+            Storage::disk('public')->delete($service->cta_background_image);
         }
 
         $service->delete();
@@ -136,6 +164,7 @@ class ServiceController extends Controller
             'process_steps',
             'documents',
             'why_choose_items',
+            'stats',
         ];
 
         foreach ($jsonFields as $field) {

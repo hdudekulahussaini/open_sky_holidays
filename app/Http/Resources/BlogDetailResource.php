@@ -62,6 +62,8 @@ class BlogDetailResource extends JsonResource
                     ];
                 }),
 
+            'description' => $this->description,
+
             'content' => $this->content,
 
             'featured_image' => $this->featured_image
@@ -93,6 +95,11 @@ class BlogDetailResource extends JsonResource
 
                 'linkedin_url' =>
                     $this->author?->linkedin_url,
+
+                'social_links' =>
+                    is_array($this->author?->social_links)
+                        ? $this->author->social_links
+                        : [],
             ],
 
             'read_time' => $this->read_time,

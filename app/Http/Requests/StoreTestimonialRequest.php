@@ -36,8 +36,7 @@ class StoreTestimonialRequest extends FormRequest
             'customer_image' => [
                 'nullable',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
-                
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
             'location' => [

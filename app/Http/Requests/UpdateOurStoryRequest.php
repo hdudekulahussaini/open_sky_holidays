@@ -62,7 +62,7 @@ class UpdateOurStoryRequest extends FormRequest
             'images.*' => [
                 'required',
                 'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:jpg,jpeg,png,webp,avif',
             ],
 
             'removed_images' => [

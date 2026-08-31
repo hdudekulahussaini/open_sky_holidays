@@ -320,13 +320,13 @@
                                 type="file"
                                 id="image_one"
                                 name="image_one"
-                                accept=".jpg,.jpeg,.png,.webp"
+                                accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
                                 class="form-control
                                     @error('image_one') is-invalid @enderror"
                             >
 
                             <small class="text-muted">
-                                JPG, JPEG, PNG or WEBP. Maximum 5 MB.
+                                JPG, JPEG, PNG, WEBP or AVIF. Maximum 5 MB.
                             </small>
 
                             @error('image_one')
@@ -354,13 +354,13 @@
                                 type="file"
                                 id="image_two"
                                 name="image_two"
-                                accept=".jpg,.jpeg,.png,.webp"
+                                accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
                                 class="form-control
                                     @error('image_two') is-invalid @enderror"
                             >
 
                             <small class="text-muted">
-                                JPG, JPEG, PNG or WEBP. Maximum 5 MB.
+                                JPG, JPEG, PNG, WEBP or AVIF. Maximum 5 MB.
                             </small>
 
                             @error('image_two')

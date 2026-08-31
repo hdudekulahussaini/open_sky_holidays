@@ -10,27 +10,34 @@ use Illuminate\Support\Facades\Storage;
 uses(RefreshDatabase::class);
 
 test('can list tours via API', function () {
-    $tourType = TourType::create(['name' => 'Adventure', 'slug' => 'adventure']);
+    $tourType = TourType::create(['name' => 'Domestic', 'slug' => 'domestic']);
     $tour = Tour::create([
         'tour_type_id' => $tourType->id,
-        'title' => 'Desert Safari',
-        'slug' => 'desert-safari',
-        'country' => 'UAE',
-        'duration' => '5 Hours',
-        'thumbnail' => 'tours/test.jpg',
+        'title' => 'Kerala',
+        'slug' => 'kerala',
+        'country' => 'India',
+        'state' => 'Kerala',
+        'duration' => '4 NIGHTS / 5 DAYS',
+        'thumbnail' => 'tours/kerala.jpg',
+        'areas' => ['Munnar', 'Alleppey', 'Thekkady', 'Kochi Fort'],
         'status' => true,
     ]);
 
     $tour->detail()->create([
-        'heading' => 'Explore the red dunes',
-        'description' => 'A great experience',
+        'heading' => 'About This Tour',
+        'description' => 'Explore Kerala',
         'status' => 'active',
     ]);
 
     $tour->gallery()->create(['image' => 'tour-details/gallery/img1.jpg']);
     $tour->features()->create([
         'type' => TourFeature::TYPE_PACKAGE_INCLUSION,
-        'title' => 'Inclusion 1',
+        'title' => '4 Star Accommodation',
+        'status' => 'active',
+    ]);
+    $tour->features()->create([
+        'type' => TourFeature::TYPE_PLACE_COVERED,
+        'title' => 'Munnar',
         'status' => 'active',
     ]);
 
@@ -40,35 +47,83 @@ test('can list tours via API', function () {
         ->assertJsonStructure([
             'data' => [
                 '*' => [
-                    'id', 'title', 'slug', 'country', 'duration', 'thumbnail', 'thumbnail_url',
+                    'id', 'title', 'slug', 'country', 'state', 'duration', 'thumbnail', 'thumbnail_url',
+                    'areas', 'highlights',
                     'detail' => ['heading', 'description', 'status'],
                     'gallery' => [
                         '*' => ['id', 'image', 'image_url'],
                     ],
-                    'features' => [
+                    'tour_features' => [
                         '*' => ['id', 'title', 'type', 'type_label'],
                     ],
+                    'package_inclusions',
+                    'places_covered',
                 ],
             ],
-        ]);
+        ])
+        ->assertJsonPath('data.0.areas.0', 'Munnar')
+        ->assertJsonPath('data.0.highlights.0', 'Munnar');
 });
 
-test('can retrieve single tour via API', function () {
-    $tourType = TourType::create(['name' => 'Adventure', 'slug' => 'adventure']);
+test('can retrieve single tour via API by ID or slug', function () {
+    $tourType = TourType::create(['name' => 'Domestic', 'slug' => 'domestic']);
     $tour = Tour::create([
         'tour_type_id' => $tourType->id,
-        'title' => 'Desert Safari',
-        'slug' => 'desert-safari',
-        'country' => 'UAE',
-        'duration' => '5 Hours',
-        'thumbnail' => 'tours/test.jpg',
+        'title' => 'Goa Special',
+        'slug' => 'goa-special',
+        'country' => 'India',
+        'state' => 'Goa',
+        'duration' => '3 NIGHTS / 4 DAYS',
+        'thumbnail' => 'tours/goa.jpg',
+        'areas' => ['Anjuna Beach', 'Baga Beach', 'Old Goa Church', 'Fort Aguada', 'Night Life'],
         'status' => true,
     ]);
 
-    $response = $this->getJson("/api/tours/{$tour->id}");
+    // Test by ID
+    $responseById = $this->getJson("/api/tours/{$tour->id}");
+    $responseById->assertStatus(200)
+        ->assertJsonPath('data.title', 'Goa Special')
+        ->assertJsonPath('data.state', 'Goa')
+        ->assertJsonPath('data.areas.4', 'Night Life');
 
+    // Test by Slug
+    $responseBySlug = $this->getJson("/api/tours/goa-special");
+    $responseBySlug->assertStatus(200)
+        ->assertJsonPath('data.slug', 'goa-special')
+        ->assertJsonPath('data.state', 'Goa')
+        ->assertJsonPath('data.areas.4', 'Night Life');
+});
+
+test('can filter tours by type', function () {
+    $domestic = TourType::create(['name' => 'Domestic', 'slug' => 'domestic']);
+    $intl = TourType::create(['name' => 'International', 'slug' => 'international']);
+
+    Tour::create([
+        'tour_type_id' => $domestic->id,
+        'title' => 'Kerala',
+        'slug' => 'kerala-filter',
+        'country' => 'India',
+        'state' => 'Kerala',
+        'duration' => '4 Nights / 5 Days',
+        'thumbnail' => 'tours/kerala.jpg',
+        'areas' => ['Munnar'],
+        'status' => true,
+    ]);
+
+    Tour::create([
+        'tour_type_id' => $intl->id,
+        'title' => 'Dubai',
+        'slug' => 'dubai-filter',
+        'country' => 'UAE',
+        'duration' => '5 Nights / 6 Days',
+        'thumbnail' => 'tours/dubai.jpg',
+        'status' => true,
+    ]);
+
+    $response = $this->getJson('/api/tours?type=domestic');
     $response->assertStatus(200)
-        ->assertJsonPath('data.title', 'Desert Safari');
+        ->assertJsonCount(1, 'data')
+        ->assertJsonPath('data.0.slug', 'kerala-filter');
 });
 
 test('can create tour via API', function () {
@@ -81,8 +136,11 @@ test('can create tour via API', function () {
         'title' => 'New Adventure Tour',
         'slug' => 'new-adventure-tour',
         'country' => 'Oman',
+        'state' => 'Muscat',
         'duration' => '3 Days',
         'thumbnail' => UploadedFile::fake()->image('thumb.jpg'),
+        'areas' => ['Jebel Shams', 'Wadi Shab'],
+        'features' => ['Jebel Shams', 'Wadi Shab'],
         'status' => 1,
         'detail' => [
             'heading' => 'Beautiful Mountains',
@@ -109,9 +167,12 @@ test('can create tour via API', function () {
 
     $response = $this->postJson('/api/tours', $payload);
 
-    $response->assertStatus(201);
+    $response->assertStatus(201)
+        ->assertJsonPath('data.state', 'Muscat')
+        ->assertJsonPath('data.areas.0', 'Jebel Shams')
+        ->assertJsonPath('data.features.0', 'Jebel Shams');
 
-    $this->assertDatabaseHas('tours', ['title' => 'New Adventure Tour']);
+    $this->assertDatabaseHas('tours', ['title' => 'New Adventure Tour', 'state' => 'Muscat']);
     $this->assertDatabaseHas('tour_details', ['heading' => 'Beautiful Mountains']);
     $this->assertDatabaseCount('tour_images', 2);
     $this->assertDatabaseCount('tour_features', 3); // 2 inclusions, 1 place

@@ -35,6 +35,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Icon</th>
                             <th>Value</th>
                             <th>Name / Label</th>
                             <th>Status</th>
@@ -45,6 +46,11 @@
                         @foreach ($counters as $counter)
                             <tr>
                                 <td>#{{ $counter->id }}</td>
+                                <td>
+                                    <div style="width: 34px; height: 34px; border-radius: 6px; background: rgba(13,110,253,0.1); display: inline-flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #0d6efd;">
+                                        <i class="{{ $counter->icon ?: 'fa-solid fa-users' }}"></i>
+                                    </div>
+                                </td>
                                 <td><strong>{{ $counter->value }}</strong></td>
                                 <td>{{ $counter->name }}</td>
                                 <td>

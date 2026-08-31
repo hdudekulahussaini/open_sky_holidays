@@ -14,12 +14,14 @@ class Author extends Model
         'twitter_url',
         'facebook_url',
         'linkedin_url',
+        'social_links',
         'status',
     ];
 
     protected function casts(): array
     {
         return [
+            'social_links' => 'array',
             'status' => 'boolean',
         ];
     }
