@@ -12,7 +12,7 @@
                     Tour Management
                 </span>
                 <h1>Tour Features</h1>
-                <p>Manage tour package inclusions, highlights, and covered places.</p>
+                <p>Manage tour package inclusions and covered places.</p>
             </div>
 
             <a href="{{ route('admin.tour-features.create') }}" class="ts-primary-btn">

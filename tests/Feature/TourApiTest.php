@@ -97,9 +97,6 @@ test('can create tour via API', function () {
             ['title' => 'Free lunch', 'sort_order' => 1],
             ['title' => 'Pick up', 'sort_order' => 2],
         ],
-        'tour_highlights' => [
-            ['title' => 'Stunning views', 'sort_order' => 1],
-        ],
         'places_covered' => [
             [
                 'title' => 'Jebel Shams',
@@ -117,7 +114,7 @@ test('can create tour via API', function () {
     $this->assertDatabaseHas('tours', ['title' => 'New Adventure Tour']);
     $this->assertDatabaseHas('tour_details', ['heading' => 'Beautiful Mountains']);
     $this->assertDatabaseCount('tour_images', 2);
-    $this->assertDatabaseCount('tour_features', 4); // 2 inclusions, 1 highlight, 1 place
+    $this->assertDatabaseCount('tour_features', 3); // 2 inclusions, 1 place
 });
 
 test('can update tour via API', function () {

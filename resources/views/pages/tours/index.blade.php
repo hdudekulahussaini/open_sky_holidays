@@ -119,7 +119,6 @@
                                         <span><i class="fa-regular fa-image" style="width: 16px;"></i> Gallery: <strong>{{ $tour->gallery_count }}</strong></span>
                                         <span><i class="fa-solid fa-box" style="width: 16px;"></i> Packages: <strong>{{ $tour->package_inclusions_count }}</strong></span>
                                         <span><i class="fa-solid fa-map-location-dot" style="width: 16px;"></i> Places: <strong>{{ $tour->places_covered_count }}</strong></span>
-                                        <span><i class="fa-solid fa-star" style="width: 16px;"></i> Highlights: <strong>{{ $tour->tour_highlights_count }}</strong></span>
                                     </div>
                                 </td>
 

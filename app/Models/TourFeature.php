@@ -11,8 +11,6 @@ class TourFeature extends Model
 
     public const TYPE_PLACE_COVERED = 'place_covered';
 
-    public const TYPE_TOUR_HIGHLIGHT = 'tour_highlight';
-
     protected $fillable = [
         'tour_id',
         'type',
@@ -35,7 +33,6 @@ class TourFeature extends Model
         return [
             self::TYPE_PACKAGE_INCLUSION => 'Package Inclusion',
             self::TYPE_PLACE_COVERED => 'Place Covered',
-            self::TYPE_TOUR_HIGHLIGHT => 'Tour Highlight',
         ];
     }
 

@@ -116,20 +116,6 @@ class Tour extends Model
             ->orderBy('id');
     }
 
-    /**
-     * Highlights belonging to the tour.
-     */
-    public function tourHighlights(): HasMany
-    {
-        return $this->hasMany(TourFeature::class)
-            ->where(
-                'type',
-                TourFeature::TYPE_TOUR_HIGHLIGHT
-            )
-            ->orderBy('sort_order')
-            ->orderBy('id');
-    }
-
     public function tourInquiries(): HasMany
     {
         return $this->hasMany(TourInquiry::class);

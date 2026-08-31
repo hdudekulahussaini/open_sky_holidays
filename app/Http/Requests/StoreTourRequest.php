@@ -150,28 +150,6 @@ class StoreTourRequest extends FormRequest
                 'mimes:jpg,jpeg,png,webp',
             ],
 
-            // Tour Highlights
-            'tour_highlights' => [
-                'nullable',
-                'array',
-            ],
-
-            'tour_highlights.*.title' => [
-                'required',
-                'string',
-                'max:255',
-            ],
-
-            'tour_highlights.*.description' => [
-                'nullable',
-                'string',
-            ],
-
-            'tour_highlights.*.sort_order' => [
-                'nullable',
-                'integer',
-                'min:0',
-            ],
         ];
     }
 
@@ -199,7 +177,6 @@ class StoreTourRequest extends FormRequest
             'package_inclusions.*.title.required' => 'The package inclusion title is required.',
             'places_covered.*.title.required' => 'The place covered title is required.',
             'places_covered.*.image.image' => 'The place covered upload must be an image.',
-            'tour_highlights.*.title.required' => 'The tour highlight title is required.',
         ];
     }
 

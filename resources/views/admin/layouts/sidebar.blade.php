@@ -21,19 +21,18 @@
         </a>
 
         <!-- Hero & Banners Dropdown -->
-        <div class="nav-dropdown-wrapper {{ request()->routeIs('admin.heroes.*', 'admin.offer-banners.*', 'admin.page-banners.*') ? 'open' : '' }}">
+        <div class="nav-dropdown-wrapper {{ request()->routeIs('admin.top-headers.*', 'admin.heroes.*', 'admin.offer-banners.*', 'admin.page-banners.*') ? 'open' : '' }}">
             <button
                 type="button"
-                class="nav-dropdown-toggle nav-item {{ request()->routeIs('admin.heroes.*', 'admin.offer-banners.*', 'admin.page-banners.*') ? 'active' : '' }}"
-                aria-expanded="{{ request()->routeIs('admin.heroes.*', 'admin.offer-banners.*', 'admin.page-banners.*') ? 'true' : 'false' }}">
+                class="nav-dropdown-toggle nav-item {{ request()->routeIs('admin.top-headers.*', 'admin.heroes.*', 'admin.offer-banners.*', 'admin.page-banners.*') ? 'active' : '' }}"
+                aria-expanded="{{ request()->routeIs('admin.top-headers.*', 'admin.heroes.*', 'admin.offer-banners.*', 'admin.page-banners.*') ? 'true' : 'false' }}">
                 <i class="fa-solid fa-images menu-icon"></i>
                 <span>Hero &amp; Banners</span>
                 <i class="fa-solid fa-chevron-down chevron-icon"></i>
             </button>
             <div class="nav-dropdown-menu">
-   
-                <a href="{{ route('admin.top-headers.index') }}" class="nav-item {{ request()->routeIs('admin.top-headers.*') ? 'active' : '' }}">
-                    <i class="fa-solid fa-heading menu-icon"></i>
+                <a href="{{ route('admin.top-headers.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.top-headers.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-heading submenu-icon"></i>
                     <span>Top Header Bar</span>
                 </a>
                 <a href="{{ route('admin.heroes.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.heroes.*') ? 'active' : '' }}">
@@ -44,9 +43,29 @@
                     <i class="fa-solid fa-image submenu-icon"></i>
                     <span>Page Banners</span>
                 </a>
+                <a href="{{ route('admin.about-sections.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.about-sections.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-building submenu-icon"></i>
+                    <span>About Section</span>
+                </a>
+                <!-- Travel Support -->
+                <a href="{{ route('admin.travel-support.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.travel-support.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-headset submenu-icon"></i>
+                    <span>Travel Support</span>
+                </a>
+                <!-- Why Choose Us -->
+                <a href="{{ route('admin.why-choose-sections.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.why-choose-sections.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-shield-halved submenu-icon"></i>
+                    <span>Why Choose Us</span>
+                </a>
+                <!-- Offer Banners -->
                 <a href="{{ route('admin.offer-banners.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.offer-banners.*') ? 'active' : '' }}">
                     <i class="fa-solid fa-tags submenu-icon"></i>
                     <span>Offer Banners</span>
+                </a>
+                <!-- Testimonials -->
+                <a href="{{ route('admin.testimonials.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-star submenu-icon"></i>
+                    <span>Testimonials</span>
                 </a>
             </div>
         </div>
@@ -62,10 +81,6 @@
                 <i class="fa-solid fa-chevron-down chevron-icon"></i>
             </button>
             <div class="nav-dropdown-menu">
-                <a href="{{ route('admin.about-sections.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.about-sections.*') ? 'active' : '' }}">
-                    <i class="fa-solid fa-building submenu-icon"></i>
-                    <span>About Section</span>
-                </a>
                 <a href="{{ route('admin.our-stories.index') }}" class="nav-dropdown-item {{ request()->routeIs('admin.our-stories.*') ? 'active' : '' }}">
                     <i class="fa-solid fa-book-open submenu-icon"></i>
                     <span>Our Story</span>
@@ -181,28 +196,11 @@
             <span>Services</span>
         </a>
 
-        <!-- Travel Support -->
-        <a href="{{ route('admin.travel-support.index') }}" class="nav-item {{ request()->routeIs('admin.travel-support.*') ? 'active' : '' }}">
-            <i class="fa-solid fa-headset menu-icon"></i>
-            <span>Travel Support</span>
-        </a>
-
-        <!-- Why Choose Us -->
-        <a href="{{ route('admin.why-choose-sections.index') }}" class="nav-item {{ request()->routeIs('admin.why-choose-sections.*') ? 'active' : '' }}">
-            <i class="fa-solid fa-shield-halved menu-icon"></i>
-            <span>Why Choose Us</span>
-        </a>
 
         <!-- Contact Section -->
         <a href="{{ route('admin.contact-sections.index') }}" class="nav-item {{ request()->routeIs('admin.contact-sections.*') ? 'active' : '' }}">
             <i class="fa-solid fa-address-book menu-icon"></i>
             <span>Contact Section</span>
-        </a>
-
-        <!-- Testimonials -->
-        <a href="{{ route('admin.testimonials.index') }}" class="nav-item {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}">
-            <i class="fa-solid fa-star menu-icon"></i>
-            <span>Testimonials</span>
         </a>
 
         <!-- Profile Settings -->

@@ -8,7 +8,7 @@
         <div class="admin-form-header">
             <div class="admin-form-header-content">
                 <h3>Create Tour Feature</h3>
-                <p>Add a new feature, inclusion, or highlight to a tour.</p>
+                <p>Add a new feature, inclusion, or covered place to a tour.</p>
             </div>
             <a href="{{ route('admin.tour-features.index') }}" class="btn btn-light">Back</a>
         </div>

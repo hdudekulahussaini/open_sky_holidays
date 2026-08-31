@@ -40,29 +40,12 @@
         $placesCovered = [];
     }
 
-    // Tour Highlights
-    if (old('tour_highlights')) {
-        $tourHighlights = old('tour_highlights');
-    } elseif (isset($tour)) {
-        $tourHighlights = $tour->tourHighlights->map(fn($item) => [
-            'id' => $item->id,
-            'title' => $item->title,
-            'description' => $item->description,
-            'sort_order' => $item->sort_order,
-        ])->toArray();
-    } else {
-        $tourHighlights = [];
-    }
-
     // Pre-populate at least one default row if empty
     if (empty($packageInclusions)) {
         $packageInclusions = [['title' => '', 'description' => '', 'sort_order' => 0]];
     }
     if (empty($placesCovered)) {
         $placesCovered = [['title' => '', 'description' => '', 'sort_order' => 0, 'image' => null]];
-    }
-    if (empty($tourHighlights)) {
-        $tourHighlights = [['title' => '', 'description' => '', 'sort_order' => 0]];
     }
 @endphp
 
@@ -390,49 +373,7 @@
         </div>
     </div>
 
-    {{-- =====================================================
-        TOUR FEATURES (Tour Highlights)
-    ====================================================== --}}
-    <div class="admin-form-card mb-4">
-        <div class="admin-form-header">
-            <div class="admin-form-header-content">
-                <h3>Tour Highlights</h3>
-                <p>Key highlights or selling points of this tour.</p>
-            </div>
-            <button type="button" class="ts-add-feature-btn" id="addTourHighlight">
-                <span>+</span> Add Highlight
-            </button>
-        </div>
-        <div class="admin-form-body">
-            <div class="tf-repeat-list" id="tourHighlightList">
-                @foreach ($tourHighlights as $index => $item)
-                    <div class="tf-repeat-item mb-3 p-3 border rounded bg-light" data-repeat-item>
-                        <div class="tf-repeat-header d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-                            <strong data-item-number>Highlight {{ $loop->iteration }}</strong>
-                            <button type="button" class="btn btn-danger btn-sm px-2 py-1" data-remove-item>Remove</button>
-                        </div>
-                        @if (!empty($item['id']))
-                            <input type="hidden" name="tour_highlights[{{ $index }}][id]" value="{{ $item['id'] }}">
-                        @endif
-                        <div class="row">
-                            <div class="col-md-9 mb-2">
-                                <label class="small fw-bold">Title *</label>
-                                <input type="text" name="tour_highlights[{{ $index }}][title]" class="admin-form-control" value="{{ $item['title'] }}" placeholder="Example: Sunrise desert safari" required>
-                            </div>
-                            <div class="col-md-3 mb-2">
-                                <label class="small fw-bold">Sort Order</label>
-                                <input type="number" name="tour_highlights[{{ $index }}][sort_order]" class="admin-form-control" value="{{ $item['sort_order'] ?? $index }}" min="0">
-                            </div>
-                            <div class="col-12">
-                                <label class="small fw-bold">Description</label>
-                                <textarea name="tour_highlights[{{ $index }}][description]" class="admin-form-control" rows="2" placeholder="Brief description (optional)">{{ $item['description'] }}</textarea>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
+
 
 </div>
 
@@ -506,28 +447,7 @@
     </div>
 </template>
 
-<template id="tourHighlightTemplate">
-    <div class="tf-repeat-item mb-3 p-3 border rounded bg-light" data-repeat-item>
-        <div class="tf-repeat-header d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-            <strong data-item-number>Highlight</strong>
-            <button type="button" class="btn btn-danger btn-sm px-2 py-1" data-remove-item>Remove</button>
-        </div>
-        <div class="row">
-            <div class="col-md-9 mb-2">
-                <label class="small fw-bold">Title *</label>
-                <input type="text" data-name="tour_highlights[__INDEX__][title]" class="admin-form-control" placeholder="Example: Sunrise desert safari" required>
-            </div>
-            <div class="col-md-3 mb-2">
-                <label class="small fw-bold">Sort Order</label>
-                <input type="number" data-name="tour_highlights[__INDEX__][sort_order]" class="admin-form-control" value="0" min="0">
-            </div>
-            <div class="col-12">
-                <label class="small fw-bold">Description</label>
-                <textarea data-name="tour_highlights[__INDEX__][description]" class="admin-form-control" rows="2" placeholder="Brief description (optional)"></textarea>
-            </div>
-        </div>
-    </div>
-</template>
+
 
 @push('styles')
     <style>
@@ -1060,13 +980,7 @@
                 inputPrefix: 'places_covered'
             });
 
-            initializeRepeater({
-                listId: 'tourHighlightList',
-                buttonId: 'addTourHighlight',
-                templateId: 'tourHighlightTemplate',
-                label: 'Highlight',
-                inputPrefix: 'tour_highlights'
-            });
+
 
             // Initialize gallery count display
             updateGalleryStatus();

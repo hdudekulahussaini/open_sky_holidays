@@ -17,7 +17,7 @@ use OpenApi\Attributes as OA;
 #[OA\Tag(name: 'Tours', description: 'Tour packages and destinations')]
 #[OA\Tag(name: 'Tour Inquiries', description: 'Specific tour booking and pricing inquiries')]
 #[OA\Tag(name: 'Tour Details', description: 'Tour itineraries and detailed information')]
-#[OA\Tag(name: 'Tour Features', description: 'Tour highlights and features')]
+#[OA\Tag(name: 'Tour Features', description: 'Tour package inclusions and places covered')]
 #[OA\Tag(name: 'Tour Types', description: 'Categories and types of tours')]
 #[OA\Tag(name: 'Services', description: 'Travel, visa, flight, and passport services')]
 #[OA\Tag(name: 'Blogs', description: 'Travel blogs, articles, and news')]
@@ -35,6 +35,7 @@ use OpenApi\Attributes as OA;
 #[OA\Tag(name: 'Counters', description: 'Homepage statistic counters')]
 #[OA\Tag(name: 'Our Story', description: 'Company history and story')]
 #[OA\Tag(name: 'Contact Section', description: 'Contact page details, support cards, phone, email, and office location')]
+#[OA\Tag(name: 'Top Header', description: 'Top header bar announcements, contact, and social links')]
 class OpenApiDocumentation
 {
 }

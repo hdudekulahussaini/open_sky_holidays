@@ -53,7 +53,7 @@ class TourFeatureController extends Controller
     #[OA\Post(
         path: '/api/tour-features',
         summary: 'Store a new tour feature',
-        description: 'Creates a new feature item (highlight, inclusion, or covered place) for a tour package.',
+        description: 'Creates a new feature item (inclusion or covered place) for a tour package.',
         tags: ['Tour Features'],
         requestBody: new OA\RequestBody(
             required: true,
@@ -63,8 +63,8 @@ class TourFeatureController extends Controller
                     required: ['tour_id', 'title', 'type'],
                     properties: [
                         new OA\Property(property: 'tour_id', type: 'integer', example: 1),
-                        new OA\Property(property: 'title', type: 'string', example: 'Burj Khalifa Top Floor Access'),
-                        new OA\Property(property: 'type', type: 'string', example: 'highlight'),
+                        new OA\Property(property: 'title', type: 'string', example: 'Deluxe Hotel Stay'),
+                        new OA\Property(property: 'type', type: 'string', example: 'package_inclusion'),
                         new OA\Property(property: 'icon', type: 'string', example: 'fas fa-building', nullable: true),
                         new OA\Property(property: 'image', type: 'string', format: 'binary', nullable: true),
                         new OA\Property(property: 'sort_order', type: 'integer', example: 1),
@@ -158,7 +158,7 @@ class TourFeatureController extends Controller
                     properties: [
                         new OA\Property(property: 'tour_id', type: 'integer', example: 1),
                         new OA\Property(property: 'title', type: 'string', example: 'Updated Feature Title'),
-                        new OA\Property(property: 'type', type: 'string', example: 'highlight'),
+                        new OA\Property(property: 'type', type: 'string', example: 'package_inclusion'),
                         new OA\Property(property: 'icon', type: 'string', example: 'fas fa-star', nullable: true),
                         new OA\Property(property: 'image', type: 'string', format: 'binary', nullable: true),
                         new OA\Property(property: 'remove_image', type: 'boolean', example: false),

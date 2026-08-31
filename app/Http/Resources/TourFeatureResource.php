@@ -50,7 +50,6 @@ class TourFeatureResource extends JsonResource
             'type_label' => match ($this->type) {
                 'package_inclusion' => 'Package Inclusion',
                 'place_covered' => 'Place Covered',
-                'tour_highlight' => 'Tour Highlight',
                 default => $this->type,
             },
 

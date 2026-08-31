@@ -181,12 +181,38 @@ class OpenApiSchemas
         type: 'object',
         properties: [
             new OA\Property(property: 'id', type: 'integer', example: 1),
-            new OA\Property(property: 'main_heading', type: 'string', example: 'Crafting Unforgettable Experiences'),
-            new OA\Property(property: 'mission_title', type: 'string', example: 'Our Mission'),
-            new OA\Property(property: 'focus_title', type: 'string', example: 'Our Focus'),
-            new OA\Property(property: 'description', type: 'string', example: 'Open Sky Holidays is a leading travel management company.'),
-            new OA\Property(property: 'customer_count', type: 'integer', example: 10000),
+            new OA\Property(property: 'main_heading', type: 'string', example: 'We Are Open Sky Holidays, The Best Travel Agency Company'),
+            new OA\Property(property: 'mission_title', type: 'string', example: 'Mission & Vision'),
+            new OA\Property(property: 'mission_icon', type: 'string', example: 'fa-solid fa-bullseye'),
+            new OA\Property(property: 'focus_title', type: 'string', example: 'Focus On Customer'),
+            new OA\Property(property: 'focus_icon', type: 'string', example: 'fa-solid fa-crosshairs'),
+            new OA\Property(property: 'description', type: 'string', example: '<p>Explore the world with our curated travel packages.</p>'),
+            new OA\Property(property: 'customer_count', type: 'integer', example: 10200),
+            new OA\Property(property: 'destinations_subtitle', type: 'string', example: 'Click any country to view tours'),
             new OA\Property(property: 'status', type: 'boolean', example: true),
+            new OA\Property(
+                property: 'globe_locations',
+                type: 'array',
+                items: new OA\Items(
+                    properties: [
+                        new OA\Property(property: 'id', type: 'integer', example: 1),
+                        new OA\Property(property: 'location_name', type: 'string', example: 'India'),
+                    ]
+                )
+            ),
+            new OA\Property(
+                property: 'customer_avatars',
+                type: 'array',
+                items: new OA\Items(
+                    properties: [
+                        new OA\Property(property: 'id', type: 'integer', example: 1),
+                        new OA\Property(property: 'image', type: 'string', example: 'about/customer-avatars/avatar1.jpg'),
+                        new OA\Property(property: 'image_url', type: 'string', example: 'http://127.0.0.1:8000/storage/about/customer-avatars/avatar1.jpg'),
+                    ]
+                )
+            ),
+            new OA\Property(property: 'created_at', type: 'string', format: 'date-time', example: '2026-08-31T10:00:00.000000Z'),
+            new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-08-31T10:00:00.000000Z'),
         ]
     )]
     public static function aboutSectionSchema() {}
@@ -370,8 +396,8 @@ class OpenApiSchemas
         properties: [
             new OA\Property(property: 'id', type: 'integer', example: 1),
             new OA\Property(property: 'tour_id', type: 'integer', example: 1),
-            new OA\Property(property: 'title', type: 'string', example: 'Burj Khalifa Top Floor Access'),
-            new OA\Property(property: 'type', type: 'string', example: 'highlight'),
+            new OA\Property(property: 'title', type: 'string', example: 'Deluxe Hotel Stay'),
+            new OA\Property(property: 'type', type: 'string', example: 'package_inclusion'),
             new OA\Property(property: 'icon', type: 'string', example: 'fas fa-building', nullable: true),
             new OA\Property(property: 'image', type: 'string', example: 'tour-features/feature1.jpg', nullable: true),
             new OA\Property(property: 'sort_order', type: 'integer', example: 1),
@@ -479,5 +505,3 @@ class OpenApiSchemas
     )]
     public static function topHeaderSchema() {}
 }
-
-

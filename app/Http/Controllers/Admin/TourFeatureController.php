@@ -109,7 +109,7 @@ class TourFeatureController extends Controller
                 $validated['icon'] = null;
             } else {
                 /*
-                 * Inclusions and highlights use icons,
+                 * Inclusions use icons,
                  * so no image should be stored.
                  */
                 $validated['image'] = null;

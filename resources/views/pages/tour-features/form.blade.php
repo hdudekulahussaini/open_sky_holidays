@@ -18,14 +18,6 @@
             'sort_order' => 0,
         ],
     ]);
-
-    $tourHighlights = old('tour_highlights', [
-        [
-            'title' => '',
-            'description' => '',
-            'sort_order' => 0,
-        ],
-    ]);
 @endphp
 
 <div class="tf-form-layout">
@@ -376,128 +368,7 @@
 
         </div>
 
-        {{-- Tour Highlights --}}
-        <div class="tf-card">
 
-            <div class="tf-card-header">
-
-                <div>
-                    <h2>Tour Highlights</h2>
-
-                    <p>
-                        Add the main attractions and special experiences.
-                    </p>
-                </div>
-
-                <button type="button" class="tf-add-button" id="addTourHighlight">
-                    + Add Highlight
-                </button>
-
-            </div>
-
-            <div class="tf-card-body">
-
-                <div class="tf-repeat-list" id="tourHighlightList">
-
-                    @foreach ($tourHighlights as $index => $item)
-                        <div class="tf-repeat-item" data-repeat-item>
-
-                            <div class="tf-repeat-header">
-
-                                <strong data-item-number>
-                                    Highlight {{ $loop->iteration }}
-                                </strong>
-
-                                <button type="button" class="tf-remove-button" data-remove-item>
-                                    Remove
-                                </button>
-
-                            </div>
-
-                            <div class="tf-form-grid">
-
-                                {{-- Title --}}
-                                <div class="tf-form-group">
-
-                                    <label for="tour_highlights_{{ $index }}_title" class="tf-label">
-                                        Title
-
-                                        <span class="tf-required">*</span>
-                                    </label>
-
-                                    <input type="text" name="tour_highlights[{{ $index }}][title]"
-                                        id="tour_highlights_{{ $index }}_title"
-                                        class="tf-control
-                                            @error("tour_highlights.$index.title")
-                                                tf-control-error
-                                            @enderror"
-                                        value="{{ $item['title'] ?? '' }}"
-                                        placeholder="Example: Sunrise mountain view">
-
-                                    @error("tour_highlights.$index.title")
-                                        <span class="tf-error-message">
-                                            {{ $message }}
-                                        </span>
-                                    @enderror
-
-                                </div>
-
-                                {{-- Sort order --}}
-                                <div class="tf-form-group">
-
-                                    <label for="tour_highlights_{{ $index }}_sort_order" class="tf-label">
-                                        Sort Order
-                                    </label>
-
-                                    <input type="number" name="tour_highlights[{{ $index }}][sort_order]"
-                                        id="tour_highlights_{{ $index }}_sort_order" min="0"
-                                        class="tf-control
-                                            @error("tour_highlights.$index.sort_order")
-                                                tf-control-error
-                                            @enderror"
-                                        value="{{ $item['sort_order'] ?? $index }}">
-
-                                    @error("tour_highlights.$index.sort_order")
-                                        <span class="tf-error-message">
-                                            {{ $message }}
-                                        </span>
-                                    @enderror
-
-                                </div>
-
-                                {{-- Description --}}
-                                <div class="tf-form-group tf-form-group-full">
-
-                                    <label for="tour_highlights_{{ $index }}_description" class="tf-label">
-                                        Description
-                                    </label>
-
-                                    <textarea name="tour_highlights[{{ $index }}][description]"
-                                        id="tour_highlights_{{ $index }}_description" rows="3"
-                                        class="tf-control tf-textarea-small
-                                            @error("tour_highlights.$index.description")
-                                                tf-control-error
-                                            @enderror"
-                                        placeholder="Enter highlight description">{{ $item['description'] ?? '' }}</textarea>
-
-                                    @error("tour_highlights.$index.description")
-                                        <span class="tf-error-message">
-                                            {{ $message }}
-                                        </span>
-                                    @enderror
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                    @endforeach
-
-                </div>
-
-            </div>
-
-        </div>
 
     </div>
 
@@ -587,13 +458,7 @@
                         </span>
                     </div>
 
-                    <div class="tf-guide-item">
-                        <strong>Tour Highlights</strong>
 
-                        <span>
-                            Special experiences and important attractions.
-                        </span>
-                    </div>
 
                 </div>
 
@@ -751,61 +616,7 @@
     </div>
 </template>
 
-<template id="tourHighlightTemplate">
-    <div class="tf-repeat-item" data-repeat-item>
 
-        <div class="tf-repeat-header">
-
-            <strong data-item-number>
-                Highlight
-            </strong>
-
-            <button type="button" class="tf-remove-button" data-remove-item>
-                Remove
-            </button>
-
-        </div>
-
-        <div class="tf-form-grid">
-
-            <div class="tf-form-group">
-
-                <label class="tf-label">
-                    Title
-                    <span class="tf-required">*</span>
-                </label>
-
-                <input type="text" data-name="tour_highlights[__INDEX__][title]" class="tf-control"
-                    placeholder="Example: Sunrise mountain view">
-
-            </div>
-
-            <div class="tf-form-group">
-
-                <label class="tf-label">
-                    Sort Order
-                </label>
-
-                <input type="number" data-name="tour_highlights[__INDEX__][sort_order]" min="0"
-                    class="tf-control" value="0">
-
-            </div>
-
-            <div class="tf-form-group tf-form-group-full">
-
-                <label class="tf-label">
-                    Description
-                </label>
-
-                <textarea data-name="tour_highlights[__INDEX__][description]" rows="3" class="tf-control tf-textarea-small"
-                    placeholder="Enter highlight description"></textarea>
-
-            </div>
-
-        </div>
-
-    </div>
-</template>
 
 @push('styles')
     <style>
@@ -1381,12 +1192,7 @@
                 label: 'Place',
             });
 
-            initializeRepeater({
-                listId: 'tourHighlightList',
-                buttonId: 'addTourHighlight',
-                templateId: 'tourHighlightTemplate',
-                label: 'Highlight',
-            });
+
         });
     </script>
 @endpush

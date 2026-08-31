@@ -14,9 +14,12 @@ class AboutSectionResource extends JsonResource
             'id' => $this->id,
             'main_heading' => $this->main_heading,
             'mission_title' => $this->mission_title,
+            'mission_icon' => $this->mission_icon ?: 'fa-solid fa-bullseye',
             'focus_title' => $this->focus_title,
+            'focus_icon' => $this->focus_icon ?: 'fa-solid fa-crosshairs',
             'description' => $this->description,
             'customer_count' => $this->customer_count,
+            'destinations_subtitle' => $this->destinations_subtitle ?: 'Click any country to view tours',
             'status' => $this->status,
 
             'globe_locations' => $this->whenLoaded(

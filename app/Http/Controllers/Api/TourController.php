@@ -101,18 +101,7 @@ class TourController extends Controller
                 }
             }
 
-            // Save highlights
-            if (! empty($validated['tour_highlights'])) {
-                foreach ($validated['tour_highlights'] as $item) {
-                    $tour->features()->create([
-                        'type' => TourFeature::TYPE_TOUR_HIGHLIGHT,
-                        'title' => $item['title'],
-                        'description' => $item['description'] ?? null,
-                        'sort_order' => $item['sort_order'] ?? 0,
-                        'status' => 'active',
-                    ]);
-                }
-            }
+
 
             // Save places
             if (! empty($validated['places_covered'])) {
@@ -288,32 +277,7 @@ class TourController extends Controller
                 }
             }
 
-            // Highlights
-            $submittedHighlights = $validated['tour_highlights'] ?? [];
-            $submittedHighlightsIds = collect($submittedHighlights)->pluck('id')->filter()->all();
 
-            $highlightsToDelete = $tour->tourHighlights()->whereNotIn('id', $submittedHighlightsIds)->get();
-            foreach ($highlightsToDelete as $item) {
-                $item->delete();
-            }
-
-            foreach ($submittedHighlights as $item) {
-                if (! empty($item['id'])) {
-                    $tour->tourHighlights()->where('id', $item['id'])->update([
-                        'title' => $item['title'],
-                        'description' => $item['description'] ?? null,
-                        'sort_order' => $item['sort_order'] ?? 0,
-                    ]);
-                } else {
-                    $tour->tourHighlights()->create([
-                        'type' => TourFeature::TYPE_TOUR_HIGHLIGHT,
-                        'title' => $item['title'],
-                        'description' => $item['description'] ?? null,
-                        'sort_order' => $item['sort_order'] ?? 0,
-                        'status' => 'active',
-                    ]);
-                }
-            }
 
             // Places
             $submittedPlaces = $validated['places_covered'] ?? [];

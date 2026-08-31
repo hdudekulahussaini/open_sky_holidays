@@ -13,9 +13,12 @@ class AboutSection extends Model
     protected $fillable = [
         'main_heading',
         'mission_title',
+        'mission_icon',
         'focus_title',
+        'focus_icon',
         'description',
         'customer_count',
+        'destinations_subtitle',
         'status',
     ];
 

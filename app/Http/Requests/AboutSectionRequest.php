@@ -26,8 +26,20 @@ class AboutSectionRequest extends FormRequest
                 'max:255',
             ],
 
+            'mission_icon' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+
             'focus_title' => [
                 'required',
+                'string',
+                'max:255',
+            ],
+
+            'focus_icon' => [
+                'nullable',
                 'string',
                 'max:255',
             ],
@@ -41,6 +53,12 @@ class AboutSectionRequest extends FormRequest
                 'required',
                 'integer',
                 'min:0',
+            ],
+
+            'destinations_subtitle' => [
+                'nullable',
+                'string',
+                'max:255',
             ],
 
             'status' => [
@@ -62,8 +80,6 @@ class AboutSectionRequest extends FormRequest
 
             'locations.*.id' => [
                 'nullable',
-                'integer',
-                'exists:about_globe_locations,id',
             ],
 
             'locations.*.location_name' => [

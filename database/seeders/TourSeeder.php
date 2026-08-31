@@ -67,32 +67,7 @@ class TourSeeder extends Seeder
             ],
         ]);
 
-        // 6. Create Highlights
-        $tour->features()->createMany([
-            [
-                'type' => TourFeature::TYPE_TOUR_HIGHLIGHT,
-                'title' => '30-45 minutes thrilling dune bashing',
-                'description' => 'Exciting ride over red dunes with professional drivers.',
-                'sort_order' => 1,
-                'status' => 'active',
-            ],
-            [
-                'type' => TourFeature::TYPE_TOUR_HIGHLIGHT,
-                'title' => 'Live belly dance and Tanoura show',
-                'description' => 'Traditional dance performances at the camp.',
-                'sort_order' => 2,
-                'status' => 'active',
-            ],
-            [
-                'type' => TourFeature::TYPE_TOUR_HIGHLIGHT,
-                'title' => 'Sunset photo stop in the desert',
-                'description' => 'Capture breath-taking photos of the desert sunset.',
-                'sort_order' => 3,
-                'status' => 'active',
-            ],
-        ]);
-
-        // 7. Create Places Covered
+        // 6. Create Places Covered
         $tour->features()->createMany([
             [
                 'type' => TourFeature::TYPE_PLACE_COVERED,

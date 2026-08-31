@@ -22,7 +22,6 @@ return new class extends Migration
             $table->enum('type', [
                 'package_inclusion',
                 'place_covered',
-                'tour_highlight',
             ]);
 
             $table->string('title');
@@ -35,7 +34,7 @@ return new class extends Migration
             $table->string('image')->nullable();
 
             /*
-             * Used for package inclusions and highlights.
+             * Used for package inclusions.
              * Store a selected icon name or icon class.
              */
             $table->unsignedInteger('sort_order')

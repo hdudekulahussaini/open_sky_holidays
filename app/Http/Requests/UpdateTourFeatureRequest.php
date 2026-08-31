@@ -37,7 +37,6 @@ class UpdateTourFeatureRequest extends FormRequest
                 Rule::in([
                     TourFeature::TYPE_PACKAGE_INCLUSION,
                     TourFeature::TYPE_PLACE_COVERED,
-                    TourFeature::TYPE_TOUR_HIGHLIGHT,
                 ]),
             ],
 

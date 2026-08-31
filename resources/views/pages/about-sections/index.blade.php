@@ -83,11 +83,25 @@
                             </td>
 
                             <td>
-                                {{ $aboutSection->mission_title ?: 'Not provided' }}
+                                @if ($aboutSection->mission_title)
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <i class="{{ $aboutSection->mission_icon ?: 'fa-solid fa-bullseye' }} text-danger"></i>
+                                        <span>{{ $aboutSection->mission_title }}</span>
+                                    </div>
+                                @else
+                                    <span class="text-muted">Not provided</span>
+                                @endif
                             </td>
 
                             <td>
-                                {{ $aboutSection->focus_title ?: 'Not provided' }}
+                                @if ($aboutSection->focus_title)
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <i class="{{ $aboutSection->focus_icon ?: 'fa-solid fa-crosshairs' }} text-success"></i>
+                                        <span>{{ $aboutSection->focus_title }}</span>
+                                    </div>
+                                @else
+                                    <span class="text-muted">Not provided</span>
+                                @endif
                             </td>
 
                             <td>

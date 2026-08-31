@@ -41,9 +41,12 @@ class AboutSectionController extends Controller
                     $request->safe()->only([
                         'main_heading',
                         'mission_title',
+                        'mission_icon',
                         'focus_title',
+                        'focus_icon',
                         'description',
                         'customer_count',
+                        'destinations_subtitle',
                         'status',
                     ])
                 );
@@ -104,7 +107,17 @@ class AboutSectionController extends Controller
         try {
             DB::transaction(function () use ($request, $aboutSection) {
                 $aboutSection->update(
-                    $request->safe()->only(['main_heading', 'mission_title', 'focus_title', 'description', 'customer_count', 'status'])
+                    $request->safe()->only([
+                        'main_heading',
+                        'mission_title',
+                        'mission_icon',
+                        'focus_title',
+                        'focus_icon',
+                        'description',
+                        'customer_count',
+                        'destinations_subtitle',
+                        'status',
+                    ])
                 );
 
                 // Replace old locations with submitted locations.

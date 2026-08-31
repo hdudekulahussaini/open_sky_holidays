@@ -2419,6 +2419,323 @@
                 }
             }
         },
+        "/api/top-header/active": {
+            "get": {
+                "tags": [
+                    "Top Header"
+                ],
+                "summary": "Get active top header bar data",
+                "description": "Retrieves the active top header bar details including email, announcement tagline, button text/link, and social icons.",
+                "operationId": "e5bad1fb194783eff7e863e2eb1b4620",
+                "responses": {
+                    "200": {
+                        "description": "Active top header bar retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Active top header bar retrieved successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/TopHeader"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No active top header bar found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No active top header bar found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/top-headers": {
+            "get": {
+                "tags": [
+                    "Top Header"
+                ],
+                "summary": "List all top header bar configurations",
+                "description": "Retrieves all top header bar records.",
+                "operationId": "dc1a82da0e12af6c95b24b4c7948b8d2",
+                "responses": {
+                    "200": {
+                        "description": "Top header bars retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Top header bars retrieved successfully."
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/TopHeader"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Top Header"
+                ],
+                "summary": "Create a new top header bar",
+                "description": "Stores a new top header bar record.",
+                "operationId": "53dd40aac38750348c36915e15f842ee",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TopHeaderInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Top header bar created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Top header bar created successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/TopHeader"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/top-headers/{id}": {
+            "get": {
+                "tags": [
+                    "Top Header"
+                ],
+                "summary": "Get a specific top header bar",
+                "description": "Retrieves a single top header bar by its ID.",
+                "operationId": "9fd1965a0b36693af0a6ed59dfa306c7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the top header bar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Top header bar retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Top header bar retrieved successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/TopHeader"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Top header bar not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Top header bar not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Top Header"
+                ],
+                "summary": "Update an existing top header bar",
+                "description": "Updates a top header bar by its ID.",
+                "operationId": "ab374bb2ea2a1d257d5ce49d23df2f17",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the top header bar to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TopHeaderInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Top header bar updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Top header bar updated successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/TopHeader"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Top Header"
+                ],
+                "summary": "Delete a top header bar",
+                "description": "Deletes a top header bar by its ID.",
+                "operationId": "f61ae6c1b07fc36a681d1843debbe88b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the top header bar to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Top header bar deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Top header bar deleted successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/tours": {
             "get": {
                 "tags": [
@@ -2822,7 +3139,7 @@
                     "Tour Features"
                 ],
                 "summary": "Store a new tour feature",
-                "description": "Creates a new feature item (highlight, inclusion, or covered place) for a tour package.",
+                "description": "Creates a new feature item (inclusion or covered place) for a tour package.",
                 "operationId": "7322514676aabe538e9f6df6eedd6b2b",
                 "requestBody": {
                     "required": true,
@@ -2841,11 +3158,11 @@
                                     },
                                     "title": {
                                         "type": "string",
-                                        "example": "Burj Khalifa Top Floor Access"
+                                        "example": "Deluxe Hotel Stay"
                                     },
                                     "type": {
                                         "type": "string",
-                                        "example": "highlight"
+                                        "example": "package_inclusion"
                                     },
                                     "icon": {
                                         "type": "string",
@@ -2934,7 +3251,7 @@
                                     },
                                     "type": {
                                         "type": "string",
-                                        "example": "highlight"
+                                        "example": "package_inclusion"
                                     },
                                     "icon": {
                                         "type": "string",
@@ -3505,13 +3822,43 @@
                 }
             }
         },
+        "/api/why-choose-sections/active": {
+            "get": {
+                "tags": [
+                    "Why Choose Us"
+                ],
+                "summary": "Get active Why Choose Us sections for website",
+                "description": "Retrieves active Why Choose Us cards ordered by sort_order for frontend display.",
+                "operationId": "2d0d713a2f11fd7e3ef66f3b5ea6bae8",
+                "responses": {
+                    "200": {
+                        "description": "Active Why Choose sections retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/WhyChooseSection"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/why-choose-sections": {
             "get": {
                 "tags": [
                     "Why Choose Us"
                 ],
-                "summary": "List all Why Choose Us home sections",
-                "description": "Retrieves all Why Choose Us section items.",
+                "summary": "List all Why Choose Us sections",
+                "description": "Retrieves all Why Choose Us section items with pagination.",
                 "operationId": "b7becf2240b9f572112f7a8bd40f9229",
                 "responses": {
                     "200": {
@@ -3533,34 +3880,266 @@
                         }
                     }
                 }
-            }
-        },
-        "/api/why-choose-sections/active": {
-            "get": {
+            },
+            "post": {
                 "tags": [
                     "Why Choose Us"
                 ],
-                "summary": "Get active Why Choose Us sections for website",
-                "description": "Retrieves active Why Choose Us cards in display order.",
-                "operationId": "2d0d713a2f11fd7e3ef66f3b5ea6bae8",
+                "summary": "Create a new Why Choose Us section",
+                "description": "Stores a new Why Choose Us record including title, description, and FontAwesome icon.",
+                "operationId": "99699daabd3aef6dcde93a0279002ec4",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "Section benefit title",
+                                        "type": "string",
+                                        "example": "Worldwide Coverage"
+                                    },
+                                    "description": {
+                                        "description": "Section description text",
+                                        "type": "string",
+                                        "example": "Explore domestic and international destinations with complete planning and trusted travel support."
+                                    },
+                                    "icon": {
+                                        "description": "FontAwesome 6 icon class (e.g. fa-solid fa-earth-americas, fa-solid fa-bolt-lightning, fa-solid fa-headset)",
+                                        "type": "string",
+                                        "example": "fa-solid fa-earth-americas",
+                                        "nullable": true
+                                    },
+                                    "sort_order": {
+                                        "description": "Display sort order priority",
+                                        "type": "integer",
+                                        "example": 0
+                                    },
+                                    "status": {
+                                        "description": "1 for Active, 0 for Inactive",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
-                    "200": {
-                        "description": "Active Why choose sections retrieved successfully",
+                    "201": {
+                        "description": "Why choose section created successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Why choose section created successfully."
+                                        },
                                         "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/WhyChooseSection"
-                                            }
+                                            "$ref": "#/components/schemas/WhyChooseSection"
                                         }
                                     },
                                     "type": "object"
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/why-choose-sections/{id}": {
+            "get": {
+                "tags": [
+                    "Why Choose Us"
+                ],
+                "summary": "Get single Why Choose Us section",
+                "description": "Retrieves a single Why Choose Us record by ID.",
+                "operationId": "800f06bfcf88e49e054b5eff1cda7954",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Why Choose Section ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Why choose section details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/WhyChooseSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Record not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Why Choose Us"
+                ],
+                "summary": "Update Why Choose Us section",
+                "description": "Updates an existing Why Choose Us record with new title, description, or icon.",
+                "operationId": "e9b67048e0087d454d2a04a30475f891",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Why Choose Section ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "Section benefit title",
+                                        "type": "string",
+                                        "example": "Fast Booking"
+                                    },
+                                    "description": {
+                                        "description": "Section description text",
+                                        "type": "string",
+                                        "example": "Seamless and quick reservations with instant confirmation."
+                                    },
+                                    "icon": {
+                                        "description": "FontAwesome 6 icon class",
+                                        "type": "string",
+                                        "example": "fa-solid fa-calendar-check",
+                                        "nullable": true
+                                    },
+                                    "sort_order": {
+                                        "description": "Display sort order priority",
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "status": {
+                                        "description": "1 for Active, 0 for Inactive",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Why choose section updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Why choose section updated successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/WhyChooseSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "404": {
+                        "description": "Record not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Why Choose Us"
+                ],
+                "summary": "Delete Why Choose Us section",
+                "description": "Permanently removes a Why Choose Us section record by ID.",
+                "operationId": "3bdeb6f663000df8d04c45211f4d16ee",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Why Choose Section ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Why choose section deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Why choose section deleted successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Record not found"
                     }
                 }
             }
@@ -3933,23 +4512,20 @@
                     },
                     "title": {
                         "type": "string",
-                        "example": "24/7 Dedicated Support"
+                        "example": "Worldwide Coverage"
                     },
                     "description": {
                         "type": "string",
-                        "example": "Our team is available round the clock to assist you."
+                        "example": "Explore domestic and international destinations with complete planning and trusted travel support."
                     },
-                    "background_color": {
+                    "icon": {
                         "type": "string",
-                        "example": "#ffffff"
-                    },
-                    "text_color": {
-                        "type": "string",
-                        "example": "#000000"
+                        "example": "fa-solid fa-earth-americas",
+                        "nullable": true
                     },
                     "sort_order": {
                         "type": "integer",
-                        "example": 1
+                        "example": 0
                     },
                     "status": {
                         "type": "boolean",
@@ -4003,27 +4579,85 @@
                     },
                     "main_heading": {
                         "type": "string",
-                        "example": "Crafting Unforgettable Experiences"
+                        "example": "We Are Open Sky Holidays, The Best Travel Agency Company"
                     },
                     "mission_title": {
                         "type": "string",
-                        "example": "Our Mission"
+                        "example": "Mission & Vision"
+                    },
+                    "mission_icon": {
+                        "type": "string",
+                        "example": "fa-solid fa-bullseye"
                     },
                     "focus_title": {
                         "type": "string",
-                        "example": "Our Focus"
+                        "example": "Focus On Customer"
+                    },
+                    "focus_icon": {
+                        "type": "string",
+                        "example": "fa-solid fa-crosshairs"
                     },
                     "description": {
                         "type": "string",
-                        "example": "Open Sky Holidays is a leading travel management company."
+                        "example": "<p>Explore the world with our curated travel packages.</p>"
                     },
                     "customer_count": {
                         "type": "integer",
-                        "example": 10000
+                        "example": 10200
+                    },
+                    "destinations_subtitle": {
+                        "type": "string",
+                        "example": "Click any country to view tours"
                     },
                     "status": {
                         "type": "boolean",
                         "example": true
+                    },
+                    "globe_locations": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "location_name": {
+                                    "type": "string",
+                                    "example": "India"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "customer_avatars": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "image": {
+                                    "type": "string",
+                                    "example": "about/customer-avatars/avatar1.jpg"
+                                },
+                                "image_url": {
+                                    "type": "string",
+                                    "example": "http://127.0.0.1:8000/storage/about/customer-avatars/avatar1.jpg"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2026-08-31T10:00:00.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2026-08-31T10:00:00.000000Z"
                     }
                 },
                 "type": "object"
@@ -4403,11 +5037,11 @@
                     },
                     "title": {
                         "type": "string",
-                        "example": "Burj Khalifa Top Floor Access"
+                        "example": "Deluxe Hotel Stay"
                     },
                     "type": {
                         "type": "string",
-                        "example": "highlight"
+                        "example": "package_inclusion"
                     },
                     "icon": {
                         "type": "string",
@@ -4549,6 +5183,115 @@
                     }
                 },
                 "type": "object"
+            },
+            "TopHeaderInput": {
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "info@openskyholidays.com",
+                        "nullable": true
+                    },
+                    "tagline": {
+                        "type": "string",
+                        "example": "The World Is Waiting. One Stop Destination For All Your Tours & Travels Needs.",
+                        "nullable": true
+                    },
+                    "button_text": {
+                        "type": "string",
+                        "example": "Book Your Tour",
+                        "nullable": true
+                    },
+                    "button_url": {
+                        "type": "string",
+                        "example": "/tours",
+                        "nullable": true
+                    },
+                    "social_links": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "platform": {
+                                    "type": "string",
+                                    "example": "facebook"
+                                },
+                                "icon": {
+                                    "type": "string",
+                                    "example": "fa-brands fa-facebook-f"
+                                },
+                                "url": {
+                                    "type": "string",
+                                    "example": "https://facebook.com/openskyholidays"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "nullable": true
+                    },
+                    "status": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                },
+                "type": "object"
+            },
+            "TopHeader": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "info@openskyholidays.com"
+                    },
+                    "tagline": {
+                        "type": "string",
+                        "example": "The World Is Waiting. One Stop Destination For All Your Tours & Travels Needs."
+                    },
+                    "button_text": {
+                        "type": "string",
+                        "example": "Book Your Tour"
+                    },
+                    "button_url": {
+                        "type": "string",
+                        "example": "/tours"
+                    },
+                    "social_links": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "platform": {
+                                    "type": "string",
+                                    "example": "facebook"
+                                },
+                                "icon": {
+                                    "type": "string",
+                                    "example": "fa-brands fa-facebook-f"
+                                },
+                                "url": {
+                                    "type": "string",
+                                    "example": "https://facebook.com/openskyholidays"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "status": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2026-08-27T12:00:00.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2026-08-27T12:00:00.000000Z"
+                    }
+                },
+                "type": "object"
             }
         }
     },
@@ -4571,7 +5314,7 @@
         },
         {
             "name": "Tour Features",
-            "description": "Tour highlights and features"
+            "description": "Tour package inclusions and places covered"
         },
         {
             "name": "Tour Types",
@@ -4640,6 +5383,10 @@
         {
             "name": "Contact Section",
             "description": "Contact page details, support cards, phone, email, and office location"
+        },
+        {
+            "name": "Top Header",
+            "description": "Top header bar announcements, contact, and social links"
         },
         {
             "name": "What We Offer",
