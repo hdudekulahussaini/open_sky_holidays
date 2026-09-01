@@ -34,7 +34,9 @@ class OfferBannerRequest extends FormRequest
 
             'image' => [
                 'nullable',
-                'file',
+                'image',
+                'mimes:jpg,jpeg,png,webp,avif',
+                'max:5120',
             ],
 
             'status' => [
@@ -52,7 +54,7 @@ class OfferBannerRequest extends FormRequest
             'subtitle.required' => 'Please enter the subtitle.',
 
             'image.image' => 'The selected file must be an image.',
-            'image.mimes' => 'The image must be JPG, JPEG, PNG or WEBP.',
+            'image.mimes' => 'The image must be JPG, JPEG, PNG, WEBP, or AVIF.',
             'image.max' => 'The image size must not exceed 5 MB.',
 
             'status.required' => 'Please select the status.',

@@ -66,7 +66,7 @@ class TourFeatureController extends Controller
                         new OA\Property(property: 'title', type: 'string', example: 'Deluxe Hotel Stay'),
                         new OA\Property(property: 'type', type: 'string', example: 'package_inclusion'),
                         new OA\Property(property: 'icon', type: 'string', example: 'fas fa-building', nullable: true),
-                        new OA\Property(property: 'image', type: 'string', format: 'binary', nullable: true),
+                        new OA\Property(property: 'image', type: 'string', format: 'binary', description: 'Image upload. Supported formats: JPG, JPEG, PNG, WEBP, AVIF. Maximum size: 5MB.', nullable: true),
                         new OA\Property(property: 'sort_order', type: 'integer', example: 1),
                     ]
                 )
@@ -160,7 +160,7 @@ class TourFeatureController extends Controller
                         new OA\Property(property: 'title', type: 'string', example: 'Updated Feature Title'),
                         new OA\Property(property: 'type', type: 'string', example: 'package_inclusion'),
                         new OA\Property(property: 'icon', type: 'string', example: 'fas fa-star', nullable: true),
-                        new OA\Property(property: 'image', type: 'string', format: 'binary', nullable: true),
+                        new OA\Property(property: 'image', type: 'string', format: 'binary', description: 'Image upload. Supported formats: JPG, JPEG, PNG, WEBP, AVIF. Maximum size: 5MB.', nullable: true),
                         new OA\Property(property: 'remove_image', type: 'boolean', example: false),
                         new OA\Property(property: 'sort_order', type: 'integer', example: 1),
                     ]

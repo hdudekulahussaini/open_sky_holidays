@@ -75,6 +75,7 @@ class TourDetailController extends Controller
                         new OA\Property(
                             property: 'gallery[]',
                             type: 'array',
+                            description: 'Gallery images. Supported formats: JPG, JPEG, PNG, WEBP, AVIF. Maximum size: 5MB per file.',
                             items: new OA\Items(type: 'string', format: 'binary')
                         ),
                     ]
@@ -183,6 +184,7 @@ class TourDetailController extends Controller
                         new OA\Property(
                             property: 'gallery[]',
                             type: 'array',
+                            description: 'New gallery images to upload. Supported formats: JPG, JPEG, PNG, WEBP, AVIF. Maximum size: 5MB per file.',
                             items: new OA\Items(type: 'string', format: 'binary')
                         ),
                         new OA\Property(

@@ -84,8 +84,8 @@ class OpenApiSchemas
             new OA\Property(property: 'country', type: 'string', example: 'INDIA'),
             new OA\Property(property: 'state', type: 'string', example: 'Kerala', nullable: true),
             new OA\Property(property: 'duration', type: 'string', example: '4 Nights / 5 Days'),
-            new OA\Property(property: 'thumbnail', type: 'string', example: 'tours/kerala.jpg'),
-            new OA\Property(property: 'thumbnail_url', type: 'string', example: 'http://127.0.0.1:8000/storage/tours/kerala.jpg'),
+            new OA\Property(property: 'thumbnail', type: 'string', description: 'Thumbnail image path (JPG, JPEG, PNG, WEBP, AVIF)', example: 'tours/kerala.jpg'),
+            new OA\Property(property: 'thumbnail_url', type: 'string', description: 'Full URL to tour thumbnail image', example: 'http://127.0.0.1:8000/storage/tours/kerala.jpg'),
             new OA\Property(
                 property: 'areas',
                 type: 'array',
@@ -137,7 +137,7 @@ class OpenApiSchemas
             new OA\Property(property: 'slug', type: 'string', example: 'visa-assistance-services'),
             new OA\Property(property: 'about_title', type: 'string', example: 'Your Gateway to Seamless Global Travel', nullable: true),
             new OA\Property(property: 'about_description', type: 'string', example: 'Navigating international visa requirements can be overwhelming.', nullable: true),
-            new OA\Property(property: 'about_image_url', type: 'string', example: 'http://127.0.0.1:8000/storage/services/about/visa.jpg', nullable: true),
+            new OA\Property(property: 'about_image_url', type: 'string', description: 'About section image URL (JPG, JPEG, PNG, WEBP, AVIF)', example: 'http://127.0.0.1:8000/storage/services/about/visa.jpg', nullable: true),
             new OA\Property(
                 property: 'features',
                 type: 'array',
@@ -165,7 +165,7 @@ class OpenApiSchemas
             new OA\Property(property: 'why_choose_items', type: 'array', items: new OA\Items(type: 'string')),
             new OA\Property(property: 'cta_title', type: 'string', example: 'Ready To Start Your Journey?', nullable: true),
             new OA\Property(property: 'cta_description', type: 'string', example: 'Let us take care of your visa process while you focus on making unforgettable memories.', nullable: true),
-            new OA\Property(property: 'cta_background_image_url', type: 'string', example: 'http://127.0.0.1:8000/storage/services/cta/banner.jpg', nullable: true),
+            new OA\Property(property: 'cta_background_image_url', type: 'string', description: 'CTA banner background image URL (JPG, JPEG, PNG, WEBP, AVIF)', example: 'http://127.0.0.1:8000/storage/services/cta/banner.jpg', nullable: true),
             new OA\Property(
                 property: 'stats',
                 type: 'array',
@@ -205,7 +205,7 @@ class OpenApiSchemas
                 properties: [
                     new OA\Property(property: 'id', type: 'integer', example: 1),
                     new OA\Property(property: 'name', type: 'string', example: 'Open Sky Team'),
-                    new OA\Property(property: 'image', type: 'string', example: 'http://127.0.0.1:8000/storage/authors/team.jpg', nullable: true),
+                    new OA\Property(property: 'image', type: 'string', description: 'Author avatar image URL (JPG, JPEG, PNG, WEBP, AVIF)', example: 'http://127.0.0.1:8000/storage/authors/team.jpg', nullable: true),
                     new OA\Property(property: 'description', type: 'string', example: 'Travel enthusiast sharing guides and tips.', nullable: true),
                     new OA\Property(property: 'twitter_url', type: 'string', nullable: true),
                     new OA\Property(property: 'facebook_url', type: 'string', nullable: true),
@@ -234,7 +234,7 @@ class OpenApiSchemas
                 )
             ),
             new OA\Property(property: 'content', type: 'string', example: '1. Book Your Flights in Advance...'),
-            new OA\Property(property: 'featured_image', type: 'string', example: 'http://127.0.0.1:8000/storage/blogs/featured-images/taj.jpg', nullable: true),
+            new OA\Property(property: 'featured_image', type: 'string', description: 'Featured blog image URL (JPG, JPEG, PNG, WEBP, AVIF)', example: 'http://127.0.0.1:8000/storage/blogs/featured-images/taj.jpg', nullable: true),
             new OA\Property(property: 'read_time', type: 'integer', example: 3),
             new OA\Property(property: 'read_time_text', type: 'string', example: '3 min read'),
             new OA\Property(property: 'published_at', type: 'string', format: 'date-time', example: '2026-08-31T10:00:00.000000Z'),
@@ -250,8 +250,8 @@ class OpenApiSchemas
             new OA\Property(property: 'id', type: 'integer', example: 1),
             new OA\Property(property: 'platform', type: 'string', example: 'Google'),
             new OA\Property(property: 'customer_name', type: 'string', example: 'Rahul Sharma'),
-            new OA\Property(property: 'customer_image', type: 'string', example: 'testimonials/rahul.jpg', nullable: true),
-            new OA\Property(property: 'customer_image_url', type: 'string', example: 'http://127.0.0.1:8000/storage/testimonials/rahul.jpg', nullable: true),
+            new OA\Property(property: 'customer_image', type: 'string', description: 'Customer image path (JPG, JPEG, PNG, WEBP, AVIF)', example: 'testimonials/rahul.jpg', nullable: true),
+            new OA\Property(property: 'customer_image_url', type: 'string', description: 'Full URL to customer image', example: 'http://127.0.0.1:8000/storage/testimonials/rahul.jpg', nullable: true),
             new OA\Property(property: 'location', type: 'string', example: 'Delhi, India', nullable: true),
             new OA\Property(property: 'rating', type: 'integer', example: 5),
             new OA\Property(property: 'review', type: 'string', example: 'Open Sky Holidays planned our honeymoon trip perfectly!'),
@@ -270,10 +270,10 @@ class OpenApiSchemas
             new OA\Property(property: 'description', type: 'string', example: 'Thrilling desert dune bashing and quad biking experience.'),
             new OA\Property(property: 'features', type: 'array', items: new OA\Items(type: 'string', example: 'Dune Bashing')),
             new OA\Property(property: 'video_link', type: 'string', example: 'https://youtube.com/watch?v=example', nullable: true),
-            new OA\Property(property: 'image_one', type: 'string', example: 'adventures/desert1.jpg', nullable: true),
-            new OA\Property(property: 'image_one_url', type: 'string', example: 'http://127.0.0.1:8000/storage/adventures/desert1.jpg', nullable: true),
-            new OA\Property(property: 'image_two', type: 'string', example: 'adventures/desert2.jpg', nullable: true),
-            new OA\Property(property: 'image_two_url', type: 'string', example: 'http://127.0.0.1:8000/storage/adventures/desert2.jpg', nullable: true),
+            new OA\Property(property: 'image_one', type: 'string', description: 'Primary adventure image (JPG, JPEG, PNG, WEBP, AVIF)', example: 'adventures/desert1.jpg', nullable: true),
+            new OA\Property(property: 'image_one_url', type: 'string', description: 'Full URL to primary adventure image', example: 'http://127.0.0.1:8000/storage/adventures/desert1.jpg', nullable: true),
+            new OA\Property(property: 'image_two', type: 'string', description: 'Secondary adventure image (JPG, JPEG, PNG, WEBP, AVIF)', example: 'adventures/desert2.jpg', nullable: true),
+            new OA\Property(property: 'image_two_url', type: 'string', description: 'Full URL to secondary adventure image', example: 'http://127.0.0.1:8000/storage/adventures/desert2.jpg', nullable: true),
             new OA\Property(property: 'status', type: 'string', example: 'active'),
         ]
     )]
@@ -301,7 +301,7 @@ class OpenApiSchemas
             new OA\Property(property: 'small_heading', type: 'string', example: 'Travel Assistance'),
             new OA\Property(property: 'heading', type: 'string', example: 'We Care For Your Seamless Experience'),
             new OA\Property(property: 'description', type: 'string', example: 'Complete guidance and hassle-free travel planning.'),
-            new OA\Property(property: 'image', type: 'string', example: 'http://127.0.0.1:8000/storage/travel-support/banner.jpg', nullable: true),
+            new OA\Property(property: 'image', type: 'string', description: 'Travel support banner image (JPG, JPEG, PNG, WEBP, AVIF)', example: 'http://127.0.0.1:8000/storage/travel-support/banner.jpg', nullable: true),
             new OA\Property(property: 'features', type: 'array', items: new OA\Items(type: 'string', example: 'Flight Booking')),
             new OA\Property(property: 'status', type: 'boolean', example: true),
         ]
@@ -338,8 +338,8 @@ class OpenApiSchemas
                 items: new OA\Items(
                     properties: [
                         new OA\Property(property: 'id', type: 'integer', example: 1),
-                        new OA\Property(property: 'image', type: 'string', example: 'about/customer-avatars/avatar1.jpg'),
-                        new OA\Property(property: 'image_url', type: 'string', example: 'http://127.0.0.1:8000/storage/about/customer-avatars/avatar1.jpg'),
+                        new OA\Property(property: 'image', type: 'string', description: 'Customer avatar image (JPG, JPEG, PNG, WEBP, AVIF)', example: 'about/customer-avatars/avatar1.jpg'),
+                        new OA\Property(property: 'image_url', type: 'string', description: 'Full URL to customer avatar', example: 'http://127.0.0.1:8000/storage/about/customer-avatars/avatar1.jpg'),
                     ]
                 )
             ),
@@ -410,7 +410,7 @@ class OpenApiSchemas
             new OA\Property(property: 'title', type: 'string', example: 'Summer Special Discount'),
             new OA\Property(property: 'discount_text', type: 'string', example: 'Up to 30% Off'),
             new OA\Property(property: 'subtitle', type: 'string', example: 'Book Dubai holiday packages today'),
-            new OA\Property(property: 'image', type: 'string', example: 'offers/summer.jpg', nullable: true),
+            new OA\Property(property: 'image', type: 'string', description: 'Offer banner image path (JPG, JPEG, PNG, WEBP, AVIF)', example: 'offers/summer.jpg', nullable: true),
             new OA\Property(property: 'status', type: 'boolean', example: true),
         ]
     )]
@@ -424,7 +424,7 @@ class OpenApiSchemas
             new OA\Property(property: 'page', type: 'string', example: 'tours-international'),
             new OA\Property(property: 'title', type: 'string', example: 'International Holiday Packages'),
             new OA\Property(property: 'subtitle', type: 'string', example: 'Explore the world with luxury & comfort'),
-            new OA\Property(property: 'banner_image', type: 'string', example: 'banners/international.jpg'),
+            new OA\Property(property: 'banner_image', type: 'string', description: 'Header page banner image (JPG, JPEG, PNG, WEBP, AVIF)', example: 'banners/international.jpg'),
         ]
     )]
     public static function pageBannerSchema() {}
@@ -436,7 +436,7 @@ class OpenApiSchemas
             new OA\Property(property: 'id', type: 'integer', example: 1),
             new OA\Property(property: 'title', type: 'string', example: 'Unforgettable Journeys Await'),
             new OA\Property(property: 'subtitle', type: 'string', example: 'Book your dream vacation today'),
-            new OA\Property(property: 'image', type: 'string', example: 'hero/slide1.jpg'),
+            new OA\Property(property: 'image', type: 'string', description: 'Hero slide image (JPG, JPEG, PNG, WEBP, AVIF)', example: 'hero/slide1.jpg'),
             new OA\Property(property: 'btn_text', type: 'string', example: 'Explore Packages'),
             new OA\Property(property: 'btn_link', type: 'string', example: '/tours'),
             new OA\Property(property: 'status', type: 'boolean', example: true),
@@ -484,8 +484,8 @@ class OpenApiSchemas
             new OA\Property(property: 'subtitle', type: 'string', example: 'Why Choose Us'),
             new OA\Property(property: 'title', type: 'string', example: 'Setting Standard for Trust and Comfort.'),
             new OA\Property(property: 'description', type: 'string', example: 'We believe that traveling shouldn\'t be stressful. We ensure every segment of your journey is organized with precise dedication.'),
-            new OA\Property(property: 'image', type: 'string', example: 'about_why_choose_us/photo.jpg', nullable: true),
-            new OA\Property(property: 'image_url', type: 'string', example: 'https://openskyholidays.com/storage/about_why_choose_us/photo.jpg', nullable: true),
+            new OA\Property(property: 'image', type: 'string', description: 'Why choose us section image (JPG, JPEG, PNG, WEBP, AVIF)', example: 'about_why_choose_us/photo.jpg', nullable: true),
+            new OA\Property(property: 'image_url', type: 'string', description: 'Full URL to why choose us image', example: 'https://openskyholidays.com/storage/about_why_choose_us/photo.jpg', nullable: true),
             new OA\Property(property: 'features_icon', type: 'array', items: new OA\Items(type: 'string', example: 'fa-solid fa-headset')),
             new OA\Property(property: 'features_title', type: 'array', items: new OA\Items(type: 'string', example: '24/7 Expert Support')),
             new OA\Property(property: 'features_description', type: 'array', items: new OA\Items(type: 'string', example: 'Our travel assistants are always available to help you navigate queries or itinerary shifts.')),
@@ -517,7 +517,7 @@ class OpenApiSchemas
             new OA\Property(property: 'id', type: 'integer', example: 1),
             new OA\Property(property: 'heading', type: 'string', example: 'Our Journey Since 2015'),
             new OA\Property(property: 'description', type: 'string', example: 'Started with a vision to make international travel accessible to everyone.'),
-            new OA\Property(property: 'images', type: 'array', items: new OA\Items(type: 'string', example: 'our-stories/story1.jpg')),
+            new OA\Property(property: 'images', type: 'array', description: 'Story images list (JPG, JPEG, PNG, WEBP, AVIF)', items: new OA\Items(type: 'string', example: 'our-stories/story1.jpg')),
             new OA\Property(property: 'features', type: 'array', items: new OA\Items(type: 'string', example: 'Certified Travel Agents')),
             new OA\Property(property: 'status', type: 'boolean', example: true),
         ]
@@ -535,7 +535,7 @@ class OpenApiSchemas
             new OA\Property(property: 'itinerary', type: 'object', example: '{"Day 1": "Arrival and Dhow Cruise", "Day 2": "City Tour and Burj Khalifa"}'),
             new OA\Property(property: 'inclusions', type: 'array', items: new OA\Items(type: 'string', example: 'Hotel Stay')),
             new OA\Property(property: 'exclusions', type: 'array', items: new OA\Items(type: 'string', example: 'Personal Expenses')),
-            new OA\Property(property: 'gallery', type: 'array', items: new OA\Items(type: 'string', example: 'tour-details/gallery/img1.jpg')),
+            new OA\Property(property: 'gallery', type: 'array', description: 'Gallery images list (JPG, JPEG, PNG, WEBP, AVIF)', items: new OA\Items(type: 'string', example: 'tour-details/gallery/img1.jpg')),
         ]
     )]
     public static function tourDetailSchema() {}
@@ -549,7 +549,7 @@ class OpenApiSchemas
             new OA\Property(property: 'title', type: 'string', example: 'Deluxe Hotel Stay'),
             new OA\Property(property: 'type', type: 'string', example: 'package_inclusion'),
             new OA\Property(property: 'icon', type: 'string', example: 'fas fa-building', nullable: true),
-            new OA\Property(property: 'image', type: 'string', example: 'tour-features/feature1.jpg', nullable: true),
+            new OA\Property(property: 'image', type: 'string', description: 'Place covered image (JPG, JPEG, PNG, WEBP, AVIF)', example: 'tour-features/feature1.jpg', nullable: true),
             new OA\Property(property: 'sort_order', type: 'integer', example: 1),
         ]
     )]
@@ -563,8 +563,8 @@ class OpenApiSchemas
             new OA\Property(property: 'title', type: 'string', example: 'Customized Holiday Packages'),
             new OA\Property(property: 'subtitle', type: 'string', example: 'Tailored for your dream vacation', nullable: true),
             new OA\Property(property: 'description', type: 'string', example: 'We offer personalized itineraries for individuals, families, and groups.', nullable: true),
-            new OA\Property(property: 'image', type: 'string', example: 'what-we-offers/offer1.jpg', nullable: true),
-            new OA\Property(property: 'image_url', type: 'string', example: 'http://127.0.0.1:8000/storage/what-we-offers/offer1.jpg', nullable: true),
+            new OA\Property(property: 'image', type: 'string', description: 'What we offer image (JPG, JPEG, PNG, WEBP, AVIF)', example: 'what-we-offers/offer1.jpg', nullable: true),
+            new OA\Property(property: 'image_url', type: 'string', description: 'Full URL to offer image', example: 'http://127.0.0.1:8000/storage/what-we-offers/offer1.jpg', nullable: true),
             new OA\Property(property: 'status', type: 'string', example: 'active'),
         ]
     )]

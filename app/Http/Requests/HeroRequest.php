@@ -46,7 +46,9 @@ class HeroRequest extends FormRequest
 
             'image' => [
                 'nullable',
-                'file',
+                'image',
+                'mimes:jpg,jpeg,png,webp,avif',
+                'max:5120',
             ],
 
             'status' => [
@@ -77,7 +79,7 @@ class HeroRequest extends FormRequest
             'description.max' => 'The hero description must not exceed 2000 characters.',
 
             'image.image' => 'The selected file must be an image.',
-            'image.mimes' => 'The image must be JPG, JPEG, PNG or WEBP.',
+            'image.mimes' => 'The image must be JPG, JPEG, PNG, WEBP, or AVIF.',
             'image.max' => 'The image size must not exceed 5 MB.',
 
             'status.required' => 'Please select the hero status.',

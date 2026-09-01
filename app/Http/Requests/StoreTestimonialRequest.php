@@ -80,7 +80,7 @@ class StoreTestimonialRequest extends FormRequest
             'customer_name.max' => 'Customer name must not exceed 255 characters.',
 
             'customer_image.image' => 'Customer image must be a valid image.',
-            'customer_image.mimes' => 'Customer image must be JPG, JPEG, PNG, or WEBP.',
+            'customer_image.mimes' => 'Customer image must be JPG, JPEG, PNG, WEBP, or AVIF.',
             'customer_image.max' => 'Customer image must not exceed 2 MB.',
 
             'location.max' => 'Location must not exceed 255 characters.',

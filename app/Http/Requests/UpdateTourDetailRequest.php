@@ -83,6 +83,7 @@ class UpdateTourDetailRequest extends FormRequest
             'description.required' => 'The description field is required.',
             'gallery.max' => 'You can upload a maximum of 10 images.',
             'gallery.*.image' => 'Every gallery file must be an image.',
+            'gallery.*.mimes' => 'Gallery images must be JPG, JPEG, PNG, WEBP, or AVIF.',
             'status.required' => 'Please select a status.',
         ];
     }

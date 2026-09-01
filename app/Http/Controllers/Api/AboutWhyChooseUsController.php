@@ -107,7 +107,7 @@ class AboutWhyChooseUsController extends Controller
                         new OA\Property(property: 'subtitle', type: 'string', example: 'Why Choose Us'),
                         new OA\Property(property: 'title', type: 'string', example: 'Setting Standard for Trust and Comfort.'),
                         new OA\Property(property: 'description', type: 'string', example: 'We believe that traveling shouldn\'t be stressful.'),
-                        new OA\Property(property: 'image', type: 'string', format: 'binary'),
+                        new OA\Property(property: 'image', type: 'string', format: 'binary', description: 'Image upload. Supported formats: JPG, JPEG, PNG, WEBP, AVIF. Maximum size: 5MB.'),
                         new OA\Property(
                             property: 'features_icon[]',
                             type: 'array',
@@ -243,7 +243,7 @@ class AboutWhyChooseUsController extends Controller
                         new OA\Property(property: 'subtitle', type: 'string', example: 'Why Choose Us'),
                         new OA\Property(property: 'title', type: 'string', example: 'Setting Standard for Trust and Comfort.'),
                         new OA\Property(property: 'description', type: 'string', example: 'We believe that traveling shouldn\'t be stressful.'),
-                        new OA\Property(property: 'image', type: 'string', format: 'binary', nullable: true),
+                        new OA\Property(property: 'image', type: 'string', format: 'binary', description: 'Image upload. Supported formats: JPG, JPEG, PNG, WEBP, AVIF. Maximum size: 5MB.', nullable: true),
                         new OA\Property(
                             property: 'features_icon[]',
                             type: 'array',

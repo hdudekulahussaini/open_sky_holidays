@@ -242,7 +242,7 @@
                         {{ isset($aboutWhyChooseUs) && $aboutWhyChooseUs->image ? 'ts-hidden' : '' }}">
                     <span class="ts-image-placeholder-icon">✦</span>
                     <strong>No image selected</strong>
-                    <small>JPG, PNG or WEBP</small>
+                    <small>JPG, PNG, WEBP or AVIF &middot; Max 5 MB</small>
                 </div>
             </div>
 

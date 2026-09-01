@@ -110,7 +110,7 @@ class UpdateOurStoryRequest extends FormRequest
                 'The total number of existing and newly uploaded images cannot exceed 3.',
 
             'images.*.image' => 'Every uploaded file must be an image.',
-            'images.*.mimes' => 'Images must be JPG, JPEG, PNG or WebP.',
+            'images.*.mimes' => 'Images must be JPG, JPEG, PNG, WEBP, or AVIF.',
             'images.*.max' => 'Each image must not exceed 5 MB.',
 
             'features.*.heading.required_with' =>

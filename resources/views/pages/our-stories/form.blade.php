@@ -118,7 +118,7 @@
         <div class="ts-side-card">
             <div class="ts-side-card-header">
                 <h3>Story Images</h3>
-                <p>Upload up to 3 images (JPG, PNG, WebP).</p>
+                <p>Upload up to 3 images (JPG, PNG, WebP, AVIF).</p>
             </div>
 
             <div class="ts-image-preview-box" style="padding: 1.5rem; text-align: center; border: 1px dashed #cbd5e1; border-radius: 12px; background-color: #f8fafc; margin-bottom: 1rem; height: auto; min-height: 205px; overflow: visible;">
@@ -134,7 +134,7 @@
                 <div id="imagePlaceholder" class="ts-image-placeholder {{ count($existingImages) > 0 ? 'ts-hidden' : '' }}">
                     <span class="ts-image-placeholder-icon">?</span>
                     <strong>No image selected</strong>
-                    <small>JPG, PNG or WEBP</small>
+                    <small>JPG, PNG, WEBP or AVIF &middot; Max 5 MB</small>
                 </div>
             </div>
 

@@ -169,7 +169,7 @@ class AboutSectionRequest extends FormRequest
 
             'avatar_images.*.image' => 'Every avatar file must be a valid image.',
 
-            'avatar_images.*.mimes' => 'Avatar images must be JPG, JPEG, PNG or WEBP files.',
+            'avatar_images.*.mimes' => 'Avatar images must be JPG, JPEG, PNG, WEBP, or AVIF files.',
 
             'avatar_images.*.max' => 'Each avatar image must not be larger than 2 MB.',
 

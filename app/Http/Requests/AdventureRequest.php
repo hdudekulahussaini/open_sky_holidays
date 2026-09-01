@@ -119,7 +119,7 @@ class AdventureRequest extends FormRequest
                 'The first selected file must be an image.',
 
             'image_one.mimes' =>
-                'The first image must be JPG, JPEG, PNG or WEBP.',
+                'The first image must be JPG, JPEG, PNG, WEBP, or AVIF.',
 
             'image_one.max' =>
                 'The first image must not exceed 5 MB.',
@@ -128,7 +128,7 @@ class AdventureRequest extends FormRequest
                 'The second selected file must be an image.',
 
             'image_two.mimes' =>
-                'The second image must be JPG, JPEG, PNG or WEBP.',
+                'The second image must be JPG, JPEG, PNG, WEBP, or AVIF.',
 
             'image_two.max' =>
                 'The second image must not exceed 5 MB.',

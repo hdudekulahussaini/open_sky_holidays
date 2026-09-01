@@ -701,7 +701,7 @@
                                         <strong>Select an image</strong>
 
                                         <small>
-                                            JPG, JPEG, PNG or WEBP
+                                            JPG, JPEG, PNG, WEBP or AVIF
                                         </small>
 
                                     </span>
@@ -945,7 +945,8 @@
         const allowedImageTypes = [
             'image/jpeg',
             'image/png',
-            'image/webp'
+            'image/webp',
+            'image/avif'
         ];
 
         function getExistingAvatarCards() {
@@ -1052,7 +1053,7 @@
                             <strong>Select an image</strong>
 
                             <small>
-                                JPG, JPEG, PNG or WEBP
+                                JPG, JPEG, PNG, WEBP or AVIF
                             </small>
 
                         </span>
@@ -1305,7 +1306,7 @@
 
                     if (!allowedImageTypes.includes(file.type)) {
                         alert(
-                            'Please select a JPG, JPEG, PNG or WEBP image.'
+                            'Please select a JPG, JPEG, PNG, WEBP, or AVIF image.'
                         );
 
                         resetAvatarPreview(uploadItem);

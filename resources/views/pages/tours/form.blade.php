@@ -723,9 +723,9 @@
                     const file = thumbnailInput.files[0];
                     if (!file) return;
 
-                    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+                    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
                     if (!allowedTypes.includes(file.type)) {
-                        alert('Please choose a JPG, JPEG, PNG or WebP image.');
+                        alert('Please choose a JPG, JPEG, PNG, WebP or AVIF image.');
                         thumbnailInput.value = '';
                         return;
                     }

@@ -70,7 +70,7 @@ class WhatWeOfferController extends Controller
                         new OA\Property(property: 'title', type: 'string', example: 'Customized Holiday Packages'),
                         new OA\Property(property: 'subtitle', type: 'string', example: 'Tailored for your dream vacation', nullable: true),
                         new OA\Property(property: 'description', type: 'string', example: 'We offer personalized itineraries for individuals, families, and groups.', nullable: true),
-                        new OA\Property(property: 'image', type: 'string', format: 'binary'),
+                        new OA\Property(property: 'image', type: 'string', format: 'binary', description: 'Image upload. Supported formats: JPG, JPEG, PNG, WEBP, AVIF. Maximum size: 5MB.'),
                         new OA\Property(property: 'status', type: 'string', example: 'active', enum: ['active', 'inactive']),
                     ]
                 )
@@ -179,7 +179,7 @@ class WhatWeOfferController extends Controller
                         new OA\Property(property: 'title', type: 'string', example: 'Updated Package Title'),
                         new OA\Property(property: 'subtitle', type: 'string', example: 'Updated subtitle', nullable: true),
                         new OA\Property(property: 'description', type: 'string', example: 'Updated description.', nullable: true),
-                        new OA\Property(property: 'image', type: 'string', format: 'binary', nullable: true),
+                        new OA\Property(property: 'image', type: 'string', format: 'binary', description: 'Image upload. Supported formats: JPG, JPEG, PNG, WEBP, AVIF. Maximum size: 5MB.', nullable: true),
                         new OA\Property(property: 'status', type: 'string', example: 'active', enum: ['active', 'inactive']),
                     ]
                 )

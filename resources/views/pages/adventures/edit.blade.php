@@ -288,6 +288,10 @@
                                     @error('image_one') is-invalid @enderror"
                             >
 
+                            <small class="text-muted">
+                                JPG, JPEG, PNG, WEBP or AVIF. Maximum 5 MB.
+                            </small>
+
                             @error('image_one')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -333,6 +337,10 @@
                                 class="form-control
                                     @error('image_two') is-invalid @enderror"
                             >
+
+                            <small class="text-muted">
+                                JPG, JPEG, PNG, WEBP or AVIF. Maximum 5 MB.
+                            </small>
 
                             @error('image_two')
                                 <div class="invalid-feedback">

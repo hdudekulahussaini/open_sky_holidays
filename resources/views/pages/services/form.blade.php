@@ -313,7 +313,7 @@
                 <div id="imagePlaceholder" class="ts-image-placeholder {{ isset($service) && $service->about_image ? 'ts-hidden' : '' }}">
                     <span class="ts-image-placeholder-icon">✦</span>
                     <strong>No image selected</strong>
-                    <small>JPG, PNG or WEBP</small>
+                    <small>JPG, PNG, WEBP or AVIF &middot; Max 5 MB</small>
                 </div>
             </div>
 
@@ -340,7 +340,7 @@
                 <div id="ctaImagePlaceholder" class="ts-image-placeholder {{ isset($service) && $service->cta_background_image ? 'ts-hidden' : '' }}">
                     <span class="ts-image-placeholder-icon">✦</span>
                     <strong>No banner image selected</strong>
-                    <small>JPG, PNG or WEBP</small>
+                    <small>JPG, PNG, WEBP or AVIF &middot; Max 5 MB</small>
                 </div>
             </div>
 

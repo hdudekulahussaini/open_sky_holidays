@@ -111,7 +111,7 @@ class AboutWhyChooseUsRequest extends FormRequest
             'description.max' => 'The description must not exceed 3000 characters.',
             'image.required' => 'Please select the section image.',
             'image.image' => 'The selected file must be a valid image.',
-            'image.mimes' => 'The image must be JPG, JPEG, PNG or WEBP.',
+            'image.mimes' => 'The image must be JPG, JPEG, PNG, WEBP, or AVIF.',
             'features_title.required' => 'Please add at least one feature.',
             'features_title.min' => 'Please add at least one feature.',
             'features_title.max' => 'You can add a maximum of 10 features.',

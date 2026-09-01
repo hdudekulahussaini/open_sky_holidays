@@ -133,7 +133,7 @@ class PageBannerRequest extends FormRequest
 
             'image.image' => 'The selected file must be an image.',
 
-            'image.mimes' => 'The image must be JPG, JPEG, PNG or WEBP.',
+            'image.mimes' => 'The image must be JPG, JPEG, PNG, WEBP, or AVIF.',
 
             'image.max' => 'The image size must not exceed 5 MB.',
 

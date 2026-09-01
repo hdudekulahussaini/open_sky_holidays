@@ -88,6 +88,9 @@ class StoreTourFeatureRequest extends FormRequest
             'title.required' => 'The title field is required.',
 
             'image.required' => 'An image is required for a place covered.',
+            'image.image' => 'The file must be an image.',
+            'image.mimes' => 'The image must be JPG, JPEG, PNG, WEBP, or AVIF.',
+            'image.max' => 'The image size must not exceed 5 MB.',
         ];
     }
 }

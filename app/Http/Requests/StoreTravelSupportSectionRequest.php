@@ -69,8 +69,8 @@ class StoreTravelSupportSectionRequest extends FormRequest
             'features.*.string' => 'Each feature must be valid text.',
 
             'image.image' => 'The selected file must be an image.',
-            'image.mimes' => 'The image must be JPG, JPEG, PNG, or WEBP.',
-            'image.max' => 'The image size must not exceed 2 MB.',
+            'image.mimes' => 'The image must be JPG, JPEG, PNG, WEBP, or AVIF.',
+            'image.max' => 'The image size must not exceed 5 MB.',
         ];
     }
 }

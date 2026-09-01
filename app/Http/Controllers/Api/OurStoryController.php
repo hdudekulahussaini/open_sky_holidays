@@ -78,6 +78,7 @@ class OurStoryController extends Controller
                         new OA\Property(
                             property: 'images[]',
                             type: 'array',
+                            description: 'Story images to upload (Max 3). Supported formats: JPG, JPEG, PNG, WEBP, AVIF. Maximum size: 5MB per file.',
                             items: new OA\Items(type: 'string', format: 'binary')
                         ),
                         new OA\Property(
@@ -171,6 +172,7 @@ class OurStoryController extends Controller
                         new OA\Property(
                             property: 'images[]',
                             type: 'array',
+                            description: 'New story images to upload. Supported formats: JPG, JPEG, PNG, WEBP, AVIF. Maximum size: 5MB per file.',
                             items: new OA\Items(type: 'string', format: 'binary')
                         ),
                         new OA\Property(
