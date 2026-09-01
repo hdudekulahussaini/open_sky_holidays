@@ -47,9 +47,10 @@ class StoreOurStoryRequest extends FormRequest
             ],
 
             'images.*' => [
-                'required',
-                'image',
+                'nullable',
+                'file',
                 'mimes:jpg,jpeg,png,webp,avif',
+                'max:5120',
             ],
 
             'features' => [

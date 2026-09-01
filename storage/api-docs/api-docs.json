@@ -48,71 +48,6 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "tags": [
-                    "About Core Values"
-                ],
-                "summary": "Create a new about core value",
-                "description": "Stores a new about section core value record.",
-                "operationId": "2294ceb71875ed0955049547f96ceb7d",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "title",
-                                    "description"
-                                ],
-                                "properties": {
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Integrity"
-                                    },
-                                    "icon": {
-                                        "type": "string",
-                                        "example": "fa-solid fa-handshake",
-                                        "nullable": true
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "We operate with complete honesty — no hidden fees, no misleading itineraries, just clear and ethical service."
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Core value created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Core value created successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/AboutOurCoreValue"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error"
-                    }
-                }
             }
         },
         "/api/about-our-core-values/{aboutOurCoreValue}": {
@@ -161,125 +96,6 @@
                         "description": "Core value not found"
                     }
                 }
-            },
-            "put": {
-                "tags": [
-                    "About Core Values"
-                ],
-                "summary": "Update an about core value",
-                "description": "Updates an existing about core value by ID.",
-                "operationId": "370e02f33ddc1d70a7a23c98deeba1fa",
-                "parameters": [
-                    {
-                        "name": "aboutOurCoreValue",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Excellence"
-                                    },
-                                    "icon": {
-                                        "type": "string",
-                                        "example": "fa-solid fa-star",
-                                        "nullable": true
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "From the first query to post-trip support, we hold ourselves to the highest standards in everything we do."
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Core value updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Core value updated successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/AboutOurCoreValue"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Core value not found"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "About Core Values"
-                ],
-                "summary": "Delete an about core value",
-                "description": "Deletes an about core value record by ID.",
-                "operationId": "906e5e1c1d62ebefe3ef24f05b6e70b9",
-                "parameters": [
-                    {
-                        "name": "aboutOurCoreValue",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Core value deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Core value deleted successfully."
-                                        },
-                                        "data": {
-                                            "type": "string",
-                                            "example": null,
-                                            "nullable": true
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Core value not found"
-                    }
-                }
             }
         },
         "/api/about-sections": {
@@ -308,6 +124,54 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/api/about-sections/{aboutSection}": {
+            "get": {
+                "tags": [
+                    "About Section"
+                ],
+                "summary": "Get single about section details",
+                "description": "Retrieves single about section record by ID.",
+                "operationId": "89d0c893dcba089d38bc08a0d107baf6",
+                "parameters": [
+                    {
+                        "name": "aboutSection",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "About section fetched successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "About section fetched successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/AboutSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "About section not found"
                     }
                 }
             }
@@ -376,110 +240,6 @@
                                 }
                             }
                         }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "About Why Choose Us"
-                ],
-                "summary": "Create About Why Choose Us section",
-                "description": "Creates a new About Why Choose Us section with image upload.",
-                "operationId": "8d96d5d0f24333d96ce57acd53c27269",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "required": [
-                                    "title",
-                                    "features_title"
-                                ],
-                                "properties": {
-                                    "subtitle": {
-                                        "type": "string",
-                                        "example": "Why Choose Us"
-                                    },
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Setting Standard for Trust and Comfort."
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "We believe that traveling shouldn't be stressful."
-                                    },
-                                    "image": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    },
-                                    "features_icon[]": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "example": "fa-solid fa-headset"
-                                        }
-                                    },
-                                    "features_title[]": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "example": "24/7 Expert Support"
-                                        }
-                                    },
-                                    "features_description[]": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "example": "Our travel assistants are always available."
-                                        }
-                                    },
-                                    "badge_title": {
-                                        "type": "string",
-                                        "example": "Trusted by 15,000+"
-                                    },
-                                    "badge_subtitle": {
-                                        "type": "string",
-                                        "example": "Happy travelers worldwide"
-                                    },
-                                    "status": {
-                                        "type": "string",
-                                        "example": "active"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "About Why Choose Us created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "About Why Choose Us created successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/AboutWhyChooseUs"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error"
-                    },
-                    "500": {
-                        "description": "Server Error"
                     }
                 }
             }
@@ -568,165 +328,6 @@
                         "description": "Section not found"
                     }
                 }
-            },
-            "put": {
-                "tags": [
-                    "About Why Choose Us"
-                ],
-                "summary": "Update About Why Choose Us section",
-                "description": "Updates an existing About Why Choose Us section record by ID.",
-                "operationId": "eb0ae5bb328ba5781272b6bb844f8f39",
-                "parameters": [
-                    {
-                        "name": "aboutWhyChooseUs",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "properties": {
-                                    "subtitle": {
-                                        "type": "string",
-                                        "example": "Why Choose Us"
-                                    },
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Setting Standard for Trust and Comfort."
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "We believe that traveling shouldn't be stressful."
-                                    },
-                                    "image": {
-                                        "type": "string",
-                                        "format": "binary",
-                                        "nullable": true
-                                    },
-                                    "features_icon[]": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "example": "fa-solid fa-headset"
-                                        }
-                                    },
-                                    "features_title[]": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "example": "24/7 Expert Support"
-                                        }
-                                    },
-                                    "features_description[]": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "example": "Our travel assistants are always available."
-                                        }
-                                    },
-                                    "badge_title": {
-                                        "type": "string",
-                                        "example": "Trusted by 15,000+"
-                                    },
-                                    "badge_subtitle": {
-                                        "type": "string",
-                                        "example": "Happy travelers worldwide"
-                                    },
-                                    "status": {
-                                        "type": "string",
-                                        "example": "active"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "About Why Choose Us updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "About Why Choose Us updated successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/AboutWhyChooseUs"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Section not found"
-                    },
-                    "500": {
-                        "description": "Server Error"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "About Why Choose Us"
-                ],
-                "summary": "Delete About Why Choose Us section",
-                "description": "Deletes an About Why Choose Us section record by ID.",
-                "operationId": "b72be036b159e48540902e87fae63c10",
-                "parameters": [
-                    {
-                        "name": "aboutWhyChooseUs",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "About Why Choose Us deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "About Why Choose Us deleted successfully."
-                                        },
-                                        "data": {
-                                            "type": "string",
-                                            "example": null,
-                                            "nullable": true
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Section not found"
-                    }
-                }
             }
         },
         "/api/adventure-categories": {
@@ -740,6 +341,34 @@
                 "responses": {
                     "200": {
                         "description": "Adventure categories retrieved successfully"
+                    }
+                }
+            }
+        },
+        "/api/adventure-categories/{adventureCategory}": {
+            "get": {
+                "tags": [
+                    "Adventures"
+                ],
+                "summary": "Get single adventure category",
+                "description": "Retrieves single adventure category by ID.",
+                "operationId": "59418fb3e4319f35f1eae93ce6161d59",
+                "parameters": [
+                    {
+                        "name": "adventureCategory",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Adventure category retrieved successfully"
+                    },
+                    "404": {
+                        "description": "Category not found"
                     }
                 }
             }
@@ -778,6 +407,54 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/api/adventures/{adventure}": {
+            "get": {
+                "tags": [
+                    "Adventures"
+                ],
+                "summary": "Get single adventure activity details",
+                "description": "Retrieves single adventure activity details by ID.",
+                "operationId": "433187a2f4fd521a02ba6c34c37d1bd2",
+                "parameters": [
+                    {
+                        "name": "adventure",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Adventure retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Adventure retrieved successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Adventure"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Adventure not found"
                     }
                 }
             }
@@ -1031,72 +708,19 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "tags": [
-                    "Contact Section"
-                ],
-                "summary": "Create a new contact section",
-                "description": "Stores a new contact section record.",
-                "operationId": "774f040a633cf6e47d14a15c443d1a5b",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ContactSectionInput"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Contact section created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Contact section created successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/ContactSection"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ValidationErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                }
             }
         },
-        "/api/contact-sections/{id}": {
+        "/api/contact-sections/{contactSection}": {
             "get": {
                 "tags": [
                     "Contact Section"
                 ],
                 "summary": "Get a specific contact section",
                 "description": "Retrieves a single contact section by its ID.",
-                "operationId": "df0b9d8630eb061c9b001add09716428",
+                "operationId": "1b6b4e8ffe71cc2c27b9aa4dc0177470",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "contactSection",
                         "in": "path",
                         "description": "ID of the contact section",
                         "required": true,
@@ -1150,111 +774,6 @@
                         }
                     }
                 }
-            },
-            "put": {
-                "tags": [
-                    "Contact Section"
-                ],
-                "summary": "Update an existing contact section",
-                "description": "Updates a contact section by its ID.",
-                "operationId": "85035c15779c62ffde68cca03fd4b649",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the contact section to update",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ContactSectionInput"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Contact section updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Contact section updated successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/ContactSection"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ValidationErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Contact Section"
-                ],
-                "summary": "Delete a contact section",
-                "description": "Deletes a contact section by its ID.",
-                "operationId": "6161b496133bf0b0e4a3d532a6a35acc",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the contact section to delete",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Contact section deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Contact section deleted successfully."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
             }
         },
         "/api/core-values": {
@@ -1278,79 +797,6 @@
                                 }
                             }
                         }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Core Values"
-                ],
-                "summary": "Store a new core value",
-                "description": "Creates a new core value record.",
-                "operationId": "43eb4a14104046196e3c4bceec47b306",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "title",
-                                    "description"
-                                ],
-                                "properties": {
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Integrity & Trust"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "Transparent pricing and honest travel guidance."
-                                    },
-                                    "icon": {
-                                        "type": "string",
-                                        "example": "fas fa-shield-alt",
-                                        "nullable": true
-                                    },
-                                    "sort_order": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "status": {
-                                        "type": "string",
-                                        "example": "active"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Core value created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "status": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Core value created successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/CoreValue"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error"
                     }
                 }
             }
@@ -1401,128 +847,6 @@
                         "description": "Core value not found"
                     }
                 }
-            },
-            "put": {
-                "tags": [
-                    "Core Values"
-                ],
-                "summary": "Update core value",
-                "description": "Updates an existing core value by ID.",
-                "operationId": "bbefa2062c74f6951c08546eb35b93e6",
-                "parameters": [
-                    {
-                        "name": "coreValue",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Updated Core Value"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "Updated description."
-                                    },
-                                    "icon": {
-                                        "type": "string",
-                                        "example": "fas fa-star",
-                                        "nullable": true
-                                    },
-                                    "sort_order": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "status": {
-                                        "type": "string",
-                                        "example": "active"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Core value updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "status": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Core value updated successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/CoreValue"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Core value not found"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Core Values"
-                ],
-                "summary": "Delete core value",
-                "description": "Deletes a core value record by ID.",
-                "operationId": "01613e5782d797696cf3eca2df3bf9c0",
-                "parameters": [
-                    {
-                        "name": "coreValue",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Core value deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "status": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Core value deleted successfully."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Core value not found"
-                    }
-                }
             }
         },
         "/api/counters": {
@@ -1559,75 +883,6 @@
                                 }
                             }
                         }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Counters"
-                ],
-                "summary": "Store a new counter",
-                "description": "Creates a new statistic counter record.",
-                "operationId": "c348817cf0125c9e95028f974b0a62b2",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "value",
-                                    "name"
-                                ],
-                                "properties": {
-                                    "value": {
-                                        "type": "string",
-                                        "example": "10K+"
-                                    },
-                                    "name": {
-                                        "type": "string",
-                                        "example": "Happy Travelers"
-                                    },
-                                    "icon": {
-                                        "type": "string",
-                                        "example": "fa-solid fa-users",
-                                        "nullable": true
-                                    },
-                                    "status": {
-                                        "type": "boolean",
-                                        "example": true
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Counter created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "status": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Counter created successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/Counter"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error"
                     }
                 }
             }
@@ -1671,13 +926,13 @@
             }
         },
         "/api/counters/{counter}": {
-            "put": {
+            "get": {
                 "tags": [
                     "Counters"
                 ],
-                "summary": "Update counter",
-                "description": "Updates an existing counter by ID.",
-                "operationId": "37c13d953df1b990bca38cdafd17ad1c",
+                "summary": "Get single statistic counter details",
+                "description": "Retrieves single counter details by ID.",
+                "operationId": "f393bc04936285b55ba2b81767117aae",
                 "parameters": [
                     {
                         "name": "counter",
@@ -1688,38 +943,9 @@
                         }
                     }
                 ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "value": {
-                                        "type": "string",
-                                        "example": "15K+"
-                                    },
-                                    "name": {
-                                        "type": "string",
-                                        "example": "Happy Customers"
-                                    },
-                                    "icon": {
-                                        "type": "string",
-                                        "example": "fa-solid fa-face-smile",
-                                        "nullable": true
-                                    },
-                                    "status": {
-                                        "type": "boolean",
-                                        "example": true
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "200": {
-                        "description": "Counter updated successfully",
+                        "description": "Counter retrieved successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1730,53 +956,10 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Counter updated successfully."
+                                            "example": "Counter retrieved successfully."
                                         },
                                         "data": {
                                             "$ref": "#/components/schemas/Counter"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Counter not found"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Counters"
-                ],
-                "summary": "Delete counter",
-                "description": "Deletes a counter record by ID.",
-                "operationId": "191fdc008c4ec139190c5850a3b1dda6",
-                "parameters": [
-                    {
-                        "name": "counter",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Counter deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "status": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Counter deleted successfully."
                                         }
                                     },
                                     "type": "object"
@@ -1883,6 +1066,54 @@
                 }
             }
         },
+        "/api/heroes/{hero}": {
+            "get": {
+                "tags": [
+                    "Hero Section"
+                ],
+                "summary": "Get single hero slide details",
+                "description": "Retrieves single hero slide details by ID.",
+                "operationId": "76559dbbb2604693010df5ee74578b99",
+                "parameters": [
+                    {
+                        "name": "hero",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Hero slide retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Hero slide retrieved successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Hero"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Hero slide not found"
+                    }
+                }
+            }
+        },
         "/api/offer-banners": {
             "get": {
                 "tags": [
@@ -1917,6 +1148,54 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/api/offer-banners/{offerBanner}": {
+            "get": {
+                "tags": [
+                    "Offer Banners"
+                ],
+                "summary": "Get single offer banner details",
+                "description": "Retrieves single offer banner details by ID.",
+                "operationId": "fcf55efb63758ce41236157550750bff",
+                "parameters": [
+                    {
+                        "name": "offerBanner",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Offer banner retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Offer banner retrieved successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/OfferBanner"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Offer banner not found"
                     }
                 }
             }
@@ -1981,6 +1260,46 @@
                 }
             }
         },
+        "/api/our-processes/{ourProcess}": {
+            "get": {
+                "tags": [
+                    "About Section"
+                ],
+                "summary": "Get single process item details",
+                "description": "Retrieves single process item details by ID.",
+                "operationId": "c0251205cbc60150cc3bb308cd7356a1",
+                "parameters": [
+                    {
+                        "name": "ourProcess",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Process item retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/OurProcess"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Process item not found"
+                    }
+                }
+            }
+        },
         "/api/our-stories": {
             "get": {
                 "tags": [
@@ -2030,97 +1349,16 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "tags": [
-                    "Our Story"
-                ],
-                "summary": "Store a new company story",
-                "description": "Creates a new company story with image uploads (max 3 images).",
-                "operationId": "68ee4b6bb951e8277c2e44f60b1d70cc",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "required": [
-                                    "heading",
-                                    "description"
-                                ],
-                                "properties": {
-                                    "heading": {
-                                        "type": "string",
-                                        "example": "Our Journey Since 2015"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "Started with a vision to make international travel accessible."
-                                    },
-                                    "images[]": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "format": "binary"
-                                        }
-                                    },
-                                    "features[]": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "example": "Certified Travel Agents"
-                                        }
-                                    },
-                                    "status": {
-                                        "type": "boolean",
-                                        "example": true
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Our Story created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Our Story created successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/OurStory"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error"
-                    },
-                    "500": {
-                        "description": "Unable to create Our Story"
-                    }
-                }
             }
         },
         "/api/our-stories/{ourStory}": {
-            "put": {
+            "get": {
                 "tags": [
                     "Our Story"
                 ],
-                "summary": "Update company story",
-                "description": "Updates an existing company story record by ID.",
-                "operationId": "7e535e78de2ed2865787731f1c683b5b",
+                "summary": "Get single story details",
+                "description": "Retrieves details for a single company story by ID.",
+                "operationId": "fef3a9cf064274ac53d5d66a3beb816c",
                 "parameters": [
                     {
                         "name": "ourStory",
@@ -2131,54 +1369,9 @@
                         }
                     }
                 ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "properties": {
-                                    "heading": {
-                                        "type": "string",
-                                        "example": "Updated Story Heading"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "Updated description content."
-                                    },
-                                    "images[]": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "format": "binary"
-                                        }
-                                    },
-                                    "removed_images[]": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "example": "our-stories/old_image.jpg"
-                                        }
-                                    },
-                                    "features[]": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "example": "Feature Name"
-                                        }
-                                    },
-                                    "status": {
-                                        "type": "boolean",
-                                        "example": true
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "200": {
-                        "description": "Our Story updated successfully",
+                        "description": "Story details retrieved successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2186,10 +1379,6 @@
                                         "success": {
                                             "type": "boolean",
                                             "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Our Story updated successfully."
                                         },
                                         "data": {
                                             "$ref": "#/components/schemas/OurStory"
@@ -2202,55 +1391,6 @@
                     },
                     "404": {
                         "description": "Story not found"
-                    },
-                    "500": {
-                        "description": "Unable to update Our Story"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Our Story"
-                ],
-                "summary": "Delete company story",
-                "description": "Deletes a company story record by ID.",
-                "operationId": "00d1319d7b6ed2e04bcf947fd5c62d45",
-                "parameters": [
-                    {
-                        "name": "ourStory",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Our Story deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Our Story deleted successfully."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Story not found"
-                    },
-                    "500": {
-                        "description": "Unable to delete Our Story"
                     }
                 }
             }
@@ -2289,6 +1429,54 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/api/page-banners/{pageBanner}": {
+            "get": {
+                "tags": [
+                    "Page Banners"
+                ],
+                "summary": "Get single page banner details",
+                "description": "Retrieves single page banner details by ID.",
+                "operationId": "b691c6e2d3c8dca242a36f6352c31b5c",
+                "parameters": [
+                    {
+                        "name": "pageBanner",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Page banner retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Page banner retrieved successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/PageBanner"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Page banner not found"
                     }
                 }
             }
@@ -2608,59 +1796,6 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "tags": [
-                    "Top Header"
-                ],
-                "summary": "Create a new top header bar",
-                "description": "Stores a new top header bar record.",
-                "operationId": "53dd40aac38750348c36915e15f842ee",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/TopHeaderInput"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Top header bar created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Top header bar created successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/TopHeader"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ValidationErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                }
             }
         },
         "/api/top-headers/{id}": {
@@ -2719,111 +1854,6 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Top header bar not found."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Top Header"
-                ],
-                "summary": "Update an existing top header bar",
-                "description": "Updates a top header bar by its ID.",
-                "operationId": "ab374bb2ea2a1d257d5ce49d23df2f17",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the top header bar to update",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/TopHeaderInput"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Top header bar updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Top header bar updated successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/TopHeader"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ValidationErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Top Header"
-                ],
-                "summary": "Delete a top header bar",
-                "description": "Deletes a top header bar by its ID.",
-                "operationId": "f61ae6c1b07fc36a681d1843debbe88b",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the top header bar to delete",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Top header bar deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Top header bar deleted successfully."
                                         }
                                     },
                                     "type": "object"
@@ -2941,98 +1971,6 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "tags": [
-                    "Tour Details"
-                ],
-                "summary": "Create tour details",
-                "description": "Creates detailed itinerary, inclusions, exclusions, and gallery images for a tour.",
-                "operationId": "c0e5314c27f63987204998748755cb2d",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "required": [
-                                    "tour_id",
-                                    "title"
-                                ],
-                                "properties": {
-                                    "tour_id": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Complete Dubai Desert Safari Itinerary"
-                                    },
-                                    "overview": {
-                                        "type": "string",
-                                        "example": "Detailed overview of the 5-day tour package."
-                                    },
-                                    "itinerary": {
-                                        "type": "string",
-                                        "example": "{\"Day 1\": \"Arrival and Dhow Cruise\"}"
-                                    },
-                                    "inclusions[]": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "example": "Hotel Stay"
-                                        }
-                                    },
-                                    "exclusions[]": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "example": "Personal Expenses"
-                                        }
-                                    },
-                                    "gallery[]": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "format": "binary"
-                                        }
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Tour details created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Tour details created successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/TourDetail"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error"
-                    },
-                    "500": {
-                        "description": "Unable to create tour details"
-                    }
-                }
             }
         },
         "/api/tour-details/{tourDetail}": {
@@ -3068,139 +2006,6 @@
                         "description": "Tour detail not found"
                     }
                 }
-            },
-            "put": {
-                "tags": [
-                    "Tour Details"
-                ],
-                "summary": "Update tour details",
-                "description": "Updates an existing tour detail record by ID.",
-                "operationId": "652a2460f49fce56aa4f65f4aec3b975",
-                "parameters": [
-                    {
-                        "name": "tourDetail",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "properties": {
-                                    "tour_id": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Updated Tour Details Title"
-                                    },
-                                    "overview": {
-                                        "type": "string",
-                                        "example": "Updated Overview"
-                                    },
-                                    "gallery[]": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "format": "binary"
-                                        }
-                                    },
-                                    "existing_gallery[]": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "example": "tour-details/gallery/img1.jpg"
-                                        }
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Tour details updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Tour details updated successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/TourDetail"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Tour detail not found"
-                    },
-                    "500": {
-                        "description": "Unable to update tour details"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Tour Details"
-                ],
-                "summary": "Delete tour details",
-                "description": "Deletes a tour detail record and its gallery images by ID.",
-                "operationId": "5760cfc94ad7e7eccbacde91f2797c3c",
-                "parameters": [
-                    {
-                        "name": "tourDetail",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Tour details deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Tour details deleted successfully."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Tour detail not found"
-                    },
-                    "500": {
-                        "description": "Unable to delete tour details"
-                    }
-                }
             }
         },
         "/api/tour-features": {
@@ -3231,98 +2036,16 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "tags": [
-                    "Tour Features"
-                ],
-                "summary": "Store a new tour feature",
-                "description": "Creates a new feature item (inclusion or covered place) for a tour package.",
-                "operationId": "7322514676aabe538e9f6df6eedd6b2b",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "required": [
-                                    "tour_id",
-                                    "title",
-                                    "type"
-                                ],
-                                "properties": {
-                                    "tour_id": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Deluxe Hotel Stay"
-                                    },
-                                    "type": {
-                                        "type": "string",
-                                        "example": "package_inclusion"
-                                    },
-                                    "icon": {
-                                        "type": "string",
-                                        "example": "fas fa-building",
-                                        "nullable": true
-                                    },
-                                    "image": {
-                                        "type": "string",
-                                        "format": "binary",
-                                        "nullable": true
-                                    },
-                                    "sort_order": {
-                                        "type": "integer",
-                                        "example": 1
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Tour feature created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Tour feature created successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/TourFeature"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error"
-                    },
-                    "500": {
-                        "description": "Unable to create tour feature"
-                    }
-                }
             }
         },
         "/api/tour-features/{tourFeature}": {
-            "put": {
+            "get": {
                 "tags": [
                     "Tour Features"
                 ],
-                "summary": "Update tour feature",
-                "description": "Updates an existing tour feature record by ID.",
-                "operationId": "185812f8288e804465744ca3a6c133e6",
+                "summary": "Get single tour feature details",
+                "description": "Retrieves single tour feature details by ID.",
+                "operationId": "117ee043a4849a53d04e249ef2016ede",
                 "parameters": [
                     {
                         "name": "tourFeature",
@@ -3333,51 +2056,9 @@
                         }
                     }
                 ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "properties": {
-                                    "tour_id": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Updated Feature Title"
-                                    },
-                                    "type": {
-                                        "type": "string",
-                                        "example": "package_inclusion"
-                                    },
-                                    "icon": {
-                                        "type": "string",
-                                        "example": "fas fa-star",
-                                        "nullable": true
-                                    },
-                                    "image": {
-                                        "type": "string",
-                                        "format": "binary",
-                                        "nullable": true
-                                    },
-                                    "remove_image": {
-                                        "type": "boolean",
-                                        "example": false
-                                    },
-                                    "sort_order": {
-                                        "type": "integer",
-                                        "example": 1
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "200": {
-                        "description": "Tour feature updated successfully",
+                        "description": "Tour feature retrieved successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3388,7 +2069,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Tour feature updated successfully."
+                                            "example": "Tour feature retrieved successfully."
                                         },
                                         "data": {
                                             "$ref": "#/components/schemas/TourFeature"
@@ -3401,55 +2082,6 @@
                     },
                     "404": {
                         "description": "Tour feature not found"
-                    },
-                    "500": {
-                        "description": "Unable to update tour feature"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Tour Features"
-                ],
-                "summary": "Delete tour feature",
-                "description": "Deletes a tour feature record by ID.",
-                "operationId": "a548c48bc5a54181689436ead65b8e1a",
-                "parameters": [
-                    {
-                        "name": "tourFeature",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Tour feature deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Tour feature deleted successfully."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Tour feature not found"
-                    },
-                    "500": {
-                        "description": "Unable to delete tour feature"
                     }
                 }
             }
@@ -3539,6 +2171,41 @@
                 }
             }
         },
+        "/api/tour-types/{tourType}": {
+            "get": {
+                "tags": [
+                    "Tour Types"
+                ],
+                "summary": "Get single tour type details",
+                "description": "Retrieves single tour category/type record by ID.",
+                "operationId": "e4368998cb116478e318b2754126f84d",
+                "parameters": [
+                    {
+                        "name": "tourType",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tour type retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TourType"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tour type not found"
+                    }
+                }
+            }
+        },
         "/api/travel-support": {
             "get": {
                 "tags": [
@@ -3573,6 +2240,54 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/api/travel-support/{travelSupport}": {
+            "get": {
+                "tags": [
+                    "Travel Support"
+                ],
+                "summary": "Get single travel support section details",
+                "description": "Retrieves details for a single travel support section by ID.",
+                "operationId": "81b5b72fe773d276b706fdb363d69b6e",
+                "parameters": [
+                    {
+                        "name": "travelSupport",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Travel support section retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Travel support section retrieved successfully."
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/TravelSupportSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Travel support section not found"
                     }
                 }
             }
@@ -3651,85 +2366,6 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "tags": [
-                    "What We Offer"
-                ],
-                "summary": "Create a new what we offer item",
-                "description": "Stores a new what we offer item record.",
-                "operationId": "fcb1cad217993b3c5d2947ac4b504cdd",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "required": [
-                                    "title",
-                                    "image",
-                                    "status"
-                                ],
-                                "properties": {
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Customized Holiday Packages"
-                                    },
-                                    "subtitle": {
-                                        "type": "string",
-                                        "example": "Tailored for your dream vacation",
-                                        "nullable": true
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "We offer personalized itineraries for individuals, families, and groups.",
-                                        "nullable": true
-                                    },
-                                    "image": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    },
-                                    "status": {
-                                        "type": "string",
-                                        "example": "active",
-                                        "enum": [
-                                            "active",
-                                            "inactive"
-                                        ]
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "What We Offer item created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "What We Offer item created successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/WhatWeOffer"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error"
-                    }
-                }
             }
         },
         "/api/what-we-offers/{whatWeOffer}": {
@@ -3767,146 +2403,6 @@
                                         },
                                         "data": {
                                             "$ref": "#/components/schemas/WhatWeOffer"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "What We Offer item not found"
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "What We Offer"
-                ],
-                "summary": "Update a what we offer item",
-                "description": "Updates an existing what we offer item by ID.",
-                "operationId": "00e806251bcc82de41e9102af5991295",
-                "parameters": [
-                    {
-                        "name": "whatWeOffer",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "required": [
-                                    "title",
-                                    "status"
-                                ],
-                                "properties": {
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Updated Package Title"
-                                    },
-                                    "subtitle": {
-                                        "type": "string",
-                                        "example": "Updated subtitle",
-                                        "nullable": true
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "Updated description.",
-                                        "nullable": true
-                                    },
-                                    "image": {
-                                        "type": "string",
-                                        "format": "binary",
-                                        "nullable": true
-                                    },
-                                    "status": {
-                                        "type": "string",
-                                        "example": "active",
-                                        "enum": [
-                                            "active",
-                                            "inactive"
-                                        ]
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "What We Offer item updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "What We Offer item updated successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/WhatWeOffer"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "What We Offer item not found"
-                    },
-                    "422": {
-                        "description": "Validation Error"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "What We Offer"
-                ],
-                "summary": "Delete a what we offer item",
-                "description": "Deletes a what we offer item record by ID.",
-                "operationId": "dd003db49eda01ac5b2f93d9f9242133",
-                "parameters": [
-                    {
-                        "name": "whatWeOffer",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "What We Offer item deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "What We Offer item deleted successfully."
-                                        },
-                                        "data": {
-                                            "type": "string",
-                                            "example": null,
-                                            "nullable": true
                                         }
                                     },
                                     "type": "object"
@@ -3978,97 +2474,19 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "tags": [
-                    "Why Choose Us"
-                ],
-                "summary": "Create a new Why Choose Us section",
-                "description": "Stores a new Why Choose Us record including title, description, and FontAwesome icon.",
-                "operationId": "99699daabd3aef6dcde93a0279002ec4",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "title",
-                                    "description"
-                                ],
-                                "properties": {
-                                    "title": {
-                                        "description": "Section benefit title",
-                                        "type": "string",
-                                        "example": "Worldwide Coverage"
-                                    },
-                                    "description": {
-                                        "description": "Section description text",
-                                        "type": "string",
-                                        "example": "Explore domestic and international destinations with complete planning and trusted travel support."
-                                    },
-                                    "icon": {
-                                        "description": "FontAwesome 6 icon class (e.g. fa-solid fa-earth-americas, fa-solid fa-bolt-lightning, fa-solid fa-headset)",
-                                        "type": "string",
-                                        "example": "fa-solid fa-earth-americas",
-                                        "nullable": true
-                                    },
-                                    "sort_order": {
-                                        "description": "Display sort order priority",
-                                        "type": "integer",
-                                        "example": 0
-                                    },
-                                    "status": {
-                                        "description": "1 for Active, 0 for Inactive",
-                                        "type": "integer",
-                                        "example": 1
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Why choose section created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Why choose section created successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/WhyChooseSection"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation error"
-                    }
-                }
             }
         },
-        "/api/why-choose-sections/{id}": {
+        "/api/why-choose-sections/{whyChooseSection}": {
             "get": {
                 "tags": [
                     "Why Choose Us"
                 ],
-                "summary": "Get single Why Choose Us section",
-                "description": "Retrieves a single Why Choose Us record by ID.",
-                "operationId": "800f06bfcf88e49e054b5eff1cda7954",
+                "summary": "Get single Why Choose Us section details",
+                "description": "Retrieves single Why Choose Us card details by ID.",
+                "operationId": "7877309fabf7030512bb440f76324f93",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "whyChooseSection",
                         "in": "path",
                         "description": "Why Choose Section ID",
                         "required": true,
@@ -4091,144 +2509,6 @@
                                         },
                                         "data": {
                                             "$ref": "#/components/schemas/WhyChooseSection"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Record not found"
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Why Choose Us"
-                ],
-                "summary": "Update Why Choose Us section",
-                "description": "Updates an existing Why Choose Us record with new title, description, or icon.",
-                "operationId": "e9b67048e0087d454d2a04a30475f891",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Why Choose Section ID",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "title",
-                                    "description"
-                                ],
-                                "properties": {
-                                    "title": {
-                                        "description": "Section benefit title",
-                                        "type": "string",
-                                        "example": "Fast Booking"
-                                    },
-                                    "description": {
-                                        "description": "Section description text",
-                                        "type": "string",
-                                        "example": "Seamless and quick reservations with instant confirmation."
-                                    },
-                                    "icon": {
-                                        "description": "FontAwesome 6 icon class",
-                                        "type": "string",
-                                        "example": "fa-solid fa-calendar-check",
-                                        "nullable": true
-                                    },
-                                    "sort_order": {
-                                        "description": "Display sort order priority",
-                                        "type": "integer",
-                                        "example": 2
-                                    },
-                                    "status": {
-                                        "description": "1 for Active, 0 for Inactive",
-                                        "type": "integer",
-                                        "example": 1
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Why choose section updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Why choose section updated successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/WhyChooseSection"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation error"
-                    },
-                    "404": {
-                        "description": "Record not found"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Why Choose Us"
-                ],
-                "summary": "Delete Why Choose Us section",
-                "description": "Permanently removes a Why Choose Us section record by ID.",
-                "operationId": "3bdeb6f663000df8d04c45211f4d16ee",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Why Choose Section ID",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Why choose section deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Why choose section deleted successfully."
                                         }
                                     },
                                     "type": "object"
@@ -4438,10 +2718,12 @@
                         "example": "4 Nights / 5 Days"
                     },
                     "thumbnail": {
+                        "description": "Thumbnail image path (JPG, JPEG, PNG, WEBP, AVIF)",
                         "type": "string",
                         "example": "tours/kerala.jpg"
                     },
                     "thumbnail_url": {
+                        "description": "Full URL to tour thumbnail image",
                         "type": "string",
                         "example": "http://127.0.0.1:8000/storage/tours/kerala.jpg"
                     },
@@ -4542,6 +2824,7 @@
                         "nullable": true
                     },
                     "about_image_url": {
+                        "description": "About section image URL (JPG, JPEG, PNG, WEBP, AVIF)",
                         "type": "string",
                         "example": "http://127.0.0.1:8000/storage/services/about/visa.jpg",
                         "nullable": true
@@ -4615,6 +2898,7 @@
                         "nullable": true
                     },
                     "cta_background_image_url": {
+                        "description": "CTA banner background image URL (JPG, JPEG, PNG, WEBP, AVIF)",
                         "type": "string",
                         "example": "http://127.0.0.1:8000/storage/services/cta/banner.jpg",
                         "nullable": true
@@ -4693,6 +2977,7 @@
                                 "example": "Open Sky Team"
                             },
                             "image": {
+                                "description": "Author avatar image URL (JPG, JPEG, PNG, WEBP, AVIF)",
                                 "type": "string",
                                 "example": "http://127.0.0.1:8000/storage/authors/team.jpg",
                                 "nullable": true
@@ -4758,6 +3043,7 @@
                         "example": "1. Book Your Flights in Advance..."
                     },
                     "featured_image": {
+                        "description": "Featured blog image URL (JPG, JPEG, PNG, WEBP, AVIF)",
                         "type": "string",
                         "example": "http://127.0.0.1:8000/storage/blogs/featured-images/taj.jpg",
                         "nullable": true
@@ -4797,11 +3083,13 @@
                         "example": "Rahul Sharma"
                     },
                     "customer_image": {
+                        "description": "Customer image path (JPG, JPEG, PNG, WEBP, AVIF)",
                         "type": "string",
                         "example": "testimonials/rahul.jpg",
                         "nullable": true
                     },
                     "customer_image_url": {
+                        "description": "Full URL to customer image",
                         "type": "string",
                         "example": "http://127.0.0.1:8000/storage/testimonials/rahul.jpg",
                         "nullable": true
@@ -4858,21 +3146,25 @@
                         "nullable": true
                     },
                     "image_one": {
+                        "description": "Primary adventure image (JPG, JPEG, PNG, WEBP, AVIF)",
                         "type": "string",
                         "example": "adventures/desert1.jpg",
                         "nullable": true
                     },
                     "image_one_url": {
+                        "description": "Full URL to primary adventure image",
                         "type": "string",
                         "example": "http://127.0.0.1:8000/storage/adventures/desert1.jpg",
                         "nullable": true
                     },
                     "image_two": {
+                        "description": "Secondary adventure image (JPG, JPEG, PNG, WEBP, AVIF)",
                         "type": "string",
                         "example": "adventures/desert2.jpg",
                         "nullable": true
                     },
                     "image_two_url": {
+                        "description": "Full URL to secondary adventure image",
                         "type": "string",
                         "example": "http://127.0.0.1:8000/storage/adventures/desert2.jpg",
                         "nullable": true
@@ -4933,6 +3225,7 @@
                         "example": "Complete guidance and hassle-free travel planning."
                     },
                     "image": {
+                        "description": "Travel support banner image (JPG, JPEG, PNG, WEBP, AVIF)",
                         "type": "string",
                         "example": "http://127.0.0.1:8000/storage/travel-support/banner.jpg",
                         "nullable": true
@@ -5018,10 +3311,12 @@
                                     "example": 1
                                 },
                                 "image": {
+                                    "description": "Customer avatar image (JPG, JPEG, PNG, WEBP, AVIF)",
                                     "type": "string",
                                     "example": "about/customer-avatars/avatar1.jpg"
                                 },
                                 "image_url": {
+                                    "description": "Full URL to customer avatar",
                                     "type": "string",
                                     "example": "http://127.0.0.1:8000/storage/about/customer-avatars/avatar1.jpg"
                                 }
@@ -5169,6 +3464,7 @@
                         "example": "Book Dubai holiday packages today"
                     },
                     "image": {
+                        "description": "Offer banner image path (JPG, JPEG, PNG, WEBP, AVIF)",
                         "type": "string",
                         "example": "offers/summer.jpg",
                         "nullable": true
@@ -5199,6 +3495,7 @@
                         "example": "Explore the world with luxury & comfort"
                     },
                     "banner_image": {
+                        "description": "Header page banner image (JPG, JPEG, PNG, WEBP, AVIF)",
                         "type": "string",
                         "example": "banners/international.jpg"
                     }
@@ -5220,6 +3517,7 @@
                         "example": "Book your dream vacation today"
                     },
                     "image": {
+                        "description": "Hero slide image (JPG, JPEG, PNG, WEBP, AVIF)",
                         "type": "string",
                         "example": "hero/slide1.jpg"
                     },
@@ -5300,11 +3598,13 @@
                         "example": "We believe that traveling shouldn't be stressful. We ensure every segment of your journey is organized with precise dedication."
                     },
                     "image": {
+                        "description": "Why choose us section image (JPG, JPEG, PNG, WEBP, AVIF)",
                         "type": "string",
                         "example": "about_why_choose_us/photo.jpg",
                         "nullable": true
                     },
                     "image_url": {
+                        "description": "Full URL to why choose us image",
                         "type": "string",
                         "example": "https://openskyholidays.com/storage/about_why_choose_us/photo.jpg",
                         "nullable": true
@@ -5390,6 +3690,7 @@
                         "example": "Started with a vision to make international travel accessible to everyone."
                     },
                     "images": {
+                        "description": "Story images list (JPG, JPEG, PNG, WEBP, AVIF)",
                         "type": "array",
                         "items": {
                             "type": "string",
@@ -5447,6 +3748,7 @@
                         }
                     },
                     "gallery": {
+                        "description": "Gallery images list (JPG, JPEG, PNG, WEBP, AVIF)",
                         "type": "array",
                         "items": {
                             "type": "string",
@@ -5480,6 +3782,7 @@
                         "nullable": true
                     },
                     "image": {
+                        "description": "Place covered image (JPG, JPEG, PNG, WEBP, AVIF)",
                         "type": "string",
                         "example": "tour-features/feature1.jpg",
                         "nullable": true
@@ -5512,11 +3815,13 @@
                         "nullable": true
                     },
                     "image": {
+                        "description": "What we offer image (JPG, JPEG, PNG, WEBP, AVIF)",
                         "type": "string",
                         "example": "what-we-offers/offer1.jpg",
                         "nullable": true
                     },
                     "image_url": {
+                        "description": "Full URL to offer image",
                         "type": "string",
                         "example": "http://127.0.0.1:8000/storage/what-we-offers/offer1.jpg",
                         "nullable": true

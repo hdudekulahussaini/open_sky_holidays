@@ -101,10 +101,10 @@ class AboutSectionRequest extends FormRequest
             ],
 
             'avatar_images.*' => [
-                'required',
-                'image',
+                'nullable',
+                'file',
                 'mimes:jpg,jpeg,png,webp,avif',
-                'max:2048',
+                'max:5120',
             ],
 
             /*

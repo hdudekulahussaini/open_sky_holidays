@@ -76,6 +76,7 @@ class UpdateTourRequest extends FormRequest
                 'nullable',
                 'image',
                 'mimes:jpg,jpeg,png,webp,avif',
+                'max:5120',
             ],
 
             'status' => [
@@ -113,9 +114,10 @@ class UpdateTourRequest extends FormRequest
             ],
 
             'gallery.*' => [
-                'required',
-                'image',
+                'nullable',
+                'file',
                 'mimes:jpg,jpeg,png,webp,avif',
+                'max:5120',
             ],
 
             // Existing Gallery Paths
@@ -189,8 +191,9 @@ class UpdateTourRequest extends FormRequest
 
             'places_covered.*.image' => [
                 'nullable',
-                'image',
+                'file',
                 'mimes:jpg,jpeg,png,webp,avif',
+                'max:5120',
             ],
 
         ];
@@ -214,12 +217,14 @@ class UpdateTourRequest extends FormRequest
             'thumbnail.max' => 'The image size may not exceed 5 MB.',
             'detail.heading.required' => 'The tour detail heading is required.',
             'detail.description.required' => 'The tour detail description is required.',
-            'gallery.*.image' => 'Each uploaded gallery item must be an image.',
+            'gallery.*.file' => 'Each uploaded gallery item must be a valid file.',
             'gallery.*.mimes' => 'Only JPG, JPEG, PNG, WEBP, and AVIF gallery images are allowed.',
+            'gallery.*.max' => 'Each gallery image may not exceed 5 MB.',
             'package_inclusions.*.title.required' => 'The package inclusion title is required.',
             'places_covered.*.title.required' => 'The place covered title is required.',
-            'places_covered.*.image.image' => 'The place covered upload must be an image.',
+            'places_covered.*.image.file' => 'The place covered upload must be a valid image file.',
             'places_covered.*.image.mimes' => 'Only JPG, JPEG, PNG, WEBP, and AVIF images are allowed.',
+            'places_covered.*.image.max' => 'The place covered image may not exceed 5 MB.',
         ];
     }
 
@@ -231,5 +236,12 @@ class UpdateTourRequest extends FormRequest
         $this->merge([
             'status' => $this->boolean('status'),
         ]);
+
+        if ($this->has('gallery') && is_array($this->gallery)) {
+            $filteredGallery = array_filter($this->gallery, fn ($item) => ! empty($item));
+            if (empty($filteredGallery)) {
+                $this->request->remove('gallery');
+            }
+        }
     }
 }

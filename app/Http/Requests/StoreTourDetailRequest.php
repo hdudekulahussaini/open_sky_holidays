@@ -45,8 +45,10 @@ class StoreTourDetailRequest extends FormRequest
             ],
 
             'gallery.*' => [
-                'image',
+                'nullable',
+                'file',
                 'mimes:jpg,jpeg,png,webp,avif',
+                'max:5120',
             ],
 
             'status' => [
@@ -67,9 +69,23 @@ class StoreTourDetailRequest extends FormRequest
             'heading.required' => 'The heading field is required.',
             'description.required' => 'The description field is required.',
             'gallery.max' => 'You can upload a maximum of 10 images.',
-            'gallery.*.image' => 'Every gallery file must be an image.',
+            'gallery.*.file' => 'Every gallery file must be a valid file.',
             'gallery.*.mimes' => 'Gallery images must be JPG, JPEG, PNG, WEBP, or AVIF.',
+            'gallery.*.max' => 'Each gallery image may not exceed 5 MB.',
             'status.required' => 'Please select a status.',
         ];
+    }
+
+    /**
+     * Prepare data before validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('gallery') && is_array($this->gallery)) {
+            $filteredGallery = array_filter($this->gallery, fn ($item) => ! empty($item));
+            if (empty($filteredGallery)) {
+                $this->request->remove('gallery');
+            }
+        }
     }
 }

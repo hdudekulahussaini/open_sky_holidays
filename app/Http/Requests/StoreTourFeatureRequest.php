@@ -55,6 +55,7 @@ class StoreTourFeatureRequest extends FormRequest
                 'nullable',
                 'image',
                 'mimes:jpg,jpeg,png,webp,avif',
+                'max:5120',
             ],
 
             'sort_order' => [

@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreContactSectionRequest;
-use App\Http\Requests\UpdateContactSectionRequest;
 use App\Http\Resources\ContactSectionResource;
 use App\Models\ContactSection;
 use Illuminate\Http\JsonResponse;
 use OpenApi\Attributes as OA;
-use Throwable;
 
 class ContactSectionController extends Controller
 {
@@ -91,65 +88,14 @@ class ContactSectionController extends Controller
         ]);
     }
 
-    #[OA\Post(
-        path: '/api/contact-sections',
-        summary: 'Create a new contact section',
-        description: 'Stores a new contact section record.',
-        tags: ['Contact Section'],
-        requestBody: new OA\RequestBody(
-            required: true,
-            content: new OA\JsonContent(ref: '#/components/schemas/ContactSectionInput')
-        ),
-        responses: [
-            new OA\Response(
-                response: 201,
-                description: 'Contact section created successfully',
-                content: new OA\JsonContent(
-                    properties: [
-                        new OA\Property(property: 'success', type: 'boolean', example: true),
-                        new OA\Property(property: 'message', type: 'string', example: 'Contact section created successfully.'),
-                        new OA\Property(property: 'data', ref: '#/components/schemas/ContactSection'),
-                    ]
-                )
-            ),
-            new OA\Response(
-                response: 422,
-                description: 'Validation error',
-                content: new OA\JsonContent(ref: '#/components/schemas/ValidationErrorResponse')
-            ),
-        ]
-    )]
-    public function store(StoreContactSectionRequest $request): JsonResponse
-    {
-        try {
-            $validated = $request->validated();
-            $validated['status'] = $request->boolean('status', true);
-
-            $contactSection = ContactSection::create($validated);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Contact section created successfully.',
-                'data' => new ContactSectionResource($contactSection),
-            ], 201);
-        } catch (Throwable $exception) {
-            report($exception);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Unable to create contact section.',
-            ], 500);
-        }
-    }
-
     #[OA\Get(
-        path: '/api/contact-sections/{id}',
+        path: '/api/contact-sections/{contactSection}',
         summary: 'Get a specific contact section',
         description: 'Retrieves a single contact section by its ID.',
         tags: ['Contact Section'],
         parameters: [
             new OA\Parameter(
-                name: 'id',
+                name: 'contactSection',
                 in: 'path',
                 required: true,
                 description: 'ID of the contact section',
@@ -187,111 +133,5 @@ class ContactSectionController extends Controller
             'message' => 'Contact section retrieved successfully.',
             'data' => new ContactSectionResource($contactSection),
         ]);
-    }
-
-    #[OA\Put(
-        path: '/api/contact-sections/{id}',
-        summary: 'Update an existing contact section',
-        description: 'Updates a contact section by its ID.',
-        tags: ['Contact Section'],
-        parameters: [
-            new OA\Parameter(
-                name: 'id',
-                in: 'path',
-                required: true,
-                description: 'ID of the contact section to update',
-                schema: new OA\Schema(type: 'integer')
-            ),
-        ],
-        requestBody: new OA\RequestBody(
-            required: true,
-            content: new OA\JsonContent(ref: '#/components/schemas/ContactSectionInput')
-        ),
-        responses: [
-            new OA\Response(
-                response: 200,
-                description: 'Contact section updated successfully',
-                content: new OA\JsonContent(
-                    properties: [
-                        new OA\Property(property: 'success', type: 'boolean', example: true),
-                        new OA\Property(property: 'message', type: 'string', example: 'Contact section updated successfully.'),
-                        new OA\Property(property: 'data', ref: '#/components/schemas/ContactSection'),
-                    ]
-                )
-            ),
-            new OA\Response(
-                response: 422,
-                description: 'Validation error',
-                content: new OA\JsonContent(ref: '#/components/schemas/ValidationErrorResponse')
-            ),
-        ]
-    )]
-    public function update(UpdateContactSectionRequest $request, ContactSection $contactSection): JsonResponse
-    {
-        try {
-            $validated = $request->validated();
-            $validated['status'] = $request->boolean('status');
-
-            $contactSection->update($validated);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Contact section updated successfully.',
-                'data' => new ContactSectionResource($contactSection->fresh()),
-            ]);
-        } catch (Throwable $exception) {
-            report($exception);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Unable to update contact section.',
-            ], 500);
-        }
-    }
-
-    #[OA\Delete(
-        path: '/api/contact-sections/{id}',
-        summary: 'Delete a contact section',
-        description: 'Deletes a contact section by its ID.',
-        tags: ['Contact Section'],
-        parameters: [
-            new OA\Parameter(
-                name: 'id',
-                in: 'path',
-                required: true,
-                description: 'ID of the contact section to delete',
-                schema: new OA\Schema(type: 'integer')
-            ),
-        ],
-        responses: [
-            new OA\Response(
-                response: 200,
-                description: 'Contact section deleted successfully',
-                content: new OA\JsonContent(
-                    properties: [
-                        new OA\Property(property: 'success', type: 'boolean', example: true),
-                        new OA\Property(property: 'message', type: 'string', example: 'Contact section deleted successfully.'),
-                    ]
-                )
-            ),
-        ]
-    )]
-    public function destroy(ContactSection $contactSection): JsonResponse
-    {
-        try {
-            $contactSection->delete();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Contact section deleted successfully.',
-            ]);
-        } catch (Throwable $exception) {
-            report($exception);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Unable to delete contact section.',
-            ], 500);
-        }
     }
 }

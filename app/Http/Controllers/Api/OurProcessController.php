@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreOurProcessRequest;
-use App\Http\Requests\UpdateOurProcessRequest;
 use App\Http\Resources\OurProcessResource;
 use App\Models\OurProcess;
 use Illuminate\Http\JsonResponse;
@@ -36,65 +34,7 @@ class OurProcessController extends Controller
             ->latest()
             ->paginate(10);
 
-        return OurProcessResource::collection(
-            $ourProcesses
-        );
-    }
-
-    public function store(
-        StoreOurProcessRequest $request
-    ): JsonResponse {
-        $data = $request->validated();
-
-        $data['promises'] = $this->preparePromises(
-            $data['promises'] ?? []
-        );
-
-        $ourProcess = OurProcess::create($data);
-
-        return response()->json([
-            'success' => true,
-
-            'message' => 'Our process created successfully.',
-
-            'data' => new OurProcessResource(
-                $ourProcess
-            ),
-        ], 201);
-    }
-    public function update(
-        UpdateOurProcessRequest $request,
-        OurProcess $ourProcess
-    ): JsonResponse {
-        $data = $request->validated();
-
-        $data['promises'] = $this->preparePromises(
-            $data['promises'] ?? []
-        );
-
-        $ourProcess->update($data);
-
-        return response()->json([
-            'success' => true,
-
-            'message' => 'Our process updated successfully.',
-
-            'data' => new OurProcessResource(
-                $ourProcess->fresh()
-            ),
-        ]);
-    }
-
-    public function destroy(
-        OurProcess $ourProcess
-    ): JsonResponse {
-        $ourProcess->delete();
-
-        return response()->json([
-            'success' => true,
-
-            'message' => 'Our process deleted successfully.',
-        ]);
+        return OurProcessResource::collection($ourProcesses);
     }
 
     #[OA\Get(
@@ -121,23 +61,36 @@ class OurProcessController extends Controller
             ->latest()
             ->get();
 
-        return OurProcessResource::collection(
-            $ourProcesses
-        );
+        return OurProcessResource::collection($ourProcesses);
     }
 
-    private function preparePromises(array $promises): array
+    #[OA\Get(
+        path: '/api/our-processes/{ourProcess}',
+        summary: 'Get single process item details',
+        description: 'Retrieves single process item details by ID.',
+        tags: ['About Section'],
+        parameters: [
+            new OA\Parameter(name: 'ourProcess', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Process item retrieved successfully',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'data', ref: '#/components/schemas/OurProcess'),
+                    ]
+                )
+            ),
+            new OA\Response(response: 404, description: 'Process item not found'),
+        ]
+    )]
+    public function show(OurProcess $ourProcess): JsonResponse
     {
-        return collect($promises)
-            ->filter(function (array $promise): bool {
-                return filled($promise['text'] ?? null);
-            })
-            ->map(function (array $promise): array {
-                return [
-                    'text' => trim($promise['text']),
-                ];
-            })
-            ->values()
-            ->all();
+        return response()->json([
+            'success' => true,
+            'message' => 'Our process retrieved successfully.',
+            'data' => new OurProcessResource($ourProcess),
+        ]);
     }
 }

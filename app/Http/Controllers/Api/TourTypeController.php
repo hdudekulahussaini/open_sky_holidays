@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTourTypeRequest;
-use App\Http\Requests\UpdateTourTypeRequest;
 use App\Http\Resources\TourTypeResource;
 use App\Models\TourType;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Str;
 use OpenApi\Attributes as OA;
 
 class TourTypeController extends Controller
@@ -40,61 +37,28 @@ class TourTypeController extends Controller
         return TourTypeResource::collection($tourTypes);
     }
 
-    /**
-     * Store a new tour type.
-     */
-    public function store(
-        StoreTourTypeRequest $request
-    ): JsonResponse {
-        $validated = $request->validated();
-
-        $validated['slug'] = Str::slug(
-            $validated['slug'] ?: $validated['name']
-        );
-
-        $tourType = TourType::create($validated);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Tour type created successfully.',
-            'data' => new TourTypeResource($tourType),
-        ], 201);
-    }
-    /**
-     * Update a tour type.
-     */
-    public function update(
-        UpdateTourTypeRequest $request,
-        TourType $tourType
-    ): JsonResponse {
-        $validated = $request->validated();
-
-        $validated['slug'] = Str::slug(
-            $validated['slug'] ?: $validated['name']
-        );
-
-        $tourType->update($validated);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Tour type updated successfully.',
-            'data' => new TourTypeResource(
-                $tourType->fresh()
+    #[OA\Get(
+        path: '/api/tour-types/{tourType}',
+        summary: 'Get single tour type details',
+        description: 'Retrieves single tour category/type record by ID.',
+        tags: ['Tour Types'],
+        parameters: [
+            new OA\Parameter(name: 'tourType', in: 'path', required: true, schema: new OA\Schema(type: 'integer')),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Tour type retrieved successfully',
+                content: new OA\JsonContent(ref: '#/components/schemas/TourType')
             ),
-        ]);
-    }
-
-    /**
-     * Delete a tour type.
-     */
-    public function destroy(
-        TourType $tourType
-    ): JsonResponse {
-        $tourType->delete();
-
+            new OA\Response(response: 404, description: 'Tour type not found'),
+        ]
+    )]
+    public function show(TourType $tourType): JsonResponse
+    {
         return response()->json([
             'success' => true,
-            'message' => 'Tour type deleted successfully.',
+            'data' => new TourTypeResource($tourType),
         ]);
     }
 }
