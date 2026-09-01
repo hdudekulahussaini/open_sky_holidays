@@ -74,7 +74,7 @@ class UpdateTourRequest extends FormRequest
 
             'thumbnail' => [
                 'nullable',
-                'image',
+                'file',
                 'mimes:jpg,jpeg,png,webp,avif',
                 'max:5120',
             ],

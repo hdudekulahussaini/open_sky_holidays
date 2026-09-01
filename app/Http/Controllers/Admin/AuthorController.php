@@ -49,7 +49,7 @@ class AuthorController extends Controller
 
             'image' => [
                 'nullable',
-                'image',
+                'file',
                 'mimes:jpg,jpeg,png,webp,avif',
                 'max:5120',
             ],
@@ -170,7 +170,7 @@ class AuthorController extends Controller
 
             'image' => [
                 'nullable',
-                'image',
+                'file',
                 'mimes:jpg,jpeg,png,webp,avif',
                 'max:5120',
             ],

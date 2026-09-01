@@ -88,7 +88,6 @@ class PageBannerRequest extends FormRequest
             'image' => [
                 $imageRequired ? 'required' : 'nullable',
                 'file',
-                'image',
                 'mimes:jpg,jpeg,png,webp,avif',
                 'max:5120',
             ],

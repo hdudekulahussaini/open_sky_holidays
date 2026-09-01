@@ -19,7 +19,7 @@ class UpdateVacationSpotRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'badge' => ['nullable', 'string', 'max:100'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,svg,avif', 'max:4096'],
+            'image' => ['nullable', 'file', 'mimes:jpeg,png,jpg,webp,svg,avif', 'max:5120'],
             'link' => ['nullable', 'string', 'max:2000'],
             'order' => ['nullable', 'integer'],
             'status' => ['nullable', 'boolean'],

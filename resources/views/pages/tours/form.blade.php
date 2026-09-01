@@ -732,8 +732,8 @@
                     const file = thumbnailInput.files[0];
                     if (!file) return;
 
-                    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
-                    if (!allowedTypes.includes(file.type)) {
+                    const isImage = file.type.startsWith('image/') || /\.(jpg|jpeg|png|webp|avif)$/i.test(file.name);
+                    if (!isImage) {
                         alert('Please choose a JPG, JPEG, PNG, WebP or AVIF image.');
                         thumbnailInput.value = '';
                         return;
@@ -951,9 +951,11 @@
                             return;
                         }
 
-                        if (!file.type.startsWith('image/')) {
+                        const isImage = file.type.startsWith('image/') || /\.(jpg|jpeg|png|webp|avif)$/i.test(file.name);
+                        if (!isImage) {
                             this.value = '';
                             if (fileName) fileName.textContent = 'Invalid image';
+                            alert('Please choose a valid image (JPG, PNG, WebP, AVIF).');
                             return;
                         }
 

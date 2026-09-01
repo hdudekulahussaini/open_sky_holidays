@@ -33,8 +33,9 @@ class StoreTravelSupportSectionRequest extends FormRequest
 
             'image' => [
                 'nullable',
-                'image',
+                'file',
                 'mimes:jpg,jpeg,png,webp,avif',
+                'max:5120',
             ],
 
             'features' => [

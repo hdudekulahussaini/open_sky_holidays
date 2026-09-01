@@ -37,8 +37,9 @@ class AboutWhyChooseUsRequest extends FormRequest
                 $this->isMethod('post')
                     ? 'required'
                     : 'nullable',
-                'image',
+                'file',
                 'mimes:jpg,jpeg,png,webp,avif',
+                'max:5120',
             ],
 
             'features_icon' => [

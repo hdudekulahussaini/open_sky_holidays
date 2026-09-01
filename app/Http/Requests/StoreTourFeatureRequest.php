@@ -53,7 +53,7 @@ class StoreTourFeatureRequest extends FormRequest
                         TourFeature::TYPE_PLACE_COVERED
                 ),
                 'nullable',
-                'image',
+                'file',
                 'mimes:jpg,jpeg,png,webp,avif',
                 'max:5120',
             ],

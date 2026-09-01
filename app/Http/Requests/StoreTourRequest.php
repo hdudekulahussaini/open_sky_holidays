@@ -70,7 +70,7 @@ class StoreTourRequest extends FormRequest
 
             'thumbnail' => [
                 'required',
-                'image',
+                'file',
                 'mimes:jpg,jpeg,png,webp,avif',
                 'max:5120',
             ],

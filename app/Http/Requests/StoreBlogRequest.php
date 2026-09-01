@@ -86,8 +86,9 @@ class StoreBlogRequest extends FormRequest
 
             'featured_image' => [
                 'required',
-                'image',
+                'file',
                 'mimes:jpg,jpeg,png,webp,avif',
+                'max:5120',
             ],
 
             'read_time' => [

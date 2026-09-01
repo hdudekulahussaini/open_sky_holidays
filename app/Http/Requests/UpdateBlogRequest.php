@@ -119,8 +119,9 @@ class UpdateBlogRequest extends FormRequest
              */
             'featured_image' => [
                 'nullable',
-                'image',
+                'file',
                 'mimes:jpg,jpeg,png,webp,avif',
+                'max:5120',
             ],
 
             'read_time' => [
