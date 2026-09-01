@@ -35,9 +35,11 @@ class WhatWeOfferController extends Controller
     ): RedirectResponse {
         $validated = $request->validated();
 
-        $validated['image'] = $request
-            ->file('image')
-            ->store('what-we-offers', 'public');
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request
+                ->file('image')
+                ->store('what-we-offers', 'public');
+        }
 
         WhatWeOffer::create($validated);
 

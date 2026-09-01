@@ -80,7 +80,7 @@
                         {{ isset($whatWeOffer) && $whatWeOffer->image ? 'ts-hidden' : '' }}">
                     <span class="ts-image-placeholder-icon">✦</span>
                     <strong>No image selected</strong>
-                    <small>JPG, PNG, WEBP or AVIF</small>
+                    <small>JPG, PNG, WEBP or AVIF &middot; Max 5 MB</small>
                 </div>
             </div>
 
@@ -138,23 +138,25 @@
             const imagePreview = document.getElementById('imagePreview');
             const imagePlaceholder = document.getElementById('imagePlaceholder');
 
-            imageInput.addEventListener('change', function() {
-                const file = this.files[0];
+            if (imageInput && imagePreview && imagePlaceholder) {
+                imageInput.addEventListener('change', function() {
+                    const file = this.files && this.files[0];
 
-                if (!file) {
-                    return;
-                }
+                    if (!file) {
+                        return;
+                    }
 
-                const reader = new FileReader();
+                    const reader = new FileReader();
 
-                reader.onload = function(event) {
-                    imagePreview.src = event.target.result;
-                    imagePreview.classList.remove('ts-hidden');
-                    imagePlaceholder.classList.add('ts-hidden');
-                };
+                    reader.onload = function(event) {
+                        imagePreview.src = event.target.result;
+                        imagePreview.classList.remove('ts-hidden');
+                        imagePlaceholder.classList.add('ts-hidden');
+                    };
 
-                reader.readAsDataURL(file);
-            });
+                    reader.readAsDataURL(file);
+                });
+            }
         });
     </script>
 @endpush

@@ -38,8 +38,9 @@ class WhatWeOfferRequest extends FormRequest
                     ? 'required'
                     : 'nullable',
 
-                'image',
+                'file',
                 'mimes:jpg,jpeg,png,webp,avif',
+                'max:5120',
             ],
 
             'status' => [
@@ -80,11 +81,14 @@ class WhatWeOfferRequest extends FormRequest
             'image.required' =>
                 'Please select an image.',
 
+            'image.file' =>
+                'The selected file must be a valid image.',
+
             'image.image' =>
                 'The selected file must be a valid image.',
 
             'image.mimes' =>
-                'The image must be JPG, JPEG, PNG or WEBP.',
+                'The image must be JPG, JPEG, PNG, WEBP or AVIF.',
 
             'image.max' =>
                 'The image size must not exceed 5 MB.',

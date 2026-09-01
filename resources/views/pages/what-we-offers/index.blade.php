@@ -58,9 +58,9 @@
                                 <td>{{ $offer->subtitle ?? '-' }}</td>
                                 <td>{{ \Illuminate\Support\Str::limit($offer->description, 90) }}</td>
                                 <td>
-                                    <span class="ts-status-badge {{ $offer->status ? 'ts-active' : 'ts-inactive' }}">
+                                    <span class="ts-status-badge {{ ($offer->status === 'active' || $offer->status == '1') ? 'ts-active' : 'ts-inactive' }}">
                                         <span></span>
-                                        {{ $offer->status ? 'Active' : 'Inactive' }}
+                                        {{ ucfirst($offer->status) }}
                                     </span>
                                 </td>
                                 <td>

@@ -96,12 +96,14 @@ class WhatWeOfferController extends Controller
     ): JsonResponse {
         $validated = $request->validated();
 
-        $validated['image'] = $request
-            ->file('image')
-            ->store(
-                'what-we-offers',
-                'public'
-            );
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request
+                ->file('image')
+                ->store(
+                    'what-we-offers',
+                    'public'
+                );
+        }
 
         $whatWeOffer = WhatWeOffer::create(
             $validated
