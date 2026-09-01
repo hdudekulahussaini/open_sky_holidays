@@ -535,7 +535,7 @@ class OpenApiSchemas
             new OA\Property(property: 'itinerary', type: 'object', example: '{"Day 1": "Arrival and Dhow Cruise", "Day 2": "City Tour and Burj Khalifa"}'),
             new OA\Property(property: 'inclusions', type: 'array', items: new OA\Items(type: 'string', example: 'Hotel Stay')),
             new OA\Property(property: 'exclusions', type: 'array', items: new OA\Items(type: 'string', example: 'Personal Expenses')),
-            new OA\Property(property: 'gallery', type: 'array', description: 'Gallery images list (JPG, JPEG, PNG, WEBP, AVIF)', items: new OA\Items(type: 'string', example: 'tour-details/gallery/img1.jpg')),
+            new OA\Property(property: 'gallery', type: 'array', description: 'Gallery media list (Images: JPG, JPEG, PNG, WEBP, AVIF; Videos: MP4, WEBM, MOV, AVI, MKV)', items: new OA\Items(type: 'string', example: 'tour-details/gallery/media1.jpg')),
         ]
     )]
     public static function tourDetailSchema() {}

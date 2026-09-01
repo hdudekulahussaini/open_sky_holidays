@@ -46,10 +46,17 @@ class TourDetailResource extends JsonResource
             'description' => $this->description,
 
             'gallery' => collect($gallery)
-                ->map(function (string $image): array {
+                ->map(function (string $item): array {
+                    $ext = strtolower(pathinfo($item, PATHINFO_EXTENSION));
+                    $isVideo = in_array($ext, ['mp4', 'webm', 'mov', 'avi', 'mkv', 'ogv']);
+                    $url = Storage::disk('public')->url($item);
+
                     return [
-                        'path' => $image,
-                        'url' => Storage::disk('public')->url($image),
+                        'file' => $item,
+                        'file_url' => $url,
+                        'media_type' => $isVideo ? 'video' : 'image',
+                        'path' => $item,
+                        'url' => $url,
                     ];
                 })
                 ->values(),

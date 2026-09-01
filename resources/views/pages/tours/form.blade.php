@@ -248,31 +248,40 @@
             <div class="admin-form-card h-100">
                 <div class="admin-form-header">
                     <div class="admin-form-header-content">
-                        <h3>Gallery Images</h3>
-                        <p>Add up to 10 gallery images.</p>
+                        <h3>Gallery Media</h3>
+                        <p>Add up to 10 gallery photos or videos.</p>
                     </div>
                     <button type="button" id="addGalleryImage" class="ts-add-feature-btn">
-                        <span>+</span> Add
+                        <span>+</span> Add Media
                     </button>
                 </div>
                 <div class="admin-form-body">
                     <div class="td-gallery-summary mb-3">
-                        <span>Selected images</span>
+                        <span>Selected items</span>
                         <strong id="totalGalleryCount">{{ count($gallery) }} / 10</strong>
                     </div>
 
-                    {{-- Existing Images --}}
+                    {{-- Existing Media (Images & Videos) --}}
                     <div class="td-gallery-section" id="existingGallerySection" style="{{ count($gallery) > 0 ? '' : 'display:none;' }}">
                         <div class="td-gallery-title mb-2">
-                            <span>Existing Images</span>
+                            <span>Existing Media</span>
                             <span id="existingGalleryCount">{{ count($gallery) }}</span>
                         </div>
                         <div class="td-existing-gallery-grid" id="existingGallery">
-                            @foreach ($gallery as $image)
-                                <div class="td-existing-gallery-item">
-                                    <img src="{{ asset('storage/' . $image) }}" alt="Tour gallery image">
-                                    <input type="hidden" name="existing_gallery[]" value="{{ $image }}">
-                                    <button type="button" class="td-remove-existing-image" aria-label="Remove existing image">
+                            @foreach ($gallery as $mediaItem)
+                                @php
+                                    $ext = strtolower(pathinfo($mediaItem, PATHINFO_EXTENSION));
+                                    $isVideo = in_array($ext, ['mp4', 'webm', 'mov', 'avi', 'mkv', 'ogv']);
+                                @endphp
+                                <div class="td-existing-gallery-item position-relative">
+                                    @if ($isVideo)
+                                        <video src="{{ asset('storage/' . $mediaItem) }}" controls muted style="width: 100%; height: 100px; object-fit: cover; border-radius: 6px;"></video>
+                                        <span class="badge bg-dark position-absolute top-0 start-0 m-1" style="font-size: 10px;">VIDEO</span>
+                                    @else
+                                        <img src="{{ asset('storage/' . $mediaItem) }}" alt="Tour gallery image">
+                                    @endif
+                                    <input type="hidden" name="existing_gallery[]" value="{{ $mediaItem }}">
+                                    <button type="button" class="td-remove-existing-image" aria-label="Remove existing media">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                                             <path d="M18 6L6 18"></path>
                                             <path d="M6 6l12 12"></path>
@@ -283,17 +292,17 @@
                         </div>
                     </div>
 
-                    {{-- New Images --}}
+                    {{-- New Media --}}
                     <div class="td-gallery-section mt-3">
                         <div class="td-gallery-title mb-2">
-                            <span>New Images</span>
+                            <span>New Media (Images & Videos)</span>
                             <span id="newGalleryCount">0</span>
                         </div>
                         <div id="galleryImageContainer" class="td-image-input-list"></div>
                         <div id="emptyGalleryMessage" class="td-empty-gallery py-4 text-center border-dashed rounded bg-light mt-2 {{ count($gallery) > 0 ? 'hidden' : '' }}">
-                            <span class="td-empty-gallery-icon fs-3 text-primary"><i class="fa-regular fa-image"></i></span>
-                            <strong class="d-block mt-2">No new images added</strong>
-                            <p class="text-muted small">Click the "Add" button to select files.</p>
+                            <span class="td-empty-gallery-icon fs-3 text-primary"><i class="fa-solid fa-photo-film"></i></span>
+                            <strong class="d-block mt-2">No new media added</strong>
+                            <p class="text-muted small">Click the "Add Media" button to upload photos (JPG, PNG, WebP, AVIF) or videos (MP4, WebM, MOV).</p>
                         </div>
                     </div>
                     @error('gallery')
@@ -798,16 +807,16 @@
                 row.className = 'td-image-input-row';
                 row.innerHTML = `
                     <div class="td-image-preview">
-                        <span>No image</span>
+                        <span>No media</span>
                     </div>
                     <div class="td-image-file-wrap">
                         <label for="${inputId}" class="td-image-file-label">
-                            <span class="td-image-file-name">Select image</span>
+                            <span class="td-image-file-name">Select photo or video</span>
                             <strong>Browse</strong>
                         </label>
-                        <input type="file" id="${inputId}" name="gallery[]" class="td-gallery-file-input" accept=".jpg,.jpeg,.png,.webp,.avif,image/*" required>
+                        <input type="file" id="${inputId}" name="gallery[]" class="td-gallery-file-input" accept=".jpg,.jpeg,.png,.webp,.avif,.mp4,.webm,.mov,.avi,.mkv,image/*,video/*" required>
                     </div>
-                    <button type="button" class="td-remove-new-image" aria-label="Remove image">
+                    <button type="button" class="td-remove-new-image" aria-label="Remove item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18"></path><path d="M6 6l12 12"></path></svg>
                     </button>
                 `;
@@ -830,24 +839,34 @@
                 const file = input.files[0];
 
                 if (!file) {
-                    preview.innerHTML = '<span>No image</span>';
-                    fileName.textContent = 'Select image';
+                    preview.innerHTML = '<span>No media</span>';
+                    fileName.textContent = 'Select photo or video';
                     return;
                 }
 
-                if (!file.type.startsWith('image/')) {
+                const isVideo = file.type.startsWith('video/') || /\.(mp4|webm|mov|avi|mkv|ogv)$/i.test(file.name);
+                const isImage = file.type.startsWith('image/') || /\.(jpg|jpeg|png|webp|avif)$/i.test(file.name);
+
+                if (!isImage && !isVideo) {
                     input.value = '';
-                    preview.innerHTML = '<span>Invalid</span>';
-                    fileName.textContent = 'Select image';
+                    preview.innerHTML = '<span class="text-danger">Invalid</span>';
+                    fileName.textContent = 'Select photo or video';
+                    alert('Please select a valid image (JPG, PNG, WebP, AVIF) or video (MP4, WebM, MOV).');
                     return;
                 }
 
                 fileName.textContent = file.name;
-                const reader = new FileReader();
-                reader.onload = function(readerEvent) {
-                    preview.innerHTML = `<img src="${readerEvent.target.result}" alt="Selected gallery image">`;
-                };
-                reader.readAsDataURL(file);
+
+                if (isVideo) {
+                    const videoUrl = URL.createObjectURL(file);
+                    preview.innerHTML = `<video src="${videoUrl}" controls muted style="max-width: 100%; max-height: 80px; border-radius: 4px;"></video>`;
+                } else {
+                    const reader = new FileReader();
+                    reader.onload = function(readerEvent) {
+                        preview.innerHTML = `<img src="${readerEvent.target.result}" alt="Selected gallery image" style="max-height: 80px; border-radius: 4px;">`;
+                    };
+                    reader.readAsDataURL(file);
+                }
             });
 
             galleryContainer.addEventListener('click', function(e) {

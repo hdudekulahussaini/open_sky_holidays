@@ -52,8 +52,8 @@ class UpdateTourDetailRequest extends FormRequest
             'gallery.*' => [
                 'nullable',
                 'file',
-                'mimes:jpg,jpeg,png,webp,avif',
-                'max:5120',
+                'mimes:jpg,jpeg,png,webp,avif,mp4,webm,mov,avi,mkv,ogv',
+                'max:51200',
             ],
 
             'existing_gallery' => [
@@ -83,10 +83,10 @@ class UpdateTourDetailRequest extends FormRequest
             'tour_id.unique' => 'Details already exist for this tour.',
             'heading.required' => 'The heading field is required.',
             'description.required' => 'The description field is required.',
-            'gallery.max' => 'You can upload a maximum of 10 images.',
+            'gallery.max' => 'You can upload a maximum of 10 items.',
             'gallery.*.file' => 'Every gallery file must be a valid file.',
-            'gallery.*.mimes' => 'Gallery images must be JPG, JPEG, PNG, WEBP, or AVIF.',
-            'gallery.*.max' => 'Each gallery image may not exceed 5 MB.',
+            'gallery.*.mimes' => 'Gallery items must be images (JPG, JPEG, PNG, WEBP, AVIF) or videos (MP4, WEBM, MOV, AVI, MKV).',
+            'gallery.*.max' => 'Each gallery item may not exceed 50 MB.',
             'status.required' => 'Please select a status.',
         ];
     }

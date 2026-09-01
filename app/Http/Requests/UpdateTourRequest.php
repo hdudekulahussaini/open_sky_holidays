@@ -106,7 +106,7 @@ class UpdateTourRequest extends FormRequest
                 Rule::in(['active', 'inactive']),
             ],
 
-            // Gallery Fields (for new uploads)
+            // Gallery Fields (for new uploads - images or videos)
             'gallery' => [
                 'nullable',
                 'array',
@@ -116,8 +116,8 @@ class UpdateTourRequest extends FormRequest
             'gallery.*' => [
                 'nullable',
                 'file',
-                'mimes:jpg,jpeg,png,webp,avif',
-                'max:5120',
+                'mimes:jpg,jpeg,png,webp,avif,mp4,webm,mov,avi,mkv,ogv',
+                'max:51200',
             ],
 
             // Existing Gallery Paths
@@ -218,8 +218,8 @@ class UpdateTourRequest extends FormRequest
             'detail.heading.required' => 'The tour detail heading is required.',
             'detail.description.required' => 'The tour detail description is required.',
             'gallery.*.file' => 'Each uploaded gallery item must be a valid file.',
-            'gallery.*.mimes' => 'Only JPG, JPEG, PNG, WEBP, and AVIF gallery images are allowed.',
-            'gallery.*.max' => 'Each gallery image may not exceed 5 MB.',
+            'gallery.*.mimes' => 'Gallery items must be images (JPG, JPEG, PNG, WEBP, AVIF) or videos (MP4, WEBM, MOV, AVI, MKV).',
+            'gallery.*.max' => 'Each gallery item may not exceed 50 MB.',
             'package_inclusions.*.title.required' => 'The package inclusion title is required.',
             'places_covered.*.title.required' => 'The place covered title is required.',
             'places_covered.*.image.file' => 'The place covered upload must be a valid image file.',

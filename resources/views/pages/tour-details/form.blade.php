@@ -189,10 +189,19 @@
                         <div class="td-existing-gallery-grid" id="existingGallery">
 
                             @foreach ($gallery as $image)
-                                <div class="td-existing-gallery-item">
+                                @php
+                                    $ext = strtolower(pathinfo($image, PATHINFO_EXTENSION));
+                                    $isVideo = in_array($ext, ['mp4', 'webm', 'mov', 'avi', 'mkv', 'ogv']);
+                                @endphp
+                                <div class="td-existing-gallery-item position-relative">
 
-                                    <img src="{{ asset('storage/' . $image) }}"
-                                        alt="Tour gallery image">
+                                    @if ($isVideo)
+                                        <video src="{{ asset('storage/' . $image) }}" controls muted style="width: 100%; height: 100px; object-fit: cover; border-radius: 6px;"></video>
+                                        <span class="badge bg-dark position-absolute top-0 start-0 m-1" style="font-size: 10px;">VIDEO</span>
+                                    @else
+                                        <img src="{{ asset('storage/' . $image) }}"
+                                            alt="Tour gallery image">
+                                    @endif
 
                                     <input type="hidden" name="existing_gallery[]" value="{{ $image }}">
 
@@ -1131,7 +1140,7 @@
                         id="${inputId}"
                         name="gallery[]"
                         class="td-gallery-file-input"
-                        accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
+                        accept=".jpg,.jpeg,.png,.webp,.avif,.mp4,.webm,.mov,.avi,.mkv,image/*,video/*"
                         required
                     >
 
@@ -1206,43 +1215,54 @@
 
                     if (!file) {
                         preview.innerHTML =
-                            '<span>No image</span>';
+                            '<span>No media</span>';
 
                         fileName.textContent =
-                            'Select an image';
+                            'Select an image or video';
 
                         return;
                     }
 
-                    if (!file.type.startsWith('image/')) {
+                    const isVideo = file.type.startsWith('video/') || /\.(mp4|webm|mov|avi|mkv|ogv)$/i.test(file.name);
+                    const isImage = file.type.startsWith('image/') || /\.(jpg|jpeg|png|webp|avif)$/i.test(file.name);
+
+                    if (!isImage && !isVideo) {
                         input.value = '';
 
                         preview.innerHTML =
-                            '<span>Invalid image</span>';
+                            '<span class="text-danger">Invalid</span>';
 
                         fileName.textContent =
-                            'Select an image';
+                            'Select an image or video';
+
+                        alert('Please choose an image (JPG, PNG, WebP, AVIF) or video (MP4, WebM, MOV).');
 
                         return;
                     }
 
                     fileName.textContent = file.name;
 
-                    const reader = new FileReader();
+                    if (isVideo) {
+                        const videoUrl = URL.createObjectURL(file);
+                        preview.innerHTML = `<video src="${videoUrl}" controls muted style="max-width: 100%; max-height: 80px; border-radius: 4px;"></video>`;
+                    } else {
+                        const reader = new FileReader();
 
-                    reader.addEventListener(
-                        'load',
-                        function(readerEvent) {
-                            preview.innerHTML = `
-                            <img
-                                src="${readerEvent.target.result}"
-                                alt="Selected gallery image"
-                            >
-                        `;
-                        }
-                    );
+                        reader.addEventListener(
+                            'load',
+                            function(readerEvent) {
+                                preview.innerHTML = `
+                                <img
+                                    src="${readerEvent.target.result}"
+                                    alt="Selected gallery image"
+                                    style="max-height: 80px; border-radius: 4px;"
+                                >
+                            `;
+                            }
+                        );
 
-                    reader.readAsDataURL(file);
+                        reader.readAsDataURL(file);
+                    }
                 }
             );
 
