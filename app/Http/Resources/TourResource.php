@@ -95,33 +95,29 @@ class TourResource extends JsonResource
             ),
 
             'tour_features' => TourFeatureResource::collection(
-                $this->whenLoaded('features')
+                $this->relationLoaded('tourFeatures')
+                    ? $this->tourFeatures
+                    : ($this->relationLoaded('features') ? $this->getRelation('features') : collect())
             ),
 
-            'package_inclusions' => $this->whenLoaded(
-                'features',
-                function () {
-                    return TourFeatureResource::collection(
-                        $this->getRelation('features')
-                            ->where('type', 'package_inclusion')
-                            ->where('status', 'active')
-                            ->sortBy('sort_order')
-                            ->values()
-                    );
-                }
+            'package_inclusions' => TourFeatureResource::collection(
+                ($this->relationLoaded('tourFeatures')
+                    ? $this->tourFeatures
+                    : ($this->relationLoaded('features') ? $this->getRelation('features') : collect()))
+                    ->where('type', 'package_inclusion')
+                    ->where('status', 'active')
+                    ->sortBy('sort_order')
+                    ->values()
             ),
 
-            'places_covered' => $this->whenLoaded(
-                'features',
-                function () {
-                    return TourFeatureResource::collection(
-                        $this->getRelation('features')
-                            ->where('type', 'place_covered')
-                            ->where('status', 'active')
-                            ->sortBy('sort_order')
-                            ->values()
-                    );
-                }
+            'places_covered' => TourFeatureResource::collection(
+                ($this->relationLoaded('tourFeatures')
+                    ? $this->tourFeatures
+                    : ($this->relationLoaded('features') ? $this->getRelation('features') : collect()))
+                    ->where('type', 'place_covered')
+                    ->where('status', 'active')
+                    ->sortBy('sort_order')
+                    ->values()
             ),
 
             'created_at' => $this->created_at?->toISOString(),

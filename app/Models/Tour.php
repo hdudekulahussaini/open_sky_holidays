@@ -93,6 +93,13 @@ class Tour extends Model
             ->orderBy('id');
     }
 
+    public function tourFeatures(): HasMany
+    {
+        return $this->hasMany(TourFeature::class)
+            ->orderBy('sort_order')
+            ->orderBy('id');
+    }
+
     /**
      * Package inclusions belonging to the tour.
      */

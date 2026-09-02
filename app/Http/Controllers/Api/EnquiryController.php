@@ -109,7 +109,7 @@ class EnquiryController extends Controller
         ]);
 
         try {
-            $adminEmail = env('ADMIN_EMAIL', config('mail.from.address')) ?: 'hdudekulahussaini@gmail.com';
+            $adminEmail = config('mail.admin_email') ?: config('mail.from.address');
             Mail::to($adminEmail)->send(new EnquiryReceivedAdminMail($enquiry));
             Mail::to($enquiry->email)->send(new EnquiryConfirmationCustomerMail($enquiry));
         } catch (Throwable $e) {

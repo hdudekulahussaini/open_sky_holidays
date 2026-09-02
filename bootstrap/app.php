@@ -21,7 +21,7 @@ return Application::configure(
         ]);
 
         $middleware->redirectGuestsTo(
-            fn (Request $request) => route('admin.login')
+            fn (Request $request) => $request->expectsJson() || $request->is('api/*') ? null : route('admin.login')
         );
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -121,7 +121,7 @@
 @if(!isset($counter))
 <div class="mb-4">
     <button type="button" id="addCounterBtn" class="btn btn-primary btn-sm">
-        <i class="fa-solid fa-plus me-1"></i> Add Counter
+        <i class="fa-solid fa-plus me-1"></i> + Add Counter
     </button>
 </div>
 @endif
@@ -174,6 +174,7 @@ function pickCounterIcon(button, iconClass) {
     }
 }
 
+@if(!isset($counter))
 document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('countersContainer');
     const addButton = document.getElementById('addCounterBtn');
@@ -304,6 +305,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     reindexCounters();
 });
+@endif
 </script>
 @endpush
 

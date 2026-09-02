@@ -50,7 +50,7 @@ class TourInquiryController extends Controller
             $inquiry = TourInquiry::create($request->validated());
 
             try {
-                $adminEmail = env('ADMIN_EMAIL', config('mail.from.address')) ?: 'hdudekulahussaini@gmail.com';
+                $adminEmail = config('mail.admin_email') ?: config('mail.from.address');
                 Mail::to($adminEmail)->send(new TourInquiryReceivedAdminMail($inquiry));
 
                 if ($inquiry->email) {

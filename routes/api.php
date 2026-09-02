@@ -148,7 +148,7 @@ Route::apiResource('services', ServiceController::class)->only(['index', 'show']
 
 // Tour Types & Tours
 Route::apiResource('tour-types', TourTypeController::class)->only(['index', 'show']);
-Route::apiResource('tours', TourController::class)->only(['index', 'show']);
+Route::apiResource('tours', TourController::class);
 Route::apiResource('tour-details', TourDetailController::class)->only(['index', 'show']);
 Route::apiResource('tour-features', TourFeatureController::class)->only(['index', 'show']);
 
