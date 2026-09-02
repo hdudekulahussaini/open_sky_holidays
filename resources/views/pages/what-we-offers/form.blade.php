@@ -29,9 +29,51 @@
             <input type="text" name="subtitle" id="subtitle"
                 class="ts-input @error('subtitle') ts-input-error @enderror"
                 value="{{ old('subtitle', $whatWeOffer->subtitle ?? '') }}"
-                placeholder="Example: Explore Service">
+                placeholder="Example: DISCOVER INCREDIBLE INDIA">
 
             @error('subtitle')
+                <span class="ts-error-message">
+                    {{ $message }}
+                </span>
+            @enderror
+        </div>
+
+        {{-- Icon --}}
+        <div class="ts-form-group">
+            <label for="icon" class="ts-label">
+                Badge Icon (FontAwesome Class)
+            </label>
+
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <div style="width: 44px; height: 44px; border-radius: 50%; background: #ffaa00; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: #111; flex-shrink: 0; box-shadow: 0 2px 8px rgba(255, 170, 0, 0.35);">
+                    <i id="offerIconPreview" class="{{ old('icon', $whatWeOffer->icon ?? 'fa-solid fa-location-dot') }}"></i>
+                </div>
+                <input type="text" name="icon" id="offerIconInput"
+                    class="ts-input @error('icon') ts-input-error @enderror"
+                    value="{{ old('icon', $whatWeOffer->icon ?? 'fa-solid fa-location-dot') }}"
+                    placeholder="e.g. fa-solid fa-location-dot"
+                    oninput="updateOfferIconPreview(this.value)">
+            </div>
+
+            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px;">
+                <button type="button" class="btn btn-sm btn-light border" style="padding: 4px 12px; font-size: 0.82rem; font-weight: 500;" onclick="pickOfferIcon('fa-solid fa-location-dot')">
+                    <i class="fa-solid fa-location-dot text-warning me-1"></i> Domestic Tours (Pin)
+                </button>
+                <button type="button" class="btn btn-sm btn-light border" style="padding: 4px 12px; font-size: 0.82rem; font-weight: 500;" onclick="pickOfferIcon('fa-solid fa-globe')">
+                    <i class="fa-solid fa-globe text-primary me-1"></i> International Tours (Globe)
+                </button>
+                <button type="button" class="btn btn-sm btn-light border" style="padding: 4px 12px; font-size: 0.82rem; font-weight: 500;" onclick="pickOfferIcon('fa-regular fa-file-lines')">
+                    <i class="fa-regular fa-file-lines text-info me-1"></i> Visa Services (Document)
+                </button>
+                <button type="button" class="btn btn-sm btn-light border" style="padding: 4px 12px; font-size: 0.82rem; font-weight: 500;" onclick="pickOfferIcon('fa-solid fa-plane-departure')">
+                    <i class="fa-solid fa-plane-departure text-success me-1"></i> Flight Tickets (Plane)
+                </button>
+                <button type="button" class="btn btn-sm btn-light border" style="padding: 4px 12px; font-size: 0.82rem; font-weight: 500;" onclick="pickOfferIcon('fa-solid fa-passport')">
+                    <i class="fa-solid fa-passport text-danger me-1"></i> Passport Services (Passport)
+                </button>
+            </div>
+
+            @error('icon')
                 <span class="ts-error-message">
                     {{ $message }}
                 </span>
@@ -133,6 +175,21 @@
 
 @push('scripts')
     <script>
+        function updateOfferIconPreview(iconClass) {
+            const preview = document.getElementById('offerIconPreview');
+            if (preview) {
+                preview.className = iconClass.trim() || 'fa-solid fa-location-dot';
+            }
+        }
+
+        function pickOfferIcon(iconClass) {
+            const input = document.getElementById('offerIconInput');
+            if (input) {
+                input.value = iconClass;
+                updateOfferIconPreview(iconClass);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const imageInput = document.getElementById('image');
             const imagePreview = document.getElementById('imagePreview');

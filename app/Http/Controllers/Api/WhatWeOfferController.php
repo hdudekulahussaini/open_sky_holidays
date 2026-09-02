@@ -70,9 +70,8 @@ class WhatWeOfferController extends Controller
             new OA\Response(response: 404, description: 'What We Offer item not found'),
         ]
     )]
-    public function show(
-        WhatWeOffer $whatWeOffer
-    ): JsonResponse {
+    public function show(WhatWeOffer $whatWeOffer): JsonResponse
+    {
         return response()->json([
             'success' => true,
             'message' => 'What We Offer item retrieved successfully.',

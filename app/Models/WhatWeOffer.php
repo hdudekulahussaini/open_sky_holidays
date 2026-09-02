@@ -12,6 +12,7 @@ class WhatWeOffer extends Model
     protected $fillable = [
         'title',
         'subtitle',
+        'icon',
         'description',
         'image',
         'status',

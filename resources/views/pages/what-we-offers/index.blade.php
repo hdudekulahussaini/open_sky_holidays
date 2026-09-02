@@ -36,6 +36,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Image</th>
+                            <th>Icon</th>
                             <th>Title</th>
                             <th>Subtitle</th>
                             <th>Description</th>
@@ -53,6 +54,11 @@
                                     @else
                                         <small>No image</small>
                                     @endif
+                                </td>
+                                <td>
+                                    <div style="width: 34px; height: 34px; border-radius: 50%; background: #ffaa00; display: inline-flex; align-items: center; justify-content: center; font-size: 0.95rem; color: #111;">
+                                        <i class="{{ $offer->icon ?? 'fa-solid fa-location-dot' }}"></i>
+                                    </div>
                                 </td>
                                 <td><strong>{{ $offer->title }}</strong></td>
                                 <td>{{ $offer->subtitle ?? '-' }}</td>

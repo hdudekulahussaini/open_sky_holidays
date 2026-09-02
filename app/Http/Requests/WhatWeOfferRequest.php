@@ -27,6 +27,12 @@ class WhatWeOfferRequest extends FormRequest
                 'max:255',
             ],
 
+            'icon' => [
+                'nullable',
+                'string',
+                'max:100',
+            ],
+
             'description' => [
                 'nullable',
                 'string',

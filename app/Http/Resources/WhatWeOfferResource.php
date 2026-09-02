@@ -16,6 +16,8 @@ class WhatWeOfferResource extends JsonResource
 
             'subtitle' => $this->subtitle,
 
+            'icon' => $this->icon,
+
             'description' => $this->description,
 
             'image' => $this->image,
