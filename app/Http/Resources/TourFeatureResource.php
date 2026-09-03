@@ -60,7 +60,7 @@ class TourFeatureResource extends JsonResource
             'image' => $this->image,
 
             'image_url' => $this->image
-                ? Storage::disk('public')->url($this->image)
+                ? asset('storage/'.$this->image)
                 : null,
 
             'sort_order' => $this->sort_order,

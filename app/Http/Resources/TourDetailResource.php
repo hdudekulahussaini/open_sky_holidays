@@ -49,7 +49,7 @@ class TourDetailResource extends JsonResource
                 ->map(function (string $item): array {
                     $ext = strtolower(pathinfo($item, PATHINFO_EXTENSION));
                     $isVideo = in_array($ext, ['mp4', 'webm', 'mov', 'avi', 'mkv', 'ogv']);
-                    $url = Storage::disk('public')->url($item);
+                    $url = asset('storage/'.$item);
 
                     return [
                         'file' => $item,

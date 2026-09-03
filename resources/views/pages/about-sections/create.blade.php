@@ -392,61 +392,28 @@
                             <h4>Customer Avatar Images</h4>
 
                             <p>
-                                Add up to three customer avatar images.
-                                Each selected image will be previewed below.
+                                Upload customer avatar images.
                             </p>
                         </div>
 
-                        <button type="button" class="btn btn-primary" id="add-avatar">
-                            Add Avatar
-                        </button>
-
                     </div>
 
-                    <div id="avatar-container" class="avatar-upload-grid">
-
-                        {{-- Initial avatar input --}}
-                        <div class="avatar-upload-item">
-
-                            <div class="avatar-upload-header">
-
-                                <h5>
-                                    Avatar
-                                    <span class="avatar-number">1</span>
-                                </h5>
-
-                                <button type="button" class="remove-avatar-button remove-avatar"
-                                    aria-label="Remove avatar">
-                                    Remove
-                                </button>
-
-                            </div>
-
-                            <label class="avatar-upload-box">
-
-                                <input type="file" name="avatar_images[]" class="avatar-file-input"
-                                    accept=".jpg,.jpeg,.png,.webp,.avif,image/*">
-
-                                <img src="" alt="Customer avatar preview" class="avatar-local-preview">
-
-                                <span class="avatar-upload-placeholder">
-                                    <strong>Select an image</strong>
-
-                                    <small>
-                                        JPG, JPEG, PNG, WEBP or AVIF
-                                    </small>
-                                </span>
-
-                            </label>
-
-                        </div>
-
+                    <div class="avatar-normal-upload-container">
+                        <input
+                            type="file"
+                            name="avatar_images[]"
+                            id="avatar_images_input"
+                            class="admin-form-control"
+                            multiple
+                            accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
+                        >
+                        <span class="admin-form-help mt-1 d-block">
+                            You can select multiple images (JPG, JPEG, PNG, WEBP, AVIF). Max size: 5 MB per file.
+                        </span>
                     </div>
 
-                    <span class="admin-form-help">
-                        Maximum three avatar images. Maximum file size:
-                        2 MB per image.
-                    </span>
+                    {{-- Dynamic live preview of newly selected files --}}
+                    <div id="new-avatars-preview-grid" class="avatar-preview-grid mt-3" style="display: none;"></div>
 
                     @error('avatar_images')
                         <span class="admin-form-error">
@@ -636,252 +603,50 @@
 
             /*
             |--------------------------------------------------------------------------
-            | Customer avatar uploads
+            | Customer avatar live upload preview
             |--------------------------------------------------------------------------
             */
 
-            const avatarContainer =
-                document.getElementById('avatar-container');
+            const avatarInput = document.getElementById('avatar_images_input');
+            const previewGrid = document.getElementById('new-avatars-preview-grid');
 
-            const addAvatarButton =
-                document.getElementById('add-avatar');
+            if (avatarInput && previewGrid) {
+                avatarInput.addEventListener('change', function () {
+                    previewGrid.innerHTML = '';
+                    const files = Array.from(this.files || []);
 
-            const maximumAvatars = 3;
-            const maximumFileSize = 2 * 1024 * 1024;
-
-            const allowedImageTypes = [
-                'image/jpeg',
-                'image/png',
-                'image/webp',
-                'image/avif'
-            ];
-
-            function updateAvatarItems() {
-                if (!avatarContainer || !addAvatarButton) {
-                    return;
-                }
-
-                const items =
-                    avatarContainer.querySelectorAll(
-                        '.avatar-upload-item'
-                    );
-
-                items.forEach(function(item, index) {
-                    const number =
-                        item.querySelector('.avatar-number');
-
-                    const removeButton =
-                        item.querySelector('.remove-avatar');
-
-                    if (number) {
-                        number.textContent = index + 1;
+                    if (files.length === 0) {
+                        previewGrid.style.display = 'none';
+                        return;
                     }
 
-                    if (removeButton) {
-                        removeButton.disabled = items.length === 1;
-                    }
-                });
+                    previewGrid.style.display = 'grid';
 
-                const maximumReached =
-                    items.length >= maximumAvatars;
+                    files.forEach(function (file, index) {
+                        if (!file.type.startsWith('image/')) return;
 
-                addAvatarButton.disabled = maximumReached;
+                        const card = document.createElement('div');
+                        card.className = 'avatar-preview-card';
+                        card.innerHTML = `
+                            <div class="avatar-preview-media">
+                                <img class="avatar-preview-image" src="" alt="New avatar ${index + 1}">
+                                <span class="avatar-existing-badge" style="background: #10b981; color: #fff;">New</span>
+                            </div>
+                            <div style="font-size: 11px; color: #64748b; text-align: center; margin-top: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 130px;">
+                                ${file.name}
+                            </div>
+                        `;
 
-                addAvatarButton.textContent = maximumReached ?
-                    'Maximum 3 Avatars' :
-                    'Add Avatar';
-            }
-
-            function createAvatarItem() {
-                return `
-                <div class="avatar-upload-item">
-
-                    <div class="avatar-upload-header">
-
-                        <h5>
-                            Avatar
-                            <span class="avatar-number"></span>
-                        </h5>
-
-                        <button
-                            type="button"
-                            class="remove-avatar-button remove-avatar"
-                            aria-label="Remove avatar"
-                        >
-                            Remove
-                        </button>
-
-                    </div>
-
-                    <label class="avatar-upload-box">
-
-                        <input
-                            type="file"
-                            name="avatar_images[]"
-                            class="avatar-file-input"
-                            accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
-                        >
-
-                        <img
-                            src=""
-                            alt="Customer avatar preview"
-                            class="avatar-local-preview"
-                        >
-
-                        <span class="avatar-upload-placeholder">
-                            <strong>Select an image</strong>
-
-                            <small>
-                                JPG, JPEG, PNG, WEBP or AVIF
-                            </small>
-                        </span>
-
-                    </label>
-
-                </div>
-            `;
-            }
-
-            function resetAvatarPreview(uploadItem) {
-                const input =
-                    uploadItem.querySelector('.avatar-file-input');
-
-                const preview =
-                    uploadItem.querySelector('.avatar-local-preview');
-
-                const placeholder =
-                    uploadItem.querySelector(
-                        '.avatar-upload-placeholder'
-                    );
-
-                if (input) {
-                    input.value = '';
-                }
-
-                if (preview) {
-                    preview.src = '';
-                    preview.classList.remove('show');
-                }
-
-                if (placeholder) {
-                    placeholder.classList.remove('hide');
-                }
-            }
-
-            if (avatarContainer && addAvatarButton) {
-
-                addAvatarButton.addEventListener(
-                    'click',
-                    function() {
-
-                        const items =
-                            avatarContainer.querySelectorAll(
-                                '.avatar-upload-item'
-                            );
-
-                        if (items.length >= maximumAvatars) {
-                            return;
-                        }
-
-                        avatarContainer.insertAdjacentHTML(
-                            'beforeend',
-                            createAvatarItem()
-                        );
-
-                        updateAvatarItems();
-                    }
-                );
-
-                avatarContainer.addEventListener(
-                    'click',
-                    function(event) {
-
-                        const removeButton =
-                            event.target.closest('.remove-avatar');
-
-                        if (!removeButton) {
-                            return;
-                        }
-
-                        const items =
-                            avatarContainer.querySelectorAll(
-                                '.avatar-upload-item'
-                            );
-
-                        if (items.length <= 1) {
-                            return;
-                        }
-
-                        removeButton
-                            .closest('.avatar-upload-item')
-                            .remove();
-
-                        updateAvatarItems();
-                    }
-                );
-
-                avatarContainer.addEventListener(
-                    'change',
-                    function(event) {
-
-                        const input =
-                            event.target.closest('.avatar-file-input');
-
-                        if (!input) {
-                            return;
-                        }
-
-                        const uploadItem =
-                            input.closest('.avatar-upload-item');
-
-                        const preview =
-                            uploadItem.querySelector(
-                                '.avatar-local-preview'
-                            );
-
-                        const placeholder =
-                            uploadItem.querySelector(
-                                '.avatar-upload-placeholder'
-                            );
-
-                        const file = input.files[0];
-
-                        if (!file) {
-                            resetAvatarPreview(uploadItem);
-                            return;
-                        }
-
-                        if (!allowedImageTypes.includes(file.type)) {
-                            alert(
-                                'Please select a JPG, JPEG, PNG, WEBP, or AVIF image.'
-                            );
-
-                            resetAvatarPreview(uploadItem);
-                            return;
-                        }
-
-                        if (file.size > maximumFileSize) {
-                            alert(
-                                'Each avatar image must not exceed 2 MB.'
-                            );
-
-                            resetAvatarPreview(uploadItem);
-                            return;
-                        }
-
+                        const img = card.querySelector('img');
                         const reader = new FileReader();
-
-                        reader.onload = function(loadEvent) {
-                            preview.src = loadEvent.target.result;
-                            preview.classList.add('show');
-                            placeholder.classList.add('hide');
+                        reader.onload = function (e) {
+                            img.src = e.target.result;
                         };
-
                         reader.readAsDataURL(file);
-                    }
-                );
 
-                updateAvatarItems();
+                        previewGrid.appendChild(card);
+                    });
+                });
             }
 
         });

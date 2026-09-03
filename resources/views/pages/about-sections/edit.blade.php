@@ -520,18 +520,9 @@
                             <h4>Customer Avatar Images</h4>
 
                             <p>
-                                Keep, remove or upload customer avatar images.
-                                A maximum of three active avatars is allowed.
+                                Manage existing customer avatars or upload new images.
                             </p>
                         </div>
-
-                        <button
-                            type="button"
-                            class="btn btn-primary"
-                            id="add-avatar"
-                        >
-                            Add Avatar
-                        </button>
 
                     </div>
 
@@ -546,12 +537,11 @@
                                     <h5>Existing Avatar Images</h5>
 
                                     <p>
-                                        Select “Remove image” to delete an
-                                        existing avatar after updating.
+                                        Delete an avatar now or mark “Remove image” to remove it after updating.
                                     </p>
                                 </div>
 
-                                <span class="existing-avatar-count">
+                                <span class="existing-avatar-count" id="existing-avatar-count-badge">
                                     {{ $aboutSection->customerAvatars->count() }}
                                     {{ Str::plural(
                                         'image',
@@ -561,59 +551,81 @@
 
                             </div>
 
-                            <div class="avatar-preview-grid">
+                            <div class="avatar-preview-grid" id="existing-avatar-grid">
 
                                 @foreach (
                                     $aboutSection->customerAvatars as $avatar
                                 )
 
-                                    <label
+                                    <div
                                         class="avatar-preview-card
                                             {{ in_array(
                                                 $avatar->id,
                                                 $selectedAvatarIds
                                             ) ? 'marked-for-removal' : '' }}"
+                                        id="existing-avatar-card-{{ $avatar->id }}"
                                         data-existing-avatar-card
+                                        data-avatar-id="{{ $avatar->id }}"
                                     >
 
                                         <div class="avatar-preview-media">
 
                                             <img
-                                                src="{{ Storage::url($avatar->image) }}"
+                                                src="{{ asset('storage/' . $avatar->image) }}"
                                                 alt="Customer avatar"
                                                 class="avatar-preview-image"
+                                                onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 24 24\' fill=\'%2394a3b8\'><path d=\'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\'/></svg>'"
                                             >
 
                                             <span class="avatar-existing-badge">
                                                 Existing
                                             </span>
 
+                                            <div class="avatar-removal-indicator">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                                <span>To be removed</span>
+                                            </div>
+
                                         </div>
 
-                                        <span class="avatar-remove-option">
+                                        <div class="avatar-card-actions">
 
-                                            <input
-                                                type="checkbox"
-                                                name="remove_avatar_ids[]"
-                                                value="{{ $avatar->id }}"
-                                                class="existing-avatar-remove-checkbox"
-                                                @checked(
-                                                    in_array(
-                                                        $avatar->id,
-                                                        $selectedAvatarIds
+                                            <label class="avatar-remove-option" for="remove_avatar_{{ $avatar->id }}">
+
+                                                <input
+                                                    type="checkbox"
+                                                    id="remove_avatar_{{ $avatar->id }}"
+                                                    name="remove_avatar_ids[]"
+                                                    value="{{ $avatar->id }}"
+                                                    class="existing-avatar-remove-checkbox"
+                                                    @checked(
+                                                        in_array(
+                                                            $avatar->id,
+                                                            $selectedAvatarIds
+                                                        )
                                                     )
-                                                )
+                                                >
+
+                                                <span class="avatar-remove-text">
+                                                    {{ in_array($avatar->id, $selectedAvatarIds) ? 'Marked for removal' : 'Remove image' }}
+                                                </span>
+
+                                            </label>
+
+                                            <button
+                                                type="button"
+                                                class="avatar-instant-delete-btn"
+                                                title="Delete permanently from server right now"
+                                                data-avatar-id="{{ $avatar->id }}"
+                                                data-delete-url="{{ route('admin.about-sections.avatars.destroy', [$aboutSection, $avatar]) }}"
                                             >
+                                                <i class="fa-solid fa-trash-can"></i>
+                                                <span>Delete Now</span>
+                                            </button>
 
-                                            <span class="avatar-remove-checkmark"></span>
+                                        </div>
 
-                                            <span class="avatar-remove-text">
-                                                Remove image
-                                            </span>
-
-                                        </span>
-
-                                    </label>
+                                    </div>
 
                                 @endforeach
 
@@ -642,89 +654,32 @@
                     @endif
 
                     {{-- New avatar uploads --}}
-                    <div class="new-avatar-section">
+                    <div class="new-avatar-section mt-4">
 
-                        <div class="new-avatar-section-header">
+                        <div class="new-avatar-section-header mb-2">
                             <h5>Upload New Avatar Images</h5>
 
                             <p>
-                                Add new images only when required.
+                                Select one or more images from your device to add new customer avatars.
                             </p>
                         </div>
 
-                        <div
-                            id="avatar-container"
-                            class="avatar-upload-grid"
-                        >
-
-                            {{-- Initial upload card --}}
-                            <div class="avatar-upload-item">
-
-                                <div class="avatar-upload-header">
-
-                                    <h5>
-                                        New Avatar
-                                        <span class="avatar-number">1</span>
-                                    </h5>
-
-                                    <button
-                                        type="button"
-                                        class="remove-avatar-button remove-avatar"
-                                        aria-label="Remove new avatar"
-                                    >
-                                        Remove
-                                    </button>
-
-                                </div>
-
-                                <label class="avatar-upload-box">
-
-                                    <input
-                                        type="file"
-                                        name="avatar_images[]"
-                                        class="avatar-file-input"
-                                        accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
-                                    >
-
-                                    <img
-                                        src=""
-                                        alt="New customer avatar preview"
-                                        class="avatar-local-preview"
-                                    >
-
-                                    <span class="avatar-upload-placeholder">
-
-                                        <span class="avatar-upload-icon">
-                                            +
-                                        </span>
-
-                                        <strong>Select an image</strong>
-
-                                        <small>
-                                            JPG, JPEG, PNG, WEBP or AVIF
-                                        </small>
-
-                                    </span>
-
-                                </label>
-
-                            </div>
-
+                        <div class="avatar-normal-upload-container">
+                            <input
+                                type="file"
+                                name="avatar_images[]"
+                                id="avatar_images_input"
+                                class="admin-form-control"
+                                multiple
+                                accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
+                            >
+                            <span class="admin-form-help mt-1 d-block">
+                                You can select multiple images (JPG, JPEG, PNG, WEBP, AVIF). Max size: 5 MB per file.
+                            </span>
                         </div>
 
-                        <span class="admin-form-help">
-                            Maximum three active avatar images in total.
-                            Maximum file size: 2 MB per image.
-                        </span>
-
-                        <div
-                            id="avatar-limit-message"
-                            class="avatar-limit-message"
-                            hidden
-                        >
-                            You already have three active avatars. Remove an
-                            existing avatar before uploading another image.
-                        </div>
+                        {{-- Dynamic live preview of newly selected files --}}
+                        <div id="new-avatars-preview-grid" class="avatar-preview-grid mt-3" style="display: none;"></div>
 
                         @error('avatar_images')
                             <span class="admin-form-error">
@@ -923,444 +878,163 @@
 
         /*
         |--------------------------------------------------------------------------
-        | Customer avatar uploads
+        | Customer avatar management & uploads
         |--------------------------------------------------------------------------
         */
 
-        const avatarSection =
-            document.getElementById('customer-avatars');
-
-        const avatarContainer =
-            document.getElementById('avatar-container');
-
-        const addAvatarButton =
-            document.getElementById('add-avatar');
-
-        const avatarLimitMessage =
-            document.getElementById('avatar-limit-message');
-
-        const maximumAvatars = 3;
-        const maximumFileSize = 2 * 1024 * 1024;
-
-        const allowedImageTypes = [
-            'image/jpeg',
-            'image/png',
-            'image/webp',
-            'image/avif'
-        ];
-
-        function getExistingAvatarCards() {
-            return document.querySelectorAll(
-                '[data-existing-avatar-card]'
-            );
-        }
-
-        function getActiveExistingAvatarCount() {
-            let count = 0;
-
-            getExistingAvatarCards().forEach(function (card) {
-                const checkbox = card.querySelector(
-                    '.existing-avatar-remove-checkbox'
-                );
-
+        function updateExistingAvatarHeader() {
+            const badge = document.getElementById('existing-avatar-count-badge');
+            if (!badge) return;
+            const cards = document.querySelectorAll('[data-existing-avatar-card]');
+            const total = cards.length;
+            let active = 0;
+            cards.forEach(function (card) {
+                const checkbox = card.querySelector('.existing-avatar-remove-checkbox');
                 if (checkbox && !checkbox.checked) {
-                    count++;
+                    active++;
                 }
             });
-
-            return count;
-        }
-
-        function getNewAvatarItems() {
-            if (!avatarContainer) {
-                return [];
-            }
-
-            return Array.from(
-                avatarContainer.querySelectorAll(
-                    '.avatar-upload-item'
-                )
-            );
-        }
-
-        function getSelectedNewAvatarCount() {
-            return getNewAvatarItems().filter(function (item) {
-                const input =
-                    item.querySelector('.avatar-file-input');
-
-                return input &&
-                    input.files &&
-                    input.files.length > 0;
-            }).length;
-        }
-
-        function getTotalActiveAvatarCount() {
-            return (
-                getActiveExistingAvatarCount() +
-                getSelectedNewAvatarCount()
-            );
-        }
-
-        function getRemainingAvatarSlots() {
-            return Math.max(
-                maximumAvatars - getTotalActiveAvatarCount(),
-                0
-            );
-        }
-
-        function createAvatarItem() {
-            return `
-                <div class="avatar-upload-item">
-
-                    <div class="avatar-upload-header">
-
-                        <h5>
-                            New Avatar
-                            <span class="avatar-number"></span>
-                        </h5>
-
-                        <button
-                            type="button"
-                            class="remove-avatar-button remove-avatar"
-                            aria-label="Remove new avatar"
-                        >
-                            Remove
-                        </button>
-
-                    </div>
-
-                    <label class="avatar-upload-box">
-
-                        <input
-                            type="file"
-                            name="avatar_images[]"
-                            class="avatar-file-input"
-                            accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
-                        >
-
-                        <img
-                            src=""
-                            alt="New customer avatar preview"
-                            class="avatar-local-preview"
-                        >
-
-                        <span class="avatar-upload-placeholder">
-
-                            <span class="avatar-upload-icon">
-                                +
-                            </span>
-
-                            <strong>Select an image</strong>
-
-                            <small>
-                                JPG, JPEG, PNG, WEBP or AVIF
-                            </small>
-
-                        </span>
-
-                    </label>
-
-                </div>
-            `;
-        }
-
-        function resetAvatarPreview(uploadItem) {
-            const input =
-                uploadItem.querySelector('.avatar-file-input');
-
-            const preview =
-                uploadItem.querySelector('.avatar-local-preview');
-
-            const placeholder =
-                uploadItem.querySelector(
-                    '.avatar-upload-placeholder'
-                );
-
-            if (input) {
-                input.value = '';
-            }
-
-            if (preview) {
-                preview.src = '';
-                preview.classList.remove('show');
-            }
-
-            if (placeholder) {
-                placeholder.classList.remove('hide');
+            const marked = total - active;
+            if (marked > 0) {
+                badge.innerHTML = `${active} active <small style="opacity: 0.85;">(${marked} to remove)</small>`;
+            } else {
+                badge.textContent = `${active} ${active === 1 ? 'image' : 'images'}`;
             }
         }
 
         function updateExistingAvatarCards() {
-            getExistingAvatarCards().forEach(function (card) {
-                const checkbox = card.querySelector(
-                    '.existing-avatar-remove-checkbox'
-                );
+            document.querySelectorAll('[data-existing-avatar-card]').forEach(function (card) {
+                const checkbox = card.querySelector('.existing-avatar-remove-checkbox');
+                const labelText = card.querySelector('.avatar-remove-text');
 
-                if (!checkbox) {
+                if (!checkbox) return;
+
+                card.classList.toggle('marked-for-removal', checkbox.checked);
+
+                if (labelText) {
+                    labelText.textContent = checkbox.checked ? 'Marked for removal' : 'Remove image';
+                }
+            });
+
+            updateExistingAvatarHeader();
+        }
+
+        // Live preview for new avatar uploads
+        const avatarInput = document.getElementById('avatar_images_input');
+        const previewGrid = document.getElementById('new-avatars-preview-grid');
+
+        if (avatarInput && previewGrid) {
+            avatarInput.addEventListener('change', function () {
+                previewGrid.innerHTML = '';
+                const files = Array.from(this.files || []);
+
+                if (files.length === 0) {
+                    previewGrid.style.display = 'none';
                     return;
                 }
 
-                card.classList.toggle(
-                    'marked-for-removal',
-                    checkbox.checked
-                );
+                previewGrid.style.display = 'grid';
+
+                files.forEach(function (file, index) {
+                    if (!file.type.startsWith('image/')) return;
+
+                    const card = document.createElement('div');
+                    card.className = 'avatar-preview-card';
+                    card.innerHTML = `
+                        <div class="avatar-preview-media">
+                            <img class="avatar-preview-image" src="" alt="New avatar ${index + 1}">
+                            <span class="avatar-existing-badge" style="background: #10b981; color: #fff;">New</span>
+                        </div>
+                        <div style="font-size: 11px; color: #64748b; text-align: center; margin-top: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 130px;">
+                            ${file.name}
+                        </div>
+                    `;
+
+                    const img = card.querySelector('img');
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+
+                    previewGrid.appendChild(card);
+                });
             });
         }
 
-        function updateAvatarItems() {
-            if (!avatarContainer || !addAvatarButton) {
+        document.addEventListener('change', function (event) {
+            const checkbox = event.target.closest('.existing-avatar-remove-checkbox');
+            if (!checkbox) return;
+
+            updateExistingAvatarCards();
+        });
+
+        document.addEventListener('click', function (event) {
+            const deleteBtn = event.target.closest('.avatar-instant-delete-btn');
+            if (!deleteBtn) return;
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            const url = deleteBtn.getAttribute('data-delete-url');
+            const card = deleteBtn.closest('[data-existing-avatar-card]');
+            if (!url || !card) return;
+
+            if (!confirm('Are you sure you want to permanently delete this customer avatar now?')) {
                 return;
             }
 
-            const items = getNewAvatarItems();
+            const originalHtml = deleteBtn.innerHTML;
+            deleteBtn.disabled = true;
+            deleteBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Deleting...</span>';
 
-            items.forEach(function (item, index) {
-                const number =
-                    item.querySelector('.avatar-number');
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') 
+                || document.querySelector('input[name="_token"]')?.value;
 
-                const removeButton =
-                    item.querySelector('.remove-avatar');
-
-                if (number) {
-                    number.textContent = index + 1;
+            fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
                 }
+            })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.success) {
+                    card.style.transition = 'all 0.35s ease';
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.85)';
+                    setTimeout(function () {
+                        card.remove();
+                        updateExistingAvatarCards();
 
-                if (removeButton) {
-                    removeButton.disabled = items.length === 1;
-                }
-            });
-
-            const activeExistingCount =
-                getActiveExistingAvatarCount();
-
-            const selectedNewCount =
-                getSelectedNewAvatarCount();
-
-            const totalActiveCount =
-                activeExistingCount + selectedNewCount;
-
-            const maximumReached =
-                totalActiveCount >= maximumAvatars;
-
-            const canAddAnotherCard =
-                items.length < maximumAvatars &&
-                !maximumReached;
-
-            addAvatarButton.disabled = !canAddAnotherCard;
-
-            if (maximumReached) {
-                addAvatarButton.textContent =
-                    'Maximum 3 Avatars';
-            } else {
-                addAvatarButton.textContent =
-                    'Add Avatar';
-            }
-
-            if (avatarLimitMessage) {
-                avatarLimitMessage.hidden = !maximumReached;
-            }
-
-            items.forEach(function (item) {
-                const input =
-                    item.querySelector('.avatar-file-input');
-
-                if (!input) {
-                    return;
-                }
-
-                const hasSelectedFile =
-                    input.files &&
-                    input.files.length > 0;
-
-                input.disabled =
-                    maximumReached && !hasSelectedFile;
-            });
-        }
-
-        if (
-            avatarSection &&
-            avatarContainer &&
-            addAvatarButton
-        ) {
-
-            addAvatarButton.addEventListener(
-                'click',
-                function () {
-
-                    if (getTotalActiveAvatarCount() >= maximumAvatars) {
-                        return;
-                    }
-
-                    const items = getNewAvatarItems();
-
-                    if (items.length >= maximumAvatars) {
-                        return;
-                    }
-
-                    avatarContainer.insertAdjacentHTML(
-                        'beforeend',
-                        createAvatarItem()
-                    );
-
-                    updateAvatarItems();
-                }
-            );
-
-            avatarContainer.addEventListener(
-                'click',
-                function (event) {
-
-                    const removeButton =
-                        event.target.closest('.remove-avatar');
-
-                    if (!removeButton) {
-                        return;
-                    }
-
-                    const items = getNewAvatarItems();
-
-                    if (items.length <= 1) {
-                        const uploadItem =
-                            removeButton.closest(
-                                '.avatar-upload-item'
-                            );
-
-                        resetAvatarPreview(uploadItem);
-                        updateAvatarItems();
-
-                        return;
-                    }
-
-                    removeButton
-                        .closest('.avatar-upload-item')
-                        .remove();
-
-                    updateAvatarItems();
-                }
-            );
-
-            avatarContainer.addEventListener(
-                'change',
-                function (event) {
-
-                    const input =
-                        event.target.closest('.avatar-file-input');
-
-                    if (!input) {
-                        return;
-                    }
-
-                    const uploadItem =
-                        input.closest('.avatar-upload-item');
-
-                    const preview =
-                        uploadItem.querySelector(
-                            '.avatar-local-preview'
-                        );
-
-                    const placeholder =
-                        uploadItem.querySelector(
-                            '.avatar-upload-placeholder'
-                        );
-
-                    const file = input.files[0];
-
-                    if (!file) {
-                        resetAvatarPreview(uploadItem);
-                        updateAvatarItems();
-
-                        return;
-                    }
-
-                    const otherSelectedImages =
-                        getNewAvatarItems().filter(function (item) {
-                            if (item === uploadItem) {
-                                return false;
+                        const grid = document.getElementById('existing-avatar-grid');
+                        if (grid && grid.querySelectorAll('[data-existing-avatar-card]').length === 0) {
+                            const section = grid.closest('.existing-avatar-section');
+                            if (section) {
+                                section.innerHTML = '<div class="empty-avatar-message">No existing avatar images are available.</div>';
                             }
-
-                            const itemInput =
-                                item.querySelector(
-                                    '.avatar-file-input'
-                                );
-
-                            return itemInput &&
-                                itemInput.files &&
-                                itemInput.files.length > 0;
-                        }).length;
-
-                    const totalAfterSelection =
-                        getActiveExistingAvatarCount() +
-                        otherSelectedImages +
-                        1;
-
-                    if (totalAfterSelection > maximumAvatars) {
-                        alert(
-                            'Only three active avatar images are allowed. Remove an existing avatar first.'
-                        );
-
-                        resetAvatarPreview(uploadItem);
-                        updateAvatarItems();
-
-                        return;
-                    }
-
-                    if (!allowedImageTypes.includes(file.type)) {
-                        alert(
-                            'Please select a JPG, JPEG, PNG, WEBP, or AVIF image.'
-                        );
-
-                        resetAvatarPreview(uploadItem);
-                        updateAvatarItems();
-
-                        return;
-                    }
-
-                    if (file.size > maximumFileSize) {
-                        alert(
-                            'Each avatar image must not exceed 2 MB.'
-                        );
-
-                        resetAvatarPreview(uploadItem);
-                        updateAvatarItems();
-
-                        return;
-                    }
-
-                    const reader = new FileReader();
-
-                    reader.onload = function (loadEvent) {
-                        preview.src = loadEvent.target.result;
-                        preview.classList.add('show');
-                        placeholder.classList.add('hide');
-
-                        updateAvatarItems();
-                    };
-
-                    reader.readAsDataURL(file);
+                        }
+                    }, 350);
+                } else {
+                    alert(data.message || 'Unable to delete avatar.');
+                    deleteBtn.disabled = false;
+                    deleteBtn.innerHTML = originalHtml;
                 }
-            );
+            })
+            .catch(function (error) {
+                console.error('Delete avatar error:', error);
+                alert('An error occurred while deleting the avatar.');
+                deleteBtn.disabled = false;
+                deleteBtn.innerHTML = originalHtml;
+            });
+        });
 
-            document.addEventListener(
-                'change',
-                function (event) {
-
-                    const checkbox =
-                        event.target.closest(
-                            '.existing-avatar-remove-checkbox'
-                        );
-
-                    if (!checkbox) {
-                        return;
-                    }
-
-                    updateExistingAvatarCards();
-                    updateAvatarItems();
-                }
-            );
-
-            updateExistingAvatarCards();
-            updateAvatarItems();
-        }
+        updateExistingAvatarCards();
 
     });
 

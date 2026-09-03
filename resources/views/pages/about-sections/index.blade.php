@@ -117,10 +117,11 @@
 
                                     <div class="table-avatar-list">
 
-                                        @forelse ($aboutSection->customerAvatars->take(3) as $avatar)
-                                            <img src="{{ Storage::url($avatar->image) }}" alt="Customer avatar"
+                                        @forelse ($aboutSection->customerAvatars as $avatar)
+                                            <img src="{{ asset('storage/' . $avatar->image) }}" alt="Customer avatar"
                                                 class="table-avatar-image" loading="lazy"
-                                                onclick="openAvatarPreview(this.src)">
+                                                onclick="openAvatarPreview(this.src)"
+                                                onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 24 24\' fill=\'%2394a3b8\'><path d=\'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\'/></svg>'">
 
                                         @empty
 
@@ -128,12 +129,6 @@
                                                 No images
                                             </span>
                                         @endforelse
-
-                                        @if ($aboutSection->customerAvatars->count() > 3)
-                                            <span class="table-avatar-more">
-                                                +{{ $aboutSection->customerAvatars->count() - 3 }}
-                                            </span>
-                                        @endif
 
                                         <a href="{{ route('admin.about-sections.edit', $aboutSection) }}#customer-avatars"
                                             class="avatar-add-link">
@@ -212,4 +207,35 @@
         </div>
     </div>
 
+    {{-- Avatar Full Preview Modal --}}
+    <div id="avatarPreviewModal" class="avatar-preview-modal" onclick="closeAvatarPreview()">
+        <button type="button" class="avatar-preview-close" onclick="closeAvatarPreview()">&times;</button>
+        <img id="avatarPreviewModalImage" class="avatar-preview-modal-image" src="" alt="Customer avatar preview" onclick="event.stopPropagation()">
+    </div>
+
 @endsection
+
+@push('scripts')
+<script>
+    function openAvatarPreview(src) {
+        const modal = document.getElementById('avatarPreviewModal');
+        const image = document.getElementById('avatarPreviewModalImage');
+        if (!modal || !image) return;
+        image.src = src;
+        modal.classList.add('show');
+    }
+
+    function closeAvatarPreview() {
+        const modal = document.getElementById('avatarPreviewModal');
+        if (modal) {
+            modal.classList.remove('show');
+        }
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeAvatarPreview();
+        }
+    });
+</script>
+@endpush

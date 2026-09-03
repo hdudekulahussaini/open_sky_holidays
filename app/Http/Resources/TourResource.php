@@ -39,8 +39,7 @@ class TourResource extends JsonResource
             'thumbnail' => $this->thumbnail,
 
             'thumbnail_url' => $this->thumbnail
-                ? Storage::disk('public')
-                    ->url($this->thumbnail)
+                ? asset('storage/'.$this->thumbnail)
                 : null,
 
             'areas' => is_array($this->areas) ? $this->areas : (is_array($this->features) ? $this->features : []),
@@ -80,7 +79,7 @@ class TourResource extends JsonResource
                     return $this->gallery->map(function ($img) {
                         $ext = strtolower(pathinfo($img->image, PATHINFO_EXTENSION));
                         $isVideo = in_array($ext, ['mp4', 'webm', 'mov', 'avi', 'mkv', 'ogv']);
-                        $url = Storage::disk('public')->url($img->image);
+                        $url = asset('storage/'.$img->image);
 
                         return [
                             'id' => $img->id,

@@ -125,6 +125,8 @@ Route::prefix('admin')
             */
 
             Route::resource('about-sections', AboutSectionController::class);
+            Route::delete('about-sections/{aboutSection}/avatars/{avatar}', [AboutSectionController::class, 'destroyAvatar'])
+                ->name('about-sections.avatars.destroy');
             Route::resource('travel-support', TravelSupportSectionController::class)->parameters(['travel-support' => 'travelSupport']);
             Route::resource('why-choose-sections', WhyChooseSectionController::class);
             Route::resource('heroes', HeroController::class)->except('show');

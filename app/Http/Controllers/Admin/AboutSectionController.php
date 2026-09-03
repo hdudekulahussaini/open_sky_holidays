@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AboutSectionRequest;
+use App\Models\AboutCustomerAvatar;
 use App\Models\AboutSection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -178,6 +180,47 @@ class AboutSectionController extends Controller
         }
     }
 
+    public function destroyAvatar(
+        AboutSection $aboutSection,
+        AboutCustomerAvatar $avatar
+    ): RedirectResponse|JsonResponse {
+        try {
+            if ($avatar->about_section_id !== $aboutSection->id) {
+                abort(404);
+            }
+
+            Storage::disk('public')->delete($avatar->image);
+
+            $publicFile = public_path('storage/'.$avatar->image);
+            if (file_exists($publicFile)) {
+                @unlink($publicFile);
+            }
+
+            $avatar->delete();
+
+            if (request()->expectsJson() || request()->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Customer avatar deleted successfully.',
+                    'remaining_count' => $aboutSection->customerAvatars()->count(),
+                ]);
+            }
+
+            return back()->with('success', 'Customer avatar deleted successfully.');
+        } catch (Throwable $exception) {
+            report($exception);
+
+            if (request()->expectsJson() || request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Unable to delete the customer avatar.',
+                ], 500);
+            }
+
+            return back()->with('error', 'Unable to delete the customer avatar.');
+        }
+    }
+
     private function storeLocations(
         AboutSection $aboutSection,
         array $locations
@@ -199,6 +242,15 @@ class AboutSectionController extends Controller
                 'public'
             );
 
+            $publicDestination = public_path('storage/'.$path);
+            $dir = dirname($publicDestination);
+            if (! is_dir($dir)) {
+                @mkdir($dir, 0755, true);
+            }
+            if (file_exists(storage_path('app/public/'.$path))) {
+                @copy(storage_path('app/public/'.$path), $publicDestination);
+            }
+
             $aboutSection->customerAvatars()->create([
                 'image' => $path,
             ]);
@@ -209,6 +261,10 @@ class AboutSectionController extends Controller
         AboutSection $aboutSection,
         array $avatarIds
     ): void {
+        if (empty($avatarIds)) {
+            return;
+        }
+
         $avatars = $aboutSection
             ->customerAvatars()
             ->whereIn('id', $avatarIds)
@@ -216,6 +272,12 @@ class AboutSectionController extends Controller
 
         foreach ($avatars as $avatar) {
             Storage::disk('public')->delete($avatar->image);
+
+            $publicFile = public_path('storage/'.$avatar->image);
+            if (file_exists($publicFile)) {
+                @unlink($publicFile);
+            }
+
             $avatar->delete();
         }
     }

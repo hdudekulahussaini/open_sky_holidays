@@ -20,7 +20,7 @@ class TravelSupportSectionResource extends JsonResource
             'description' => $this->description,
 
             'image' => $this->image
-                ? url(Storage::url($this->image))
+                ? asset('storage/'.$this->image)
                 : null,
 
             'features' => $this->features ?? [],

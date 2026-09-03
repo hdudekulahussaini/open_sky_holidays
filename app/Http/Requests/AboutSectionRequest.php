@@ -97,7 +97,6 @@ class AboutSectionRequest extends FormRequest
             'avatar_images' => [
                 'nullable',
                 'array',
-                'max:3',
             ],
 
             'avatar_images.*' => [
@@ -162,8 +161,6 @@ class AboutSectionRequest extends FormRequest
             'locations.*.location_name.required' => 'Every globe location must have a location name.',
 
             'avatar_images.array' => 'Avatar images must be submitted as a valid image list.',
-
-            'avatar_images.max' => 'You can upload a maximum of 3 avatar images.',
 
             'avatar_images.*.required' => 'Please select an image for every avatar field.',
 

@@ -19,7 +19,7 @@ class OurStoryResource extends JsonResource
                 ->map(function (string $image) {
                     return [
                         'path' => $image,
-                        'url' => Storage::disk('public')->url($image),
+                        'url' => asset('storage/'.$image),
                     ];
                 })
                 ->values(),

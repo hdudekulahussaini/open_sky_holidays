@@ -38,8 +38,7 @@ class AboutSectionResource extends JsonResource
                     fn ($avatar) => [
                         'id' => $avatar->id,
                         'image' => $avatar->image,
-                        'image_url' => Storage::disk('public')
-                            ->url($avatar->image),
+                        'image_url' => asset('storage/'.$avatar->image),
                     ]
                 )
             ),

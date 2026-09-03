@@ -5795,14 +5795,16 @@ input[type="file"].admin-form-control {
     align-items: center !important;
     justify-content: center;
     gap: 8px !important;
-    margin-top: 12px !important;
-    padding: 10px;
-    border-radius: 10px;
+    margin-top: 0 !important;
+    padding: 8px 10px;
+    border-radius: 8px;
     background: var(--ts-bg);
     color: var(--ts-danger) !important;
-    font-size: 13px !important;
+    font-size: 12px !important;
     font-weight: 600 !important;
     transition: 0.25s ease;
+    cursor: pointer;
+    user-select: none;
 }
 
 .avatar-preview-card.marked-for-removal .avatar-remove-option {
@@ -5815,6 +5817,60 @@ input[type="file"].admin-form-control {
     height: 16px !important;
     accent-color: var(--ts-danger) !important;
     cursor: pointer;
+}
+
+.avatar-card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.avatar-removal-indicator {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: rgba(220, 53, 69, 0.85);
+    color: #ffffff;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    backdrop-filter: blur(2px);
+    z-index: 5;
+}
+
+.avatar-preview-card.marked-for-removal .avatar-removal-indicator {
+    display: flex;
+}
+
+.avatar-instant-delete-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 12px;
+    background: #fff0f0;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.avatar-instant-delete-btn:hover {
+    background: #dc2626;
+    color: #ffffff;
+    border-color: #dc2626;
+}
+
+.avatar-instant-delete-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 /* Upload New Avatar Images */
@@ -5909,4 +5965,23 @@ input[type="file"].admin-form-control {
 
 .avatar-local-preview {
     border-radius: 10px !important;
+}
+
+.avatar-normal-upload-container {
+    background: #ffffff;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.25s ease;
+}
+
+.avatar-normal-upload-container:hover {
+    border-color: var(--ts-primary);
+    background: #f8fbff;
+}
+
+.avatar-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
 }

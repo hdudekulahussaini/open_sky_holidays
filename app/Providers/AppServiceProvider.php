@@ -20,6 +20,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (is_dir(storage_path('app/public/about'))) {
+            \Illuminate\Support\Facades\File::copyDirectory(
+                storage_path('app/public/about'),
+                public_path('storage/about')
+            );
+        }
+
+        if (is_dir(storage_path('app/public/testimonials'))) {
+            \Illuminate\Support\Facades\File::copyDirectory(
+                storage_path('app/public/testimonials'),
+                public_path('storage/testimonials')
+            );
+        }
         Paginator::useBootstrapFive();
     }
 }

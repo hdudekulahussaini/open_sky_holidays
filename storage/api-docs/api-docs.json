@@ -1864,85 +1864,6 @@
                 }
             }
         },
-        "/api/tours": {
-            "get": {
-                "tags": [
-                    "Tours"
-                ],
-                "summary": "List all tour packages",
-                "description": "Retrieves a paginated list of all active and available tour packages.",
-                "operationId": "0e5f396c3f9e5f094223a808680719e6",
-                "responses": {
-                    "200": {
-                        "description": "Paginated list of tours",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/Tour"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/tours/{id}": {
-            "get": {
-                "tags": [
-                    "Tours"
-                ],
-                "summary": "Get tour details by ID",
-                "description": "Retrieves detailed information for a specific tour including itinerary, features, and gallery images.",
-                "operationId": "f5e0637f8d4f8a179689782c6dbb75a1",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the tour",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Tour details retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Tour retrieved successfully."
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/Tour"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Tour not found"
-                    }
-                }
-            }
-        },
         "/api/tour-details": {
             "get": {
                 "tags": [
@@ -4035,10 +3956,6 @@
         {
             "name": "Enquiries",
             "description": "General customer contact and travel enquiries"
-        },
-        {
-            "name": "Tours",
-            "description": "Tour packages and destinations"
         },
         {
             "name": "Tour Inquiries",
