@@ -185,8 +185,11 @@
                                 @php
                                     $features = old(
                                         'features',
-                                        $adventure->features ?: ['']
+                                        $adventure->features ?? ['']
                                     );
+                                    if (!is_array($features) || empty($features)) {
+                                        $features = [''];
+                                    }
                                 @endphp
 
                                 @foreach ($features as $index => $feature)
@@ -227,6 +230,11 @@
                                 @endforeach
                             </div>
 
+                            @error('features')
+                                <div class="text-danger small mt-1">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div>
@@ -271,12 +279,36 @@
                     </div>
 
                     <div class="card-body p-4">
+
+                        {{-- First Image --}}
                         <div class="mb-4">
                             <label
                                 for="image_one"
-                                class="form-label fw-semibold"
+                                class="form-label fw-semibold mb-2"
                             >
-                                First Image
+                                First Image (Cover)
+                            </label>
+
+                            <div class="ts-image-preview-box">
+                                <img
+                                    src="{{ $adventure->image_one ? asset('storage/' . $adventure->image_one) : '' }}"
+                                    alt="First Image preview"
+                                    id="imageOnePreview"
+                                    class="ts-image-preview {{ $adventure->image_one ? '' : 'ts-hidden' }}"
+                                >
+
+                                <div
+                                    id="imageOnePlaceholder"
+                                    class="ts-image-placeholder {{ $adventure->image_one ? 'ts-hidden' : '' }}"
+                                >
+                                    <span class="ts-image-placeholder-icon">✦</span>
+                                    <strong>No image selected</strong>
+                                    <small>JPG, JPEG, PNG, WEBP or AVIF &middot; Max 5 MB</small>
+                                </div>
+                            </div>
+
+                            <label for="image_one" class="ts-upload-label d-block text-center rounded-3 mb-1" style="cursor: pointer;">
+                                <i class="fas fa-cloud-arrow-up me-1"></i> {{ $adventure->image_one ? 'Change First Image' : 'Choose First Image' }}
                             </label>
 
                             <input
@@ -284,49 +316,52 @@
                                 id="image_one"
                                 name="image_one"
                                 accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
-                                class="form-control
-                                    @error('image_one') is-invalid @enderror"
+                                class="ts-file-input @error('image_one') is-invalid @enderror"
                             >
 
-                            <small class="text-muted">
-                                JPG, JPEG, PNG, WEBP or AVIF. Maximum 5 MB.
-                            </small>
+                            @if ($adventure->image_one)
+                                <div id="imageOneCurrentInfo" class="small text-muted mt-1 text-truncate" title="{{ $adventure->image_one }}">
+                                    <i class="fas fa-image me-1 text-primary"></i> Current: <strong>{{ basename($adventure->image_one) }}</strong>
+                                </div>
+                            @endif
+                            <div id="imageOneFileName" class="small text-success mt-1 ts-hidden"></div>
 
                             @error('image_one')
-                                <div class="invalid-feedback">
+                                <div class="text-danger small mt-1">
                                     {{ $message }}
                                 </div>
                             @enderror
-
-                            @if ($adventure->image_one)
-                                <img
-                                    src="{{ asset(
-                                        'storage/' .
-                                        $adventure->image_one
-                                    ) }}"
-                                    alt="{{ $adventure->title }}"
-                                    class="mt-3"
-                                    style="
-                                        width: 100%;
-                                        height: 170px;
-                                        object-fit: cover;
-                                        border-radius: 10px;
-                                    "
-                                >
-                            @endif
-
-                            <div
-                                id="imageOnePreview"
-                                class="mt-3"
-                            ></div>
                         </div>
 
+                        {{-- Second Image --}}
                         <div>
                             <label
                                 for="image_two"
-                                class="form-label fw-semibold"
+                                class="form-label fw-semibold mb-2"
                             >
                                 Second Image
+                            </label>
+
+                            <div class="ts-image-preview-box">
+                                <img
+                                    src="{{ $adventure->image_two ? asset('storage/' . $adventure->image_two) : '' }}"
+                                    alt="Second Image preview"
+                                    id="imageTwoPreview"
+                                    class="ts-image-preview {{ $adventure->image_two ? '' : 'ts-hidden' }}"
+                                >
+
+                                <div
+                                    id="imageTwoPlaceholder"
+                                    class="ts-image-placeholder {{ $adventure->image_two ? 'ts-hidden' : '' }}"
+                                >
+                                    <span class="ts-image-placeholder-icon">✦</span>
+                                    <strong>No image selected</strong>
+                                    <small>JPG, JPEG, PNG, WEBP or AVIF &middot; Max 5 MB</small>
+                                </div>
+                            </div>
+
+                            <label for="image_two" class="ts-upload-label d-block text-center rounded-3 mb-1" style="cursor: pointer;">
+                                <i class="fas fa-cloud-arrow-up me-1"></i> {{ $adventure->image_two ? 'Change Second Image' : 'Choose Second Image' }}
                             </label>
 
                             <input
@@ -334,41 +369,21 @@
                                 id="image_two"
                                 name="image_two"
                                 accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
-                                class="form-control
-                                    @error('image_two') is-invalid @enderror"
+                                class="ts-file-input @error('image_two') is-invalid @enderror"
                             >
 
-                            <small class="text-muted">
-                                JPG, JPEG, PNG, WEBP or AVIF. Maximum 5 MB.
-                            </small>
+                            @if ($adventure->image_two)
+                                <div id="imageTwoCurrentInfo" class="small text-muted mt-1 text-truncate" title="{{ $adventure->image_two }}">
+                                    <i class="fas fa-image me-1 text-primary"></i> Current: <strong>{{ basename($adventure->image_two) }}</strong>
+                                </div>
+                            @endif
+                            <div id="imageTwoFileName" class="small text-success mt-1 ts-hidden"></div>
 
                             @error('image_two')
-                                <div class="invalid-feedback">
+                                <div class="text-danger small mt-1">
                                     {{ $message }}
                                 </div>
                             @enderror
-
-                            @if ($adventure->image_two)
-                                <img
-                                    src="{{ asset(
-                                        'storage/' .
-                                        $adventure->image_two
-                                    ) }}"
-                                    alt="{{ $adventure->title }}"
-                                    class="mt-3"
-                                    style="
-                                        width: 100%;
-                                        height: 170px;
-                                        object-fit: cover;
-                                        border-radius: 10px;
-                                    "
-                                >
-                            @endif
-
-                            <div
-                                id="imageTwoPreview"
-                                class="mt-3"
-                            ></div>
                         </div>
                     </div>
                 </div>
@@ -448,6 +463,141 @@
         </div>
     </form>
 </div>
-
-
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const featureContainer = document.getElementById('featureContainer');
+        const addFeatureButton = document.getElementById('addFeatureButton');
+
+        function createFeatureRow() {
+            const row = document.createElement('div');
+            row.className = 'feature-row row g-2 align-items-start mb-3';
+            row.innerHTML = `
+                <div class="col">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-check"></i>
+                        </span>
+                        <input
+                            type="text"
+                            name="features[]"
+                            class="form-control"
+                            placeholder="Enter feature"
+                        >
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button
+                        type="button"
+                        class="btn btn-danger remove-feature"
+                        title="Delete feature"
+                        aria-label="Delete feature"
+                    >
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            return row;
+        }
+
+        if (addFeatureButton && featureContainer) {
+            addFeatureButton.addEventListener('click', function () {
+                const rows = featureContainer.querySelectorAll('.feature-row');
+
+                if (rows.length >= 10) {
+                    alert('You can add a maximum of 10 features.');
+                    return;
+                }
+
+                const newRow = createFeatureRow();
+                featureContainer.appendChild(newRow);
+
+                const newInput = newRow.querySelector('input[name="features[]"]');
+                if (newInput) {
+                    newInput.focus();
+                }
+            });
+
+            featureContainer.addEventListener('click', function (event) {
+                const removeButton = event.target.closest('.remove-feature');
+                if (!removeButton) {
+                    return;
+                }
+
+                const rows = featureContainer.querySelectorAll('.feature-row');
+                if (rows.length === 1) {
+                    const input = rows[0].querySelector('input[name="features[]"]');
+                    if (input) {
+                        input.value = '';
+                        input.focus();
+                    }
+                    return;
+                }
+
+                const currentRow = removeButton.closest('.feature-row');
+                if (currentRow) {
+                    currentRow.remove();
+                }
+            });
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Image preview setup
+        |--------------------------------------------------------------------------
+        */
+
+        function setupImagePreview(inputId, previewId, placeholderId, fileNameId, currentInfoId) {
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            const placeholder = document.getElementById(placeholderId);
+            const fileName = fileNameId ? document.getElementById(fileNameId) : null;
+            const currentInfo = currentInfoId ? document.getElementById(currentInfoId) : null;
+
+            if (!input || !preview) {
+                return;
+            }
+
+            input.addEventListener('change', function () {
+                const file = this.files && this.files[0];
+
+                if (!file) {
+                    return;
+                }
+
+                if (!file.type.startsWith('image/')) {
+                    alert('Please select a valid image file (JPG, PNG, WEBP, AVIF).');
+                    return;
+                }
+
+                const reader = new FileReader();
+
+                reader.onload = function (event) {
+                    preview.src = event.target.result;
+                    preview.classList.remove('ts-hidden');
+
+                    if (placeholder) {
+                        placeholder.classList.add('ts-hidden');
+                    }
+
+                    if (fileName) {
+                        fileName.innerHTML = `<i class="fas fa-check-circle me-1"></i> New: <strong>${file.name}</strong> (${(file.size / 1024).toFixed(1)} KB)`;
+                        fileName.classList.remove('ts-hidden');
+                    }
+
+                    if (currentInfo) {
+                        currentInfo.classList.add('ts-hidden');
+                    }
+                };
+
+                reader.readAsDataURL(file);
+            });
+        }
+
+        setupImagePreview('image_one', 'imageOnePreview', 'imageOnePlaceholder', 'imageOneFileName', 'imageOneCurrentInfo');
+        setupImagePreview('image_two', 'imageTwoPreview', 'imageTwoPlaceholder', 'imageTwoFileName', 'imageTwoCurrentInfo');
+    });
+</script>
+@endpush

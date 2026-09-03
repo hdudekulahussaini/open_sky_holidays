@@ -200,6 +200,9 @@
                             <div id="featureContainer">
                                 @php
                                     $features = old('features', ['']);
+                                    if (!is_array($features) || empty($features)) {
+                                        $features = [''];
+                                    }
                                 @endphp
 
                                 @foreach ($features as $index => $feature)
@@ -253,7 +256,7 @@
                             </div>
 
                             @error('features')
-                                <div class="text-danger small">
+                                <div class="text-danger small mt-1">
                                     {{ $message }}
                                 </div>
                             @enderror
@@ -307,13 +310,31 @@
 
                     <div class="card-body p-4">
 
-                        {{-- Image one --}}
+                        {{-- First Image --}}
                         <div class="mb-4">
                             <label
                                 for="image_one"
-                                class="form-label fw-semibold"
+                                class="form-label fw-semibold mb-2"
                             >
-                                First Image
+                                First Image (Cover)
+                            </label>
+
+                            <div class="ts-image-preview-box">
+                                <img
+                                    src=""
+                                    alt="First Image preview"
+                                    id="imageOnePreview"
+                                    class="ts-image-preview ts-hidden"
+                                >
+                                <div id="imageOnePlaceholder" class="ts-image-placeholder">
+                                    <span class="ts-image-placeholder-icon">✦</span>
+                                    <strong>No image selected</strong>
+                                    <small>JPG, JPEG, PNG, WEBP or AVIF &middot; Max 5 MB</small>
+                                </div>
+                            </div>
+
+                            <label for="image_one" class="ts-upload-label d-block text-center rounded-3 mb-1" style="cursor: pointer;">
+                                <i class="fas fa-cloud-arrow-up me-1"></i> Choose First Image
                             </label>
 
                             <input
@@ -321,33 +342,43 @@
                                 id="image_one"
                                 name="image_one"
                                 accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
-                                class="form-control
-                                    @error('image_one') is-invalid @enderror"
+                                class="ts-file-input @error('image_one') is-invalid @enderror"
                             >
 
-                            <small class="text-muted">
-                                JPG, JPEG, PNG, WEBP or AVIF. Maximum 5 MB.
-                            </small>
+                            <div id="imageOneFileName" class="small text-success mt-1 ts-hidden"></div>
 
                             @error('image_one')
-                                <div class="invalid-feedback">
+                                <div class="text-danger small mt-1">
                                     {{ $message }}
                                 </div>
                             @enderror
-
-                            <div
-                                id="imageOnePreview"
-                                class="mt-3"
-                            ></div>
                         </div>
 
-                        {{-- Image two --}}
+                        {{-- Second Image --}}
                         <div>
                             <label
                                 for="image_two"
-                                class="form-label fw-semibold"
+                                class="form-label fw-semibold mb-2"
                             >
                                 Second Image
+                            </label>
+
+                            <div class="ts-image-preview-box">
+                                <img
+                                    src=""
+                                    alt="Second Image preview"
+                                    id="imageTwoPreview"
+                                    class="ts-image-preview ts-hidden"
+                                >
+                                <div id="imageTwoPlaceholder" class="ts-image-placeholder">
+                                    <span class="ts-image-placeholder-icon">✦</span>
+                                    <strong>No image selected</strong>
+                                    <small>JPG, JPEG, PNG, WEBP or AVIF &middot; Max 5 MB</small>
+                                </div>
+                            </div>
+
+                            <label for="image_two" class="ts-upload-label d-block text-center rounded-3 mb-1" style="cursor: pointer;">
+                                <i class="fas fa-cloud-arrow-up me-1"></i> Choose Second Image
                             </label>
 
                             <input
@@ -355,24 +386,16 @@
                                 id="image_two"
                                 name="image_two"
                                 accept=".jpg,.jpeg,.png,.webp,.avif,image/*"
-                                class="form-control
-                                    @error('image_two') is-invalid @enderror"
+                                class="ts-file-input @error('image_two') is-invalid @enderror"
                             >
 
-                            <small class="text-muted">
-                                JPG, JPEG, PNG, WEBP or AVIF. Maximum 5 MB.
-                            </small>
+                            <div id="imageTwoFileName" class="small text-success mt-1 ts-hidden"></div>
 
                             @error('image_two')
-                                <div class="invalid-feedback">
+                                <div class="text-danger small mt-1">
                                     {{ $message }}
                                 </div>
                             @enderror
-
-                            <div
-                                id="imageTwoPreview"
-                                class="mt-3"
-                            ></div>
                         </div>
 
                     </div>
@@ -452,9 +475,9 @@
         </div>
     </form>
 </div>
+@endsection
 
-
-
+@push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const featureContainer =
@@ -512,108 +535,118 @@
         |--------------------------------------------------------------------------
         */
 
-        addFeatureButton.addEventListener('click', function () {
-            const rows =
-                featureContainer.querySelectorAll('.feature-row');
+        if (addFeatureButton && featureContainer) {
+            addFeatureButton.addEventListener('click', function () {
+                const rows =
+                    featureContainer.querySelectorAll('.feature-row');
 
-            if (rows.length >= 10) {
-                alert('You can add a maximum of 10 features.');
-                return;
-            }
+                if (rows.length >= 10) {
+                    alert('You can add a maximum of 10 features.');
+                    return;
+                }
 
-            const newRow = createFeatureRow();
+                const newRow = createFeatureRow();
 
-            featureContainer.appendChild(newRow);
+                featureContainer.appendChild(newRow);
 
-            const newInput = newRow.querySelector(
-                'input[name="features[]"]'
-            );
-
-            newInput.focus();
-        });
-
-        /*
-        |--------------------------------------------------------------------------
-        | Delete one feature
-        |--------------------------------------------------------------------------
-        */
-
-        featureContainer.addEventListener('click', function (event) {
-            const removeButton =
-                event.target.closest('.remove-feature');
-
-            if (!removeButton) {
-                return;
-            }
-
-            const rows =
-                featureContainer.querySelectorAll('.feature-row');
-
-            if (rows.length === 1) {
-                const input = rows[0].querySelector(
+                const newInput = newRow.querySelector(
                     'input[name="features[]"]'
                 );
 
-                input.value = '';
-                input.focus();
+                if (newInput) {
+                    newInput.focus();
+                }
+            });
 
-                return;
-            }
+            /*
+            |--------------------------------------------------------------------------
+            | Delete one feature
+            |--------------------------------------------------------------------------
+            */
 
-            const currentRow =
-                removeButton.closest('.feature-row');
+            featureContainer.addEventListener('click', function (event) {
+                const removeButton =
+                    event.target.closest('.remove-feature');
 
-            currentRow.remove();
-        });
+                if (!removeButton) {
+                    return;
+                }
+
+                const rows =
+                    featureContainer.querySelectorAll('.feature-row');
+
+                if (rows.length === 1) {
+                    const input = rows[0].querySelector(
+                        'input[name="features[]"]'
+                    );
+
+                    if (input) {
+                        input.value = '';
+                        input.focus();
+                    }
+
+                    return;
+                }
+
+                const currentRow =
+                    removeButton.closest('.feature-row');
+
+                if (currentRow) {
+                    currentRow.remove();
+                }
+            });
+        }
 
         /*
         |--------------------------------------------------------------------------
-        | Image preview
+        | Image preview setup
         |--------------------------------------------------------------------------
         */
 
-        function setupImagePreview(inputId, previewId) {
+        function setupImagePreview(inputId, previewId, placeholderId, fileNameId) {
             const input = document.getElementById(inputId);
             const preview = document.getElementById(previewId);
+            const placeholder = document.getElementById(placeholderId);
+            const fileName = fileNameId ? document.getElementById(fileNameId) : null;
 
             if (!input || !preview) {
                 return;
             }
 
             input.addEventListener('change', function () {
-                preview.innerHTML = '';
+                const file = this.files && this.files[0];
 
-                const file = this.files[0];
+                if (!file) {
+                    return;
+                }
 
-                if (!file || !file.type.startsWith('image/')) {
+                if (!file.type.startsWith('image/')) {
+                    alert('Please select a valid image file (JPG, PNG, WEBP, AVIF).');
                     return;
                 }
 
                 const reader = new FileReader();
 
                 reader.onload = function (event) {
-                    const image = document.createElement('img');
+                    preview.src = event.target.result;
+                    preview.classList.remove('ts-hidden');
 
-                    image.src = event.target.result;
-                    image.alt = 'Selected adventure image';
-                    image.className = 'image-preview';
+                    if (placeholder) {
+                        placeholder.classList.add('ts-hidden');
+                    }
 
-                    preview.appendChild(image);
+                    if (fileName) {
+                        fileName.innerHTML = `<i class="fas fa-check-circle me-1"></i> Selected: <strong>${file.name}</strong> (${(file.size / 1024).toFixed(1)} KB)`;
+                        fileName.classList.remove('ts-hidden');
+                    }
                 };
 
                 reader.readAsDataURL(file);
             });
         }
 
-        setupImagePreview(
-            'image_one',
-            'imageOnePreview'
-        );
-
-        setupImagePreview(
-            'image_two',
-            'imageTwoPreview'
-        );
+        setupImagePreview('image_one', 'imageOnePreview', 'imageOnePlaceholder', 'imageOneFileName');
+        setupImagePreview('image_two', 'imageTwoPreview', 'imageTwoPlaceholder', 'imageTwoFileName');
     });
 </script>
-@endsection
+@endpush
