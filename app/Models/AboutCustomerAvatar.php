@@ -19,4 +19,15 @@ class AboutCustomerAvatar extends Model
     {
         return $this->belongsTo(AboutSection::class);
     }
+
+    public function getImageUrlAttribute(): string
+    {
+        if (! $this->image) {
+            return '';
+        }
+
+        return str_starts_with($this->image, 'http')
+            ? $this->image
+            : asset('storage/' . $this->image);
+    }
 }

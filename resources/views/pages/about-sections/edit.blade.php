@@ -3,6 +3,35 @@
 @section('title', 'Edit About Section')
 @section('page-title', 'Edit About Section')
 
+@push('styles')
+<style>
+    .btn-remove-existing-avatar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: 100%;
+        margin-top: 12px;
+        padding: 9px 14px;
+        border: 1px solid #fecaca;
+        border-radius: 10px;
+        background: #fef2f2;
+        color: #dc2626;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .btn-remove-existing-avatar:hover {
+        background: #dc2626;
+        color: #ffffff;
+        border-color: #dc2626;
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+    }
+</style>
+@endpush
+
 @section('content')
 
     @php
@@ -527,131 +556,115 @@
                     </div>
 
                     {{-- Existing avatars --}}
-                    @if ($aboutSection->customerAvatars->isNotEmpty())
+                    @php
+                        $activeExistingAvatars = $aboutSection->customerAvatars->reject(
+                            fn ($avatar) => in_array($avatar->id, $selectedAvatarIds)
+                        );
+                    @endphp
 
-                        <div class="existing-avatar-section">
+                    <div
+                        class="existing-avatar-section"
+                        id="existing-avatar-section"
+                        {{ $aboutSection->customerAvatars->isEmpty() ? 'hidden' : '' }}
+                    >
 
-                            <div class="existing-avatar-header">
-
-                                <div>
-                                    <h5>Existing Avatar Images</h5>
-
-                                    <p>
-                                        Delete an avatar now or mark “Remove image” to remove it after updating.
-                                    </p>
-                                </div>
-
-                                <span class="existing-avatar-count" id="existing-avatar-count-badge">
-                                    {{ $aboutSection->customerAvatars->count() }}
-                                    {{ Str::plural(
-                                        'image',
-                                        $aboutSection->customerAvatars->count()
-                                    ) }}
-                                </span>
-
+                        <div class="existing-avatar-header">
+                            <div>
+                                <h5>Existing Avatar Images</h5>
+                                <p>
+                                    Delete an avatar now or mark “Remove image” to remove it after updating.
+                                </p>
                             </div>
 
-                            <div class="avatar-preview-grid" id="existing-avatar-grid">
+                            <span class="existing-avatar-count" id="existing-avatar-count-badge">
+                                {{ $aboutSection->customerAvatars->count() }}
+                                {{ Str::plural(
+                                    'image',
+                                    $aboutSection->customerAvatars->count()
+                                ) }}
+                            </span>
+                        </div>
 
-                                @foreach (
-                                    $aboutSection->customerAvatars as $avatar
-                                )
-
-                                    <div
-                                        class="avatar-preview-card
-                                            {{ in_array(
-                                                $avatar->id,
-                                                $selectedAvatarIds
-                                            ) ? 'marked-for-removal' : '' }}"
-                                        id="existing-avatar-card-{{ $avatar->id }}"
-                                        data-existing-avatar-card
-                                        data-avatar-id="{{ $avatar->id }}"
-                                    >
-
-                                        <div class="avatar-preview-media">
-
-                                            <img
-                                                src="{{ asset('storage/' . $avatar->image) }}"
-                                                alt="Customer avatar"
-                                                class="avatar-preview-image"
-                                                onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 24 24\' fill=\'%2394a3b8\'><path d=\'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\'/></svg>'"
-                                            >
-
-                                            <span class="avatar-existing-badge">
-                                                Existing
-                                            </span>
-
-                                            <div class="avatar-removal-indicator">
-                                                <i class="fa-solid fa-trash-can"></i>
-                                                <span>To be removed</span>
-                                            </div>
-
+                        <div class="avatar-preview-grid" id="existing-avatar-grid">
+                            @foreach ($aboutSection->customerAvatars as $avatar)
+                                <div
+                                    class="avatar-preview-card {{ in_array($avatar->id, $selectedAvatarIds) ? 'marked-for-removal' : '' }}"
+                                    id="existing-avatar-card-{{ $avatar->id }}"
+                                    data-existing-avatar-card
+                                    data-avatar-id="{{ $avatar->id }}"
+                                >
+                                    <div class="avatar-preview-media">
+                                        <img
+                                            src="{{ $avatar->image_url }}"
+                                            alt="Customer avatar"
+                                            class="avatar-preview-image"
+                                            onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 24 24\' fill=\'%2394a3b8\'><path d=\'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\'/></svg>'"
+                                        >
+                                        <span class="avatar-existing-badge">Existing</span>
+                                        <div class="avatar-removal-indicator">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                            <span>To be removed</span>
                                         </div>
-
-                                        <div class="avatar-card-actions">
-
-                                            <label class="avatar-remove-option" for="remove_avatar_{{ $avatar->id }}">
-
-                                                <input
-                                                    type="checkbox"
-                                                    id="remove_avatar_{{ $avatar->id }}"
-                                                    name="remove_avatar_ids[]"
-                                                    value="{{ $avatar->id }}"
-                                                    class="existing-avatar-remove-checkbox"
-                                                    @checked(
-                                                        in_array(
-                                                            $avatar->id,
-                                                            $selectedAvatarIds
-                                                        )
-                                                    )
-                                                >
-
-                                                <span class="avatar-remove-text">
-                                                    {{ in_array($avatar->id, $selectedAvatarIds) ? 'Marked for removal' : 'Remove image' }}
-                                                </span>
-
-                                            </label>
-
-                                            <button
-                                                type="button"
-                                                class="avatar-instant-delete-btn"
-                                                title="Delete permanently from server right now"
-                                                data-avatar-id="{{ $avatar->id }}"
-                                                data-delete-url="{{ route('admin.about-sections.avatars.destroy', [$aboutSection, $avatar]) }}"
-                                            >
-                                                <i class="fa-solid fa-trash-can"></i>
-                                                <span>Delete Now</span>
-                                            </button>
-
-                                        </div>
-
                                     </div>
 
-                                @endforeach
+                                    <div class="avatar-card-actions">
+                                        <label class="avatar-remove-option" for="remove_avatar_{{ $avatar->id }}">
+                                            <input
+                                                type="checkbox"
+                                                id="remove_avatar_{{ $avatar->id }}"
+                                                name="remove_avatar_ids[]"
+                                                value="{{ $avatar->id }}"
+                                                class="existing-avatar-remove-checkbox"
+                                                @checked(in_array($avatar->id, $selectedAvatarIds))
+                                            >
+                                            <span class="avatar-remove-text">
+                                                {{ in_array($avatar->id, $selectedAvatarIds) ? 'Marked for removal' : 'Remove image' }}
+                                            </span>
+                                        </label>
 
-                            </div>
-
-                            @error('remove_avatar_ids')
-                                <span class="admin-form-error">
-                                    {{ $message }}
-                                </span>
-                            @enderror
-
-                            @error('remove_avatar_ids.*')
-                                <span class="admin-form-error">
-                                    {{ $message }}
-                                </span>
-                            @enderror
-
+                                        <button
+                                            type="button"
+                                            class="avatar-instant-delete-btn"
+                                            title="Delete permanently from server right now"
+                                            data-avatar-id="{{ $avatar->id }}"
+                                            data-delete-url="{{ route('admin.about-sections.avatars.destroy', [$aboutSection, $avatar]) }}"
+                                        >
+                                            <i class="fa-solid fa-trash-can"></i>
+                                            <span>Delete Now</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
 
-                    @else
+                        @error('remove_avatar_ids')
+                            <span class="admin-form-error">
+                                {{ $message }}
+                            </span>
+                        @enderror
 
-                        <div class="empty-avatar-message">
-                            No existing avatar images are available.
-                        </div>
+                        @error('remove_avatar_ids.*')
+                            <span class="admin-form-error">
+                                {{ $message }}
+                            </span>
+                        @enderror
 
-                    @endif
+                    </div>
+
+                    <div
+                        id="empty-existing-avatar-message"
+                        class="empty-avatar-message"
+                        {{ $aboutSection->customerAvatars->isNotEmpty() ? 'hidden' : '' }}
+                    >
+                        No existing avatar images are available.
+                    </div>
+
+                    {{-- Container holding removed avatar IDs for form submit --}}
+                    <div id="removed-avatars-container">
+                        @foreach ($selectedAvatarIds as $removedId)
+                            <input type="hidden" name="remove_avatar_ids[]" value="{{ $removedId }}">
+                        @endforeach
+                    </div>
 
                     {{-- New avatar uploads --}}
                     <div class="new-avatar-section mt-4">
@@ -894,6 +907,7 @@
                     active++;
                 }
             });
+
             const marked = total - active;
             if (marked > 0) {
                 badge.innerHTML = `${active} active <small style="opacity: 0.85;">(${marked} to remove)</small>`;
@@ -1014,10 +1028,10 @@
 
                         const grid = document.getElementById('existing-avatar-grid');
                         if (grid && grid.querySelectorAll('[data-existing-avatar-card]').length === 0) {
-                            const section = grid.closest('.existing-avatar-section');
-                            if (section) {
-                                section.innerHTML = '<div class="empty-avatar-message">No existing avatar images are available.</div>';
-                            }
+                            const section = document.getElementById('existing-avatar-section');
+                            const emptyMsg = document.getElementById('empty-existing-avatar-message');
+                            if (section) section.hidden = true;
+                            if (emptyMsg) emptyMsg.hidden = false;
                         }
                     }, 350);
                 } else {

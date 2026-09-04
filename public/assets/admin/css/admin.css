@@ -5819,6 +5819,33 @@ input[type="file"].admin-form-control {
     cursor: pointer;
 }
 
+.btn-remove-existing-avatar,
+.btn-delete-avatar {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    width: 100% !important;
+    margin-top: 12px !important;
+    padding: 9px 14px !important;
+    border: 1px solid #fecaca !important;
+    border-radius: 10px !important;
+    background: #fef2f2 !important;
+    color: #dc2626 !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease !important;
+}
+
+.btn-remove-existing-avatar:hover,
+.btn-delete-avatar:hover {
+    background: #dc2626 !important;
+    color: #ffffff !important;
+    border-color: #dc2626 !important;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2) !important;
+}
+
 .avatar-card-actions {
     display: flex;
     flex-direction: column;

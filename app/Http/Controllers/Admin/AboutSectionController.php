@@ -8,6 +8,7 @@ use App\Models\AboutCustomerAvatar;
 use App\Models\AboutSection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -161,7 +162,9 @@ class AboutSectionController extends Controller
                 $aboutSection->load('customerAvatars');
 
                 foreach ($aboutSection->customerAvatars as $avatar) {
-                    Storage::disk('public')->delete($avatar->image);
+                    if ($avatar->image && Storage::disk('public')->exists($avatar->image)) {
+                        Storage::disk('public')->delete($avatar->image);
+                    }
                 }
 
                 $aboutSection->delete();
@@ -186,13 +189,21 @@ class AboutSectionController extends Controller
     ): RedirectResponse|JsonResponse {
         try {
             if ($avatar->about_section_id !== $aboutSection->id) {
+                if (request()->expectsJson() || request()->ajax()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Avatar does not belong to this section.',
+                    ], 403);
+                }
                 abort(404);
             }
 
-            Storage::disk('public')->delete($avatar->image);
+            if ($avatar->image && Storage::disk('public')->exists($avatar->image)) {
+                Storage::disk('public')->delete($avatar->image);
+            }
 
             $publicFile = public_path('storage/'.$avatar->image);
-            if (file_exists($publicFile)) {
+            if ($avatar->image && file_exists($publicFile)) {
                 @unlink($publicFile);
             }
 
@@ -234,9 +245,17 @@ class AboutSectionController extends Controller
 
     private function storeAvatars(
         AboutSection $aboutSection,
-        array $avatarImages
+        mixed $avatarImages = []
     ): void {
+        if (! is_array($avatarImages)) {
+            return;
+        }
+
         foreach ($avatarImages as $avatarImage) {
+            if (! $avatarImage instanceof \Illuminate\Http\UploadedFile || ! $avatarImage->isValid()) {
+                continue;
+            }
+
             $path = $avatarImage->store(
                 'about/customer-avatars',
                 'public'
@@ -259,9 +278,9 @@ class AboutSectionController extends Controller
 
     private function removeSelectedAvatars(
         AboutSection $aboutSection,
-        array $avatarIds
+        mixed $avatarIds = []
     ): void {
-        if (empty($avatarIds)) {
+        if (! is_array($avatarIds) || empty($avatarIds)) {
             return;
         }
 
@@ -271,10 +290,12 @@ class AboutSectionController extends Controller
             ->get();
 
         foreach ($avatars as $avatar) {
-            Storage::disk('public')->delete($avatar->image);
+            if ($avatar->image && Storage::disk('public')->exists($avatar->image)) {
+                Storage::disk('public')->delete($avatar->image);
+            }
 
             $publicFile = public_path('storage/'.$avatar->image);
-            if (file_exists($publicFile)) {
+            if ($avatar->image && file_exists($publicFile)) {
                 @unlink($publicFile);
             }
 

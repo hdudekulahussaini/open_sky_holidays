@@ -124,6 +124,10 @@ Route::prefix('admin')
             |--------------------------------------------------------------------------
             */
 
+            Route::delete(
+                'about-sections/{aboutSection}/avatars/{avatar}',
+                [AboutSectionController::class, 'destroyAvatar']
+            )->name('about-sections.avatars.destroy');
             Route::resource('about-sections', AboutSectionController::class);
             Route::delete('about-sections/{aboutSection}/avatars/{avatar}', [AboutSectionController::class, 'destroyAvatar'])
                 ->name('about-sections.avatars.destroy');

@@ -37,8 +37,7 @@ class AboutSectionResource extends JsonResource
                 fn () => $this->customerAvatars->map(
                     fn ($avatar) => [
                         'id' => $avatar->id,
-                        'image' => $avatar->image,
-                        'image_url' => asset('storage/'.$avatar->image),
+                        'image_url' => $avatar->image_url,
                     ]
                 )
             ),

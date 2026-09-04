@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('top_headers', function (Blueprint $table) {
             $table->id();
             $table->string('email')->nullable()->default('info@openskyholidays.com');
-            $table->text('tagline')->nullable()->default('The World Is Waiting. One Stop Destination For All Your Tours & Travels Needs.');
+            $table->text('tagline')->nullable();
             $table->string('button_text')->nullable()->default('Book Your Tour');
             $table->string('button_url')->nullable()->default('#');
             $table->json('social_links')->nullable();

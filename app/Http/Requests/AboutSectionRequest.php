@@ -133,6 +133,33 @@ class AboutSectionRequest extends FormRequest
         }
     }
 
+    public function withValidator($validator): void
+    {
+        $validator->after(function ($validator) {
+            $aboutSection = $this->route('about_section');
+            if ($aboutSection instanceof \App\Models\AboutSection) {
+                $existingCount = $aboutSection->customerAvatars()->count();
+                $removeCount = is_array($this->input('remove_avatar_ids'))
+                    ? count($this->input('remove_avatar_ids'))
+                    : 0;
+                $activeExisting = max(0, $existingCount - $removeCount);
+
+                $newFiles = array_filter(
+                    (array) $this->file('avatar_images', []),
+                    fn ($file) => $file instanceof \Illuminate\Http\UploadedFile && $file->isValid()
+                );
+                $newCount = count($newFiles);
+
+                if (($activeExisting + $newCount) > 3) {
+                    $validator->errors()->add(
+                        'avatar_images',
+                        'Total customer avatars cannot exceed 3. Please remove an existing avatar first.'
+                    );
+                }
+            }
+        });
+    }
+
     public function messages(): array
     {
         return [
